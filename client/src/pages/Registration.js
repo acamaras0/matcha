@@ -9,6 +9,7 @@ export default function Registration() {
   const [usernameReg, setUsernameReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
   const [confirmPasswordReg, setConfirmPasswordReg] = useState("");
+  const [status, setStatus] = useState("");
 
   Axios.defaults.withCredentials = true;
 
@@ -20,7 +21,11 @@ export default function Registration() {
       email: emailReg,
       password: passwordReg,
     }).then((response) => {
-      console.log(response);
+      if (response.data.message) {
+        setStatus(response.data.message);
+      } else {
+        setStatus(response.data[0].username);
+      }
     });
   };
 
@@ -62,8 +67,9 @@ export default function Registration() {
           onChange={(e) => {
             setPasswordReg(e.target.value);
           }}
-        />
+        /><br/>
         <button onClick={register}> Register </button>
+        <h1>{status}</h1>
         <p>Already have an account?</p>
         <a href="http://localhost:3000/login">Login</a>
       </div>

@@ -1,6 +1,7 @@
 const express = require("express");
-const mysql = require("mysql");
+//const mysql = require("mysql");
 const cors = require("cors");
+const db = require("./config/db");
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -10,7 +11,6 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const app = express();
-
 app.use(express.json());
 app.use(
   cors({
@@ -34,23 +34,6 @@ app.use(
   })
 );
 
-const db = mysql.createConnection({
-  user: "root",
-  host: "localhost",
-  password: "123456",
-  database: "matcha",
-});
-
-db.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
-  var sql = "CREATE TABLE IF NOT EXISTS users (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, firstname VARCHAR(255), lastname VARCHAR(255), username VARCHAR(255), email VARCHAR(255), password VARCHAR(255))";
-  db.query(sql, function (err, result) {
-    if (err) throw err;
-    console.log("User table created");
-  });
-});
-
 app.post("/register", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -58,20 +41,40 @@ app.post("/register", (req, res) => {
   const lastname = req.body.lastName;
   const email = req.body.email;
 
-  bcrypt.hash(password, saltRounds, (err, hash) => {
-    if (err) {
-      console.log(err);
-    }
-    let i = 0;
-    db.query(
-      "INSERT INTO users (id, firstname, lastname, username, email, password) VALUES (?,?,?,?,?,?)",
-      [i ,firstname, lastname, username, email, hash],
-      (err, result) => {
-        console.log(err);
+  if (username && password && firstname && lastname && email) {
+    db.query("SELECT username, email FROM users;", (err, result) => {
+      if (err) {
+        res.send({ err: err });
       }
-    );
-    i++;
-  });
+      else if (
+        result.length > 0 &&
+        result.some((user) => user.username === username)
+      ) {
+        res.send({ message: "Username already exists" });
+      }
+      else if (result.length > 0 && result.some((user) => user.email === email)) {
+        res.send({ message: "Email already exists" });
+      } else {
+        bcrypt.hash(password, saltRounds, function (err, hash) {
+          if (err) {
+            res.send({ err: err });
+          }
+          db.query(
+            "INSERT INTO users (firstname, lastname, username, email, password) VALUES (?, ?, ?, ?, ?)",
+            [firstname, lastname, username, email, hash],
+            (err, result) => {
+              if (err) {
+                res.send({ err: err });
+              }
+              res.send({ message: "User created!" });
+            }
+          );
+        });
+      }
+    });
+  } else {
+    res.send("Please fill in all fields!");
+  }
 });
 
 app.get("/login", (req, res) => {

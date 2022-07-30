@@ -10,7 +10,7 @@ function App() {
     <Router>
       <Route path="/registration" exact render={(props) => <Registration />} />
       <Route path="/login" exact render={(props) => <Login />} />
-      <Route path="/" exact render={(props) => <Main />} />
+      <Route path="/" exact render={(props) => <Registration />} />
     </Router>
   );
 }

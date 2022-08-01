@@ -20,6 +20,7 @@ export default function Registration() {
       username: usernameReg,
       email: emailReg,
       password: passwordReg,
+      confPassword: confirmPasswordReg,
     }).then((response) => {
       if (response.data.message) {
         setStatus(response.data.message);
@@ -67,9 +68,16 @@ export default function Registration() {
           onChange={(e) => {
             setPasswordReg(e.target.value);
           }}
+        />
+        <label>Confirm password</label>
+        <input
+          type="password"
+          onChange={(e) => {
+            setConfirmPasswordReg(e.target.value);
+          }}
         /><br/>
         <button onClick={register}> Register </button>
-        <h1>{status}</h1>
+        <h3>{status}</h3>
         <p>Already have an account?</p>
         <a href="http://localhost:3000/login">Login</a>
       </div>

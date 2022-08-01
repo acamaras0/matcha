@@ -32,7 +32,7 @@ export default function Login() {
 
   return (
     <div className="App">
-    <h1>{loginStatus}</h1>
+      <h1>{loginStatus}</h1>
       <div className="login">
         <h1>Login</h1>
         <input
@@ -42,6 +42,7 @@ export default function Login() {
             setUsername(e.target.value);
           }}
         />
+        <br />
         <input
           type="password"
           placeholder="Password..."
@@ -49,10 +50,11 @@ export default function Login() {
             setPassword(e.target.value);
           }}
         />
+        <br />
         <button onClick={login}> Login </button>
       </div>
       <p>Are you new around here?</p>
-        <a href="http://localhost:3000/registration">Create an account!</a>
+      <a href="http://localhost:3000/registration">Create an account!</a>
     </div>
   );
 }

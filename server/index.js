@@ -1,5 +1,4 @@
 const express = require("express");
-//const mysql = require("mysql");
 const cors = require("cors");
 const db = require("./config/db");
 
@@ -9,6 +8,8 @@ const session = require("express-session");
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+
+const nodemailer = require("nodemailer");
 
 const app = express();
 app.use(express.json());
@@ -37,23 +38,43 @@ app.use(
 app.post("/register", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  const confPassword = req.body.confPassword;
   const firstname = req.body.firstName;
   const lastname = req.body.lastName;
   const email = req.body.email;
 
-  if (username && password && firstname && lastname && email) {
+  var transporter = nodemailer.createTransport({
+    host: "smtp.mailtrap.io",
+    port: 2525,
+    auth: {
+      user: "add349a94e8fe5",
+      pass: "161004143cb79c",
+    },
+  });
+  let mailOptions = {
+    from: "matcha.acamaras@proton.me",
+    to: email,
+    subject: "Account confirmation",
+    text: "Activate your account by clicking this link: http://localhost:3000/activate",
+  };
+
+  if (username && password && confPassword && firstname && lastname && email) {
     db.query("SELECT username, email FROM users;", (err, result) => {
       if (err) {
         res.send({ err: err });
       }
-      else if (
+      if (password !== confPassword) {
+        res.send({ message: "Passwords do not match" });
+      } else if (
         result.length > 0 &&
         result.some((user) => user.username === username)
       ) {
-        res.send({ message: "Username already exists" });
-      }
-      else if (result.length > 0 && result.some((user) => user.email === email)) {
-        res.send({ message: "Email already exists" });
+        res.send({ message: "Username already exists!" });
+      } else if (
+        result.length > 0 &&
+        result.some((user) => user.email === email)
+      ) {
+        res.send({ message: "Email already exists!" });
       } else {
         bcrypt.hash(password, saltRounds, function (err, hash) {
           if (err) {
@@ -66,7 +87,12 @@ app.post("/register", (req, res) => {
               if (err) {
                 res.send({ err: err });
               }
-              res.send({ message: "User created!" });
+              transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                  console.log({ err: error });
+                }
+              });
+              res.send({ message: "User created! Activate your account!" });
             }
           );
         });

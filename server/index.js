@@ -35,6 +35,28 @@ app.use(
   })
 );
 
+app.post("/completeprofile", (req, res) => {
+  const birthdate = req.body.birthdate;
+  const gender = req.body.gender;
+  const orientation = req.body.orientation;
+  const city = req.body.city;
+  const interests = req.body.interests;
+  const bio = req.body.bio;
+
+  if (birthdate || gender || orientation || city || interests || bio) {
+    db.query(
+      "INSERT INTO users (birthdate, gender, orientation, city, interests, bio) VALUES (?, ?, ?, ?, ?, ?)",
+      [birthdate, gender, orientation, city, interests, bio],
+      (err, result) => {
+        if (err) {
+          console.log({ err: err });
+        }
+        console.log({ message: "Let's get some babes!" });
+      }
+    );
+  }
+});
+
 app.post("/register", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;

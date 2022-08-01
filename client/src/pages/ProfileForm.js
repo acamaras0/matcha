@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import "../App.css";
+import Gender from "../components/Gender";
+import Tags from "../components/Tags";
+import Cities from "../components/Cities";
+import Orientation from "../components/Orientation";
 
 export default function ProfileForm() {
   const [birthdate, setBirthdate] = useState("");
   const [gender, setGender] = useState("");
   const [orientation, setOrientation] = useState("");
   const [city, setCity] = useState("");
-  const [interests, setInterests] = useState("");
+  const [interests, setInterests] = useState([]);
   const [bio, setBio] = useState("");
-  const [status, setStatus] = useState("");
 
   Axios.defaults.withCredentials = true;
 
   const profileFill = () => {
-    Axios.post("http://localhost:3001/profilefill", {
+    Axios.post("http://localhost:3001/completeprofile", {
       birthdate: birthdate,
       gender: gender,
       orientation: orientation,
@@ -23,16 +26,16 @@ export default function ProfileForm() {
       bio: bio,
     }).then((response) => {
       if (response.data.message) {
-        setStatus(response.data.message);
+        console.log(response.data.message);
       } else {
-        setStatus(response.data[0].username);
+        console.log(response.data.error);
       }
     });
   };
 
   return (
     <div className="App">
-      <h3>{status}</h3>
+      {/* <h3>{status}</h3> */}
       <div className="registration">
         <h1>Profile info</h1>
         <label>Birthdate</label>
@@ -42,54 +45,34 @@ export default function ProfileForm() {
             setBirthdate(e.target.value);
           }}
         />
+        <br />
         <label>Gender</label>
-        <select
+        <Gender
           onChange={(e) => {
             setGender(e.target.value);
           }}
-        >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
+        />
+        <br />
         <label>Sexual orientation</label>
-        <select
+        <Orientation
           onChange={(e) => {
             setOrientation(e.target.value);
           }}
-        >
-          <option value="hetero">Straight</option>
-          <option value="gay">Gay</option>
-          <option value="bi">Bisexual</option>
-        </select>
+        />
+        <br />
         <label>City</label>
-        <select
+        <Cities
           onChange={(e) => {
             setCity(e.target.value);
           }}
-        >
-          <option value="Helsinki">Helsinki</option>
-          <option value="Tampere">Tampere</option>
-          <option value="Jyväskylä">Jyväskylä</option>
-          <option value="Oulu">Oulu</option>
-          <option value="Turku">Turku</option>
-          <option value="Kuopio">Kuopio</option>
-          <option value="Kouvola">Kouvola</option>
-        </select>
+        />
+        <br />
         <label>Interests</label>
-        <select
-          multiple={true}
+        <Tags
           onChange={(e) => {
             setInterests(e.target.value);
           }}
-        >
-          <option value="traveling">Traveling</option>
-          <option value="cooking">Cooking</option>
-          <option value="gaming">Gaming</option>
-          <option value="reading">Reading</option>
-          <option value="movies">Movies</option>
-          <option value="music">Music</option>
-          <option value="sports">Sports</option>
-        </select>
+        />
         <label>Bio</label>
         <input
           type="text"
@@ -98,7 +81,7 @@ export default function ProfileForm() {
           }}
         />
         <br />
-        <button onClick={profileFill}> Submit </button>
+        <button onClick={profileFill}> Submit </button> <br />
         <a href="http://localhost:3000/login">Return</a>
       </div>
     </div>

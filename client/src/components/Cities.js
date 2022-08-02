@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import  Select  from  "react-select";
+import Select from "react-select";
 
 const options = [
   { label: "Espoo", value: "espoo" },
@@ -20,15 +20,16 @@ const options = [
   { label: "Vantaa", value: "vantaa" },
 ];
 
-const Cities = () => {
+const Cities = ({ setCity }) => {
   const [selected, setSelected] = useState([]);
-
   return (
     <div>
       <Select
         options={options}
-        value={selected}
-        onChange={setSelected}
+        onChange={(choice) => {
+          setSelected(choice.value);
+          setCity(choice.value);
+        }}
         labelledBy="Select"
       />
     </div>

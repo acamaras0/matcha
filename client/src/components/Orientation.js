@@ -1,25 +1,27 @@
 import React, { useState } from "react";
-import  Select  from  "react-select";
+import Select from "react-select";
 
 const options = [
-    { label: "Heterosexual", value: "heterosexual" },
-    { label: "Homosexual", value: "homosexual" },
-    { label: "Bisexual", value: "bisexual" },
-  ];
+  { label: "Heterosexual", value: "heterosexual" },
+  { label: "Homosexual", value: "homosexual" },
+  { label: "Bisexual", value: "bisexual" },
+];
 
-  const Orientation = () => {
-    const [selected, setSelected] = useState([]);
-  
-    return (
-      <div>
-        <Select
-          options={options}
-          value={selected}
-          onChange={setSelected}
-          labelledBy="Select"
-        />
-      </div>
-    );
-  };
-  
-  export default Orientation;
+const Orientation = ({setOrientation}) => {
+  const [selected, setSelected] = useState([]);
+
+  return (
+    <div>
+      <Select
+        options={options}
+        onChange={(choice) => {
+          setSelected(choice.value);
+          setOrientation(choice.value);
+        }}
+        labelledBy="Select"
+      />
+    </div>
+  );
+};
+
+export default Orientation;

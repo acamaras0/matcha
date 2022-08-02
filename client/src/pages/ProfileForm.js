@@ -32,7 +32,6 @@ export default function ProfileForm() {
       }
     });
   };
-
   return (
     <div className="App">
       {/* <h3>{status}</h3> */}
@@ -47,32 +46,17 @@ export default function ProfileForm() {
         />
         <br />
         <label>Gender</label>
-        <Gender
-          onChange={(e) => {
-            setGender(e.target.value);
-          }}
-        />
+        <Gender setGender={setGender} />
         <br />
         <label>Sexual orientation</label>
-        <Orientation
-          onChange={(e) => {
-            setOrientation(e.target.value);
-          }}
-        />
+        <Orientation setOrientation={setOrientation} />
         <br />
         <label>City</label>
-        <Cities
-          onChange={(e) => {
-            setCity(e.target.value);
-          }}
-        />
+        <Cities setCity={setCity} />
         <br />
         <label>Interests</label>
-        <Tags
-          onChange={(e) => {
-            setInterests(e.target.value);
-          }}
-        />
+        <Tags setInterests={setInterests} />
+        <br />
         <label>Bio</label>
         <input
           type="text"

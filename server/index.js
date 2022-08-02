@@ -1,11 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./config/db");
-
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
 
+let user
+const session = require("express-session");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
@@ -34,28 +34,6 @@ app.use(
     },
   })
 );
-
-app.post("/completeprofile", (req, res) => {
-  const birthdate = req.body.birthdate;
-  const gender = req.body.gender;
-  const orientation = req.body.orientation;
-  const city = req.body.city;
-  const interests = req.body.interests;
-  const bio = req.body.bio;
-
-  if (birthdate || gender || orientation || city || interests || bio) {
-    db.query(
-      "INSERT INTO users (birthdate, gender, orientation, city, interests, bio) VALUES (?, ?, ?, ?, ?, ?)",
-      [birthdate, gender, orientation, city, interests, bio],
-      (err, result) => {
-        if (err) {
-          console.log({ err: err });
-        }
-        console.log({ message: "Let's get some babes!" });
-      }
-    );
-  }
-});
 
 app.post("/register", (req, res) => {
   const username = req.body.username;
@@ -149,7 +127,8 @@ app.post("/login", (req, res) => {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if (response) {
             req.session.user = result;
-            console.log(req.session.user);
+            user = result[0].id;
+            console.log("this is user", user)
             res.send(result);
           } else {
             res.send({ message: "Wrong username/password combination!" });
@@ -160,6 +139,30 @@ app.post("/login", (req, res) => {
       }
     }
   );
+});
+
+app.post("/completeprofile", (req, res) => {
+  const birthdate = req.body.birthdate;
+  const gender = req.body.gender;
+  const orientation = req.body.orientation;
+  const city = req.body.city;
+  const interests = req.body.interests;
+  const bio = req.body.bio;
+
+  if (birthdate || gender || orientation || city || interests || bio) {
+    db.query(
+      "UPDATE users SET birthdate = ?, gender = ?, orientation = ?, city = ?, interests = ?, bio = ? WHERE id = '" +
+      db.escape(user) +
+      "'",
+      [birthdate, gender, orientation, city, interests, bio],
+      (err, result) => {
+        if (err) {
+          console.log({ err: err });
+        }
+        console.log({ message: "Let's get some babes!" });
+      }
+    );
+  }
 });
 
 app.listen(3001, () => {

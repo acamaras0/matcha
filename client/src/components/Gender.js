@@ -12,15 +12,17 @@ const options = [
     { label: "Etc.", value: "etc"},
   ];
 
-  const Gender = () => {
+  const Gender = ({setGender}) => {
     const [selected, setSelected] = useState([]);
   
     return (
       <div>
         <Select
           options={options}
-          value={selected}
-          onChange={setSelected}
+          onChange={(choice) => {
+            setSelected(choice.value);
+            setGender(choice.value);
+          }}
           labelledBy="Select"
         />
       </div>

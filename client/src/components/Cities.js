@@ -22,6 +22,7 @@ const options = [
 
 const Cities = ({ setCity }) => {
   const [selected, setSelected] = useState([]);
+  console.log(selected);
   return (
     <div>
       <Select

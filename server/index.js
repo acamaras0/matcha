@@ -35,6 +35,30 @@ app.use(
   })
 );
 
+app.post("/completeprofile", (req, res) => {
+  const birthdate = req.body.birthdate;
+  const gender = req.body.gender;
+  const orientation = req.body.orientation;
+  const city = req.body.city;
+  const interests = req.body.interests;
+  const bio = req.body.bio;
+
+  if (birthdate || gender || orientation || city || interests || bio) {
+    db.query(
+      "UPDATE users SET birthdate = ?, gender = ?, orientation = ?, city = ?, interests = ?, bio = ? WHERE id = '" +
+      db.escape(user) +
+      "'",
+      [birthdate, gender, orientation, city, interests, bio],
+      (err, result) => {
+        if (err) {
+          console.log({ err: err });
+        }
+        console.log({ message: "Let's get some babes!" });
+      }
+    );
+  }
+});
+
 app.post("/register", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -140,31 +164,6 @@ app.post("/login", (req, res) => {
     }
   );
 });
-
-app.post("/completeprofile", (req, res) => {
-  const birthdate = req.body.birthdate;
-  const gender = req.body.gender;
-  const orientation = req.body.orientation;
-  const city = req.body.city;
-  const interests = req.body.interests;
-  const bio = req.body.bio;
-
-  if (birthdate || gender || orientation || city || interests || bio) {
-    db.query(
-      "UPDATE users SET birthdate = ?, gender = ?, orientation = ?, city = ?, interests = ?, bio = ? WHERE id = '" +
-      db.escape(user) +
-      "'",
-      [birthdate, gender, orientation, city, interests, bio],
-      (err, result) => {
-        if (err) {
-          console.log({ err: err });
-        }
-        console.log({ message: "Let's get some babes!" });
-      }
-    );
-  }
-});
-
 app.listen(3001, () => {
   console.log("running server");
 });

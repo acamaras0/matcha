@@ -14,7 +14,7 @@ const options = [
 
   const Gender = ({setGender}) => {
     const [selected, setSelected] = useState([]);
-  
+    console.log(selected);
     return (
       <div>
         <Select

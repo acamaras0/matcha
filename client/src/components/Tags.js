@@ -18,6 +18,7 @@ const options = [
 
 const Tags = ({setInterests}) => {
   const [selected, setSelected] = useState([]);
+  console.log(selected);
 
   return (
     <div>

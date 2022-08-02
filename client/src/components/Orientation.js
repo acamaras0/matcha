@@ -9,6 +9,7 @@ const options = [
 
 const Orientation = ({setOrientation}) => {
   const [selected, setSelected] = useState([]);
+  console.log(selected);
 
   return (
     <div>

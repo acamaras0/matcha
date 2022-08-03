@@ -5,8 +5,8 @@ import "../App.css";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const [loginStatus, setLoginStatus] = useState("");
+
   Axios.defaults.withCredentials = true;
 
   const login = () => {
@@ -31,30 +31,40 @@ export default function Login() {
   }, []);
 
   return (
-    <div className="App">
-      <h1>{loginStatus}</h1>
-      <div className="login">
-        <h1>Login</h1>
-        <input
-          type="text"
-          placeholder="Username..."
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
-        <br />
-        <input
-          type="password"
-          placeholder="Password..."
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        <br />
-        <button onClick={login}> Login </button>
-      </div>
-      <p>Are you new around here?</p>
-      <a href="http://localhost:3000/registration">Create an account!</a>
+    <div className="Auth-form-container">
+      <form className="Auth-form">
+        <div className="Auth-form-content">
+          <h1>{loginStatus}</h1>
+          <h3 className="Auth-form-title">Sign in</h3>
+          <div className="form-group mt-3">
+            <input
+              className="form-control mt-1"
+              type="text"
+              placeholder="Username..."
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
+          </div>
+          <br />
+          <div className="form-group mt-3">
+            <input
+              className="form-control mt-1"
+              type="password"
+              placeholder="Password..."
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+          </div>
+          <br />
+          <button className="btn btn-primary" onClick={login}> Login </button>
+        </div>
+        <p className="forgot-password text-right mt-2">
+          Are you new around here?
+          <a href="http://localhost:3000/registration">Create an account!</a>
+        </p>
+      </form>
     </div>
   );
 }

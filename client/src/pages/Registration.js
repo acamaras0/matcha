@@ -31,56 +31,83 @@ export default function Registration() {
   };
 
   return (
-    <div className="App">
-      <div className="registration">
-        <h1>Registration</h1>
-        <label>First Name</label>
-        <input
-          type="text"
-          onChange={(e) => {
-            setFirstNameReg(e.target.value);
-          }}
-        />
-        <label>Last Name</label>
-        <input
-          type="text"
-          onChange={(e) => {
-            setLastNameReg(e.target.value);
-          }}
-        />
-        <label>Username</label>
-        <input
-          type="text"
-          onChange={(e) => {
-            setUsernameReg(e.target.value);
-          }}
-        />
-        <label>Email address</label>
-        <input
-          type="email"
-          onChange={(e) => {
-            setEmailReg(e.target.value);
-          }}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          onChange={(e) => {
-            setPasswordReg(e.target.value);
-          }}
-        />
-        <label>Confirm password</label>
-        <input
-          type="password"
-          onChange={(e) => {
-            setConfirmPasswordReg(e.target.value);
-          }}
-        /><br/>
-        <button onClick={register}> Register </button>
-        <h3>{status}</h3>
-        <p>Already have an account?</p>
-        <a href="http://localhost:3000/login">Login</a>
-      </div>
+    <div className="Auth-form-container">
+      <form className="Auth-form">
+        <div className="Auth-form-content">
+          <h3 className="Auth-form-title">Sign up</h3>
+          <div className="form-group mt-3">
+            <label>First Name</label>
+            <input
+              className="form-control mt-1"
+              type="text"
+              onChange={(e) => {
+                setFirstNameReg(e.target.value);
+              }}
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Last Name</label>
+            <input
+              className="form-control mt-1"
+              type="text"
+              onChange={(e) => {
+                setLastNameReg(e.target.value);
+              }}
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Username</label>
+            <input
+              className="form-control mt-1"
+              type="text"
+              onChange={(e) => {
+                setUsernameReg(e.target.value);
+              }}
+            />
+            <div className="form-group mt-3"></div>
+            <label>Email address</label>
+            <input
+              className="form-control mt-1"
+              type="email"
+              onChange={(e) => {
+                setEmailReg(e.target.value);
+              }}
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Password</label>
+            <input
+              className="form-control mt-1"
+              type="password"
+              onChange={(e) => {
+                setPasswordReg(e.target.value);
+              }}
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Confirm password</label>
+            <input
+              className="form-control mt-1"
+              type="password"
+              onChange={(e) => {
+                setConfirmPasswordReg(e.target.value);
+              }}
+            />
+          </div>
+          <br />
+          <div className="d-grid gap-2 mt-3">
+            <button className="btn btn-primary" onClick={register}>
+              {" "}
+              Register{" "}
+            </button>
+          </div>
+          <h3>{status}</h3>
+          <p className="forgot-password text-right mt-2">
+            Already have an account?
+            <a href="http://localhost:3000/login">Login</a>
+          </p>
+        </div>
+      </form>
     </div>
   );
 }

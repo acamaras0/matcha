@@ -13,7 +13,8 @@ export default function Registration() {
 
   Axios.defaults.withCredentials = true;
 
-  const register = () => {
+  const register = (e) => {
+    e.preventDefault();
     Axios.post("http://localhost:3001/register", {
       firstName: firstNameReg,
       lastName: lastNameReg,
@@ -32,7 +33,7 @@ export default function Registration() {
 
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" onSubmit={register}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Sign up</h3>
           <div className="form-group mt-3">
@@ -96,7 +97,7 @@ export default function Registration() {
           </div>
           <br />
           <div className="d-grid gap-2 mt-3">
-            <button className="btn btn-primary" onClick={register}>
+            <button className="btn btn-primary">
               {" "}
               Register{" "}
             </button>

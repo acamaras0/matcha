@@ -9,7 +9,8 @@ export default function Login() {
 
   Axios.defaults.withCredentials = true;
 
-  const login = () => {
+  const login = (e) => {
+    e.preventDefault();
     Axios.post("http://localhost:3001/login", {
       username: username,
       password: password,
@@ -21,18 +22,18 @@ export default function Login() {
       }
     });
   };
-
   useEffect(() => {
     Axios.get("http://localhost:3001/login").then((response) => {
       if (response.data.loggedIn === true) {
         setLoginStatus(response.data.user[0].username);
+        console.log('this is response data',response.data.user[0].username);
       }
     });
   }, []);
 
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" onSubmit={login}>
         <div className="Auth-form-content">
           <h1>{loginStatus}</h1>
           <h3 className="Auth-form-title">Sign in</h3>
@@ -58,7 +59,7 @@ export default function Login() {
             />
           </div>
           <br />
-          <button className="btn btn-primary" onClick={login}> Login </button>
+          <button className="btn btn-primary"> Login </button>
         </div>
         <p className="forgot-password text-right mt-2">
           Are you new around here?

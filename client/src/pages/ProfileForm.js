@@ -17,7 +17,8 @@ export default function ProfileForm() {
 
   Axios.defaults.withCredentials = true;
 
-  const profileFill = () => {
+  const profileFill = (e) => {
+    e.preventDefault();
     Axios.post("http://localhost:3001/completeprofile", {
       birthdate: birthdate,
       gender: gender,
@@ -35,7 +36,7 @@ export default function ProfileForm() {
   };
   return (
     <div className="Auth-form-container">
-      <form className="Auth-form">
+      <form className="Auth-form" onSubmit={profileFill}>
         <div className="Auth-form-content">
           <h3 className="Auth-form-title">Complete profile</h3>
           <div className="form-group mt-3">
@@ -74,7 +75,7 @@ export default function ProfileForm() {
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-              <button className="btn btn-primary" onClick={profileFill}>
+              <button className="btn btn-primary">
                 Submit
               </button>
               <p className="forgot-password text-right mt-2">

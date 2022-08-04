@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-const session = require("express-session");
 const cors = require("cors");
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const userRouter = require("./controllers/users");
@@ -27,6 +27,6 @@ app.use(
     },
   })
 );
-app.use(userRouter);
+app.use("/", userRouter);
 
 module.exports = app;

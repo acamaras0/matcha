@@ -93,7 +93,7 @@ userRouter.post("/login", (req, res) => {
           if (response) {
             req.session.user = result;
             userId = result[0].id;
-            console.log("this is user", user);
+            console.log("this is user", userId);
             res.send(result);
           } else {
             res.send({ message: "Wrong username/password combination!" });
@@ -110,12 +110,13 @@ userRouter.post("/completeprofile", (req, res) => {
   const { birthdate, gender, orientation, city, interests, bio } = req.body;
 
   if (
-  (birthdate.length > 0 ||
-    gender.length > 0 ||
-    orientation.length > 0 ||
-    city.length > 0 ||
-    interests.length > 0 ||
-    bio.length > 0) && userId !== null
+    (birthdate.length > 0 ||
+      gender.length > 0 ||
+      orientation.length > 0 ||
+      city.length > 0 ||
+      interests.length > 0 ||
+      bio.length > 0) &&
+    userId !== null
   ) {
     db.query(
       "UPDATE users SET birthdate = ?, gender = ?, orientation = ?, city = ?, interests = ?, bio = ? WHERE id = '" +
@@ -131,6 +132,21 @@ userRouter.post("/completeprofile", (req, res) => {
     );
   } else {
     res.send({ message: "Fill in the forms!" });
+  }
+});
+
+userRouter.get("/logout", (req, res) => {
+  if (req.session) {
+    console.log("here"),
+    req.session.destroy((err) => {
+      if (err) {
+        res.status(400).send("Unable to log out");
+      } else {
+        res.send("Logout successful");
+      }
+    });
+  } else {
+    res.end();
   }
 });
 

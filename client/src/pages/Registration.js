@@ -105,8 +105,8 @@ export default function Registration() {
           <h3>{status}</h3>
           <p className="forgot-password text-right mt-2">
             Already have an account?
-            <a href="http://localhost:3000/login">Login</a>
           </p>
+            <a href="http://localhost:3000/login">Login</a>
         </div>
       </form>
     </div>

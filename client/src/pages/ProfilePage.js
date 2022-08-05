@@ -9,7 +9,7 @@ export default function ProfilePage() {
           if (response.data.message) {
             setLoginStatus(response.data.message);
           } else {
-            setLoginStatus("");
+            setLoginStatus(response.data.message);
           }
         });
       }

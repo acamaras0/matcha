@@ -37,6 +37,10 @@ export default function Login() {
         <div className="Auth-form-content">
           <h1>{loginStatus}</h1>
           <h3 className="Auth-form-title">Sign in</h3>
+          <p className="forgot-password text-right mt-2">
+          Are you new around here?
+        </p>
+          <a href="http://localhost:3000/registration">Create an account!</a>
           <div className="form-group mt-3">
             <input
               className="form-control mt-1"
@@ -60,10 +64,10 @@ export default function Login() {
           </div>
           <br />
           <button className="btn btn-primary"> Login </button>
-        </div>
+        </div><br/>
         <p className="forgot-password text-right mt-2">
-          Are you new around here?
-          <a href="http://localhost:3000/registration">Create an account!</a>
+          Forgot
+          <a href="http://localhost:3000/forgotpassword"> password?</a>
         </p>
       </form>
     </div>

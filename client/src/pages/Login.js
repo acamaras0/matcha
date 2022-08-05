@@ -6,6 +6,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
+  const [message, setMessage] = useState("");
 
   Axios.defaults.withCredentials = true;
 
@@ -15,8 +16,8 @@ export default function Login() {
       username: username,
       password: password,
     }).then((response) => {
-      if (response.data.message) {
-        setLoginStatus(response.data.message);
+      if (response.data.error) {
+        setMessage(response.data.error);
       } else {
         setLoginStatus(response.data[0].username);
       }
@@ -34,8 +35,8 @@ export default function Login() {
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={login}>
+      <h1>{loginStatus}</h1>
         <div className="Auth-form-content">
-          <h1>{loginStatus}</h1>
           <h3 className="Auth-form-title">Sign in</h3>
           <p className="forgot-password text-right mt-2">
           Are you new around here?
@@ -65,6 +66,7 @@ export default function Login() {
           <br />
           <button className="btn btn-primary"> Login </button>
         </div><br/>
+        <p className="error">{message}</p>
         <p className="forgot-password text-right mt-2">
           Forgot
           <a href="http://localhost:3000/forgotpassword"> password?</a>

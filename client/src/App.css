@@ -53,3 +53,15 @@ label {
   font-weight: 600;
   color: rgb(34, 34, 34);
 }
+
+p.message {
+  text-align: center;
+  font-size: 14px;
+  color: forestgreen;
+}
+
+p.error {
+  text-align: center;
+  font-size: 14px;
+  color: red;
+}

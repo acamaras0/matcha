@@ -10,6 +10,7 @@ export default function Registration() {
   const [passwordReg, setPasswordReg] = useState("");
   const [confirmPasswordReg, setConfirmPasswordReg] = useState("");
   const [status, setStatus] = useState("");
+  const [message, setMessage] = useState("");
 
   Axios.defaults.withCredentials = true;
 
@@ -23,10 +24,10 @@ export default function Registration() {
       password: passwordReg,
       confPassword: confirmPasswordReg,
     }).then((response) => {
-      if (response.data.message) {
+      if (response.data.error) {
+        setMessage(response.data.error);
+      } else if (response.data.message) {
         setStatus(response.data.message);
-      } else {
-        setStatus(response.data[0].username);
       }
     });
   };
@@ -102,7 +103,8 @@ export default function Registration() {
               Register{" "}
             </button>
           </div>
-          <h3>{status}</h3>
+          <p className="message">{status}</p>
+          <p className="error">{message}</p>
           <p className="forgot-password text-right mt-2">
             Already have an account?
           </p>

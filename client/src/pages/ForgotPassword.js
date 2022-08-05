@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Axios from "axios";
 import "../App.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("");
+  const [message, setMessage] = useState("");
 
   Axios.defaults.withCredentials = true;
 
@@ -16,24 +17,15 @@ export default function Login() {
       if (response.data.message) {
         setStatus(response.data.message);
       } else {
-        setStatus(response.data[0].email);
+        setMessage(response.data.error);
       }
     });
   };
-  useEffect(() => {
-    Axios.get("http://localhost:3001/forgotpassword").then((response) => {
-      if (response.data.loggedIn === true) {
-        setStatus(response.data.user[0].email);
-        console.log('this is response data',response.data.user[0].email);
-      }
-    });
-  }, []);
 
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={forgotPassword}>
         <div className="Auth-form-content">
-          <h1>{status}</h1>
           <h3 className="Auth-form-title">Password recovery</h3>
           <br />
           <div className="form-group mt-3">
@@ -48,9 +40,12 @@ export default function Login() {
           </div>
           <br />
           <button className="btn btn-primary"> Submit </button>
-        </div><br/>
+        </div>
+        <br />
+        <p className="message">{status}</p>
+        <p className="error">{message}</p>
         <p className="forgot-password text-right mt-2">
-          <a href="http://localhost:3000/forgotPassword"> Return to login</a>
+          <a href="http://localhost:3000/login"> Return to login</a>
         </p>
       </form>
     </div>

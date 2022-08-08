@@ -2,14 +2,14 @@
   background-color: white;
 }
 
-.registration, .login {
+/* .registration, .login {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid #ccc;
   border-radius: 10px;
-}
+} */
 
 /* input {
   width: 250px;
@@ -29,7 +29,7 @@
 .Auth-form {
   width: 420px;
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
-  padding-top: 30px;
+  padding-top: 40px;
   padding-bottom: 20px;
   border-radius: 8px;
   background-color: white;

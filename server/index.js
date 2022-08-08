@@ -3,5 +3,5 @@ const http = require("http");
 const server = http.createServer(app);
 
 server.listen(3001, () => {
-  console.log("running server 3001");
+  console.log("🌎 ---> PORT 3001");
 });

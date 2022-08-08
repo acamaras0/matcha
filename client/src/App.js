@@ -1,4 +1,6 @@
 import React from "react";
+// import { useEffect, useState} from "react";
+// import Axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
@@ -8,6 +10,16 @@ import ForgotPassword from "./pages/ForgotPassword";
 
 
 function App() {
+
+  // const [loginStatus, setLoginStatus] = useState("");
+  //   useEffect(() => {
+  //   Axios.get("http://localhost:3001/login").then((response) => {
+  //     if (response.data.loggedIn === true) {
+  //       setLoginStatus(response.data.user[0].username);
+  //     }
+  //   });
+  // }, []);
+
   return (
     <Router>
       <Route path="/registration" exact render={(props) => <Registration />} />

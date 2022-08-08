@@ -170,7 +170,7 @@ userRouter.post("/forgotpassword", (req, res) => {
 userRouter.get("/logout", (req, res) => {
   if (req.session) {
     console.log("logout"),
-    res.clearCookie("userId", {path:"/"});
+    res.clearCookie("userId");
       req.session.destroy((err) => {
         if (err) {
           res.status(400).send({ error: "Unable to log out" });

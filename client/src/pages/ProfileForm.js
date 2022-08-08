@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Redirect from "react-router-dom/Redirect";
 import Axios from "axios";
 import Gender from "../components/Gender";
 import Tags from "../components/Tags";
@@ -14,6 +15,7 @@ export default function ProfileForm() {
   const [interests, setInterests] = useState([]);
   const [bio, setBio] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   Axios.defaults.withCredentials = true;
 
@@ -30,10 +32,13 @@ export default function ProfileForm() {
       if (response.data.message) {
         setMessage(response.data.message);
       } else {
-        setMessage(response.data.error);
+        setError(response.data.error);
       }
     });
+    
   };
+  const f = (e) => {
+    return <Redirect to="/profile" />; }
   return (
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={profileFill}>
@@ -75,15 +80,14 @@ export default function ProfileForm() {
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-              <button className="btn btn-primary">
-                Submit
-              </button>
+              <button className="btn btn-primary" onClick={f}>Submit</button>
               <p className="forgot-password text-right mt-2">
                 <a href="http://localhost:3000/login">Skip</a>
               </p>
             </div>
           </div>
-          <p className="forgot-password text-right mt-2">{message}</p>
+          <p className="message">{message}</p>
+          <p className="error">{error}</p>
         </div>
       </form>
     </div>

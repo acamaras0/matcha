@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Redirect from "react-router-dom/Redirect";
+import {Redirect} from "react-router-dom";
 import Axios from "axios";
 import "../App.css";
+import Nav from "../components/Nav";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -37,6 +38,8 @@ export default function Login() {
     return <Redirect to="/completeprofile" />;  
   }
   return (
+    <>
+    <Nav/>
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={login}>
         <h1>{loginStatus}</h1>
@@ -68,7 +71,7 @@ export default function Login() {
             />
           </div>
           <br />
-          <button className="btn btn-primary"> Login </button>
+          <button className="btn btn-outline-warning"> Login </button>
         </div>
         <br />
         <p className="error">{message}</p>
@@ -78,6 +81,7 @@ export default function Login() {
         </p>
       </form>
     </div>
+    </>
   );
 }
 

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import Redirect from "react-router-dom/Redirect";
+import {Redirect} from "react-router-dom";
 import Axios from "axios";
 import Gender from "../components/Gender";
 import Tags from "../components/Tags";
 import Cities from "../components/Cities";
 import Orientation from "../components/Orientation";
+import NavOut from "../components/NavOut";
 import "../App.css";
 
 export default function ProfileForm() {
@@ -37,9 +38,10 @@ export default function ProfileForm() {
     });
     
   };
-  const f = (e) => {
+  const f = () => {
     return <Redirect to="/profile" />; }
   return (
+    <div><NavOut />
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={profileFill}>
         <div className="Auth-form-content">
@@ -80,7 +82,7 @@ export default function ProfileForm() {
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-              <button className="btn btn-primary" onClick={f}>Submit</button>
+              <button className="btn btn-outline-warning" onClick={f}>Submit</button>
               <p className="forgot-password text-right mt-2">
                 <a href="http://localhost:3000/login">Skip</a>
               </p>
@@ -90,6 +92,7 @@ export default function ProfileForm() {
           <p className="error">{error}</p>
         </div>
       </form>
+    </div>
     </div>
   );
 }

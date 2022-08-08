@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Nav from "../components/Nav";
 import Axios from "axios";
 import "../App.css";
 
@@ -23,6 +24,8 @@ export default function Login() {
   };
 
   return (
+    <div>
+      <Nav />
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={forgotPassword}>
         <div className="Auth-form-content">
@@ -39,7 +42,7 @@ export default function Login() {
             />
           </div>
           <br />
-          <button className="btn btn-primary"> Submit </button>
+          <button className="btn btn-outline-warning"> Submit </button>
         </div>
         <br />
         <p className="message">{status}</p>
@@ -48,6 +51,7 @@ export default function Login() {
           <a href="http://localhost:3000/login"> Return to login</a>
         </p>
       </form>
+    </div>
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default function ProfilePage() {
     <div>
       <p>{status}</p>
       <p className="error">{message}</p>
-      <button className="btn btn-primary" onClick={logout}>Logout</button>
+      <button className="btn btn-outline-warning" onClick={logout}>Logout</button>
     </div>
   );
 }

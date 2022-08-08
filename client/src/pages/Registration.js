@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import Axios from "axios";
+import Nav from "../components/Nav";
 import "../App.css";
 
 export default function Registration() {
@@ -32,85 +34,88 @@ export default function Registration() {
     });
   };
 
+  if (status) {
+    return <Redirect to="/login" />;
+  }
   return (
-    <div className="Auth-form-container">
-      <form className="Auth-form" onSubmit={register}>
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign up</h3>
-          <div className="form-group mt-3">
-            <label>First Name</label>
-            <input
-              className="form-control mt-1"
-              type="text"
-              onChange={(e) => {
-                setFirstNameReg(e.target.value);
-              }}
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Last Name</label>
-            <input
-              className="form-control mt-1"
-              type="text"
-              onChange={(e) => {
-                setLastNameReg(e.target.value);
-              }}
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Username</label>
-            <input
-              className="form-control mt-1"
-              type="text"
-              onChange={(e) => {
-                setUsernameReg(e.target.value);
-              }}
-            />
-            <div className="form-group mt-3"></div>
-            <label>Email address</label>
-            <input
-              className="form-control mt-1"
-              type="email"
-              onChange={(e) => {
-                setEmailReg(e.target.value);
-              }}
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Password</label>
-            <input
-              className="form-control mt-1"
-              type="password"
-              onChange={(e) => {
-                setPasswordReg(e.target.value);
-              }}
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>Confirm password</label>
-            <input
-              className="form-control mt-1"
-              type="password"
-              onChange={(e) => {
-                setConfirmPasswordReg(e.target.value);
-              }}
-            />
-          </div>
-          <br />
-          <div className="d-grid gap-2 mt-3">
-            <button className="btn btn-primary">
-              {" "}
-              Register{" "}
-            </button>
-          </div>
-          <p className="message">{status}</p>
-          <p className="error">{message}</p>
-          <p className="forgot-password text-right mt-2">
-            Already have an account?
-          </p>
+    <div>
+      <Nav />
+      <div className="Auth-form-container">
+        <form className="Auth-form" onSubmit={register}>
+          <div className="Auth-form-content">
+            <h3 className="Auth-form-title">Sign up</h3>
+            <div className="form-group mt-3">
+              <label>First Name</label>
+              <input
+                className="form-control mt-1"
+                type="text"
+                onChange={(e) => {
+                  setFirstNameReg(e.target.value);
+                }}
+              />
+            </div>
+            <div className="form-group mt-3">
+              <label>Last Name</label>
+              <input
+                className="form-control mt-1"
+                type="text"
+                onChange={(e) => {
+                  setLastNameReg(e.target.value);
+                }}
+              />
+            </div>
+            <div className="form-group mt-3">
+              <label>Username</label>
+              <input
+                className="form-control mt-1"
+                type="text"
+                onChange={(e) => {
+                  setUsernameReg(e.target.value);
+                }}
+              />
+              <div className="form-group mt-3"></div>
+              <label>Email address</label>
+              <input
+                className="form-control mt-1"
+                type="email"
+                onChange={(e) => {
+                  setEmailReg(e.target.value);
+                }}
+              />
+            </div>
+            <div className="form-group mt-3">
+              <label>Password</label>
+              <input
+                className="form-control mt-1"
+                type="password"
+                onChange={(e) => {
+                  setPasswordReg(e.target.value);
+                }}
+              />
+            </div>
+            <div className="form-group mt-3">
+              <label>Confirm password</label>
+              <input
+                className="form-control mt-1"
+                type="password"
+                onChange={(e) => {
+                  setConfirmPasswordReg(e.target.value);
+                }}
+              />
+            </div>
+            <br />
+            <div className="d-grid gap-2 mt-3">
+              <button className="btn btn-outline-warning"> Register </button>
+            </div>
+            <p className="message">{status}</p>
+            <p className="error">{message}</p>
+            <p className="forgot-password text-right mt-2">
+              Already have an account?
+            </p>
             <a href="http://localhost:3000/login">Login</a>
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

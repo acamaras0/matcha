@@ -1,11 +1,30 @@
 import Users from "../models/UserModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "add349a94e8fe5",
+    pass: "161004143cb79c",
+  },
+});
 
 export const getUsers = async (req, res) => {
   try {
     const users = await Users.findAll({
-      attributes: ["id", "username", "email"],
+      attributes: [
+        "id",
+        "username",
+        "email",
+        "birthdate",
+        "gender",
+        "orientation",
+        "city",
+        "online",
+      ],
     });
     res.json(users);
   } catch (error) {
@@ -16,21 +35,70 @@ export const getUsers = async (req, res) => {
 export const Register = async (req, res) => {
   const { username, password, confPassword, firstName, lastName, email } =
     req.body;
-  if (password !== confPassword)
-    return res.status(400).json({ msg: "Passwords do not match" });
-  const salt = await bcrypt.genSalt();
-  const hashPassword = await bcrypt.hash(password, salt);
-  try {
-    await Users.create({
-      username: username,
-      firstname: firstName,
-      lastname: lastName,
-      email: email,
-      password: hashPassword,
+  const mailOptions = {
+    from: "matcha@gmail.com",
+    to: email,
+    subject: "Account activation",
+    text:
+      "Activate your account by clicking the following link: http://localhost:3000/activate/" +
+      username,
+  };
+  const user = await Users.findOne({
+    where: {
+      username,
+    },
+  });
+  const userMail = await Users.findOne({
+    where: {
+      email,
+    },
+  });
+  if (
+    !(username && password && confPassword && firstName && lastName && email)
+  ) {
+    return res.status(400).json({
+      msg: "All fields are required",
     });
-    res.json({ msg: "Success! User created" });
-  } catch (error) {
-    console.log(error);
+  } else if (user) {
+    res.status(400).json({
+      msg: "Username already exists",
+    });
+  } else if (username < 3 || username > 20) {
+    res.status(400).json({
+      msg: "Username must be between 3 and 20 characters",
+    });
+  } else if (userMail) {
+    res.status(400).json({
+      msg: "Email already exists",
+    });
+  } else if (password < 8 || password > 20) {
+    return res.status(400).json({
+      msg: "Passwords must be between 8 and 20 characters long",
+    });
+  } else if (password !== confPassword)
+    return res.status(400).json({ msg: "Passwords do not match" });
+  else {
+    const salt = await bcrypt.genSalt();
+    const hashPassword = await bcrypt.hash(password, salt);
+    try {
+      await Users.create({
+        username: username,
+        firstname: firstName,
+        lastname: lastName,
+        email: email,
+        password: hashPassword,
+      });
+      res.json({ msg: "Success! User created" });
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
@@ -73,41 +141,56 @@ export const Login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.json({ accessToken });
+    await Users.update(
+      {
+        online: 1,
+      },
+      {
+        where: {
+          id: userId,
+        },
+      }
+    );
   } catch (error) {
     res.status(404).json({ msg: "User not found" });
   }
 };
 
 export const ProfileFill = async (req, res) => {
-    const { birthdate, gender, orientation, city, interests, bio } = req.body;
-    const refreshToken = req.cookies.refreshToken;
-    const user = await Users.findAll({
-      where: {
-        refresh_token: refreshToken,
-      },
+  const { birthdate, gender, orientation, city, interests, bio } = req.body;
+  if (!(birthdate && gender && orientation && city && interests && bio)) {
+    return res.status(400).json({
+      message: "All fields are required",
     });
-    const userId = user[0].id;
-    try {
-      await Users.update(
-        {
-          birthdate: birthdate,
-          gender: gender,
-          orientation: orientation,
-          city: city,
-          interests: interests,
-          bio: bio,
+  }
+  const refreshToken = req.cookies.refreshToken;
+  const user = await Users.findAll({
+    where: {
+      refresh_token: refreshToken,
+    },
+  });
+  const userId = user[0].id;
+  try {
+    await Users.update(
+      {
+        birthdate: birthdate,
+        gender: gender,
+        orientation: orientation,
+        city: city,
+        interests: interests,
+        bio: bio,
+      },
+      {
+        where: {
+          id: userId,
         },
-        {
-          where: {
-            id: userId,
-          },
-        }
-      );
-      res.json({ msg: "Success! Profile filled!" });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      }
+    );
+    res.json({ msg: "Success! Profile filled!" });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const Logout = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
@@ -127,7 +210,16 @@ export const Logout = async (req, res) => {
       },
     }
   );
+  await Users.update(
+    {
+      online: 0,
+    },
+    {
+      where: {
+        id: userId,
+      },
+    }
+  );
   res.clearCookie("refreshToken");
   return res.sendStatus(200);
 };
-

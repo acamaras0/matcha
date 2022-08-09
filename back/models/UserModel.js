@@ -47,6 +47,10 @@ const Users = db.define('users',{
     bio:{
         type: DataTypes.STRING,
     },
+    online:{
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+    },
         refresh_token:{
         type: DataTypes.TEXT
     }

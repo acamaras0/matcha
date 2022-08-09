@@ -67,6 +67,11 @@ const Dashboard = () => {
             <th>Id</th>
             <th>Name</th>
             <th>Email</th>
+            <th>Birthdate</th>
+            <th>Gender</th>
+            <th>Sexual orientation</th>
+            <th>City</th>
+            <th>Online</th>
           </tr>
         </thead>
         <tbody>
@@ -75,6 +80,11 @@ const Dashboard = () => {
               <td>{index + 1}</td>
               <td>{user.username}</td>
               <td>{user.email}</td>
+              <td>{user.birthdate}</td>
+              <td>{user.gender}</td>
+              <td>{user.orientation}</td>
+              <td>{user.city}</td>
+              <td>{user.online}</td>
             </tr>
           ))}
         </tbody>

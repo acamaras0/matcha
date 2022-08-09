@@ -4,7 +4,7 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import ProfileForm from "./components/ProfileForm";
-import ForgotPasswords from "./components/ForgotPassword"
+import ForgotPasswords from "./components/ForgotPassword";
 
 function App() {
   return (
@@ -12,13 +12,15 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Login />
+        </Route>
+        <Route path="/forgotpassword">
           <ForgotPasswords />
         </Route>
         <Route path="/register">
           <Register />
         </Route>
         <Route path="/completeprofile">
-          <Navbar/>
+          <Navbar />
           <ProfileForm />
         </Route>
         <Route path="/dashboard">

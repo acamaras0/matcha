@@ -1,55 +1,56 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 import "../App.css";
 
-export default function Login() {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("");
   const [message, setMessage] = useState("");
-
-  Axios.defaults.withCredentials = true;
+  const history = useHistory();
 
   const forgotPassword = (e) => {
     e.preventDefault();
-    Axios.post("http://localhost:5000/forgotpassword", {
-      email: email,
-    }).then((response) => {
-      if (response.data.message) {
-        setStatus(response.data.message);
-      } else {
-        setMessage(response.data.error);
+    try {
+      axios.post("http://localhost:5000/forgotpassword", {
+        email: email,
+      });
+      history.push("/");
+    } catch (error) {
+      if (error.response) {
+        setMessage(error.response.data.msg);
       }
-    });
+    }
   };
 
   return (
     <div>
-    <div className="Auth-form-container">
-      <form className="Auth-form" onSubmit={forgotPassword}>
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Password recovery</h3>
-          <br />
-          <div className="form-group mt-3">
-            <input
-              className="form-control mt-1"
-              type="email"
-              placeholder="Email..."
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-            />
+      <div className="Auth-form-container">
+        <form className="Auth-form" onSubmit={forgotPassword}>
+          <div className="Auth-form-content">
+            <h3 className="Auth-form-title">Password recovery</h3>
+            <br />
+            <div className="form-group mt-3">
+              <input
+                className="form-control mt-1"
+                type="email"
+                placeholder="Email..."
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </div>
+            <br />
+            <button className="btn btn-outline-warning"> Submit </button>
           </div>
           <br />
-          <button className="btn btn-outline-warning"> Submit </button>
-        </div>
-        <br />
-        <p className="message">{status}</p>
-        <p className="error">{message}</p>
-        <p className="forgot-password text-right mt-2">
-          <a href="http://localhost:3000/login"> Return to login</a>
-        </p>
-      </form>
-    </div>
+          <p className="error">{message}</p>
+          <p className="forgot-password text-right mt-2">
+            <a href="http://localhost:3000/"> Return to login</a>
+          </p>
+        </form>
+      </div>
     </div>
   );
-}
+};
+
+export default ForgotPassword;

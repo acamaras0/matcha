@@ -15,6 +15,14 @@ const Navbar = () => {
     }
   };
 
+  const Login = () => {
+    history.push("/");
+  };
+
+  const Register = () => {
+    history.push("/register");
+  };
+
   return (
     <nav
       className="navbar is-light"
@@ -31,8 +39,17 @@ const Navbar = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
+                <button onClick={Register} className="btn btn-outline-warning">
+                  {" "}
+                  Register{" "}
+                </button>
+                <button onClick={Login} className="btn btn-outline-warning">
+                  {" "}
+                  Login{" "}
+                </button>
                 <button onClick={Logout} className="btn btn-outline-warning">
-                  Log Out
+                  {" "}
+                  Log Out{" "}
                 </button>
               </div>
             </div>

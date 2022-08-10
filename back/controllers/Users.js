@@ -160,7 +160,7 @@ export const ProfileFill = async (req, res) => {
   const { birthdate, gender, orientation, city, interests, bio } = req.body;
   if (!(birthdate && gender && orientation && city && interests && bio)) {
     return res.status(400).json({
-      message: "All fields are required",
+      msg: "All fields are required",
     });
   }
   const refreshToken = req.cookies.refreshToken;

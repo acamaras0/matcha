@@ -11,15 +11,12 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Navbar />
           <Login />
         </Route>
         <Route path="/forgotpassword">
-          <Navbar />
           <ForgotPasswords />
         </Route>
         <Route path="/register">
-          <Navbar />
           <Register />
         </Route>
         <Route path="/completeprofile">

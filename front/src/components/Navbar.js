@@ -2,6 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import logo from "../assets/logo.png";
+// import jwt_decode from "jwt-decode";
+// import { useState } from "react";
 
 const Navbar = () => {
   const history = useHistory();
@@ -15,12 +17,16 @@ const Navbar = () => {
     }
   };
 
-  const Login = () => {
-    history.push("/");
+  const Notifications = () => {
+    history.push("/notifications");
   };
 
-  const Register = () => {
-    history.push("/register");
+  const Settings = () => {
+    history.push("/settings");
+  };
+
+  const Chat = () => {
+    history.push("/chat");
   };
 
   return (
@@ -39,15 +45,26 @@ const Navbar = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <button onClick={Register} className="btn btn-outline-warning">
+                <button
+                  onClick={Notifications}
+                  className="btn btn-outline-warning"
+                >
                   {" "}
-                  Register{" "}
+                  Notifications{" "}
                 </button>
-                <button onClick={Login} className="btn btn-outline-warning">
+                <button onClick={Settings} className="btn btn-outline-warning">
                   {" "}
-                  Login{" "}
+                  Settings{" "}
                 </button>
-                <button onClick={Logout} className="btn btn-outline-warning">
+                <button onClick={Chat} className="btn btn-outline-warning">
+                  {" "}
+                  Chat{" "}
+                </button>
+                <button
+                  id="logout"
+                  onClick={Logout}
+                  className="btn btn-warning"
+                >
                   {" "}
                   Log Out{" "}
                 </button>

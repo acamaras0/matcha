@@ -39,6 +39,7 @@ const Dashboard = () => {
         const response = await axios.get("http://localhost:5000/token");
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
+        //console.log("token ",response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
         setName(decoded.name);
         setExpire(decoded.exp);

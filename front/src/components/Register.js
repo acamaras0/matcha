@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
+import logo from "../assets/logo.png";
 
 const Register = () => {
   const [firstNameReg, setFirstNameReg] = useState("");
@@ -34,6 +35,9 @@ const Register = () => {
 
   return (
     <div>
+      <div className="logo">
+        <img src={logo} alt="logo" />
+      </div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Register}>
           <div className="Auth-form-content">

@@ -28,6 +28,11 @@
   margin-left: 20px;
 }
 
+.logo {
+  padding-top: 30px;
+  display: flex;
+  justify-content: center;
+}
 .Auth-form-container {
   display: flex;
   justify-content: center;

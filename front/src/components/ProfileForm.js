@@ -79,6 +79,7 @@ const ProfileForm = () => {
               </div>
               <div className="d-grid gap-2 mt-3">
                 <button className="btn btn-outline-warning">Submit</button>
+                <a href="http://localhost:3000/dashboard"> Skip</a>
               </div>
             </div>
             <p className="message">{message}</p>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
+import logo from "../assets/logo.png";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +25,9 @@ const ForgotPassword = () => {
 
   return (
     <div>
+      <div className="logo">
+        <img src={logo} alt="logo" />
+      </div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={forgotPassword}>
           <div className="Auth-form-content">

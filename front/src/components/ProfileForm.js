@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Gender from "../models/Gender";
 import Tags from "../models/Tags";
 import Cities from "../models/Cities";
 import Orientation from "../models/Orientation";
+import jwt_decode from "jwt-decode";
 import "../App.css";
 
 const ProfileForm = () => {
+  const [loggedIn, setLoggedin] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [gender, setGender] = useState("");
   const [orientation, setOrientation] = useState("");
@@ -16,11 +18,68 @@ const ProfileForm = () => {
   const [bio, setBio] = useState("");
   const [message, setMessage] = useState("");
   const history = useHistory();
+  const [name, setName] = useState("");
+  const [token, setToken] = useState("");
+  const [expire, setExpire] = useState("");
+
+  useEffect(() => {
+    refreshToken();
+    getLoggedIn();
+  }, []);
+
+  const refreshToken = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/token");
+      setToken(response.data.accessToken);
+      const decoded = jwt_decode(response.data.accessToken);
+      setName(decoded.name);
+      setExpire(decoded.exp);
+    } catch (error) {
+      if (error.response) {
+        history.push("/");
+      }
+    }
+  };
+
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get("http://localhost:5000/token");
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setName(decoded.name);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
+  const getLoggedIn = async () => {
+    try {
+      const response = await axiosJWT.get("http://localhost:5000/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setLoggedin(response.data);
+    } catch (error) {
+      if (error.response) {
+        history.push("/");
+      }
+    }
+  };
 
   const profileFill = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/fill", {
+      await axios.post(`http://localhost:5000/fill`, {
         birthdate: birthdate,
         gender: gender,
         orientation: orientation,
@@ -28,7 +87,7 @@ const ProfileForm = () => {
         interests: interests,
         bio: bio,
       });
-      history.push("/dashboard");
+      history.push("/pictures");
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -36,6 +95,9 @@ const ProfileForm = () => {
     }
   };
 
+  if (loggedIn && loggedIn.birthdate) {
+    return history.push("/dashboard");
+  }
   return (
     <div>
       <div className="Auth-form-container">

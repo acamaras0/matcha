@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
 
 const Dashboard = () => {
+  const [loggedIn, setLoggedin] = useState("");
   const [name, setName] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
@@ -14,6 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     refreshToken();
     getUsers();
+    getLoggedIn();
   }, []);
 
   const refreshToken = async () => {
@@ -52,16 +54,30 @@ const Dashboard = () => {
   );
 
   const getUsers = async () => {
-    const response = await axiosJWT.get("http://localhost:5000/users", {
+    const response = await axiosJWT.get("http://localhost:5000/users/info", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     setUsers(response.data);
   };
+  const getLoggedIn = async () => {
+    try {
+      const response = await axiosJWT.get("http://localhost:5000/users", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setLoggedin(response.data);
+    } catch (error) {
+      if (error.response) {
+        history.push("/");
+      }
+    }
+  };
   return (
     <div className="container mt-5">
-      <h1>DB users: {name}</h1>
+      <h1>Logged in as: {loggedIn.username}</h1>
       <table className="table is-striped is-fullwidth">
         <thead>
           <tr>

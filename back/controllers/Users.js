@@ -24,9 +24,24 @@ export const getUsers = async (req, res) => {
         "orientation",
         "city",
         "online",
+        "refresh_token",
       ],
     });
     res.json(users);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getLoggedIn = async (req, res) => {
+  try {
+    const loggedIn = await Users.findOne({
+      where: {
+        online: 1,
+      },
+    });
+    res.json(loggedIn);
+    console.log("HERE", loggedIn);
   } catch (error) {
     console.log(error);
   }

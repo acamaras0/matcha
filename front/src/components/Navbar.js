@@ -2,8 +2,6 @@ import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import logo from "../assets/logo.png";
-// import jwt_decode from "jwt-decode";
-// import { useState } from "react";
 
 const Navbar = () => {
   const history = useHistory();

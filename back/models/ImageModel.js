@@ -19,10 +19,7 @@ const UserImages = db.define(
     },
     pic_path: {
       type: DataTypes.STRING,
-    },
-    refresh_token: {
-      type: DataTypes.TEXT,
-    },
+    }
   },
   {
     freezeTableName: true,

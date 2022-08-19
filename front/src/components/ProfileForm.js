@@ -96,7 +96,7 @@ const ProfileForm = () => {
   };
 
   if (loggedIn && loggedIn.birthdate) {
-    return history.push("/dashboard");
+    return history.push("/profile");
   }
   return (
     <div>

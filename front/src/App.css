@@ -66,6 +66,15 @@
   font-weight: 800;
 }
 
+.profile-pic {
+  border: #fffefe 1px solid;
+  border-radius: 100%;
+}
+.card
+{
+  margin-right: 400px;
+  margin-left: 400px;
+}
 label {
   font-size: 14px;
   font-weight: 600;

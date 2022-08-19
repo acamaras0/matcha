@@ -7,6 +7,7 @@ import Register from "./components/Register";
 import ProfileForm from "./components/ProfileForm";
 import PicturesForm from "./components/PicturesForm";
 import ForgotPasswords from "./components/ForgotPassword";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
           <Navbar />
           <Dashboard />
         </Route>
+        <Route path="/profile">
+          <Navbar />
+          <Profile />
+        </Route>
+         
         {/* {users.birthdate === 0 ? (
           <Redirect to="/completeprofile" />
         ) : (

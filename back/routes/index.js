@@ -7,7 +7,7 @@ import {
   Logout,
   getLoggedIn,
 } from "../controllers/Users.js";
-import { UploadPic } from "../controllers/Images.js";
+import { UploadPic, getPicsById } from "../controllers/Images.js";
 import { upload } from "../middleware/Upload.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
@@ -18,6 +18,7 @@ router.get("/users", getLoggedIn);
 router.get("/users/info", getUsers);
 router.get("/users/verify", verifyToken);
 router.get("/token", refreshToken);
+router.get("/user/pictures", getPicsById);
 
 
 router.post("/users", Register);

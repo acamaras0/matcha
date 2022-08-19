@@ -1,104 +1,53 @@
-import React from 'react'
-import axios from 'axios';
-import { useState } from 'react';
+import React from "react";
+import axios from "axios";
+import { useState} from "react";
+import { useHistory } from "react-router-dom";
 
 const PicturesForm = () => {
   const [file, setFile] = useState();
-  const [filename, setFilename] = useState("");
-
+  const [selectedImage, setSelectedImage] = useState(null);
+  const history = useHistory();
   const saveFile = (e) => {
     setFile(e.target.files[0]);
-    setFilename(e.target.files[0].name);
-  }
+    setSelectedImage(e.target.files[0]);
+  };
   const uploadFile = async (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const res = await axios.post("http://localhost:5000/upload", formData)
-      console.log("res", res);
+      await axios.post("http://localhost:5000/upload", formData);
+     history.push("/profile");
     } catch (err) {
       console.log(err);
     }
-  }
+  };
+  const f = () => {
+    setFile(null);
+    setSelectedImage(null);
+  };
+
   return (
-    <div>
-      <input type="file" name="file" onChange={saveFile} />
-      <button onClick={uploadFile}>Upload</button>
-      <p>{filename}</p>
+    <div className="form-group text-center">
+      <h2>Upload your profile picture</h2><br/>
+      {selectedImage && (
+        <div>
+          <img
+            alt="not fount"
+            width={"250px"}
+            src={URL.createObjectURL(selectedImage)}
+          />
+          <br />
+          <button className="btn btn-danger" onClick={f}>
+            Remove
+          </button>
+        </div>
+      )}
+      <br />
+      <input classname="input-group mb-3" type="file" name="file" onChange={saveFile} />
+      <button className="btn btn-warning" onClick={uploadFile}>Upload</button>
     </div>
-  )
-}
+  );
+};
 
 export default PicturesForm;
-
-
-
-
-
-
-
-
-
-
-// import React from 'react';
-// import ImageUploading from 'react-images-uploading';
-
-// const PicturesForm = () => {
-//   const [images, setImages] = React.useState([]);
-//   const maxNumber = 5;
-
-//   const onChange = (imageList, addUpdateIndex) => {
-//     // data for submit
-//     console.log(imageList, addUpdateIndex);
-//     setImages(imageList);
-//   };
-
-//   return (
-//     <div className="img-container">
-//       <ImageUploading
-//         multiple
-//         value={images}
-//         onChange={onChange}
-//         maxNumber={maxNumber}
-//         dataURLKey="data_url"
-//       >
-//         {({
-//           imageList,
-//           onImageUpload,
-//           onImageRemoveAll,
-//           onImageUpdate,
-//           onImageRemove,
-//           isDragging,
-//           dragProps,
-//         }) => (
-//           // write your building UI
-//           <div className="upload__image-wrapper">
-//             <button className="btn btn-outline-warning"
-//               style={isDragging ? { color: 'red' } : undefined}
-//               onClick={onImageUpload}
-//               {...dragProps}
-//             >
-//               Click or Drop here
-//             </button>
-//             &nbsp;
-//             <button onClick={onImageRemoveAll} className="btn btn-outline-warning">Remove all images</button> <br />
-//             {imageList.map((image, index) => (
-//               <div key={index} className="image-item">
-//                 <div> 
-//                 <img src={image['data_url']} alt="" width="300" /> </div> <br />
-//                 <div className="image-item__btn-wrapper">
-//                   <button className="btn btn-outline-warning" onClick={() => onImageRemove(index)}>Remove</button>
-//                 </div><br/>
-//                 <button className="btn btn-outline-warning" onClick={() => onImageUpdate(index)}>Update</button>
-
-//               </div>
-//             ))}
-//           </div>
-//         )}
-//       </ImageUploading>
-//     </div>
-//   );
-// }
-
-// export default PicturesForm;

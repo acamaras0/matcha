@@ -1,5 +1,4 @@
 import express from "express";
-import path from "path";
 import {
   getUsers,
   Register,
@@ -11,8 +10,9 @@ import {
 import { upload } from "../middleware/Upload.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
-import Resize from "../middleware/Resize.js";
-
+//import Resize from "../middleware/Resize.js";
+import UserImages from "../models/ImageModel.js";
+import Users from "../models/UserModel.js";
 
 const router = express.Router();
 
@@ -24,18 +24,31 @@ router.post("/users", Register);
 router.post("/login", Login);
 router.post("/fill", ProfileFill);
 
-router.post('/upload', upload.single('image'), async function (req, res) {
-  const imagePath = path.join(__dirname, '../uploads');
-  const fileUpload = new Resize(imagePath);
+router.post("/upload", upload.single("file"), async (req, res) => {
   if (!req.file) {
-    res.status(401).json({error: 'Please provide an image'});
+    return res.status(400).send("No file uploaded");
+  } else {
+    console.log(req.file.filename);
+    const imgsrc = "./uploads/" + req.file.filename;
+    const user = await Users.findOne({
+      where: {
+        online: 1,
+      },
+    });
+    const userId = user.dataValues.id;
+    try {
+      await UserImages.create({
+        user_id: userId,
+        pic_name: req.file.filename,
+        pic_path: imgsrc,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
-  const filename = await fileUpload.save(req.file.buffer);
-  return res.status(200).json({ name: filename });
+  console.log("File uploaded successfully");
 });
 
-
 router.delete("/logout", Logout);
-
 
 export default router;

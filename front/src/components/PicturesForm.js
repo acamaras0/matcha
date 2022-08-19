@@ -23,7 +23,7 @@ const PicturesForm = () => {
   }
   return (
     <div>
-      <input type="file" name="image" onChange={saveFile} />
+      <input type="file" name="file" onChange={saveFile} />
       <button onClick={uploadFile}>Upload</button>
       <p>{filename}</p>
     </div>

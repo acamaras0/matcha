@@ -31,7 +31,7 @@ const Users = db.define(
       defaultValue: 0,
     },
     birthdate: {
-      type: DataTypes.DATE,
+      type: DataTypes.INTEGER,
     },
     gender: {
       type: DataTypes.STRING,

@@ -7,7 +7,6 @@ import img from "./file1660896899801.jpeg";
 
 const Dashboard = () => {
   const [loggedIn, setLoggedin] = useState("");
-  const [name, setName] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
   const [users, setUsers] = useState([]);
@@ -26,7 +25,6 @@ const Dashboard = () => {
       const response = await axios.get("http://localhost:5000/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
-      setName(decoded.name);
       setExpire(decoded.exp);
     } catch (error) {
       if (error.response) {
@@ -46,7 +44,6 @@ const Dashboard = () => {
         setToken(response.data.accessToken);
         //console.log("token ",response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
-        setName(decoded.name);
         setExpire(decoded.exp);
       }
       return config;

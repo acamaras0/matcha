@@ -8,47 +8,111 @@ import ProfileForm from "./components/ProfileForm";
 import PicturesForm from "./components/PicturesForm";
 import ForgotPasswords from "./components/ForgotPassword";
 import Profile from "./components/Profile";
+// import { useEffect, useState } from "react";
+// import { useHistory } from "react-router-dom";
+// import axios from "axios";
+//import socketIOClient from "socket.io-client";
+//import jwt_decode from "jwt-decode";
+// const ENDPOINT = "http://localhost:5000";
+// const socket = socketIOClient(ENDPOINT);
 
 function App() {
   return (
-    <UserContextProvider>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          <Login />
-        </Route>
-        <Route path="/forgotpassword">
-          <ForgotPasswords />
-        </Route>
-        <Route path="/register">
-          <Register />
-        </Route>
-        <Route path="/completeprofile">
-          <Navbar />
-          <ProfileForm />
-        </Route>
-        <Route path="/pictures">
-          <Navbar />
-          <PicturesForm />
-        </Route>
-        <Route path="/dashboard">
-          <Navbar />
-          <Dashboard />
-        </Route>
-        <Route path="/profile">
-          <Navbar />
-          <Profile />
-        </Route>
-         
-        {/* {users.birthdate === 0 ? (
-          <Redirect to="/completeprofile" />
-        ) : (
-          <Redirect to="/dashboard" />
-        )} */}
-      </Switch>
-    </BrowserRouter>
-    </UserContextProvider>
+    <>
+      <UserContextProvider>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/">
+              <Login />
+            </Route>
+            <Route path="/forgotpassword">
+              <ForgotPasswords />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="/completeprofile">
+              <Navbar />
+              <ProfileForm />
+            </Route>
+            <Route path="/pictures">
+              <Navbar />
+              <PicturesForm />
+            </Route>
+            <Route path="/dashboard">
+              <Navbar />
+              <Dashboard />
+            </Route>
+            <Route path="/profile">
+              <Navbar />
+              <Profile />
+            </Route>
+            {/* <Route path="/">
+              {loggedIn.birthdate !== 0 ? (
+                <Redirect to="/profile" />
+              ) : (
+                <Redirect to="/completeprofile" />
+              )}
+            </Route> */}
+          </Switch>
+        </BrowserRouter>
+      </UserContextProvider>
+    </>
   );
 }
 
 export default App;
+
+// if (!loggedIn)
+// return (
+//   <UserContextProvider>
+//     <BrowserRouter>
+//       <Switch>
+//         <Route exact path="/">
+//           <Login />
+//         </Route>
+//         <Route path="/forgotpassword">
+//           <ForgotPasswords />
+//         </Route>
+//         <Route path="/register">
+//           <Register />
+//         </Route>
+//       </Switch>
+//     </BrowserRouter>
+//   </UserContextProvider>
+// );
+// return (
+// <>
+//   <UserContextProvider>
+//     <BrowserRouter>
+//       <Switch>
+//         <Route path="/completeprofile">
+//           <Navbar />
+//           <ProfileForm />
+//         </Route>
+//         <Route path="/pictures">
+//           <Navbar />
+//           <PicturesForm />
+//         </Route>
+//         <Route path="/dashboard">
+//           <Navbar />
+//           <Dashboard />
+//         </Route>
+//         <Route path="/profile">
+//           <Navbar />
+//           <Profile />
+//         </Route>
+//         <Route path="/">
+//           {loggedIn.birthdate !== 0 ? (
+//             <Redirect to="/profile" />
+//           ) : (
+//             <Redirect to="/completeprofile" />
+//           )}
+//         </Route>
+
+//       </Switch>
+//     </BrowserRouter>
+//   </UserContextProvider>
+// </>
+// );
+// }

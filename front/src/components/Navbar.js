@@ -26,7 +26,9 @@ const Navbar = () => {
   const Chat = () => {
     history.push("/chat");
   };
-
+  const Dashboard = () => {
+    history.push("/dashboard");
+  };
   return (
     <nav
       className="navbar is-light"
@@ -36,7 +38,7 @@ const Navbar = () => {
       <div className="container">
         <div className="navbar-brand">
           <div className="Nav-logo">
-            <img src={logo} alt="logo" />
+            <img onClick={Dashboard} src={logo} alt="logo" />
           </div>
         </div>
         <div id="navbarBasicExample" className="navbar-menu">

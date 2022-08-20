@@ -8,7 +8,6 @@ import StarRating from "../models/StarRating";
 
 const Profile = () => {
   const [loggedIn, setLoggedin] = useState("");
-  const [name, setName] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
   const [pics, setPics] = useState([]);
@@ -25,7 +24,6 @@ const Profile = () => {
       const response = await axios.get("http://localhost:5000/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
-      setName(decoded.name);
       setExpire(decoded.exp);
     } catch (error) {
       if (error.response) {
@@ -45,7 +43,6 @@ const Profile = () => {
         setToken(response.data.accessToken);
         //console.log("token ",response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
-        setName(decoded.name);
         setExpire(decoded.exp);
       }
       return config;
@@ -81,25 +78,19 @@ const Profile = () => {
       </h1>
       <StarRating rating={3} />
       <div className="card">
-        <img
-          className="card-img-top"
-          src={img}
-          alt="Card image cap"
-        />
+        <img className="card-img-top" src={img} alt="Card cap" />
         <div className="card-body">
           <h5 className="card-title">{loggedIn.username}</h5>
-          <p classname="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          
+          <label>Age</label>
+          <p classname="card-text">{loggedIn.birthdate}</p>
+          <label>Bio</label>
+          <p classname="card-text">{loggedIn.bio}</p>
+          <label>Gender</label>
+          <p classname="card-text">{loggedIn.gender}</p>
         </div>
       </div>
-      <p>{loggedIn.bio}</p>
-      <p>{loggedIn.gender}</p>
     </div>
   );
 };
 
 export default Profile;
-

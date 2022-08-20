@@ -4,13 +4,15 @@ import { useHistory } from "react-router-dom";
 import Gender from "../models/Gender";
 import Tags from "../models/Tags";
 import Cities from "../models/Cities";
+import Age from "../models/Age";
+
 import Orientation from "../models/Orientation";
 import jwt_decode from "jwt-decode";
 import "../App.css";
 
 const ProfileForm = () => {
   const [loggedIn, setLoggedin] = useState("");
-  const [birthdate, setBirthdate] = useState("");
+  const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [orientation, setOrientation] = useState("");
   const [city, setCity] = useState("");
@@ -18,7 +20,6 @@ const ProfileForm = () => {
   const [bio, setBio] = useState("");
   const [message, setMessage] = useState("");
   const history = useHistory();
-  const [name, setName] = useState("");
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
 
@@ -32,7 +33,6 @@ const ProfileForm = () => {
       const response = await axios.get("http://localhost:5000/token");
       setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
-      setName(decoded.name);
       setExpire(decoded.exp);
     } catch (error) {
       if (error.response) {
@@ -51,7 +51,6 @@ const ProfileForm = () => {
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
-        setName(decoded.name);
         setExpire(decoded.exp);
       }
       return config;
@@ -68,7 +67,8 @@ const ProfileForm = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setLoggedin(response.data);
+      if (!response.data) return null;
+      else setLoggedin(response.data);
     } catch (error) {
       if (error.response) {
         history.push("/");
@@ -80,7 +80,7 @@ const ProfileForm = () => {
     e.preventDefault();
     try {
       await axios.post(`http://localhost:5000/fill`, {
-        birthdate: birthdate,
+        birthdate: age,
         gender: gender,
         orientation: orientation,
         city: city,
@@ -105,14 +105,15 @@ const ProfileForm = () => {
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Complete profile</h3>
             <div className="form-group mt-3">
-              <label>Birthdate</label>
               <div className="form-group mt-3">
-                <input
-                  type="date"
+                <label>Birthdate</label>
+                <Age setAge={setAge} />
+                {/* <input
+                  type="number"
                   onChange={(e) => {
                     setBirthdate(e.target.value);
                   }}
-                />
+                /> */}
               </div>
               <br />
               <label>Gender</label>

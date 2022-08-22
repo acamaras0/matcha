@@ -6,6 +6,7 @@ import {
   ProfileFill,
   Logout,
   getLoggedIn,
+  getRandomUser,
 } from "../controllers/Users.js";
 import { UploadPic, getPicsById } from "../controllers/Images.js";
 import { upload } from "../middleware/Upload.js";
@@ -19,7 +20,7 @@ router.get("/users/info", getUsers);
 router.get("/users/verify", verifyToken);
 router.get("/token", refreshToken);
 router.get("/user/pictures", getPicsById);
-
+router.get("/users/:id", getRandomUser);
 
 router.post("/users", Register);
 router.post("/login", Login);

@@ -12,22 +12,22 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export const getRandomUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await Users.findAll({
+    where: {
+      id: id,
+    },
+  });
+  res.json(user[0].dataValues);
+};
+
 export const getUsers = async (req, res) => {
   try {
     const users = await Users.findAll({
-      attributes: [
-        "id",
-        "username",
-        "email",
-        "birthdate",
-        "gender",
-        "orientation",
-        "city",
-        "online",
-        "profile_pic",
-        "refresh_token",
-      ],
-    });
+      where: {
+        online:0,
+    }});
     res.json(users);
   } catch (error) {
     console.log(error);

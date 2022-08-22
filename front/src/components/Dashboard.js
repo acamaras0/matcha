@@ -76,13 +76,14 @@ const Dashboard = () => {
       },
     });
     setPics(response.data);
-    
+  };
+
+  const handleUserSelect = async (id) => {
+    history.push(`/users/${id}`);
   };
 
   return (
     <div className="container mt-5">
-      {/* <img src={img} alt="pic" width="100" height="100" /> */}
-
       <h1>Logged in as: {loggedIn.username}</h1>
       <table className="table is-striped is-fullwidth">
         <thead>
@@ -99,18 +100,23 @@ const Dashboard = () => {
         </thead>
 
         <tbody>
-          {users.map((user, index) => (
-            <tr key={user.id}>
-              <td><img src={user.profile_pic} width="300" height="300"/> </td>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-              <td>{user.birthdate}</td>
-              <td>{user.gender}</td>
-              <td>{user.orientation}</td>
-              <td>{user.city}</td>
-              <td>{user.online}</td>
-            </tr>
-          ))}
+          {users &&
+            users.map((user) => {
+              return (
+                <tr onClick={() => handleUserSelect(user.id)} key={user.id}>
+                  <td>
+                    <img src={user.profile_pic} width="300" height="250" />{" "}
+                  </td>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>{user.birthdate}</td>
+                  <td>{user.gender}</td>
+                  <td>{user.orientation}</td>
+                  <td>{user.city}</td>
+                  <td>{user.online}</td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>

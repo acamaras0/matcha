@@ -8,6 +8,7 @@ import ProfileForm from "./components/ProfileForm";
 import PicturesForm from "./components/PicturesForm";
 import ForgotPasswords from "./components/ForgotPassword";
 import Profile from "./components/Profile";
+import ProfileRandom from "./components/ProfileRandom";
 // import { useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
 // import axios from "axios";
@@ -46,6 +47,10 @@ function App() {
             <Route path="/profile">
               <Navbar />
               <Profile />
+            </Route>
+            <Route path="/users/:id">
+              <Navbar />
+              <ProfileRandom/>
             </Route>
             {/* <Route path="/">
               {loggedIn.birthdate !== 0 ? (

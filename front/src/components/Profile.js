@@ -75,7 +75,7 @@ const Profile = () => {
         <h2 className="text-center">
           {loggedIn.firstname} {loggedIn.lastname}
         </h2>
-        <StarRating rating={3} />
+        <StarRating rating={5} />
         <div className="card">
           <img className="card-img-top" src={pics[0].pic_path} alt="Card cap" />
           <div className="card-body">

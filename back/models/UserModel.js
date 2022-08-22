@@ -49,6 +49,9 @@ const Users = db.define(
     bio: {
       type: DataTypes.STRING,
     },
+    profile_pic: {
+      type: DataTypes.STRING,
+    },
     online: {
       type: DataTypes.INTEGER,
       defaultValue: 0,

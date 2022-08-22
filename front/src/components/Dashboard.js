@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
-import img from "./file1660896899801.jpeg"; 
 
 const Dashboard = () => {
   const [loggedIn, setLoggedin] = useState("");
@@ -80,17 +79,15 @@ const Dashboard = () => {
     
   };
 
-  // console.log("here",pics[0].pic_path);
   return (
     <div className="container mt-5">
-      <img src={img} alt="pic" width="100" height="100" />
+      {/* <img src={img} alt="pic" width="100" height="100" /> */}
 
       <h1>Logged in as: {loggedIn.username}</h1>
       <table className="table is-striped is-fullwidth">
         <thead>
           <tr>
             <th>Pic</th>
-            <th>Id</th>
             <th>Name</th>
             <th>Email</th>
             <th>Birthdate</th>
@@ -102,17 +99,9 @@ const Dashboard = () => {
         </thead>
 
         <tbody>
-          {/* {pics.map((pic, index) => (
-            <tr key={index}>
-              <td>
-                <img src={pic.pic_path} alt="pic" width="100" height="100" />
-             
-              </td>
-              </tr>
-          ))} */}
           {users.map((user, index) => (
             <tr key={user.id}>
-              <td>{index + 1}</td>
+              <td><img src={user.profile_pic} width="300" height="300"/> </td>
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>{user.birthdate}</td>

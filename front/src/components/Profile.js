@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
-import img from "./file1660896899801.jpeg";
 import StarRating from "../models/StarRating";
 
 const Profile = () => {
@@ -70,27 +69,32 @@ const Profile = () => {
     setPics(response.data);
   };
 
-  //   console.log("here",pics[0].pic_path);
-  return (
-    <div className="text-center">
-      <h1 className="text-center">
-        {loggedIn.firstname} {loggedIn.lastname}
-      </h1>
-      <StarRating rating={3} />
-      <div className="card">
-        <img className="card-img-top" src={img} alt="Card cap" />
-        <div className="card-body">
-          <h5 className="card-title">{loggedIn.username}</h5>
-          <label>Age</label>
-          <p classname="card-text">{loggedIn.birthdate}</p>
-          <label>Bio</label>
-          <p classname="card-text">{loggedIn.bio}</p>
-          <label>Gender</label>
-          <p classname="card-text">{loggedIn.gender}</p>
+  if (pics.length > 0)
+    return (
+      <div className="text-center">
+        <h2 className="text-center">
+          {loggedIn.firstname} {loggedIn.lastname}
+        </h2>
+        <StarRating rating={3} />
+        <div className="card">
+          <img className="card-img-top" src={pics[0].pic_path} alt="Card cap" />
+          <div className="card-body">
+            <h5 className="card-title">{loggedIn.username}</h5>
+            <label>Age</label>
+            <p className="card-text">{loggedIn.birthdate}</p>
+            <label>Bio</label>
+            <p className="card-text">{loggedIn.bio}</p>
+            <label>Gender</label>
+            <p className="card-text">{loggedIn.gender}</p>
+            <label>Location</label>
+            <p className="card-text">{loggedIn.city}</p>
+            <label>Interests</label>
+            <p className="card-text">{loggedIn.interests}</p>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  return <div>Loading ... </div>;
 };
 
 export default Profile;

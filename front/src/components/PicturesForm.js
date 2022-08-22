@@ -44,7 +44,7 @@ const PicturesForm = () => {
         </div>
       )}
       <br />
-      <input classname="input-group mb-3" type="file" name="file" onChange={saveFile} />
+      <input className="input-group mb-3" type="file" name="file" onChange={saveFile} />
       <button className="btn btn-warning" onClick={uploadFile}>Upload</button>
     </div>
   );

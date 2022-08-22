@@ -106,14 +106,8 @@ const ProfileForm = () => {
             <h3 className="Auth-form-title">Complete profile</h3>
             <div className="form-group mt-3">
               <div className="form-group mt-3">
-                <label>Birthdate</label>
+                <label>Age</label>
                 <Age setAge={setAge} />
-                {/* <input
-                  type="number"
-                  onChange={(e) => {
-                    setBirthdate(e.target.value);
-                  }}
-                /> */}
               </div>
               <br />
               <label>Gender</label>

@@ -24,6 +24,7 @@ export const getUsers = async (req, res) => {
         "orientation",
         "city",
         "online",
+        "profile_pic",
         "refresh_token",
       ],
     });

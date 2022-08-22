@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
+import StarRating from "../models/StarRating";
 
 const Dashboard = () => {
   const [loggedIn, setLoggedin] = useState("");
@@ -83,42 +84,45 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h1>Logged in as: {loggedIn.username}</h1>
-      <table className="table is-striped is-fullwidth">
-        <thead>
-          <tr>
-            <th>Pic</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Birthdate</th>
-            <th>Gender</th>
-            <th>Sexual orientation</th>
-            <th>City</th>
-            <th>Online</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {users &&
-            users.map((user) => {
-              return (
-                <tr onClick={() => handleUserSelect(user.id)} key={user.id}>
-                  <td>
-                    <img src={user.profile_pic} width="300" height="250" />{" "}
-                  </td>
-                  <td>{user.username}</td>
-                  <td>{user.email}</td>
-                  <td>{user.birthdate}</td>
-                  <td>{user.gender}</td>
-                  <td>{user.orientation}</td>
-                  <td>{user.city}</td>
-                  <td>{user.online}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+    <div className="">
+      <div className="text-center">
+      <a href="http://localhost:3000/profile">Logged in as: {loggedIn.username}</a>
+      </div> <br/>
+      <div className="">
+        {users &&
+          users.map((user) => {
+            return (
+                <div key={user.id} className="card mb-3">
+                  <div className="row no-gutters">
+                    <div className="col-md-4">
+                      <img
+                        onClick={() => handleUserSelect(user.id)}
+                        className="card-img-top"
+                        src={user.profile_pic}
+                        alt="Card cap"
+                      />
+                    </div>
+                    <div className="col-md-8">
+                      <div className="card-body">
+                        <h5 className="card-title">{user.username}</h5>
+                        <StarRating rating={5} /> <br />
+                        <label>Age</label>
+                        <p className="card-text">{user.birthdate}</p>
+                        <label>Bio</label>
+                        <p className="card-text">{user.bio}</p>
+                        <label>Gender</label>
+                        <p className="card-text">{user.gender}</p>
+                        <label>Location</label>
+                        <p className="card-text">{user.city}</p>
+                        <label>Interests</label>
+                        <p className="card-text">{user.interests}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            );
+          })}
+      </div>
     </div>
   );
 };

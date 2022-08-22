@@ -22,7 +22,6 @@ const ProfileRandom = () => {
       } catch (error) {
         console.log(error);
       }
-      console.log(selectedUser);
     };
     fetchData();
   }, []);
@@ -40,24 +39,24 @@ const ProfileRandom = () => {
     }
   };
 
-  const axiosJWT = axios.create();
+//   const axiosJWT = axios.create();
 
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+//   axiosJWT.interceptors.request.use(
+//     async (config) => {
+//       const currentDate = new Date();
+//       if (expire * 1000 < currentDate.getTime()) {
+//         const response = await axios.get("http://localhost:5000/token");
+//         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+//         setToken(response.data.accessToken);
+//         const decoded = jwt_decode(response.data.accessToken);
+//         setExpire(decoded.exp);
+//       }
+//       return config;
+//     },
+//     (error) => {
+//       return Promise.reject(error);
+//     }
+//   );
 
   if (!selectedUser) {
     return <div>Loading...</div>;

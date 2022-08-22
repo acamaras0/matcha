@@ -9,6 +9,7 @@ import PicturesForm from "./components/PicturesForm";
 import ForgotPasswords from "./components/ForgotPassword";
 import Profile from "./components/Profile";
 import ProfileRandom from "./components/ProfileRandom";
+import Footer from "./models/Footer";
 // import { useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
 // import axios from "axios";
@@ -60,6 +61,7 @@ function App() {
               )}
             </Route> */}
           </Switch>
+          <Footer/>
         </BrowserRouter>
       </UserContextProvider>
     </>

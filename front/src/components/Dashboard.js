@@ -4,6 +4,7 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
 import StarRating from "../models/StarRating";
+import Footer from "../models/Footer";
 
 const Dashboard = () => {
   const [loggedIn, setLoggedin] = useState("");
@@ -86,40 +87,39 @@ const Dashboard = () => {
   return (
     <div className="">
       <div className="text-center">
-      <a href="http://localhost:3000/profile">Logged in as: {loggedIn.username}</a>
-      </div> <br/>
+        <a href="http://localhost:3000/profile">
+          Logged in as: {loggedIn.username}
+        </a>
+      </div>{" "}
+      <br />
       <div className="">
         {users &&
           users.map((user) => {
             return (
-                <div key={user.id} className="card mb-3">
-                  <div className="row no-gutters">
-                    <div className="col-md-4">
-                      <img
-                        onClick={() => handleUserSelect(user.id)}
-                        className="card-img-top"
-                        src={user.profile_pic}
-                        alt="Card cap"
-                      />
-                    </div>
-                    <div className="col-md-8">
-                      <div className="card-body">
-                        <h5 className="card-title">{user.username}</h5>
-                        <StarRating rating={5} /> <br />
-                        <label>Age</label>
-                        <p className="card-text">{user.birthdate}</p>
-                        <label>Bio</label>
-                        <p className="card-text">{user.bio}</p>
-                        <label>Gender</label>
-                        <p className="card-text">{user.gender}</p>
-                        <label>Location</label>
-                        <p className="card-text">{user.city}</p>
-                        <label>Interests</label>
-                        <p className="card-text">{user.interests}</p>
-                      </div>
+              <div key={user.id} className="card mb-3">
+                <div className="row no-gutters">
+                  <div className="col-md-4">
+                    <img
+                      onClick={() => handleUserSelect(user.id)}
+                      className="card-img-top"
+                      src={user.profile_pic}
+                      alt="Card cap"
+                    />
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <h5 className="card-title">{user.username}, {user.birthdate}</h5>
+                      <StarRating rating={5} /> <br />
+                      <label>Gender</label>
+                      <p className="card-text">{user.gender}</p>
+                      <label>Location</label>
+                      <p className="card-text">{user.city}</p>
+                      <label>Bio</label>
+                      <p className="card-text">{user.bio}</p>
                     </div>
                   </div>
                 </div>
+              </div>
             );
           })}
       </div>

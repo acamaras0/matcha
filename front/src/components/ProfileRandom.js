@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
 import StarRating from "../models/StarRating";
+import Footer from "../models/Footer";
 
 const ProfileRandom = () => {
   const { id } = useParams();
@@ -39,48 +40,54 @@ const ProfileRandom = () => {
     }
   };
 
-//   const axiosJWT = axios.create();
+  //   const axiosJWT = axios.create();
 
-//   axiosJWT.interceptors.request.use(
-//     async (config) => {
-//       const currentDate = new Date();
-//       if (expire * 1000 < currentDate.getTime()) {
-//         const response = await axios.get("http://localhost:5000/token");
-//         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-//         setToken(response.data.accessToken);
-//         const decoded = jwt_decode(response.data.accessToken);
-//         setExpire(decoded.exp);
-//       }
-//       return config;
-//     },
-//     (error) => {
-//       return Promise.reject(error);
-//     }
-//   );
+  //   axiosJWT.interceptors.request.use(
+  //     async (config) => {
+  //       const currentDate = new Date();
+  //       if (expire * 1000 < currentDate.getTime()) {
+  //         const response = await axios.get("http://localhost:5000/token");
+  //         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+  //         setToken(response.data.accessToken);
+  //         const decoded = jwt_decode(response.data.accessToken);
+  //         setExpire(decoded.exp);
+  //       }
+  //       return config;
+  //     },
+  //     (error) => {
+  //       return Promise.reject(error);
+  //     }
+  //   );
 
   if (!selectedUser) {
     return <div>Loading...</div>;
   } else {
     return (
+      <div>
         <div className="text-center">
-        <h2 className="text-center">
-          {selectedUser.firstname} {selectedUser.lastname}
-        </h2>
-        <StarRating rating={5} />
-        <div className="card">
-          <img className="card-img-top" src={selectedUser.profile_pic} alt="Card cap" />
-          <div className="card-body">
-            <h5 className="card-title">{selectedUser.username}</h5>
-            <label>Age</label>
-            <p className="card-text">{selectedUser.birthdate}</p>
-            <label>Bio</label>
-            <p className="card-text">{selectedUser.bio}</p>
-            <label>Gender</label>
-            <p className="card-text">{selectedUser.gender}</p>
-            <label>Location</label>
-            <p className="card-text">{selectedUser.city}</p>
-            <label>Interests</label>
-            <p className="card-text">{selectedUser.interests}</p>
+          <h2 className="text-center">
+            {selectedUser.firstname} {selectedUser.lastname}
+          </h2>
+          <StarRating rating={5} />
+          <div className="card-profile">
+            <img
+              className="card-img-top"
+              src={selectedUser.profile_pic}
+              alt="Card cap"
+            />
+            <div className="card-body">
+              <h5 className="card-title">{selectedUser.username}</h5>
+              <label>Age</label>
+              <p className="card-text">{selectedUser.birthdate}</p>
+              <label>Bio</label>
+              <p className="card-text">{selectedUser.bio}</p>
+              <label>Gender</label>
+              <p className="card-text">{selectedUser.gender}</p>
+              <label>Location</label>
+              <p className="card-text">{selectedUser.city}</p>
+              <label>Interests</label>
+              <p className="card-text">{selectedUser.interests}</p>
+            </div>
           </div>
         </div>
       </div>

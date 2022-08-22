@@ -70,15 +70,14 @@
   border: #fffefe 1px solid;
   border-radius: 100%;
 }
-.card
-{
-  margin-right: 400px;
-  margin-left: 400px;
+.card-profile {
+  margin-right: 40vw;
+  margin-left: 40vw;
 }
 label {
   font-size: 14px;
   font-weight: 600;
-  color: rgb(236, 189, 0);
+  color: rgb(0, 0, 0);
 }
 
 p.message {
@@ -110,13 +109,12 @@ a:active {
   text-decoration: none;
 }
 
-.img-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  text-align: center;
+.footer {
+  padding: 1%;
+  margin-top: 10vw;
+  font-size: 10px;
+}
+
+.col-md-4{
+  background-color: rgb(255, 253, 240);
 }

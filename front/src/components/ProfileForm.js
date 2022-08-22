@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import Gender from "../models/Gender";
 import Tags from "../models/Tags";
 import Cities from "../models/Cities";
 import Age from "../models/Age";
-
 import Orientation from "../models/Orientation";
 import jwt_decode from "jwt-decode";
 import "../App.css";
@@ -67,8 +66,7 @@ const ProfileForm = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (!response.data) return null;
-      else setLoggedin(response.data);
+      setLoggedin(response.data);
     } catch (error) {
       if (error.response) {
         history.push("/");
@@ -96,7 +94,9 @@ const ProfileForm = () => {
   };
 
   if (loggedIn && loggedIn.birthdate) {
-    return history.push("/profile");
+    return (
+      <Redirect to="/profile" />
+    );
   }
   return (
     <div>

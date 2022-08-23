@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 
 export const resetPass = async (req, res) => {
   const { token } = req.params;
-  const check = await Users.findOne({
+  const check = await Users.findAll({
     where: {
       reset_token: token,
     },

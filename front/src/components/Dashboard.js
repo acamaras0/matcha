@@ -4,7 +4,6 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
 import StarRating from "../models/StarRating";
-import Footer from "../models/Footer";
 
 const Dashboard = () => {
   const [loggedIn, setLoggedin] = useState("");
@@ -108,7 +107,9 @@ const Dashboard = () => {
                   </div>
                   <div className="col-md-8">
                     <div className="card-body">
-                      <h5 className="card-title">{user.username}, {user.birthdate}</h5>
+                      <h5 className="card-title">
+                        {user.username}, {user.birthdate}
+                      </h5>
                       <StarRating rating={5} /> <br />
                       <label>Gender</label>
                       <p className="card-text">{user.gender}</p>

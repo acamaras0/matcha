@@ -12,6 +12,75 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export const resetPass = async (req, res) => {
+  const { token } = req.params;
+  const check = await Users.findOne({
+    where: {
+      reset_token: token,
+    },
+  });
+  const { password } = req.body;
+  const { confPassword } = req.body;
+  if (password !== confPassword) {
+    return res.status(400).send("Passwords do not match");
+  } else if (password.length < 8 || password.length > 20) {
+    return res.status(400).send("Password must be at least 8 characters");
+  } else if (token === check.reset_token) {
+    return res.status(400).send("Invalid token");
+  } else {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    await Users.update(
+      {
+        password: hash,
+        reset_token: null,
+      },
+      {
+        where: {
+          reset_token: token,
+        },
+      }
+    );
+    return res.status(200).send("Password reset");
+  }
+};
+
+export const forgotPass = async (req, res) => {
+  const { email } = req.body;
+  const user = await Users.findOne({ email });
+  const token = process.env.ACCESS_TOKEN_SECRET;
+  console.log("FORGOT", token);
+  if (!user) {
+    return res.status(404).json({ msg: "User not found" });
+  } else {
+    await Users.update(
+      {
+        reset_token: token,
+      },
+      {
+        where: {
+          email: email,
+        },
+      }
+    );
+    const mailOptions = {
+      from: "matcha@gmail.com",
+      to: email,
+      subject: "Password Reset",
+      text:
+        "Reset your password by clicking the following link: http://localhost:3000/resetpassword/" +
+        token,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        return res.status(200).json({ msg: "Email sent!" });
+      }
+    });
+  }
+};
+
 export const getRandomUser = async (req, res) => {
   const { id } = req.params;
   const user = await Users.findAll({
@@ -26,8 +95,9 @@ export const getUsers = async (req, res) => {
   try {
     const users = await Users.findAll({
       where: {
-        online:0,
-    }});
+        online: 0,
+      },
+    });
     res.json(users);
   } catch (error) {
     console.log(error);

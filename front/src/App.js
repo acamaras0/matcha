@@ -10,6 +10,7 @@ import ForgotPasswords from "./components/ForgotPassword";
 import Profile from "./components/Profile";
 import ProfileRandom from "./components/ProfileRandom";
 import Footer from "./models/Footer";
+import ResetPassword from "./components/ResetPassword";
 // import { useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
 // import axios from "axios";
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route path="/forgotpassword">
               <ForgotPasswords />
+            </Route>
+            <Route path="/resetpassword/:token">
+              <ResetPassword />
             </Route>
             <Route path="/register">
               <Register />
@@ -51,7 +55,7 @@ function App() {
             </Route>
             <Route path="/users/:id">
               <Navbar />
-              <ProfileRandom/>
+              <ProfileRandom />
             </Route>
             {/* <Route path="/">
               {loggedIn.birthdate !== 0 ? (
@@ -61,7 +65,7 @@ function App() {
               )}
             </Route> */}
           </Switch>
-          <Footer/>
+          <Footer />
         </BrowserRouter>
       </UserContextProvider>
     </>

@@ -12,7 +12,7 @@ const ForgotPassword = () => {
   const forgotPassword = (e) => {
     e.preventDefault();
     try {
-      axios.post("http://localhost:5000/forgotpassword", {
+      axios.post("http://localhost:5000/users/forgotpassword", {
         email: email,
       });
       history.push("/");

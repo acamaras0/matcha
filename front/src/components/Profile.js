@@ -5,7 +5,6 @@ import jwt_decode from "jwt-decode";
 import { useHistory, useParams } from "react-router-dom";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
-import StarRating from "../models/StarRating";
 
 const Profile = () => {
   const { id } = useParams();
@@ -106,57 +105,54 @@ const Profile = () => {
   if (pics.length > 0)
     return (
       <div className="text-center">
-        <h3>Edit your profile by clicking on the desired field.</h3>
-        <br />
-        <EditText
-          className="text-center"
-          name="textbox1"
-          defaultValue={loggedIn.firstname}
-          inputClassName="bg-success form-control"
-          onSave={(value) => {
-            if (value !== "") {
-              setNewFirstName(value);
-            } else {
-              setNewFirstName(loggedIn.firstname);
-            }
-            console.log(value);
-          }}
-        />
-        <EditText
-          name="textbox1"
-          defaultValue={loggedIn.lastname}
-          inputClassName="bg-success form-control"
-          onSave={(value) => {
-            if (value !== "") {
-              setNewLastName(value);
-            } else {
-              setNewLastName(loggedIn.lastname);
-            }
-            console.log(value);
-          }}
-        />
-        <p>{loggedIn.birthdate}</p>
-        <EditText
-          name="textbox1"
-          defaultValue={loggedIn.email}
-          inputClassName="bg-success form-control"
-          onSave={(value) => {
-            if (value !== "") {
-              setNewEmail(value);
-            } else {
-              setNewEmail(loggedIn.email);
-            }
-            console.log(value);
-          }}
-        />
-        <StarRating rating={5} />
         <div className="card-profile">
+          <h1>✍</h1>
+          <h3>Update profile</h3>
+          <br />
+          <EditText
+            className="update"
+            name="textbox1"
+            defaultValue={loggedIn.firstname}
+            onSave={(value) => {
+              if (value !== "") {
+                setNewFirstName(value);
+              } else {
+                setNewFirstName(loggedIn.firstname);
+              }
+              console.log(value);
+            }}
+          />
+          <EditText
+            name="textbox1"
+            defaultValue={loggedIn.lastname}
+            onSave={(value) => {
+              if (value !== "") {
+                setNewLastName(value);
+              } else {
+                setNewLastName(loggedIn.lastname);
+              }
+              console.log(value);
+            }}
+          />
+          <p>{loggedIn.birthdate}</p>
+          <EditText
+            name="textbox1"
+            defaultValue={loggedIn.email}
+            onSave={(value) => {
+              if (value !== "") {
+                setNewEmail(value);
+              } else {
+                setNewEmail(loggedIn.email);
+              }
+              console.log(value);
+            }}
+          />
           <img className="card-img-top" src={pics[0].pic_path} alt="Card cap" />
           <div className="card-body">
+            <label>✎ Username</label>
             <EditText
               name="textbox1"
               defaultValue={loggedIn.username}
-              inputClassName="bg-success form-control"
               onSave={(value) => {
                 if (value !== "") {
                   setNewUsername(value);
@@ -166,11 +162,10 @@ const Profile = () => {
                 console.log(value);
               }}
             />
-            <label>Gender</label>
+            <label>✎ Gender</label>
             <EditText
               name="textbox1"
               defaultValue={loggedIn.gender}
-              inputClassName="bg-success form-control"
               onSave={(value) => {
                 if (value !== "") {
                   setNewGender(value);
@@ -180,11 +175,10 @@ const Profile = () => {
                 console.log(value);
               }}
             />
-            <label>Sexual orientation</label>
+            <label>✎ Sexual orientation</label>
             <EditText
               name="textbox1"
               defaultValue={loggedIn.orientation}
-              inputClassName="bg-success form-control"
               onSave={(value) => {
                 if (value !== "") {
                   setNewOrientation(value);
@@ -195,11 +189,10 @@ const Profile = () => {
               }}
             />
 
-            <label>Location</label>
+            <label>✎ Location</label>
             <EditText
               name="textbox1"
               defaultValue={loggedIn.city}
-              inputClassName="bg-success form-control"
               onSave={(value) => {
                 if (value !== "") {
                   setNewCity(value);
@@ -209,11 +202,10 @@ const Profile = () => {
                 console.log(value);
               }}
             />
-            <label>Interests</label>
+            <label>✎ Interests</label>
             <EditText
               name="textbox1"
               defaultValue={loggedIn.interests}
-              inputClassName="bg-success form-control"
               onSave={(value) => {
                 if (value !== "") {
                   setNewInterest(value);
@@ -223,11 +215,10 @@ const Profile = () => {
                 console.log(value);
               }}
             />
-            <label>Bio</label>
+            <label>✎ Bio</label>
             <EditTextarea
               name="textbox1"
               defaultValue={loggedIn.bio}
-              inputClassName="bg-success form-control"
               onSave={(value) => {
                 if (value !== "") {
                   setNewBio(value);
@@ -238,7 +229,7 @@ const Profile = () => {
               }}
             />
           </div>
-          <button className="btn btn-primary" onClick={updateProfile}>
+          <button className="btn btn-warning" onClick={updateProfile}>
             Update
           </button>
         </div>
@@ -248,17 +239,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
-{
-  /* <h5 className="card-title">{loggedIn.username}</h5>
-            <label>Age</label>
-            <p className="card-text">{loggedIn.birthdate}</p>
-            <label>Bio</label>
-            <p className="card-text">{loggedIn.bio}</p>
-            <label>Gender</label>
-            <p className="card-text">{loggedIn.gender}</p>
-            <label>Location</label>
-            <p className="card-text">{loggedIn.city}</p>
-            <label>Interests</label>
-            <p className="card-text">{loggedIn.interests}</p> */
-}

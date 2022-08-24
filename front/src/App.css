@@ -2,6 +2,10 @@
   background-color: rgb(250, 239, 182);
 }
 
+h3 {
+  color: rgb(236, 189, 0);
+}
+
 .Nav {
   background-color: #fffefe;
   border-bottom: 1px solid #ffffff;
@@ -80,7 +84,7 @@ label {
   color: rgb(0, 0, 0);
 }
 
-p{
+p {
   font-size: 14px;
   font-weight: 600;
   color: rgb(236, 189, 0);
@@ -121,6 +125,6 @@ a:active {
   font-size: 10px;
 }
 
-.col-md-4{
+.col-md-4 {
   background-color: rgb(255, 253, 240);
 }

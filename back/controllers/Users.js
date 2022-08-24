@@ -12,6 +12,114 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export const updateProfile = async (req, res) => {
+  const { id } = req.params;
+  const {
+    username,
+    firstName,
+    lastName,
+    email,
+    bio,
+    interests,
+    gender,
+    orientation,
+    city,
+  } = req.body;
+  if (firstName) {
+    await Users.update(
+      {
+        firstname: firstName,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (lastName) {
+    await Users.update(
+      {
+        lastname: lastName,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (username) {
+    await Users.update(
+      {
+        username: username,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (email) {
+    await Users.update(
+      {
+        email: email,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (bio) {
+    await Users.update(
+      {
+        bio: bio,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (interests) {
+    await Users.update(
+      {
+        interests: interests,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (gender) {
+    await Users.update(
+      {
+        gender: gender,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (orientation) {
+    await Users.update(
+      {
+        orientation: orientation,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (city) {
+    await Users.update(
+      {
+        city: city,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  res.status(200).json({
+    msg: "Profile updated",
+  });
+};
+
 export const resetPass = async (req, res) => {
   const { token } = req.params;
   const check = await Users.findAll({
@@ -49,7 +157,6 @@ export const forgotPass = async (req, res) => {
   const { email } = req.body;
   const user = await Users.findOne({ email });
   const token = process.env.ACCESS_TOKEN_SECRET;
-  console.log("FORGOT", token);
   if (!user) {
     return res.status(404).json({ msg: "User not found" });
   } else {
@@ -112,7 +219,6 @@ export const getLoggedIn = async (req, res) => {
       },
     });
     res.json(loggedIn);
-    console.log("HERE", loggedIn);
   } catch (error) {
     console.log(error);
   }

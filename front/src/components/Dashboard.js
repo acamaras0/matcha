@@ -86,7 +86,7 @@ const Dashboard = () => {
   return (
     <div className="">
       <div className="text-center">
-        <a href="http://localhost:3000/profile">
+        <a href={`http://localhost:3000/profile/${loggedIn.id}`}>
           Logged in as: {loggedIn.username}
         </a>
       </div>{" "}

@@ -52,10 +52,6 @@ const Navbar = () => {
                   {" "}
                   Notifications{" "}
                 </button>
-                <button onClick={Settings} className="btn btn-outline-warning">
-                  {" "}
-                  Settings{" "}
-                </button>
                 <button onClick={Chat} className="btn btn-outline-warning">
                   {" "}
                   Chat{" "}

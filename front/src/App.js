@@ -49,7 +49,7 @@ function App() {
               <Navbar />
               <Dashboard />
             </Route>
-            <Route path="/profile">
+            <Route path="/profile/:id">
               <Navbar />
               <Profile />
             </Route>

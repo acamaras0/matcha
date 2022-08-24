@@ -75,9 +75,15 @@
   margin-left: 40vw;
 }
 label {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
   color: rgb(0, 0, 0);
+}
+
+p{
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(236, 189, 0);
 }
 
 p.message {

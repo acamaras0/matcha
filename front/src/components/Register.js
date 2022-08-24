@@ -3,7 +3,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
-import Footer from "../models/Footer";
 
 const Register = () => {
   const [firstNameReg, setFirstNameReg] = useState("");

@@ -6,6 +6,10 @@ h3 {
   color: rgb(236, 189, 0);
 }
 
+.update {
+  display: flex;
+}
+
 .Nav {
   background-color: #fffefe;
   border-bottom: 1px solid #ffffff;
@@ -75,8 +79,8 @@ h3 {
   border-radius: 100%;
 }
 .card-profile {
-  margin-right: 40vw;
-  margin-left: 40vw;
+  margin-right: 20vw;
+  margin-left: 20vw;
 }
 label {
   font-size: 18px;
@@ -127,4 +131,10 @@ a:active {
 
 .col-md-4 {
   background-color: rgb(255, 253, 240);
+}
+
+.img-top {
+  width: 20%;
+  height: 20%;
+  margin: 10vw;
 }

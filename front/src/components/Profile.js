@@ -104,13 +104,15 @@ const Profile = () => {
 
   if (pics.length > 0)
     return (
-      <div className="text-center">
+      <div className="update">
+        <img className="img-top" src={pics[0].pic_path} alt="Card cap" />
+
         <div className="card-profile">
           <h1>✍</h1>
           <h3>Update profile</h3>
           <br />
+          <label>✎ Firts name</label>
           <EditText
-            className="update"
             name="textbox1"
             defaultValue={loggedIn.firstname}
             onSave={(value) => {
@@ -122,6 +124,7 @@ const Profile = () => {
               console.log(value);
             }}
           />
+          <label>✎ Last Name</label>
           <EditText
             name="textbox1"
             defaultValue={loggedIn.lastname}
@@ -134,7 +137,9 @@ const Profile = () => {
               console.log(value);
             }}
           />
+          <label>Age</label>
           <p>{loggedIn.birthdate}</p>
+          <label>✎ Email address</label>
           <EditText
             name="textbox1"
             defaultValue={loggedIn.email}
@@ -147,7 +152,7 @@ const Profile = () => {
               console.log(value);
             }}
           />
-          <img className="card-img-top" src={pics[0].pic_path} alt="Card cap" />
+          {/* <img className="card-img-top" src={pics[0].pic_path} alt="Card cap" /> */}
           <div className="card-body">
             <label>✎ Username</label>
             <EditText

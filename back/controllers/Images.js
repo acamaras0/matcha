@@ -1,5 +1,6 @@
 import Users from "../models/UserModel.js";
 import UserImages from "../models/ImageModel.js";
+import fs from "fs";
 
 export const getPicsById = async (req, res) => {
   const user = await Users.findOne({
@@ -54,5 +55,27 @@ export const UploadPic = async (req, res) => {
   res.sendStatus(200);
 };
 
-// export const PicUpdate = async (req, res) => {
-// }
+export const deletePic = async (req, res) => {
+  const pic_id = req.params.id;
+  try {
+    const picture = await UserImages.findOne({
+      where: {
+        id: pic_id,
+      },
+    });
+    let path = String(`./uploads/${picture.dataValues.pic_name}`);
+    // fs.unlink(path, (err) => {
+    //   if (err) throw err; 
+    //   console.log("picture deleted");
+    // });
+  } catch (err) {
+    console.log(err);
+  }
+  try {
+    await UserImages.destroy({
+      where: { id: pic_id },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};

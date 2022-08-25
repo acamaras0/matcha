@@ -103,19 +103,42 @@ const Profile = () => {
     }
   };
 
+  const deletePic = async (pic_id) => {
+    try {
+      await axios.delete(`http://localhost:5000/user/picture/${pic_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      history.push(`/profile/${id}`);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.msg);
+      }
+    }
+    console.log(pic_id);
+  };
+
   if (pics.length > 0)
     return (
       <div className="update">
         <div className="card-pictures">
           <PicturesForm />
           <div className="uploaded-pics">
-            {pics.map((pic) => (
-              <img
-                className="img-top"
-                src={pic.pic_path}
-                alt="uploaded-pic"
-                key={pic.id}
-              />
+            {pics.map((pic, id) => (
+              <div key={pic.id}>
+                <img
+                  className="img-top"
+                  src={pic.pic_path}
+                  alt="uploaded-pic"
+                />
+                <button
+                  className="btn btn-danger"
+                  onClick={() => deletePic(pic.id)}
+                >
+                  Delete
+                </button>
+              </div>
             ))}
           </div>
         </div>

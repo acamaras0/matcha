@@ -53,3 +53,6 @@ export const UploadPic = async (req, res) => {
   console.log("File uploaded successfully");
   res.sendStatus(200);
 };
+
+// export const PicUpdate = async (req, res) => {
+// }

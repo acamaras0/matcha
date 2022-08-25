@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useHistory, useParams } from "react-router-dom";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
+import PicturesForm from "./PicturesForm";
 
 const Profile = () => {
   const { id } = useParams();
@@ -105,11 +106,21 @@ const Profile = () => {
   if (pics.length > 0)
     return (
       <div className="update">
-        <img className="img-top" src={pics[0].pic_path} alt="Card cap" />
-
+        <div className="card-pictures">
+          <PicturesForm />
+          <div className="uploaded-pics">
+            {pics.map((pic) => (
+              <img
+                className="img-top"
+                src={pic.pic_path}
+                alt="uploaded-pic"
+                key={pic.id}
+              />
+            ))}
+          </div>
+        </div>
         <div className="card-profile">
-          <h1>✍</h1>
-          <h3>Update profile</h3>
+          <h3>✍ Update profile</h3>
           <br />
           <label>✎ Firts name</label>
           <EditText
@@ -152,7 +163,6 @@ const Profile = () => {
               console.log(value);
             }}
           />
-          {/* <img className="card-img-top" src={pics[0].pic_path} alt="Card cap" /> */}
           <div className="card-body">
             <label>✎ Username</label>
             <EditText

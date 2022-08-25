@@ -94,9 +94,7 @@ const ProfileForm = () => {
   };
 
   if (loggedIn && loggedIn.birthdate) {
-    return (
-      <Redirect to="/profile" />
-    );
+    return <Redirect to={`/profile/${loggedIn.id}`} />;
   }
   return (
     <div>

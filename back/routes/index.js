@@ -12,7 +12,7 @@ import {
   updateProfile,
 } from "../controllers/Users.js";
 import { UploadPic, getPicsById } from "../controllers/Images.js";
-import { upload } from "../middleware/Upload.js";
+import { upload} from "../middleware/Upload.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
 
@@ -32,6 +32,7 @@ router.post("/users", Register);
 router.post("/login", Login);
 router.post("/fill", ProfileFill);
 router.post("/upload", upload.single("file"), UploadPic);
+// router.post("/upload-images/:id", uploadMultiple.array("file", 5), PicUpdate);
 
 router.delete("/logout", Logout);
 

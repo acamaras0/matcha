@@ -123,8 +123,9 @@ const Profile = () => {
 
   if (pics.length > 0)
     return (
+      <div className="profile">
+        {message ? <p className="error">{message}</p> : null}
       <div className="update">
-        {/* {message ? <p className="error">{message}</p> : null} */}
         <div className="card-pictures">
           <PicturesForm />
           <div className="uploaded-pics">
@@ -275,6 +276,7 @@ const Profile = () => {
           </button>
         </div>
       </div>
+    </div>
     );
   else return <div>Loading...</div>;
 };

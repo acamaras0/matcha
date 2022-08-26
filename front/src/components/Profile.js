@@ -22,6 +22,7 @@ const Profile = () => {
   const [newOrientation, setNewOrientation] = useState("");
   const [newCity, setNewCity] = useState("");
   const [newEmail, setNewEmail] = useState("");
+  const [message, setMessage] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -84,7 +85,7 @@ const Profile = () => {
   const updateProfile = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/user/update/${id}`, {
+      const response = await axios.post(`http://localhost:5000/user/update/${id}`, {
         firstName: newFirstName.value,
         lastName: newLastName.value,
         username: newUsername.value,
@@ -95,33 +96,35 @@ const Profile = () => {
         orientation: newOrientation.value,
         city: newCity.value,
       });
+      setMessage(response.data.msg);
       history.push(`/profile/${id}`);
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data.msg);
+        setMessage(error.response.data.msg);
       }
     }
   };
 
   const deletePic = async (pic_id) => {
     try {
-      await axios.delete(`http://localhost:5000/user/picture/${pic_id}`, {
+      const response = await axios.delete(`http://localhost:5000/user/picture/${pic_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       history.push(`/profile/${id}`);
+      setMessage(response.data.msg);
     } catch (error) {
       if (error.response) {
-        console.log(error.response.data.msg);
+        setMessage(error.response.data.msg);
       }
     }
-    console.log(pic_id);
   };
 
   if (pics.length > 0)
     return (
       <div className="update">
+        {message ? <p className="error">{message}</p> : null}
         <div className="card-pictures">
           <PicturesForm />
           <div className="uploaded-pics">

@@ -20,7 +20,7 @@ export const getPicsById = async (req, res) => {
 
 export const UploadPic = async (req, res) => {
   if (!req.file) {
-    return res.status(400).send("No file uploaded");
+    return res.status(200).json("No file uploaded");
   }
   const user = await Users.findOne({
     where: {
@@ -32,7 +32,7 @@ export const UploadPic = async (req, res) => {
     where: { user_id: userId },
   });
   if (picCount >= 5) {
-    return res.status(400).send("You can only upload 5 pictures");
+    return res.status(200).json("You can only upload 5 pictures");
   } else {
     try {
       await UserImages.create({
@@ -57,8 +57,7 @@ export const UploadPic = async (req, res) => {
     } catch (err) {
       console.log(err);
     }
-    console.log("File uploaded successfully");
-    res.sendStatus(200);
+    res.status(200).json({ msg: "File uploaded successfully" });
   }
 };
 

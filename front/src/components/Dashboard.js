@@ -100,7 +100,7 @@ const Dashboard = () => {
                   <div className="col-md-4">
                     <img
                       onClick={() => handleUserSelect(user.id)}
-                      className="card-img-top"
+                      className="card-img"
                       src={user.profile_pic}
                       alt="Card cap"
                     />

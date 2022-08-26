@@ -10,6 +10,9 @@ h3 {
   display: flex;
   justify-content: space-evenly;
 }
+img.card-img-top {
+  width: 40%;
+}
 
 .images {
   display: flex;

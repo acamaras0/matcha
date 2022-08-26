@@ -8,8 +8,20 @@ h3 {
 
 .update {
   display: flex;
+  justify-content: space-evenly;
 }
 
+.images {
+  display: flex;
+  align-content: flex-end;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-button {
+  display: flex;
+  flex-direction: column-reverse;
+}
 .Nav {
   background-color: #fffefe;
   border-bottom: 1px solid #ffffff;
@@ -139,7 +151,7 @@ a:active {
   margin: 2vw;
 }
 
-.uploaded-pics{
+.uploaded-pics {
   display: flow-root;
   justify-content: unset;
 }

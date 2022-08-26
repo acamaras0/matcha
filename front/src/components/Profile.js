@@ -123,25 +123,27 @@ const Profile = () => {
 
   if (pics.length > 0)
     return (
-      <div className="profile">
+      <div className="">
         {message ? <p className="error">{message}</p> : null}
       <div className="update">
         <div className="card-pictures">
           <PicturesForm />
           <div className="uploaded-pics">
-            {pics.map((pic, id) => (
-              <div key={pic.id}>
+            {pics.map((pic) => (
+              <div className="images" key={pic.id}>
                 <img
                   className="img-top"
                   src={pic.pic_path}
                   alt="uploaded-pic"
                 />
+                <div className="delete-button">
                 <button
                   className="btn btn-danger"
                   onClick={() => deletePic(pic.id)}
                 >
                   Delete
                 </button>
+                </div>
               </div>
             ))}
           </div>

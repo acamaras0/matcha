@@ -10,6 +10,7 @@ import {
   forgotPass,
   resetPass,
   updateProfile,
+  accountActivation
 } from "../controllers/Users.js";
 import { UploadPic, getPicsById, deletePic } from "../controllers/Images.js";
 import { upload} from "../middleware/Upload.js";
@@ -24,6 +25,7 @@ router.get("/users/verify", verifyToken);
 router.get("/token", refreshToken);
 router.get("/user/pictures", getPicsById);
 router.get("/users/:id", getRandomUser);
+router.post("/active/:username", accountActivation);
 
 router.post("/user/update/:id", updateProfile);
 router.post("/resetpassword/:token", resetPass);

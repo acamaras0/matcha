@@ -12,6 +12,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export const accountActivation = async (req, res) => {
+  const username = req.params.username;
+
+  console.log("USERNAME", username);
+}
+
 export const updateProfile = async (req, res) => {
   const { id } = req.params;
   const {

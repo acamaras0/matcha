@@ -19,10 +19,6 @@ const Navbar = () => {
     history.push("/notifications");
   };
 
-  const Settings = () => {
-    history.push("/settings");
-  };
-
   const Chat = () => {
     history.push("/chat");
   };

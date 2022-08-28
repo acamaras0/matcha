@@ -11,6 +11,8 @@ import Profile from "./components/Profile";
 import ProfileRandom from "./components/ProfileRandom";
 import Footer from "./models/Footer";
 import ResetPassword from "./components/ResetPassword";
+import Activation from "./components/Activation";
+import Nav from "./models/Nav";
 // import { useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
 // import axios from "axios";
@@ -36,6 +38,9 @@ function App() {
             </Route>
             <Route path="/register">
               <Register />
+            </Route>
+            <Route path="/activate/:hash">
+              <Activation />
             </Route>
             <Route path="/completeprofile">
               <Navbar />

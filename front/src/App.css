@@ -20,7 +20,9 @@ img.card-img-top {
   flex-direction: column;
   align-items: center;
 }
-
+.activ{
+  padding: 10vw;
+}
 .delete-button {
   display: flex;
   flex-direction: column-reverse;
@@ -98,7 +100,7 @@ img.card-img-top {
   margin-left: 10vw;
 }
 label {
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
   color: rgb(0, 0, 0);
 }
@@ -106,7 +108,7 @@ label {
 p {
   font-size: 14px;
   font-weight: 600;
-  color: rgb(236, 189, 0);
+  color: black;
 }
 
 p.message {

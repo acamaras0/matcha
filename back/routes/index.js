@@ -25,7 +25,8 @@ router.get("/users/verify", verifyToken);
 router.get("/token", refreshToken);
 router.get("/user/pictures", getPicsById);
 router.get("/users/:id", getRandomUser);
-router.post("/active/:username", accountActivation);
+
+router.post("/activate/:hash", accountActivation);
 
 router.post("/user/update/:id", updateProfile);
 router.post("/resetpassword/:token", resetPass);

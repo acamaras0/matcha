@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../assets/logo.png";
 import { Link} from "react-router-dom";
 
-export default function Nav() {
+const Nav = () => {
   return (
     <div className="Nav">
       <div className="Nav-content">
@@ -10,10 +10,12 @@ export default function Nav() {
           <img src={logo} alt="logo" />
         </div>
         <div className="Nav-links">
-          <Link to="/login"> Login </Link>
+          <Link to="/"> Login </Link>
           <Link to="/registration"> Register </Link>
         </div>
       </div>
     </div>
   );
 }
+
+export default Nav;

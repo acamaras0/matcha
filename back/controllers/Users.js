@@ -13,10 +13,37 @@ const transporter = nodemailer.createTransport({
 });
 
 export const accountActivation = async (req, res) => {
-  const username = req.params.username;
+  const hash = req.params.hash;
+  const user = await Users.findOne({
+    where: {
+      activ_token: hash,
+    },
+  });
+  if (!user) {
+    return res.status(202).send("User not found");
+  } else {
+    const check = user.dataValues.activ_token;
 
-  console.log("USERNAME", username);
-}
+    if (!check) {
+      return res.status(200).send("Invalid link");
+    } else if (check === hash) {
+      await Users.update(
+        {
+          activ_token: "",
+          activ_status: 1,
+        },
+        {
+          where: {
+            id: user.dataValues.id,
+          },
+        }
+      );
+      res.status(200).send("Account activated");
+    } else {
+      res.status(200).send("Invalid token");
+    }
+  }
+};
 
 export const updateProfile = async (req, res) => {
   const { id } = req.params;
@@ -136,11 +163,11 @@ export const resetPass = async (req, res) => {
   const { password } = req.body;
   const { confPassword } = req.body;
   if (password !== confPassword) {
-    return res.status(400).send("Passwords do not match");
+    return res.status(200).send("Passwords do not match");
   } else if (password.length < 8 || password.length > 20) {
-    return res.status(400).send("Password must be at least 8 characters");
+    return res.status(200).send("Password must be at least 8 characters");
   } else if (token === check.reset_token) {
-    return res.status(400).send("Invalid token");
+    return res.status(200).send("Invalid token");
   } else {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
@@ -233,13 +260,14 @@ export const getLoggedIn = async (req, res) => {
 export const Register = async (req, res) => {
   const { username, password, confPassword, firstName, lastName, email } =
     req.body;
+  const activ_code = process.env.ACTIVATION_CODE;
   const mailOptions = {
     from: "matcha@gmail.com",
     to: email,
     subject: "Account activation",
     text:
       "Activate your account by clicking the following link: http://localhost:3000/activate/" +
-      username,
+      activ_code,
   };
   const user = await Users.findOne({
     where: {
@@ -285,6 +313,7 @@ export const Register = async (req, res) => {
         lastname: lastName,
         email: email,
         password: hashPassword,
+        activ_token: activ_code,
       });
       res.json({ msg: "Success! User created" });
       transporter.sendMail(mailOptions, function (error, info) {
@@ -312,6 +341,9 @@ export const Login = async (req, res) => {
     const userId = user[0].id;
     const name = user[0].username;
     const email = user[0].email;
+    const activ_status = user[0].activ_status;
+    if (activ_status === 0)
+      return res.status(400).json({ msg: "Account not activated" });
     const accessToken = jwt.sign(
       { userId, name, email },
       process.env.ACCESS_TOKEN_SECRET,

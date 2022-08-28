@@ -49,6 +49,20 @@ const Users = db.define(
     bio: {
       type: DataTypes.STRING,
     },
+    geo_lat: {
+      type: DataTypes.FLOAT,
+    },
+    geo_long: {
+      type: DataTypes.FLOAT,
+    },
+    dist_min: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    dist_max: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     profile_pic: {
       type: DataTypes.STRING,
     },
@@ -60,6 +74,9 @@ const Users = db.define(
       type: DataTypes.TEXT,
     },
     reset_token: {
+      type: DataTypes.TEXT,
+    },
+    activ_token: {
       type: DataTypes.TEXT,
     },
   },

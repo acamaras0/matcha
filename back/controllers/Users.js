@@ -12,6 +12,11 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// export const loggedIn = async (req, res) => {
+//   const token = req.params.token;
+
+// }
+
 export const accountActivation = async (req, res) => {
   const hash = req.params.hash;
   const user = await Users.findOne({
@@ -245,12 +250,15 @@ export const getUsers = async (req, res) => {
 };
 
 export const getLoggedIn = async (req, res) => {
+  const token = req.params.token;
+  console.log("TOKEN HEREEE", token);
   try {
     const loggedIn = await Users.findOne({
       where: {
-        online: 1,
+        refresh_token: token,
       },
     });
+    //console.log("LOGGED IN", loggedIn);
     res.json(loggedIn);
   } catch (error) {
     console.log(error);
@@ -367,7 +375,7 @@ export const Login = async (req, res) => {
       }
     );
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
+      httpOnly: false,
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.json({ accessToken });

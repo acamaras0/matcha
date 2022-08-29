@@ -6,6 +6,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import PicturesForm from "./PicturesForm";
+import { useCookies } from "react-cookie";
 
 const Profile = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const Profile = () => {
   const [newCity, setNewCity] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
 
   useEffect(() => {
@@ -65,37 +67,38 @@ const Profile = () => {
   );
 
   const getLoggedIn = async () => {
-    const response = await axiosJWT.get("http://localhost:5000/users", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axiosJWT.get(
+      `http://localhost:5000/user/${cookie.refreshToken}`,
+      {}
+    );
     setLoggedin(response.data);
   };
 
   const getPicsById = async () => {
-    const response = await axiosJWT.get("http://localhost:5000/user/pictures", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `http://localhost:5000/user/pictures/${id}`,
+      {}
+    );
     setPics(response.data);
   };
 
   const updateProfile = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:5000/user/update/${id}`, {
-        firstName: newFirstName.value,
-        lastName: newLastName.value,
-        username: newUsername.value,
-        email: newEmail.value,
-        bio: newBio.value,
-        interests: newInterest.value,
-        gender: newGender.value,
-        orientation: newOrientation.value,
-        city: newCity.value,
-      });
+      const response = await axios.post(
+        `http://localhost:5000/user/update/${id}`,
+        {
+          firstName: newFirstName.value,
+          lastName: newLastName.value,
+          username: newUsername.value,
+          email: newEmail.value,
+          bio: newBio.value,
+          interests: newInterest.value,
+          gender: newGender.value,
+          orientation: newOrientation.value,
+          city: newCity.value,
+        }
+      );
       setMessage(response.data.msg);
       history.push(`/profile/${id}`);
     } catch (error) {
@@ -107,11 +110,14 @@ const Profile = () => {
 
   const deletePic = async (pic_id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/user/picture/${pic_id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.delete(
+        `http://localhost:5000/user/picture/${pic_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       history.push(`/profile/${id}`);
       setMessage(response.data.msg);
     } catch (error) {
@@ -120,165 +126,165 @@ const Profile = () => {
       }
     }
   };
-
-  if (pics.length > 0)
+  console.log(pics);
+  if (loggedIn)
     return (
       <div className="">
         {message ? <p className="error">{message}</p> : null}
-      <div className="update">
-        <div className="card-pictures">
-          <PicturesForm />
-          <div className="uploaded-pics">
-            {pics.map((pic) => (
-              <div className="images" key={pic.id}>
-                <img
-                  className="img-top"
-                  src={pic.pic_path}
-                  alt="uploaded-pic"
-                />
-                <div className="delete-button">
-                <button
-                  className="btn btn-danger"
-                  onClick={() => deletePic(pic.id)}
-                >
-                  Delete
-                </button>
+        <div className="update">
+          <div className="card-pictures">
+            <PicturesForm />
+            <div className="uploaded-pics">
+              {pics.map((pic) => (
+                <div className="images" key={pic.id}>
+                  <img
+                    className="img-top"
+                    src={pic.pic_path}
+                    alt="uploaded-pic"
+                  />
+                  <div className="delete-button">
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => deletePic(pic.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="card-profile">
-          <h3>✍ Update profile</h3>
-          <br />
-          <label>✎ Firts name</label>
-          <EditText
-            name="textbox1"
-            defaultValue={loggedIn.firstname}
-            onSave={(value) => {
-              if (value !== "") {
-                setNewFirstName(value);
-              } else {
-                setNewFirstName(loggedIn.firstname);
-              }
-              console.log(value);
-            }}
-          />
-          <label>✎ Last Name</label>
-          <EditText
-            name="textbox1"
-            defaultValue={loggedIn.lastname}
-            onSave={(value) => {
-              if (value !== "") {
-                setNewLastName(value);
-              } else {
-                setNewLastName(loggedIn.lastname);
-              }
-              console.log(value);
-            }}
-          />
-          <label>Age</label>
-          <p>{loggedIn.birthdate}</p>
-          <label>✎ Email address</label>
-          <EditText
-            name="textbox1"
-            defaultValue={loggedIn.email}
-            onSave={(value) => {
-              if (value !== "") {
-                setNewEmail(value);
-              } else {
-                setNewEmail(loggedIn.email);
-              }
-              console.log(value);
-            }}
-          />
-          <div className="card-body">
-            <label>✎ Username</label>
+          <div className="card-profile">
+            <h3>✍ Update profile</h3>
+            <br />
+            <label>✎ Firts name</label>
             <EditText
               name="textbox1"
-              defaultValue={loggedIn.username}
+              defaultValue={loggedIn.firstname}
               onSave={(value) => {
                 if (value !== "") {
-                  setNewUsername(value);
+                  setNewFirstName(value);
                 } else {
-                  setNewUsername(loggedIn.username);
+                  setNewFirstName(loggedIn.firstname);
                 }
                 console.log(value);
               }}
             />
-            <label>✎ Gender</label>
+            <label>✎ Last Name</label>
             <EditText
               name="textbox1"
-              defaultValue={loggedIn.gender}
+              defaultValue={loggedIn.lastname}
               onSave={(value) => {
                 if (value !== "") {
-                  setNewGender(value);
+                  setNewLastName(value);
                 } else {
-                  setNewGender(loggedIn.gender);
+                  setNewLastName(loggedIn.lastname);
                 }
                 console.log(value);
               }}
             />
-            <label>✎ Sexual orientation</label>
+            <label>Age</label>
+            <p>{loggedIn.birthdate}</p>
+            <label>✎ Email address</label>
             <EditText
               name="textbox1"
-              defaultValue={loggedIn.orientation}
+              defaultValue={loggedIn.email}
               onSave={(value) => {
                 if (value !== "") {
-                  setNewOrientation(value);
+                  setNewEmail(value);
                 } else {
-                  setNewOrientation(loggedIn.orientation);
+                  setNewEmail(loggedIn.email);
                 }
                 console.log(value);
               }}
             />
+            <div className="card-body">
+              <label>✎ Username</label>
+              <EditText
+                name="textbox1"
+                defaultValue={loggedIn.username}
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewUsername(value);
+                  } else {
+                    setNewUsername(loggedIn.username);
+                  }
+                  console.log(value);
+                }}
+              />
+              <label>✎ Gender</label>
+              <EditText
+                name="textbox1"
+                defaultValue={loggedIn.gender}
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewGender(value);
+                  } else {
+                    setNewGender(loggedIn.gender);
+                  }
+                  console.log(value);
+                }}
+              />
+              <label>✎ Sexual orientation</label>
+              <EditText
+                name="textbox1"
+                defaultValue={loggedIn.orientation}
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewOrientation(value);
+                  } else {
+                    setNewOrientation(loggedIn.orientation);
+                  }
+                  console.log(value);
+                }}
+              />
 
-            <label>✎ Location</label>
-            <EditText
-              name="textbox1"
-              defaultValue={loggedIn.city}
-              onSave={(value) => {
-                if (value !== "") {
-                  setNewCity(value);
-                } else {
-                  setNewCity(loggedIn.city);
-                }
-                console.log(value);
-              }}
-            />
-            <label>✎ Interests</label>
-            <EditText
-              name="textbox1"
-              defaultValue={loggedIn.interests}
-              onSave={(value) => {
-                if (value !== "") {
-                  setNewInterest(value);
-                } else {
-                  setNewInterest(loggedIn.interests);
-                }
-                console.log(value);
-              }}
-            />
-            <label>✎ Bio</label>
-            <EditTextarea
-              name="textbox1"
-              defaultValue={loggedIn.bio}
-              onSave={(value) => {
-                if (value !== "") {
-                  setNewBio(value);
-                } else {
-                  setNewBio(loggedIn.bio);
-                }
-                console.log(value);
-              }}
-            />
+              <label>✎ Location</label>
+              <EditText
+                name="textbox1"
+                defaultValue={loggedIn.city}
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewCity(value);
+                  } else {
+                    setNewCity(loggedIn.city);
+                  }
+                  console.log(value);
+                }}
+              />
+              <label>✎ Interests</label>
+              <EditText
+                name="textbox1"
+                defaultValue={loggedIn.interests}
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewInterest(value);
+                  } else {
+                    setNewInterest(loggedIn.interests);
+                  }
+                  console.log(value);
+                }}
+              />
+              <label>✎ Bio</label>
+              <EditTextarea
+                name="textbox1"
+                defaultValue={loggedIn.bio}
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewBio(value);
+                  } else {
+                    setNewBio(loggedIn.bio);
+                  }
+                  console.log(value);
+                }}
+              />
+            </div>
+            <button className="btn btn-warning" onClick={updateProfile}>
+              Update
+            </button>
           </div>
-          <button className="btn btn-warning" onClick={updateProfile}>
-            Update
-          </button>
         </div>
       </div>
-    </div>
     );
   else return <div>Loading...</div>;
 };

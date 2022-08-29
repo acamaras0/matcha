@@ -3,18 +3,12 @@ import UserImages from "../models/ImageModel.js";
 import fs from "fs";
 
 export const getPicsById = async (req, res) => {
-  const user = await Users.findOne({
-    where: {
-      online: 1,
-    },
-  });
-  const userId = user.dataValues.id;
+  const { id } = req.params;
   const pics = await UserImages.findAll({
     where: {
-      user_id: userId,
+      user_id: id,
     },
   });
-  console.log(pics);
   res.json(pics);
 };
 

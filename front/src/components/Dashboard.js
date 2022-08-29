@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import StarRating from "../models/StarRating";
 import img from "../assets/yellow-heart.png";
 import img1 from "../assets/broken-heart.png";
@@ -13,19 +14,20 @@ const Dashboard = () => {
   const [expire, setExpire] = useState("");
   const [users, setUsers] = useState([]);
   const [pics, setPics] = useState([]);
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
 
   useEffect(() => {
     refreshToken();
     getUsers();
     getLoggedIn();
-    getPicsById();
   }, []);
 
   const refreshToken = async () => {
     try {
       const response = await axios.get("http://localhost:5000/token");
       setToken(response.data.accessToken);
+      //console.log("token ", response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
       setExpire(decoded.exp);
     } catch (error) {
@@ -44,7 +46,6 @@ const Dashboard = () => {
         const response = await axios.get("http://localhost:5000/token");
         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
         setToken(response.data.accessToken);
-        //console.log("token ",response.data.accessToken);
         const decoded = jwt_decode(response.data.accessToken);
         setExpire(decoded.exp);
       }
@@ -56,34 +57,32 @@ const Dashboard = () => {
   );
 
   const getUsers = async () => {
-    const response = await axiosJWT.get("http://localhost:5000/users/info", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const response = await axios.get("http://localhost:5000/users/info", {
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
     });
     setUsers(response.data);
+    console.log("users", users);
   };
+
   const getLoggedIn = async () => {
-    const response = await axiosJWT.get("http://localhost:5000/users", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `http://localhost:5000/user/${cookie.refreshToken}`,
+      {
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
+      }
+    );
     setLoggedin(response.data);
   };
 
-  const getPicsById = async () => {
-    const response = await axiosJWT.get("http://localhost:5000/user/pictures", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    setPics(response.data);
-  };
 
   const handleUserSelect = async (id) => {
     history.push(`/users/${id}`);
   };
+
 
   return (
     <div className="">

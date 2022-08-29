@@ -12,7 +12,8 @@ import ProfileRandom from "./components/ProfileRandom";
 import Footer from "./models/Footer";
 import ResetPassword from "./components/ResetPassword";
 import Activation from "./components/Activation";
-import Nav from "./models/Nav";
+import { useState } from "react";
+import { useCookies } from "react-cookie";
 // import { useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
 // import axios from "axios";
@@ -22,6 +23,10 @@ import Nav from "./models/Nav";
 // const socket = socketIOClient(ENDPOINT);
 
 function App() {
+  // const [cookie, setCookie] = useCookies(["refreshToken"]);
+
+  // console.log("cookie", cookie.refreshToken);
+
   return (
     <>
       <UserContextProvider>

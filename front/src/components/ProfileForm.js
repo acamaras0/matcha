@@ -7,6 +7,7 @@ import Cities from "../models/Cities";
 import Age from "../models/Age";
 import Orientation from "../models/Orientation";
 import jwt_decode from "jwt-decode";
+import { useCookies } from "react-cookie";
 import "../App.css";
 
 const ProfileForm = () => {
@@ -21,6 +22,7 @@ const ProfileForm = () => {
   const history = useHistory();
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
 
   useEffect(() => {
     refreshToken();
@@ -61,11 +63,14 @@ const ProfileForm = () => {
 
   const getLoggedIn = async () => {
     try {
-      const response = await axiosJWT.get("http://localhost:5000/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axiosJWT.get(
+        `http://localhost:5000/user/${cookie.refreshToken}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setLoggedin(response.data);
     } catch (error) {
       if (error.response) {

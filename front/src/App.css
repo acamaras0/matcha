@@ -2,6 +2,27 @@
   background-color: rgb(250, 239, 182);
 }
 
+img.like {
+  width: 39px;
+  height: 41px;
+  -webkit-filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.322));
+  filter: drop-shadow(5px 5px 5px rgba(255, 215, 37, 0.446));
+}
+
+img.dislike {
+  width: 38px;
+  height: 37px;
+  -webkit-filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.322));
+  filter: drop-shadow(5px 5px 5px rgba(255, 215, 37, 0.446));
+}
+
+.like-container {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 5vw;
+  padding-right: 5vw;
+  padding-top: 10vh;
+}
 h3 {
   color: rgb(236, 189, 0);
 }
@@ -20,7 +41,7 @@ img.card-img-top {
   flex-direction: column;
   align-items: center;
 }
-.activ{
+.activ {
   padding: 10vw;
 }
 .delete-button {
@@ -159,4 +180,9 @@ a:active {
 .uploaded-pics {
   display: flow-root;
   justify-content: unset;
+}
+
+.card {
+  margin-right: 20vw;
+  margin-left: 20vw;
 }

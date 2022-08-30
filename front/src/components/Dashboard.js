@@ -7,6 +7,7 @@ import { useCookies } from "react-cookie";
 import StarRating from "../models/StarRating";
 import img from "../assets/yellow-heart.png";
 import img1 from "../assets/broken-heart.png";
+import useGetDistance from "../utils/useGetDistance";
 
 const Dashboard = () => {
   const [loggedIn, setLoggedin] = useState("");
@@ -16,6 +17,9 @@ const Dashboard = () => {
   const [pics, setPics] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
+  const distance = useGetDistance();
+
+  console.log("distance", distance);
 
   useEffect(() => {
     refreshToken();
@@ -27,7 +31,6 @@ const Dashboard = () => {
     try {
       const response = await axios.get("http://localhost:5000/token");
       setToken(response.data.accessToken);
-      //console.log("token ", response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
       setExpire(decoded.exp);
     } catch (error) {
@@ -57,11 +60,7 @@ const Dashboard = () => {
   );
 
   const getUsers = async () => {
-    const response = await axios.get("http://localhost:5000/users/info", {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-    });
+    const response = await axios.get("http://localhost:5000/users/info", {});
     setUsers(response.data);
     console.log("users", users);
   };
@@ -69,11 +68,7 @@ const Dashboard = () => {
   const getLoggedIn = async () => {
     const response = await axios.get(
       `http://localhost:5000/user/${cookie.refreshToken}`,
-      {
-        // headers: {
-        //   Authorization: `Bearer ${token}`,
-        // },
-      }
+      {}
     );
     setLoggedin(response.data);
   };
@@ -81,7 +76,16 @@ const Dashboard = () => {
   const handleUserSelect = async (id) => {
     history.push(`/users/${id}`);
   };
-
+  if (users.length === 0)
+    return (
+      <div className="text-center">
+        <a href={`http://localhost:3000/profile/${loggedIn.id}`}>
+          Logged in as: {loggedIn.username}
+        </a>
+        <br />
+        <p>Loading...</p>
+      </div>
+    );
   return (
     <div className="">
       <div className="text-center">
@@ -94,6 +98,19 @@ const Dashboard = () => {
         {users &&
           users.map((user) => {
             if (user.profile_pic) {
+              {
+                distance &&
+                  distance.map((dist) => {
+                    
+                      <div key={user.id}>
+                        <div className="text-center"></div>
+                        {dist.distance}
+                        <p>HERE</p>
+                      </div> //NOT WORKING YET
+                    
+                  });
+              }
+
               return (
                 <div key={user.id} className="card mb-3">
                   <div className="row no-gutters">

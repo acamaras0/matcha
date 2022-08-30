@@ -68,7 +68,7 @@ const ProfileRandom = () => {
           <h2 className="text-center">
             {selectedUser.firstname} {selectedUser.lastname}
           </h2>
-          <StarRating rating={5} />
+          <StarRating rating={3} />
           <div className="card-profile">
             <img
               className="card-img-top"

@@ -12,10 +12,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// export const loggedIn = async (req, res) => {
-//   const token = req.params.token;
-
-// }
+export const getCoordinates = async (req, res) => {
+  console.log("HHHEEEEEEEEREEEEEEEEE");
+  const coordinates = await Users.findAll({
+    attributes: ["geo_lat", "geo_long"],
+  });
+  console.log("COORDINATES", coordinates);
+  res.json(coordinates);
+};
 
 export const accountActivation = async (req, res) => {
   const hash = req.params.hash;
@@ -243,6 +247,7 @@ export const getUsers = async (req, res) => {
         online: 0,
       },
     });
+    //console.log(users);
     res.json(users);
   } catch (error) {
     console.log(error);

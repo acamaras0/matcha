@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useGeoLocation = () => {
   const [location, setLocation] = useState({
@@ -41,6 +41,25 @@ const useGeoLocation = () => {
 
     navigator.geolocation.getCurrentPosition(onSuccess, onError);
   }, []);
+
+  // fetch(
+  //   "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+  //     location.coordinates.lat +
+  //     "," +
+  //     location.coordinates.lng +
+  //     "&key=AIzaSyDhF60vnq16OGzqjgpXj5WemUR1Eg4K6sU"
+  // )
+  //   .then((response) => response.json())
+  //   .then((responseJson) => {
+  //     console.log(
+  //       "ADDRESS GEOCODE is BACK!! => " + JSON.stringify(responseJson)
+  //     );
+  //   });
+  // const geocoder = new window.google.maps.Geocoder();
+  // const my_location = {
+  //   lat: location.coordinates.lat,
+  //   lng: location.coordinates.lng,
+  // };
 
   return location;
 };

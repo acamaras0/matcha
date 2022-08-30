@@ -11,6 +11,7 @@ import {
   resetPass,
   updateProfile,
   accountActivation,
+  getCoordinates,
 } from "../controllers/Users.js";
 import { UploadPic, getPicsById, deletePic } from "../controllers/Images.js";
 import { upload } from "../middleware/Upload.js";
@@ -25,6 +26,7 @@ router.get("/users/verify", verifyToken);
 router.get("/token", refreshToken);
 router.get("/user/pictures/:id", getPicsById);
 router.get("/users/:id", getRandomUser);
+router.get("/coordinates", getCoordinates);
 
 router.post("/activate/:hash", accountActivation);
 

@@ -50,10 +50,10 @@ const Users = db.define(
       type: DataTypes.STRING,
     },
     geo_lat: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DOUBLE,
     },
     geo_long: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DOUBLE,
     },
     dist_min: {
       type: DataTypes.INTEGER,

@@ -3,11 +3,13 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
+import useGeoLocation from "../utils/useGeoLocation";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const location = useGeoLocation();
   const history = useHistory();
 
   const Auth = async (e) => {
@@ -16,6 +18,8 @@ const Login = () => {
       await axios.post("http://localhost:5000/login", {
         username: username,
         password: password,
+        lat: location.coordinates.lat,
+        lng: location.coordinates.lng,
       });
       history.push("/completeprofile");
     } catch (error) {
@@ -30,6 +34,7 @@ const Login = () => {
       <div className="logo">
         <img src={logo} alt="logo" />
       </div>
+      {location.loaded ? JSON.stringify(location) : "No permission."}
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Auth}>
           <div className="Auth-form-content">

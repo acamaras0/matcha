@@ -78,11 +78,9 @@ const Dashboard = () => {
     setLoggedin(response.data);
   };
 
-
   const handleUserSelect = async (id) => {
     history.push(`/users/${id}`);
   };
-
 
   return (
     <div className="">

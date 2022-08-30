@@ -251,7 +251,7 @@ export const getUsers = async (req, res) => {
 
 export const getLoggedIn = async (req, res) => {
   const token = req.params.token;
-  console.log("TOKEN HEREEE", token);
+  //console.log("TOKEN HEREEE", token);
   try {
     const loggedIn = await Users.findOne({
       where: {
@@ -338,6 +338,7 @@ export const Register = async (req, res) => {
 };
 
 export const Login = async (req, res) => {
+  const { lat, lng } = req.body;
   try {
     const user = await Users.findAll({
       where: {
@@ -382,6 +383,8 @@ export const Login = async (req, res) => {
     await Users.update(
       {
         online: 1,
+        geo_lat: lat,
+        geo_long: lng,
       },
       {
         where: {

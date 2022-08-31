@@ -186,3 +186,8 @@ a:active {
   margin-right: 20vw;
   margin-left: 20vw;
 }
+
+.card-text{
+  color: rgb(236, 189, 0);
+  font-style: italic;
+}

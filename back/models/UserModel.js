@@ -40,9 +40,6 @@ const Users = db.define(
       type: DataTypes.STRING,
       defaultValue: "bisexual",
     },
-    city: {
-      type: DataTypes.STRING,
-    },
     interests: {
       type: DataTypes.STRING,
     },

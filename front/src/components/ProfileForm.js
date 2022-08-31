@@ -3,7 +3,6 @@ import axios from "axios";
 import { useHistory, Redirect } from "react-router-dom";
 import Gender from "../models/Gender";
 import Tags from "../models/Tags";
-import Cities from "../models/Cities";
 import Age from "../models/Age";
 import Orientation from "../models/Orientation";
 import jwt_decode from "jwt-decode";
@@ -15,7 +14,6 @@ const ProfileForm = () => {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [orientation, setOrientation] = useState("");
-  const [city, setCity] = useState("");
   const [interests, setInterests] = useState([]);
   const [bio, setBio] = useState("");
   const [message, setMessage] = useState("");
@@ -86,7 +84,6 @@ const ProfileForm = () => {
         birthdate: age,
         gender: gender,
         orientation: orientation,
-        city: city,
         interests: interests,
         bio: bio,
       });
@@ -118,9 +115,6 @@ const ProfileForm = () => {
               <br />
               <label>Sexual orientation</label>
               <Orientation setOrientation={setOrientation} />
-              <br />
-              <label>City</label>
-              <Cities setCity={setCity} />
               <br />
               <label>Interests</label>
               <div className="form-group mt-3">

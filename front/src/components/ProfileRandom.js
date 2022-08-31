@@ -3,8 +3,8 @@ import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
+import useGetDistance from "../utils/useGetDistance";
 import StarRating from "../models/StarRating";
-import Footer from "../models/Footer";
 
 const ProfileRandom = () => {
   const { id } = useParams();
@@ -12,6 +12,7 @@ const ProfileRandom = () => {
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
   const history = useHistory();
+  const distance = useGetDistance();
 
   useEffect(() => {
     refreshToken();
@@ -58,7 +59,11 @@ const ProfileRandom = () => {
   //       return Promise.reject(error);
   //     }
   //   );
-
+  var userID = useParams().id;
+  var location = { ...distance };
+  if (location[userID - 1]){
+    var getDistance = location[userID - 1].distance / 1000;
+  }
   if (!selectedUser) {
     return <div>Loading...</div>;
   } else {
@@ -77,14 +82,13 @@ const ProfileRandom = () => {
             />
             <div className="card-body">
               <h5 className="card-title">{selectedUser.username}</h5>
+              <p className="card-text">{getDistance} km away</p>
               <label>Age</label>
               <p className="card-text">{selectedUser.birthdate}</p>
               <label>Bio</label>
               <p className="card-text">{selectedUser.bio}</p>
               <label>Gender</label>
               <p className="card-text">{selectedUser.gender}</p>
-              <label>Location</label>
-              <p className="card-text">{selectedUser.city}</p>
               <label>Interests</label>
               <p className="card-text">{selectedUser.interests}</p>
             </div>

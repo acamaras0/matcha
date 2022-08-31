@@ -76,6 +76,10 @@ const Dashboard = () => {
   const handleUserSelect = async (id) => {
     history.push(`/users/${id}`);
   };
+
+  var merge = [...users, ...distance];
+  console.log("merge", merge);
+
   if (users.length === 0)
     return (
       <div className="text-center">
@@ -94,23 +98,24 @@ const Dashboard = () => {
         </a>
       </div>{" "}
       <br />
-      <div className="">
-        {users &&
-          users.map((user) => {
-            if (user.profile_pic) {
-              {
-                distance &&
-                  distance.map((dist) => {
-                    
-                      <div key={user.id}>
-                        <div className="text-center"></div>
-                        {dist.distance}
-                        <p>HERE</p>
-                      </div> //NOT WORKING YET
-                    
-                  });
-              }
+      {/* <div>
 
+        <p>HERE</p>
+        {merge.map((user) => (
+          <div key={user.id}>
+            <div className="text-center">
+                {user.username}
+              </div>
+                {user.distance}
+
+          </div>
+        ))}
+              
+      </div> */}
+      <div className="">
+        {merge &&
+          merge.map((user) => {
+            if (user.profile_pic) {
               return (
                 <div key={user.id} className="card mb-3">
                   <div className="row no-gutters">
@@ -128,10 +133,10 @@ const Dashboard = () => {
                           {user.username}, {user.birthdate}
                         </h5>
                         <StarRating rating={5} /> <br />
+                        <label>Distance</label>
+                        <p className="card-text">{user.distance}</p>
                         <label>Gender</label>
                         <p className="card-text">{user.gender}</p>
-                        <label>Location</label>
-                        <p className="card-text">{user.city}</p>
                         <label>Bio</label>
                         <p className="card-text">{user.bio}</p>
                         <div className="like-container">

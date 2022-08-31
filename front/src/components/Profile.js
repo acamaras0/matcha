@@ -7,6 +7,7 @@ import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import PicturesForm from "./PicturesForm";
 import { useCookies } from "react-cookie";
+import useGetDistance from "../utils/useGetDistance";
 
 const Profile = () => {
   const { id } = useParams();
@@ -21,11 +22,13 @@ const Profile = () => {
   const [newInterest, setNewInterest] = useState("");
   const [newGender, setNewGender] = useState("");
   const [newOrientation, setNewOrientation] = useState("");
-  const [newCity, setNewCity] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [message, setMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
+  const distance = useGetDistance();
+
+  console.log("distance", distance);
 
   useEffect(() => {
     refreshToken();
@@ -96,7 +99,6 @@ const Profile = () => {
           interests: newInterest.value,
           gender: newGender.value,
           orientation: newOrientation.value,
-          city: newCity.value,
         }
       );
       setMessage(response.data.msg);
@@ -234,20 +236,6 @@ const Profile = () => {
                     setNewOrientation(value);
                   } else {
                     setNewOrientation(loggedIn.orientation);
-                  }
-                  console.log(value);
-                }}
-              />
-
-              <label>✎ Location</label>
-              <EditText
-                name="textbox1"
-                defaultValue={loggedIn.city}
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewCity(value);
-                  } else {
-                    setNewCity(loggedIn.city);
                   }
                   console.log(value);
                 }}

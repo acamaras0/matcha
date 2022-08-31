@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 export const getCoordinates = async (req, res) => {
   console.log("HHHEEEEEEEEREEEEEEEEE");
   const coordinates = await Users.findAll({
-    attributes: ["geo_lat", "geo_long"],
+    attributes: ["id", "geo_lat", "geo_long"],
   });
   console.log("COORDINATES", coordinates);
   res.json(coordinates);
@@ -65,7 +65,6 @@ export const updateProfile = async (req, res) => {
     interests,
     gender,
     orientation,
-    city,
   } = req.body;
   if (firstName) {
     await Users.update(
@@ -141,16 +140,6 @@ export const updateProfile = async (req, res) => {
     await Users.update(
       {
         orientation: orientation,
-      },
-      {
-        where: { id },
-      }
-    );
-  }
-  if (city) {
-    await Users.update(
-      {
-        city: city,
       },
       {
         where: { id },
@@ -403,8 +392,8 @@ export const Login = async (req, res) => {
 };
 
 export const ProfileFill = async (req, res) => {
-  const { birthdate, gender, orientation, city, interests, bio } = req.body;
-  if (!(birthdate && gender && orientation && city && interests && bio)) {
+  const { birthdate, gender, orientation, interests, bio } = req.body;
+  if (!(birthdate && gender && orientation && interests && bio)) {
     return res.status(400).json({
       msg: "All fields are required",
     });
@@ -422,7 +411,6 @@ export const ProfileFill = async (req, res) => {
         birthdate: birthdate,
         gender: gender,
         orientation: orientation,
-        city: city,
         interests: interests,
         bio: bio,
       },

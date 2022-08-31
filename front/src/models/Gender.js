@@ -8,8 +8,6 @@ const options = [
     { label: "Androgyne", value: "androgyne"},
     { label: "Cisgender", value: "cisgender"},
     { label: "Transgender", value: "transgender"},
-    { label: "Helicopter", value: "helicopter"},
-    { label: "Etc.", value: "etc"},
   ];
 
   const Gender = ({setGender}) => {

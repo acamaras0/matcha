@@ -54,6 +54,30 @@ export const accountActivation = async (req, res) => {
   }
 };
 
+export const updatePassword = async (req, res) => {
+  const { id } = req.params;
+  const { password, passwordConfirm } = req.body;
+  if (password !== passwordConfirm) {
+    return res.status(200).send("Passwords do not match");
+  } else if (password.length < 8 || password.length > 20) {
+    return res.status(200).send("Password must be at least 8 characters");
+  } else {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+    await Users.update(
+      {
+        password: hash,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
+    );
+    res.status(200).send("Password updated");
+  }
+};
+
 export const updateProfile = async (req, res) => {
   const { id } = req.params;
   const {
@@ -65,6 +89,8 @@ export const updateProfile = async (req, res) => {
     interests,
     gender,
     orientation,
+    geoLat,
+    geoLng,
   } = req.body;
   if (firstName) {
     await Users.update(
@@ -140,6 +166,26 @@ export const updateProfile = async (req, res) => {
     await Users.update(
       {
         orientation: orientation,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (geoLat) {
+    await Users.update(
+      {
+        geo_lat: geoLat,
+      },
+      {
+        where: { id },
+      }
+    );
+  }
+  if (geoLng) {
+    await Users.update(
+      {
+        geo_long: geoLng,
       },
       {
         where: { id },

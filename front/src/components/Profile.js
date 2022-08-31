@@ -23,6 +23,10 @@ const Profile = () => {
   const [newGender, setNewGender] = useState("");
   const [newOrientation, setNewOrientation] = useState("");
   const [newEmail, setNewEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
+  const [newGeoLat, setNewGeoLat] = useState("");
+  const [newGeoLng, setNewGeoLng] = useState("");
   const [message, setMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
@@ -99,6 +103,10 @@ const Profile = () => {
           interests: newInterest.value,
           gender: newGender.value,
           orientation: newOrientation.value,
+          password: newPassword.value,
+          passwordConfirm: newPasswordConfirm.value,
+          geoLat: newGeoLat.value,
+          geoLng: newGeoLng.value,
         }
       );
       setMessage(response.data.msg);
@@ -128,7 +136,26 @@ const Profile = () => {
       }
     }
   };
-  console.log(pics);
+
+  const updatePassword = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/user/updatePassword/${id}`,
+        {
+          password: newPassword,
+          passwordConfirm: newPasswordConfirm,
+        }
+      );
+      setMessage(response.data.msg);
+      history.push(`/profile/${id}`);
+    } catch (error) {
+      if (error.response) {
+        setMessage(error.response.data.msg);
+      }
+    }
+  };
+
   if (loggedIn)
     return (
       <div className="">
@@ -155,6 +182,33 @@ const Profile = () => {
                 </div>
               ))}
             </div>
+          </div>
+          <div className="card-password">
+            <div className="card-body">
+              <h3>✍ Change Password</h3> <br />
+              <label>New Password</label>
+              <input
+                type="password"
+                className="form-control mt-3"
+                placeholder="Password..."
+                onChange={(e) => {
+                  setNewPassword(e.target.value);
+                }}
+              ></input>
+              <label>Confirm Password</label>
+              <input
+                type="password"
+                className="form-control mt-3"
+                placeholder="Confirm password..."
+                onChange={(e) => {
+                  setNewPasswordConfirm(e.target.value);
+                }}
+              ></input>
+            </div>{" "}
+            <br />
+            <button onClick={updatePassword} className="btn btn-warning">
+              Submit
+            </button>
           </div>
           <div className="card-profile">
             <h3>✍ Update profile</h3>
@@ -187,6 +241,29 @@ const Profile = () => {
             />
             <label>Age</label>
             <p>{loggedIn.birthdate}</p>
+            <label>Coordinates</label>
+            <EditText
+              name="textbox1"
+              defaultValue="New longitude"
+              onSave={(value) => {
+                if (value !== "") {
+                  setNewGeoLat(value);
+                } else {
+                  setNewGeoLat(loggedIn.geo_lat);
+                }
+              }}
+            />
+            <EditText
+              name="textbox1"
+              defaultValue="New longitude"
+              onSave={(value) => {
+                if (value !== "") {
+                  setNewGeoLng(value);
+                } else {
+                  setNewGeoLng(loggedIn.geo_long);
+                }
+              }}
+            />
             <label>✎ Email address</label>
             <EditText
               name="textbox1"

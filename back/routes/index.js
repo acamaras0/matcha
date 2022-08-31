@@ -12,6 +12,7 @@ import {
   updateProfile,
   accountActivation,
   getCoordinates,
+  updatePassword,
 } from "../controllers/Users.js";
 import { UploadPic, getPicsById, deletePic } from "../controllers/Images.js";
 import { upload } from "../middleware/Upload.js";
@@ -29,7 +30,7 @@ router.get("/users/:id", getRandomUser);
 router.get("/coordinates", getCoordinates);
 
 router.post("/activate/:hash", accountActivation);
-
+router.post("/user/updatePassword/:id", updatePassword);
 router.post("/user/update/:id", updateProfile);
 router.post("/resetpassword/:token", resetPass);
 router.post("/users/forgotpassword", forgotPass);

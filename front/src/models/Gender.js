@@ -1,30 +1,27 @@
 import React, { useState } from "react";
-import  Select  from  "react-select";
+import Select from "react-select";
 
 const options = [
-    { label: "Male", value: "male" },
-    { label: "Female", value: "female" },
-    { label: "Agender", value: "agender"},
-    { label: "Androgyne", value: "androgyne"},
-    { label: "Cisgender", value: "cisgender"},
-    { label: "Transgender", value: "transgender"},
-  ];
+  { label: "Male", value: "male" },
+  { label: "Female", value: "female" },
+  { label: "Other", value: "other" },
+];
 
-  const Gender = ({setGender}) => {
-    const [selected, setSelected] = useState([]);
-    console.log(selected);
-    return (
-      <div>
-        <Select
-          options={options}
-          onChange={(choice) => {
-            setSelected(choice.value);
-            setGender(choice.value);
-          }}
-          labelledBy="Select"
-        />
-      </div>
-    );
-  };
-  
-  export default Gender;
+const Gender = ({ setGender }) => {
+  const [selected, setSelected] = useState([]);
+  console.log(selected);
+  return (
+    <div>
+      <Select
+        options={options}
+        onChange={(choice) => {
+          setSelected(choice.value);
+          setGender(choice.value);
+        }}
+        labelledBy="Select"
+      />
+    </div>
+  );
+};
+
+export default Gender;

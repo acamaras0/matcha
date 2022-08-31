@@ -14,7 +14,6 @@ const useGetDistance = () => {
   const getCoordinates = async () => {
     const response = await axios.get("http://localhost:5000/coordinates");
     setMatchLocation(response.data);
-    console.log("matchLocation", matchLocation);
   };
 
   for (let i = 0; i < matchLocation.length; i++) {

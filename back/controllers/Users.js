@@ -13,11 +13,9 @@ const transporter = nodemailer.createTransport({
 });
 
 export const getCoordinates = async (req, res) => {
-  console.log("HHHEEEEEEEEREEEEEEEEE");
   const coordinates = await Users.findAll({
     attributes: ["id", "geo_lat", "geo_long"],
   });
-  console.log("COORDINATES", coordinates);
   res.json(coordinates);
 };
 

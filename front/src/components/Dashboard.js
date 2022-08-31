@@ -19,8 +19,6 @@ const Dashboard = () => {
   const history = useHistory();
   const distance = useGetDistance();
 
-  console.log("distance", distance);
-
   useEffect(() => {
     refreshToken();
     getUsers();
@@ -98,20 +96,6 @@ const Dashboard = () => {
         </a>
       </div>{" "}
       <br />
-      {/* <div>
-
-        <p>HERE</p>
-        {merge.map((user) => (
-          <div key={user.id}>
-            <div className="text-center">
-                {user.username}
-              </div>
-                {user.distance}
-
-          </div>
-        ))}
-              
-      </div> */}
       <div className="">
         {merge &&
           merge.map((user) => {

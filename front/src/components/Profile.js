@@ -168,7 +168,7 @@ const Profile = () => {
                 <div className="images" key={pic.id}>
                   <img
                     className="img-top"
-                    src={pic.pic_path}
+                    src={pic.img}
                     alt="uploaded-pic"
                   />
                   <div className="delete-button">

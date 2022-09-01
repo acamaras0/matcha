@@ -17,7 +17,7 @@ const UserImages = db.define(
     pic_name: {
       type: DataTypes.STRING,
     },
-    pic_path: {
+    img: {
       type: DataTypes.STRING,
     }
   },

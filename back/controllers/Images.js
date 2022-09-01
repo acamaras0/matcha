@@ -5,6 +5,7 @@ import fs from "fs";
 export const getPicsById = async (req, res) => {
   const { id } = req.params;
   const pics = await UserImages.findAll({
+    attributes: ["img"],
     where: {
       user_id: id,
     },
@@ -32,7 +33,7 @@ export const UploadPic = async (req, res) => {
       await UserImages.create({
         user_id: userId,
         pic_name: req.file.filename,
-        pic_path: "http://localhost:5000/upload/" + req.file.filename,
+        img: "http://localhost:5000/upload/" + req.file.filename,
       });
     } catch (err) {
       console.log(err);

@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import axios from "axios";
 import useGetDistance from "../utils/useGetDistance";
 import StarRating from "../models/StarRating";
+import Gallery from "../models/Gallery";
 
 const ProfileRandom = () => {
   const { id } = useParams();
@@ -71,6 +72,12 @@ const ProfileRandom = () => {
   };
   console.log(pics);
   var location = { ...distance };
+
+  // const path = [
+  //   {
+  //     path: "http://localhost:5000/upload/file-1662022362822.jpg",
+  //   },
+  // ];
   if (location[id - 1]) {
     var getDistance = location[id - 1].distance / 1000;
   }
@@ -83,21 +90,9 @@ const ProfileRandom = () => {
           <h2 className="text-center">
             {selectedUser.firstname} {selectedUser.lastname}
           </h2>
-          <StarRating rating={3} />
+          <StarRating rating={5} />
           <div className="card-profile">
-            <div className="gallery">
-              {pics &&
-                pics.map((pic) => {
-                  return (
-                    <img
-                      key={pic.id}
-                      className="card-img-top"
-                      src={pic.pic_path}
-                      alt="Card cap"
-                    />
-                  );
-                })}
-            </div>
+            <Gallery galleryImages={pics} />
             <div className="card-body">
               <h5 className="card-title">{selectedUser.username}</h5>
               <p className="card-text">{getDistance} km away</p>

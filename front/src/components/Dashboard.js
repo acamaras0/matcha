@@ -92,7 +92,7 @@ const Dashboard = () => {
     <div className="">
       <div className="text-center">
         <a href={`http://localhost:3000/profile/${loggedIn.id}`}>
-          Logged in as: {loggedIn.username}
+          <button className="btn btn-outline-warning">My profile</button>
         </a>
       </div>{" "}
       <br />
@@ -117,8 +117,8 @@ const Dashboard = () => {
                           {user.username}, {user.birthdate}
                         </h5>
                         <StarRating rating={5} /> <br />
-                        <label>Distance</label>
-                        <p className="card-text">{user.distance}</p>
+                        {/* <label>Distance</label>
+                        <p className="card-text">{user.distance}</p> */}
                         <label>Gender</label>
                         <p className="card-text">{user.gender}</p>
                         <label>Bio</label>

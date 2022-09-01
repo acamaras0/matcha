@@ -2,6 +2,16 @@
   background-color: rgb(250, 239, 182);
 }
 
+.gallery {
+  overflow: hidden;
+  display: inline-flex;
+  width: 70%;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-content: stretch;
+}
+
 img.like {
   width: 39px;
   height: 41px;
@@ -33,6 +43,9 @@ h3 {
 }
 img.card-img-top {
   width: 40%;
+  padding: 1%;
+  border: 2px solid white;
+  border-radius: 5%;
 }
 
 .images {
@@ -185,9 +198,10 @@ a:active {
 .card {
   margin-right: 20vw;
   margin-left: 20vw;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
 }
 
-.card-text{
+.card-text {
   color: rgb(236, 189, 0);
   font-style: italic;
 }

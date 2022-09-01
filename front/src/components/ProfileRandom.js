@@ -11,11 +11,13 @@ const ProfileRandom = () => {
   const { selectedUser, setSelectedUser } = useContext(UserContext);
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
+  const [pics, setPics] = useState([]);
   const history = useHistory();
   const distance = useGetDistance();
 
   useEffect(() => {
     refreshToken();
+    getPicsById();
 
     const fetchData = async () => {
       try {
@@ -59,10 +61,18 @@ const ProfileRandom = () => {
   //       return Promise.reject(error);
   //     }
   //   );
-  var userID = useParams().id;
+
+  const getPicsById = async () => {
+    const response = await axios.get(
+      `http://localhost:5000/user/pictures/${id}`,
+      {}
+    );
+    setPics(response.data);
+  };
+  console.log(pics);
   var location = { ...distance };
-  if (location[userID - 1]){
-    var getDistance = location[userID - 1].distance / 1000;
+  if (location[id - 1]) {
+    var getDistance = location[id - 1].distance / 1000;
   }
   if (!selectedUser) {
     return <div>Loading...</div>;
@@ -75,11 +85,19 @@ const ProfileRandom = () => {
           </h2>
           <StarRating rating={3} />
           <div className="card-profile">
-            <img
-              className="card-img-top"
-              src={selectedUser.profile_pic}
-              alt="Card cap"
-            />
+            <div className="gallery">
+              {pics &&
+                pics.map((pic) => {
+                  return (
+                    <img
+                      key={pic.id}
+                      className="card-img-top"
+                      src={pic.pic_path}
+                      alt="Card cap"
+                    />
+                  );
+                })}
+            </div>
             <div className="card-body">
               <h5 className="card-title">{selectedUser.username}</h5>
               <p className="card-text">{getDistance} km away</p>

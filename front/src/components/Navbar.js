@@ -25,6 +25,7 @@ const Navbar = () => {
   const Dashboard = () => {
     history.push("/dashboard");
   };
+
   return (
     <nav
       className="navbar is-light"

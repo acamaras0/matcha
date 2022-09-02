@@ -3,22 +3,20 @@ import React, { useState } from "react";
 import Select from "react-select";
 
 const options = [
-    { label: "Travel", value: "travel" },
-    { label: "Music", value: "music" },
-    { label: "Movies", value: "movies" },
-    { label: "Books", value: "books" },
-    { label: "Sports", value: "sports" },
-    { label: "Food", value: "food" },
-    { label: "Gaming", value: "gaming" },
-    { label: "Art", value: "art" },
-    { label: "Photography", value: "photography" },
-    { label: "Fashion", value: "fashion" },
+  { label: "Travel", value: "travel" },
+  { label: "Music", value: "music" },
+  { label: "Movies", value: "movies" },
+  { label: "Books", value: "books" },
+  { label: "Sports", value: "sports" },
+  { label: "Food", value: "food" },
+  { label: "Gaming", value: "gaming" },
+  { label: "Art", value: "art" },
+  { label: "Photography", value: "photography" },
+  { label: "Fashion", value: "fashion" },
 ];
 
-
-const Tags = ({setInterests}) => {
+const Tags = ({ setInterests }) => {
   const [selected, setSelected] = useState([]);
-  console.log(selected);
 
   return (
     <div>
@@ -27,6 +25,7 @@ const Tags = ({setInterests}) => {
         onChange={(choice) => {
           setSelected(choice.value);
           setInterests(choice.value);
+          console.log(selected);
         }}
         labelledBy="Select"
       />
@@ -52,7 +51,3 @@ export default Tags;
 // };
 
 // export default Tags;
-
-
-
-

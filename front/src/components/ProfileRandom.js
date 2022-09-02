@@ -44,25 +44,6 @@ const ProfileRandom = () => {
     }
   };
 
-  //   const axiosJWT = axios.create();
-
-  //   axiosJWT.interceptors.request.use(
-  //     async (config) => {
-  //       const currentDate = new Date();
-  //       if (expire * 1000 < currentDate.getTime()) {
-  //         const response = await axios.get("http://localhost:5000/token");
-  //         config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-  //         setToken(response.data.accessToken);
-  //         const decoded = jwt_decode(response.data.accessToken);
-  //         setExpire(decoded.exp);
-  //       }
-  //       return config;
-  //     },
-  //     (error) => {
-  //       return Promise.reject(error);
-  //     }
-  //   );
-
   const getPicsById = async () => {
     const response = await axios.get(
       `http://localhost:5000/user/pictures/${id}`,
@@ -70,17 +51,12 @@ const ProfileRandom = () => {
     );
     setPics(response.data);
   };
-  console.log(pics);
-  var location = { ...distance };
 
-  // const path = [
-  //   {
-  //     path: "http://localhost:5000/upload/file-1662022362822.jpg",
-  //   },
-  // ];
+  var location = { ...distance };
   if (location[id - 1]) {
     var getDistance = location[id - 1].distance / 1000;
   }
+
   if (!selectedUser) {
     return <div>Loading...</div>;
   } else {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useParams, useHistory} from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import logo from "../assets/logo.png";
 const Activation = () => {
   const hash = useParams().hash;

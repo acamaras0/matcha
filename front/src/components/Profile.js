@@ -32,8 +32,6 @@ const Profile = () => {
   const history = useHistory();
   const distance = useGetDistance();
 
-  console.log("distance", distance);
-
   useEffect(() => {
     refreshToken();
     getLoggedIn();
@@ -53,28 +51,8 @@ const Profile = () => {
     }
   };
 
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        //console.log("token ",response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
   const getLoggedIn = async () => {
-    const response = await axiosJWT.get(
+    const response = await axios.get(
       `http://localhost:5000/user/${cookie.refreshToken}`,
       {}
     );
@@ -164,23 +142,26 @@ const Profile = () => {
           <div className="card-pictures">
             <PicturesForm />
             <div className="uploaded-pics">
-              {pics.map((pic) => (
-                <div className="images" key={pic.id}>
-                  <img
-                    className="img-top"
-                    src={pic.img}
-                    alt="uploaded-pic"
-                  />
-                  <div className="delete-button">
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => deletePic(pic.id)}
-                    >
-                      Delete
-                    </button>
+              {pics &&
+                pics.map((pic) => (
+                  <div className="images" key={pic.id}>
+                    <img
+                      className="img-top"
+                      src={pic.img}
+                      alt="uploaded-pic"
+                      key={pic.id}
+                    />
+                    <div className="delete-button" key={pic.id}>
+                      <button
+                        key={pic.id}
+                        className="btn btn-danger"
+                        onClick={() => deletePic(pic.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
           <div className="card-password">

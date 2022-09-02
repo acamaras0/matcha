@@ -14,7 +14,6 @@ const Dashboard = () => {
   const [token, setToken] = useState("");
   const [expire, setExpire] = useState("");
   const [users, setUsers] = useState([]);
-  const [pics, setPics] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   const distance = useGetDistance();
@@ -38,29 +37,9 @@ const Dashboard = () => {
     }
   };
 
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
   const getUsers = async () => {
     const response = await axios.get("http://localhost:5000/users/info", {});
     setUsers(response.data);
-    console.log("users", users);
   };
 
   const getLoggedIn = async () => {
@@ -76,7 +55,6 @@ const Dashboard = () => {
   };
 
   var merge = [...users, ...distance];
-  console.log("merge", merge);
 
   if (users.length === 0)
     return (

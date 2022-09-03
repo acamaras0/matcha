@@ -3,12 +3,16 @@ import axios from "axios";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useCookies } from "react-cookie";
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { token } = useParams();
   const [message, setMessage] = useState("");
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
+
+  console.log(setCookie);
 
   const ResetPassword = async (e) => {
     e.preventDefault();
@@ -26,7 +30,9 @@ const ResetPassword = () => {
     }
   };
 
-  console.log(token);
+  if (cookie.refreshToken) {
+    history.push("/dashboard");
+  }
   return (
     <div>
       <div className="logo">

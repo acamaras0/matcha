@@ -1,7 +1,11 @@
-.App {
+/* .App {
   background-color: rgb(250, 239, 182);
-}
+} */
 
+.footer-content {
+  font-style: italic;
+  font-size: 0.8em;
+}
 .gallery {
   overflow: hidden;
   display: inline-flex;

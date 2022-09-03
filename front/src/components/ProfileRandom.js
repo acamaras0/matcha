@@ -1,25 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import jwt_decode from "jwt-decode";
 import axios from "axios";
 import useGetDistance from "../utils/useGetDistance";
 import StarRating from "../models/StarRating";
 import Gallery from "../models/Gallery";
+import { useCookies } from "react-cookie";
 
 const ProfileRandom = () => {
   const { id } = useParams();
   const { selectedUser, setSelectedUser } = useContext(UserContext);
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
   const [pics, setPics] = useState([]);
   const history = useHistory();
   const distance = useGetDistance();
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
+
+  console.log(setCookie);
 
   useEffect(() => {
-    refreshToken();
-    getPicPath();
-
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/users/${id}`);
@@ -29,34 +27,25 @@ const ProfileRandom = () => {
       }
     };
     fetchData();
-  }, []);
 
-  const refreshToken = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setExpire(decoded.exp);
-    } catch (error) {
-      if (error.response) {
-        history.push("/");
-      }
-    }
-  };
-
-  const getPicPath = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/user/pictures/${id}`,
-      {}
-    );
-    setPics(response.data);
-  };
+    const getPicPath = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/user/pictures/${id}`,
+        {}
+      );
+      setPics(response.data);
+    };
+    getPicPath();
+  }, [id, setSelectedUser]);
 
   var location = { ...distance };
   if (location[id - 1]) {
     var getDistance = location[id - 1].distance / 1000;
   }
 
+  if (!cookie.refreshToken) {
+    history.push("/");
+  }
   if (!selectedUser) {
     return <div>Loading...</div>;
   } else {

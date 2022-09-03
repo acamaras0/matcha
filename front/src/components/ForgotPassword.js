@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import "../App.css";
 import logo from "../assets/logo.png";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
+
+  console.log(setCookie);
 
   const forgotPassword = (e) => {
     e.preventDefault();
@@ -23,6 +27,9 @@ const ForgotPassword = () => {
     }
   };
 
+  if (cookie.refreshToken) {
+    history.push("/dashboard");
+  }
   return (
     <div>
       <div className="logo">

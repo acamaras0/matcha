@@ -4,13 +4,17 @@ import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
 import useGeoLocation from "../utils/useGeoLocation";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const location = useGeoLocation();
   const history = useHistory();
+
+  console.log(setCookie);
 
   const Auth = async (e) => {
     e.preventDefault();
@@ -29,6 +33,9 @@ const Login = () => {
     }
   };
 
+  if (cookie.refreshToken) {
+    history.push("/dashboard");
+  }
   return (
     <div>
       <div className="logo">

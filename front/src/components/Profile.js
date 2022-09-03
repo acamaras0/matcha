@@ -1,19 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 import { useHistory, useParams } from "react-router-dom";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import PicturesForm from "./PicturesForm";
 import { useCookies } from "react-cookie";
-import useGetDistance from "../utils/useGetDistance";
+//import useGetDistance from "../utils/useGetDistance";
 
 const Profile = () => {
   const { id } = useParams();
   const [loggedIn, setLoggedin] = useState("");
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
   const [pics, setPics] = useState([]);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
@@ -30,51 +27,17 @@ const Profile = () => {
   const [message, setMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
-  const distance = useGetDistance();
+  //const distance = useGetDistance();
 
-  //console.log("distance", distance);
+  console.log(setCookie);
 
   useEffect(() => {
-    refreshToken();
     getLoggedIn();
     getPicPath();
   }, []);
 
-  const refreshToken = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setExpire(decoded.exp);
-    } catch (error) {
-      if (error.response) {
-        history.push("/");
-      }
-    }
-  };
-
-  const axiosJWT = axios.create();
-
-  axiosJWT.interceptors.request.use(
-    async (config) => {
-      const currentDate = new Date();
-      if (expire * 1000 < currentDate.getTime()) {
-        const response = await axios.get("http://localhost:5000/token");
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
-        setToken(response.data.accessToken);
-        //console.log("token ",response.data.accessToken);
-        const decoded = jwt_decode(response.data.accessToken);
-        setExpire(decoded.exp);
-      }
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
-
   const getLoggedIn = async () => {
-    const response = await axiosJWT.get(
+    const response = await axios.get(
       `http://localhost:5000/user/${cookie.refreshToken}`,
       {}
     );
@@ -122,12 +85,7 @@ const Profile = () => {
     console.log("pic_id", pic_id);
     try {
       const response = await axios.delete(
-        `http://localhost:5000/user/picture/${pic_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        `http://localhost:5000/user/picture/${pic_id}`
       );
       history.push(`/profile/${id}`);
       setMessage(response.data.msg);
@@ -156,7 +114,9 @@ const Profile = () => {
       }
     }
   };
-
+  if (!cookie.refreshToken) {
+    history.push("/");
+  }
   if (loggedIn)
     return (
       <div className="">
@@ -349,7 +309,7 @@ const Profile = () => {
         </div>
       </div>
     );
-  else return <div>Loading...</div>;
+  return <div>Loading...</div>;
 };
 
 export default Profile;

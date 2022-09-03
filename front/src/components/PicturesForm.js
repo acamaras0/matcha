@@ -2,11 +2,16 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const PicturesForm = () => {
   const [file, setFile] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
+
+  console.log(setCookie);
+
   const saveFile = (e) => {
     setFile(e.target.files[0]);
     setSelectedImage(e.target.files[0]);
@@ -17,9 +22,6 @@ const PicturesForm = () => {
     formData.append("file", file);
     try {
       await axios.post("http://localhost:5000/upload", formData);
-      //  history.push({
-      //     pathname: `/profile/${id}`,
-      //  })
       history.push("/dashboard");
     } catch (err) {
       console.log(err);
@@ -30,6 +32,9 @@ const PicturesForm = () => {
     setSelectedImage(null);
   };
 
+  if (!cookie.refreshToken) {
+    history.push("/");
+  }
   return (
     <div className="form-group text-center">
       <h3>✍ Upload picture</h3>

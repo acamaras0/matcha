@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import StarRating from "../models/StarRating";
@@ -18,24 +17,26 @@ const Dashboard = () => {
   const history = useHistory();
   const distance = useGetDistance();
 
+  console.log(setCookie);
+
   useEffect(() => {
-    refreshToken();
+    //refreshToken();
     getUsers();
     getLoggedIn();
   }, []);
 
-  const refreshToken = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/token");
-      //setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      //setExpire(decoded.exp);
-    } catch (error) {
-      if (error.response) {
-        history.push("/");
-      }
-    }
-  };
+  // const refreshToken = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:5000/token");
+  //     //setToken(response.data.accessToken);
+  //     const decoded = jwt_decode(response.data.accessToken);
+  //     //setExpire(decoded.exp);
+  //   } catch (error) {
+  //     if (error.response) {
+  //       history.push("/");
+  //     }
+  //   }
+  // };
 
   const getUsers = async () => {
     const response = await axios.get("http://localhost:5000/users/info", {});
@@ -55,6 +56,11 @@ const Dashboard = () => {
   };
 
   var merge = [...users, ...distance];
+  //console.log(merge);
+
+  if (!cookie.refreshToken) {
+    history.push("/");
+  }
 
   if (users.length === 0)
     return (
@@ -76,6 +82,7 @@ const Dashboard = () => {
       <br />
       <div className="">
         {merge &&
+          // eslint-disable-next-line
           merge.map((user) => {
             if (user.profile_pic) {
               return (

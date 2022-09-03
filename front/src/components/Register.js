@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
+import { useCookies } from "react-cookie";
 
 const Register = () => {
   const [firstNameReg, setFirstNameReg] = useState("");
@@ -12,7 +13,10 @@ const Register = () => {
   const [passwordReg, setPasswordReg] = useState("");
   const [confirmPasswordReg, setConfirmPasswordReg] = useState("");
   const [message, setMessage] = useState("");
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
+
+  console.log(setCookie);
 
   const Register = async (e) => {
     e.preventDefault();
@@ -32,6 +36,9 @@ const Register = () => {
       }
     }
   };
+  if (cookie.refreshToken) {
+    history.push("/dashboard");
+  }
 
   return (
     <div>

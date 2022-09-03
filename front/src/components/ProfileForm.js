@@ -5,7 +5,6 @@ import Gender from "../models/Gender";
 import Tags from "../models/Tags";
 import Age from "../models/Age";
 import Orientation from "../models/Orientation";
-import jwt_decode from "jwt-decode";
 import { useCookies } from "react-cookie";
 import "../App.css";
 
@@ -18,40 +17,25 @@ const ProfileForm = () => {
   const [bio, setBio] = useState("");
   const [message, setMessage] = useState("");
   const history = useHistory();
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
 
+  console.log(setCookie);
+
   useEffect(() => {
-    refreshToken();
+    const getLoggedIn = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/user/${cookie.refreshToken}`
+        );
+        setLoggedin(response.data);
+      } catch (error) {
+        if (error.response) {
+          history.push("/");
+        }
+      }
+    };
     getLoggedIn();
-  }, []);
-
-  const refreshToken = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/token");
-      setToken(response.data.accessToken);
-      const decoded = jwt_decode(response.data.accessToken);
-      setExpire(decoded.exp);
-    } catch (error) {
-      if (error.response) {
-        history.push("/");
-      }
-    }
-  };
-
-  const getLoggedIn = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/user/${cookie.refreshToken}`
-      );
-      setLoggedin(response.data);
-    } catch (error) {
-      if (error.response) {
-        history.push("/");
-      }
-    }
-  };
+  }, [cookie.refreshToken, history]);
 
   const profileFill = async (e) => {
     e.preventDefault();
@@ -71,6 +55,9 @@ const ProfileForm = () => {
     }
   };
 
+  if (!cookie.refreshToken) {
+    history.push("/");
+  }
   if (loggedIn && loggedIn.birthdate) {
     return <Redirect to={`/profile/${loggedIn.id}`} />;
   }

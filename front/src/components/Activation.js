@@ -2,13 +2,15 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import logo from "../assets/logo.png";
 const Activation = () => {
   const hash = useParams().hash;
   const history = useHistory();
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const [message, setMessage] = useState("");
 
-  console.log(hash);
+  console.log(setCookie);
 
   const activate = async () => {
     try {
@@ -22,6 +24,9 @@ const Activation = () => {
     }
   };
 
+  if (cookie.refreshToken) {
+    history.push("/dashboard");
+  }
   return (
     <>
       <div className="text-center">

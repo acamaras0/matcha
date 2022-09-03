@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch} from "react-router-dom";
 import { UserContextProvider } from "./context/UserContext";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
@@ -12,8 +12,8 @@ import ProfileRandom from "./components/ProfileRandom";
 import Footer from "./models/Footer";
 import ResetPassword from "./components/ResetPassword";
 import Activation from "./components/Activation";
-import { useState } from "react";
-import { useCookies } from "react-cookie";
+// import { useState } from "react";
+// import { useCookies } from "react-cookie";
 // import { useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
 // import axios from "axios";

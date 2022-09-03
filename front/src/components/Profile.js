@@ -32,10 +32,12 @@ const Profile = () => {
   const history = useHistory();
   const distance = useGetDistance();
 
+  //console.log("distance", distance);
+
   useEffect(() => {
     refreshToken();
     getLoggedIn();
-    getPicsById();
+    getPicPath();
   }, []);
 
   const refreshToken = async () => {
@@ -51,15 +53,35 @@ const Profile = () => {
     }
   };
 
+  const axiosJWT = axios.create();
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const currentDate = new Date();
+      if (expire * 1000 < currentDate.getTime()) {
+        const response = await axios.get("http://localhost:5000/token");
+        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        setToken(response.data.accessToken);
+        //console.log("token ",response.data.accessToken);
+        const decoded = jwt_decode(response.data.accessToken);
+        setExpire(decoded.exp);
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
+
   const getLoggedIn = async () => {
-    const response = await axios.get(
+    const response = await axiosJWT.get(
       `http://localhost:5000/user/${cookie.refreshToken}`,
       {}
     );
     setLoggedin(response.data);
   };
 
-  const getPicsById = async () => {
+  const getPicPath = async () => {
     const response = await axios.get(
       `http://localhost:5000/user/pictures/${id}`,
       {}
@@ -97,6 +119,7 @@ const Profile = () => {
   };
 
   const deletePic = async (pic_id) => {
+    console.log("pic_id", pic_id);
     try {
       const response = await axios.delete(
         `http://localhost:5000/user/picture/${pic_id}`,
@@ -145,15 +168,9 @@ const Profile = () => {
               {pics &&
                 pics.map((pic) => (
                   <div className="images" key={pic.id}>
-                    <img
-                      className="img-top"
-                      src={pic.img}
-                      alt="uploaded-pic"
-                      key={pic.id}
-                    />
-                    <div className="delete-button" key={pic.id}>
+                    <img className="img-top" src={pic.img} alt="uploaded-pic" />
+                    <div className="delete-button">
                       <button
-                        key={pic.id}
                         className="btn btn-danger"
                         onClick={() => deletePic(pic.id)}
                       >

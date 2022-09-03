@@ -18,7 +18,7 @@ const ProfileRandom = () => {
 
   useEffect(() => {
     refreshToken();
-    getPicsById();
+    getPicPath();
 
     const fetchData = async () => {
       try {
@@ -44,7 +44,7 @@ const ProfileRandom = () => {
     }
   };
 
-  const getPicsById = async () => {
+  const getPicPath = async () => {
     const response = await axios.get(
       `http://localhost:5000/user/pictures/${id}`,
       {}

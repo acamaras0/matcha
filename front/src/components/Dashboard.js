@@ -11,8 +11,8 @@ import useGetDistance from "../utils/useGetDistance";
 
 const Dashboard = () => {
   const [loggedIn, setLoggedin] = useState("");
-  const [token, setToken] = useState("");
-  const [expire, setExpire] = useState("");
+  //const [token, setToken] = useState("");
+  //const [expire, setExpire] = useState("");
   const [users, setUsers] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
@@ -27,9 +27,9 @@ const Dashboard = () => {
   const refreshToken = async () => {
     try {
       const response = await axios.get("http://localhost:5000/token");
-      setToken(response.data.accessToken);
+      //setToken(response.data.accessToken);
       const decoded = jwt_decode(response.data.accessToken);
-      setExpire(decoded.exp);
+      //setExpire(decoded.exp);
     } catch (error) {
       if (error.response) {
         history.push("/");

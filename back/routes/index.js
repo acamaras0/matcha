@@ -14,7 +14,12 @@ import {
   getCoordinates,
   updatePassword,
 } from "../controllers/Users.js";
-import { UploadPic, getPicsById, deletePic } from "../controllers/Images.js";
+import {
+  UploadPic,
+  getPicsById,
+  deletePic,
+  getPicPath,
+} from "../controllers/Images.js";
 import { upload } from "../middleware/Upload.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
@@ -25,7 +30,7 @@ router.get("/users/info", getUsers);
 router.get("/user/:token", getLoggedIn);
 router.get("/users/verify", verifyToken);
 router.get("/token", refreshToken);
-router.get("/user/pictures/:id", getPicsById);
+router.get("/user/pictures/:id", getPicsById, getPicPath);
 router.get("/users/:id", getRandomUser);
 router.get("/coordinates", getCoordinates);
 

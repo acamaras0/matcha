@@ -2,10 +2,21 @@ import Users from "../models/UserModel.js";
 import UserImages from "../models/ImageModel.js";
 import fs from "fs";
 
-export const getPicsById = async (req, res) => {
+export const getPicPath = async (req, res) => {
   const { id } = req.params;
   const pics = await UserImages.findAll({
     attributes: ["img"],
+    where: {
+      user_id: id,
+    },
+  });
+  res.json(pics);
+};
+
+export const getPicsById = async (req, res) => {
+  const { id } = req.params;
+  const pics = await UserImages.findAll({
+    attributes: ["img", "id"],
     where: {
       user_id: id,
     },

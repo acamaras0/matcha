@@ -210,6 +210,11 @@ a:active {
   font-style: italic;
 }
 
+.report {
+  padding-top: 1vh;
+  font-style: italic;
+  color: rgba(236, 181, 0, 0.695);
+}
 
 /* Gallery */
 
@@ -251,7 +256,9 @@ a:active {
   height: 100%;
 }
 
-.sliderWrap .btnClose, .sliderWrap .btnPrev, .sliderWrap .btnNext {
+.sliderWrap .btnClose,
+.sliderWrap .btnPrev,
+.sliderWrap .btnNext {
   position: fixed;
   cursor: pointer;
   opacity: 0.6;
@@ -259,7 +266,9 @@ a:active {
   z-index: 9999;
 }
 
-.btnNext:hover, .btnPrev:hover, .btnClose:hover {
+.btnNext:hover,
+.btnPrev:hover,
+.btnClose:hover {
   opacity: 1;
 }
 
@@ -294,5 +303,5 @@ a:active {
   pointer-events: none;
   -webkit-user-select: none; /* Safari */
   -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */  
+  user-select: none; /* Standard syntax */
 }

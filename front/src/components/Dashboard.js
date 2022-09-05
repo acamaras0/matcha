@@ -79,6 +79,17 @@ const Dashboard = () => {
     }
   };
 
+  const handleReport = async (id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/report/${loggedIn}/${id}`
+      );
+      setMessage(response.data.msg);
+    } catch (error) {
+      if (error.response) console.log("error", error.response.data);
+    }
+  };
+
   var merge = [...users, ...distance];
 
   if (!cookie.refreshToken) {
@@ -143,6 +154,14 @@ const Dashboard = () => {
                             src={img1}
                             alt="Card cap"
                           />
+                        </div>
+                        <div className="text-center">
+                          <a
+                            onClick={() => handleReport(user.id)}
+                            className="report"
+                          >
+                            Report fake account
+                          </a>
                         </div>
                       </div>
                     </div>

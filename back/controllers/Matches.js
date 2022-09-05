@@ -22,6 +22,7 @@ export const insertLike = async (req, res) => {
           },
         }
       );
+      res.status(200).send({ msg: "You got a match!" });
     } catch (err) {
       console.log(err);
     }
@@ -70,7 +71,7 @@ export const unLike = async (req, res) => {
         },
       }
     );
-    res.status(200).send({ msg: "Disliked!" });
+    res.status(200).send({ msg: "Unmatched!" });
   }
 };
 

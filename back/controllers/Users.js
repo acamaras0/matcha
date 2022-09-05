@@ -289,14 +289,12 @@ export const getUsers = async (req, res) => {
 
 export const getLoggedIn = async (req, res) => {
   const token = req.params.token;
-  //console.log("TOKEN HEREEE", token);
   try {
     const loggedIn = await Users.findOne({
       where: {
         refresh_token: token,
       },
     });
-    //console.log("LOGGED IN", loggedIn);
     res.json(loggedIn);
   } catch (error) {
     console.log(error);

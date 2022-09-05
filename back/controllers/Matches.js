@@ -47,6 +47,9 @@ export const unLike = async (req, res) => {
   const check = await Matches.findOne({
     where: { user1, user2 },
   });
+  const check1 = await Matches.findOne({
+    where: { user1: user2, user2: user1 },
+  });
   if (check) {
     await Matches.destroy({
       where: {
@@ -55,5 +58,29 @@ export const unLike = async (req, res) => {
       },
     });
     res.status(200).send({ msg: "Disliked!" });
+  } else if (check1) {
+    await Matches.update(
+      {
+        match_status: 0,
+      },
+      {
+        where: {
+          user1: user2,
+          user2: user1,
+        },
+      }
+    );
+    res.status(200).send({ msg: "Disliked!" });
   }
+};
+
+export const getMatches = async (req, res) => {
+  const user = req.params.user;
+  const matches = await Matches.findAll({
+    where: {
+      user1: user,
+      match_status: 1,
+    },
+  });
+  res.status(200).send(matches);
 };

@@ -19,7 +19,7 @@ const UserImages = db.define(
     },
     img: {
       type: DataTypes.STRING,
-    }
+    },
   },
   {
     freezeTableName: true,

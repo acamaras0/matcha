@@ -20,6 +20,7 @@ import {
   deletePic,
   getPicPath,
 } from "../controllers/Images.js";
+import { insertLike, unLike } from "../controllers/Matches.js";
 import { upload } from "../middleware/Upload.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
@@ -43,6 +44,9 @@ router.post("/users", Register);
 router.post("/login", Login);
 router.post("/fill", ProfileFill);
 router.post("/upload", upload.single("file"), UploadPic);
+
+router.post("/like/:user1/:user2", insertLike);
+router.post("/unlike/:user1/:user2", unLike);
 
 router.delete("/logout", Logout);
 router.delete("/user/picture/:id", deletePic);

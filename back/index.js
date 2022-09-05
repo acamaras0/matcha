@@ -9,18 +9,18 @@ dotenv.config();
 const app = express();
 
 try {
-    await db.authenticate();
-    console.log('Database Connected...');
+  await db.authenticate();
+  console.log("Database Connected...");
 } catch (error) {
-    console.error(error);
+  console.error(error);
 }
 
-app.use(cors({ credentials:true, origin:'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.json());
-app.use('/upload', express.static('./uploads'));
+app.use("/upload", express.static("./uploads"));
 app.use(router);
 
-app.listen(5000, ()=> console.log('Server running at port 5000'));
+app.listen(5000, () => console.log("Server running at port 5000"));

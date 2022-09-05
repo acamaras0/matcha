@@ -81,7 +81,7 @@ const Profile = () => {
   };
 
   const deletePic = async (pic_id) => {
-    console.log("pic_id", pic_id);
+    //console.log("pic_id", pic_id);
     try {
       const response = await axios.delete(
         `http://localhost:5000/user/picture/${pic_id}`

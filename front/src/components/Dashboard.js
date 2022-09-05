@@ -13,14 +13,15 @@ const Dashboard = () => {
   //const [token, setToken] = useState("");
   //const [expire, setExpire] = useState("");
   const [users, setUsers] = useState([]);
+  const [message, setMessage] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   const distance = useGetDistance();
 
   useEffect(() => {
     //refreshToken();
-    getUsers();
     getLoggedIn();
+    getUsers();
   }, []);
 
   // const refreshToken = async () => {
@@ -46,15 +47,39 @@ const Dashboard = () => {
       `http://localhost:5000/user/${cookie.refreshToken}`,
       {}
     );
-    setLoggedin(response.data);
+    setLoggedin(response.data.id);
   };
 
   const handleUserSelect = async (id) => {
     history.push(`/users/${id}`);
   };
 
+  const handleLike = async (id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/like/${loggedIn}/${id}`,
+        {}
+      );
+      setMessage(response.data.msg);
+    } catch (error) {
+      if (error.response) {
+        console.log("error", error.response.data);
+      }
+    }
+  };
+
+  const handleUnLike = async (id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/unlike/${loggedIn}/${id}`
+      );
+      setMessage(response.data.msg);
+    } catch (error) {
+      if (error.response) console.log("error", error.response.data);
+    }
+  };
+
   var merge = [...users, ...distance];
-  //console.log(merge);
 
   if (!cookie.refreshToken) {
     history.push("/");
@@ -63,9 +88,7 @@ const Dashboard = () => {
   if (users.length === 0)
     return (
       <div className="text-center">
-        <a href={`http://localhost:3000/profile/${loggedIn.id}`}>
-          Logged in as: {loggedIn.username}
-        </a>
+        <a href={`http://localhost:3000/profile/${loggedIn}`}>My Profile</a>
         <br />
         <p>Loading...</p>
       </div>
@@ -73,8 +96,9 @@ const Dashboard = () => {
   return (
     <div className="">
       <div className="text-center">
-        <a href={`http://localhost:3000/profile/${loggedIn.id}`}>
+        <a href={`http://localhost:3000/profile/${loggedIn}`}>
           <button className="btn btn-outline-warning">My profile</button>
+          <p className="message">{message}</p>
         </a>
       </div>{" "}
       <br />
@@ -107,8 +131,18 @@ const Dashboard = () => {
                         <label>Bio</label>
                         <p className="card-text">{user.bio}</p>
                         <div className="like-container">
-                          <img className="like" src={img} alt="Card cap" />
-                          <img className="dislike" src={img1} alt="Card cap" />
+                          <img
+                            onClick={() => handleLike(user.id)}
+                            className="like"
+                            src={img}
+                            alt="Card cap"
+                          />
+                          <img
+                            onClick={() => handleUnLike(user.id)}
+                            className="dislike"
+                            src={img1}
+                            alt="Card cap"
+                          />
                         </div>
                       </div>
                     </div>

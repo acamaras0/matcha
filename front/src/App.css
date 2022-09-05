@@ -17,20 +17,35 @@
 }
 
 img.like {
+  opacity: 1;
+  display: block;
+  /* width: 100%;
+  height: auto; */
+  transition: 0.5s ease;
+  backface-visibility: hidden;
+  cursor: pointer;
   width: 39px;
   height: 41px;
   -webkit-filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.322));
-  filter: drop-shadow(5px 5px 5px rgba(255, 215, 37, 0.446));
+  filter: drop-shadow(5px 5px 5px rgba(112, 112, 112, 0.245));
 }
 
 img.dislike {
+  cursor: pointer;
   width: 38px;
   height: 37px;
   -webkit-filter: drop-shadow(5px 5px 5px rgba(34, 34, 34, 0.322));
-  filter: drop-shadow(5px 5px 5px rgba(255, 215, 37, 0.446));
+  filter: drop-shadow(5px 5px 5px rgba(112, 112, 112, 0.245));
 }
 
-.like-container {
+.like-container:hover .like {
+  opacity: 0.3;
+}
+.dislike-container:hover .dislike {
+  opacity: 0.3;
+}
+
+div.container {
   display: flex;
   justify-content: space-between;
   padding-left: 5vw;
@@ -163,15 +178,18 @@ p.error {
 
 a:link {
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:visited {
   text-decoration: none;
   color: rgb(236, 189, 0);
+  cursor: pointer;
 }
 
 a:hover {
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:active {
@@ -213,7 +231,9 @@ a:active {
 .report {
   padding-top: 1vh;
   font-style: italic;
+  font-size: 0.8em;
   color: rgba(236, 181, 0, 0.695);
+  cursor: pointer;
 }
 
 /* Gallery */

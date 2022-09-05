@@ -141,19 +141,23 @@ const Dashboard = () => {
                         <p className="card-text">{user.gender}</p>
                         <label>Bio</label>
                         <p className="card-text">{user.bio}</p>
-                        <div className="like-container">
-                          <img
-                            onClick={() => handleLike(user.id)}
-                            className="like"
-                            src={img}
-                            alt="Card cap"
-                          />
-                          <img
-                            onClick={() => handleUnLike(user.id)}
-                            className="dislike"
-                            src={img1}
-                            alt="Card cap"
-                          />
+                        <div className="container">
+                          <div className="like-container">
+                            <img
+                              onClick={() => handleLike(user.id)}
+                              className="like"
+                              src={img}
+                              alt="Card cap"
+                            />
+                          </div>
+                          <div className="dislike-container">
+                            <img
+                              onClick={() => handleUnLike(user.id)}
+                              className="dislike"
+                              src={img1}
+                              alt="Card cap"
+                            />
+                          </div>
                         </div>
                         <div className="text-center">
                           <a

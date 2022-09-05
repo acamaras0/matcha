@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -13,8 +14,6 @@ const Login = () => {
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const location = useGeoLocation();
   const history = useHistory();
-
-  console.log(setCookie);
 
   const Auth = async (e) => {
     e.preventDefault();

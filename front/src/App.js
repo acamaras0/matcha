@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { BrowserRouter, Route, Switch} from "react-router-dom";
 import { UserContextProvider } from "./context/UserContext";
 import Dashboard from "./components/Dashboard";

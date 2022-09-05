@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -9,8 +10,6 @@ const PicturesForm = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
-
-  console.log(setCookie);
 
   const saveFile = (e) => {
     setFile(e.target.files[0]);

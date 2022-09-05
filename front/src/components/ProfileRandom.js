@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
@@ -14,8 +15,6 @@ const ProfileRandom = () => {
   const history = useHistory();
   const distance = useGetDistance();
   const [cookie, setCookie] = useCookies(["refreshToken"]);
-
-  console.log(setCookie);
 
   useEffect(() => {
     const fetchData = async () => {

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
@@ -9,8 +10,6 @@ const Activation = () => {
   const history = useHistory();
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const [message, setMessage] = useState("");
-
-  console.log(setCookie);
 
   const activate = async () => {
     try {

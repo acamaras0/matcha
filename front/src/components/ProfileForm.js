@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, Redirect } from "react-router-dom";
@@ -19,7 +20,6 @@ const ProfileForm = () => {
   const history = useHistory();
   const [cookie, setCookie] = useCookies(["refreshToken"]);
 
-  console.log(setCookie);
 
   useEffect(() => {
     const getLoggedIn = async () => {

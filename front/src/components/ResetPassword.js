@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -11,8 +12,6 @@ const ResetPassword = () => {
   const [message, setMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
-
-  console.log(setCookie);
 
   const ResetPassword = async (e) => {
     e.preventDefault();

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -10,8 +11,6 @@ const ForgotPassword = () => {
   const [message, setMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
-
-  console.log(setCookie);
 
   const forgotPassword = (e) => {
     e.preventDefault();

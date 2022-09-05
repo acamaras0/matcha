@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
@@ -29,7 +29,6 @@ const Profile = () => {
   const history = useHistory();
   //const distance = useGetDistance();
 
-  console.log(setCookie);
 
   useEffect(() => {
     getLoggedIn();

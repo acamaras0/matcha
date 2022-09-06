@@ -49,10 +49,8 @@ const ProfileRandom = () => {
 
   const block = async (id) => {
     try {
-      const response = await axios.post(
-        `http://localhost:5000/block/${loggedIn}/${id}`,
-        {}
-      );
+      await axios.post(`http://localhost:5000/block/${loggedIn}/${id}`, {});
+      history.push("/dashboard");
     } catch (error) {
       console.log(error);
     }

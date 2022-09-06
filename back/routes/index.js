@@ -20,7 +20,7 @@ import {
   deletePic,
   getPicPath,
 } from "../controllers/Images.js";
-import { report, block, unblock } from "../controllers/Report.js";
+import { report, block } from "../controllers/ReportBlock.js";
 import { insertLike, unLike } from "../controllers/Matches.js";
 import { upload } from "../middleware/Upload.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
@@ -28,13 +28,14 @@ import { refreshToken } from "../controllers/RefreshToken.js";
 
 const router = express.Router();
 
-router.get("/users/info", getUsers);
+router.get("/users/info/:token", getUsers);
 router.get("/user/:token", getLoggedIn);
 router.get("/users/verify", verifyToken);
 router.get("/token", refreshToken);
 router.get("/user/pictures/:id", getPicsById, getPicPath);
 router.get("/users/:id", getRandomUser);
 router.get("/coordinates", getCoordinates);
+//router.get("/user/blocked/:id", getBlockedUsers);
 
 router.post("/activate/:hash", accountActivation);
 router.post("/user/updatePassword/:id", updatePassword);
@@ -51,7 +52,7 @@ router.post("/unlike/:user1/:user2", unLike);
 
 router.post("/report/:user_id/:reported_id", report);
 router.post("/block/:user_id/:blocked_id", block);
-router.post("/unblock/:user_id/:blocked_id", unblock);
+//router.post("/unblock/:user_id/:blocked_id", unblock);
 
 router.delete("/logout", Logout);
 router.delete("/user/picture/:id", deletePic);

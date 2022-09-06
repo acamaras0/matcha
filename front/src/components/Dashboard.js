@@ -38,7 +38,10 @@ const Dashboard = () => {
   // };
 
   const getUsers = async () => {
-    const response = await axios.get("http://localhost:5000/users/info", {});
+    const response = await axios.get(
+      `http://localhost:5000/users/info/${cookie.refreshToken}`,
+      {}
+    );
     setUsers(response.data);
   };
 

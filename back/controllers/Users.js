@@ -1,4 +1,6 @@
 import Users from "../models/UserModel.js";
+import Block from "../models/BlockModel.js";
+import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
@@ -274,13 +276,19 @@ export const getRandomUser = async (req, res) => {
 };
 
 export const getUsers = async (req, res) => {
+  const token = req.params.token;
+  const loggedIn = await Users.findOne({
+    where: {
+      refresh_token: token,
+    },
+  });
+  let id = loggedIn.dataValues.id;
   try {
     const users = await Users.findAll({
       where: {
-        online: 0,
+        id: { [Op.ne]: id },
       },
     });
-    //console.log(users);
     res.json(users);
   } catch (error) {
     console.log(error);

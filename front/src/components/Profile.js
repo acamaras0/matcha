@@ -25,6 +25,7 @@ const Profile = () => {
   const [newGeoLat, setNewGeoLat] = useState("");
   const [newGeoLng, setNewGeoLng] = useState("");
   const [message, setMessage] = useState("");
+  const [blocked, setBlocked] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   //const distance = useGetDistance();
@@ -80,7 +81,6 @@ const Profile = () => {
   };
 
   const deletePic = async (pic_id) => {
-    //console.log("pic_id", pic_id);
     try {
       const response = await axios.delete(
         `http://localhost:5000/user/picture/${pic_id}`
@@ -112,6 +112,7 @@ const Profile = () => {
       }
     }
   };
+
   if (!cookie.refreshToken) {
     history.push("/");
   }

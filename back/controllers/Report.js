@@ -20,5 +20,39 @@ export const report = async (req, res) => {
     }
   }
 };
-// export const block = async (res, req) => {};
-// export const unblock = async (res, req) => {};
+export const block = async (req, res) => {
+  const id = req.params.user_id;
+  const blocked = req.params.blocked_id;
+  const check = await Block.findOne({
+    where: { user_id: id, blocked_id: blocked },
+  });
+  if (check) return res.status(200).send({ msg: "You can block only once." });
+  else {
+    try {
+      await Block.create({
+        user_id: id,
+        blocked_id: blocked,
+      });
+      res.status(200).send({ msg: "Blocked!" });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
+
+export const unblock = async (req, res) => {
+  const id = req.params.user_id;
+  const blocked = req.params.blocked_id;
+  const check = await Block.findOne({
+    where: { user_id: id, blocked_id: blocked },
+  });
+  if (check) {
+    await Block.destroy({
+      where: {
+        user_id: id,
+        blocked_id: blocked,
+      },
+    });
+    res.status(200).send({ msg: "Unblocked!" });
+  }
+};

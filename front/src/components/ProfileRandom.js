@@ -12,6 +12,7 @@ const ProfileRandom = () => {
   const { id } = useParams();
   const { selectedUser, setSelectedUser } = useContext(UserContext);
   const [pics, setPics] = useState([]);
+  const [loggedIn, setLoggedIn] = useState("");
   const history = useHistory();
   const distance = useGetDistance();
   const [cookie, setCookie] = useCookies(["refreshToken"]);
@@ -35,12 +36,34 @@ const ProfileRandom = () => {
       setPics(response.data);
     };
     getPicPath();
+
+    const getLoggedIn = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/user/${cookie.refreshToken}`,
+        {}
+      );
+      setLoggedIn(response.data.id);
+    };
+    getLoggedIn();
   }, [id, setSelectedUser]);
+
+  const block = async (id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/block/${loggedIn}/${id}`,
+        {}
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   var location = { ...distance };
   if (location[id - 1]) {
     var getDistance = location[id - 1].distance / 1000;
   }
+
+  console.log(selectedUser.id);
 
   if (!cookie.refreshToken) {
     history.push("/");
@@ -69,7 +92,14 @@ const ProfileRandom = () => {
               <label>Interests</label>
               <p className="card-text">{selectedUser.interests}</p>
             </div>
-          </div>
+          </div>{" "}
+          <br />
+          <button
+            onClick={() => block(selectedUser.id)}
+            className="btn btn-danger"
+          >
+            Block
+          </button>
         </div>
       </div>
     );

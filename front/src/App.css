@@ -59,6 +59,20 @@ h3 {
 .update {
   display: flex;
   justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.card-pictures{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-evenly;
+}
+
+.card-password {
+  padding-left: 30vw;
+  padding-right: 30vw;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
 }
 img.card-img-top {
   width: 40%;
@@ -149,8 +163,10 @@ img.card-img-top {
   border-radius: 100%;
 }
 .card-profile {
-  margin-right: 10vw;
-  margin-left: 10vw;
+  padding-left: 30vw;
+  padding-right: 30vw;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
 }
 label {
   font-size: 14px;
@@ -213,8 +229,7 @@ a:active {
 }
 
 .uploaded-pics {
-  display: flow-root;
-  justify-content: unset;
+  width: 40%;
 }
 
 .card {

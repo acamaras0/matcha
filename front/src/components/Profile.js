@@ -29,7 +29,6 @@ const Profile = () => {
   const history = useHistory();
   //const distance = useGetDistance();
 
-
   useEffect(() => {
     getLoggedIn();
     getPicPath();
@@ -118,11 +117,10 @@ const Profile = () => {
   }
   if (loggedIn)
     return (
-      <div className="">
+      <div className="text-center">
         {message ? <p className="error">{message}</p> : null}
         <div className="update">
           <div className="card-pictures">
-            <PicturesForm />
             <div className="uploaded-pics">
               {pics &&
                 pics.map((pic) => (
@@ -139,6 +137,7 @@ const Profile = () => {
                   </div>
                 ))}
             </div>
+            <PicturesForm />
           </div>
           <div className="card-password">
             <div className="card-body">

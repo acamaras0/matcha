@@ -14,7 +14,7 @@ const Dashboard = () => {
   const [message, setMessage] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
-  const distance = useGetDistance();
+  //const distance = useGetDistance();
 
   useEffect(() => {
     getLoggedIn();
@@ -77,7 +77,7 @@ const Dashboard = () => {
     }
   };
 
-  var merge = [...users, ...distance];
+  //var merge = [...users, ...distance];
 
   if (!cookie.refreshToken) {
     history.push("/");
@@ -101,9 +101,9 @@ const Dashboard = () => {
       </div>{" "}
       <br />
       <div className="">
-        {merge &&
+        {users &&
           // eslint-disable-next-line
-          merge.map((user) => {
+          users.map((user) => {
             if (user.profile_pic) {
               return (
                 <div key={user.id} className="card mb-3">

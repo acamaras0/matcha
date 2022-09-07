@@ -12,8 +12,13 @@ const useGetDistance = () => {
   }, []);
 
   const getCoordinates = async () => {
-    const response = await axios.get("http://localhost:5000/coordinates");
-    setMatchLocation(response.data);
+    try{
+      const response = await axios.get("http://localhost:5000/coordinates");
+      setMatchLocation(response.data);
+    }
+    catch (error) {
+      console.log(error);
+    }
   };
 
   for (let i = 0; i < matchLocation.length; i++) {

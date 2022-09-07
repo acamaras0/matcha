@@ -58,7 +58,7 @@ const ProfileForm = () => {
     history.push("/");
   }
   if (loggedIn && loggedIn.birthdate) {
-    return <Redirect to={`/profile/${loggedIn.id}`} />;
+    return <Redirect to={"/dashboard"} />;
   }
   return (
     <div>

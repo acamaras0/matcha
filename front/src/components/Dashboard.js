@@ -120,7 +120,7 @@ const Dashboard = () => {
                           {user.username}, {user.birthdate}
                         </h5>
                         <StarRating rating={5} /> <br />
-                        <p className="card-text">About {user.distance/ 1000} km away</p>
+                        <p className="card-text">About {Math.round(user.distance/ 1000)} km away</p>
                         <label>Gender</label>
                         <p className="card-text">{user.gender}</p>
                         <label>Bio</label>

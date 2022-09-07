@@ -322,7 +322,7 @@ export const getUsers = async (req, res) => {
         },
       });
       const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_long;
+        return a.geo_lat - b.geo_lat;
       });
       res.json(end);
     } catch (error) {
@@ -338,7 +338,7 @@ export const getUsers = async (req, res) => {
         },
       });
       const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_long;
+        return a.geo_lat - b.geo_lat;
       });
       res.json(end);
     } catch (error) {
@@ -354,7 +354,7 @@ export const getUsers = async (req, res) => {
         },
       });
       const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_long;
+        return a.geo_lat - b.geo_lat;
       });
       res.json(end);
     } catch (error) {
@@ -370,7 +370,7 @@ export const getUsers = async (req, res) => {
         },
       });
       const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_long;
+        return a.geo_lat - b.geo_lat;
       });
       res.json(end);
     } catch (error) {
@@ -388,7 +388,7 @@ export const getUsers = async (req, res) => {
         },
       });
       const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_long;
+        return a.geo_lat - b.geo_lat;
       });
       res.json(end);
     } catch (error) {
@@ -402,7 +402,7 @@ export const getUsers = async (req, res) => {
         },
       });
       const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_long;
+        return a.geo_lat - b.geo_lat;
       });
       res.json(end);
     } catch (error) {

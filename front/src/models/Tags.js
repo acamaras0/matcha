@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { MultiSelect } from "react-multi-select-component";
-//import Select from "react-select";
 
 const options = [
   { label: "Travel", value: "travel" },

@@ -56,18 +56,6 @@ h3 {
   color: rgb(236, 189, 0);
 }
 
-.update {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-}
-
-.card-pictures{
-  display: flex;
-  align-items: baseline;
-  justify-content: space-evenly;
-}
-
 .card-password {
   padding-left: 30vw;
   padding-right: 30vw;
@@ -230,6 +218,7 @@ a:active {
 
 .uploaded-pics {
   width: 40%;
+  display: inline-block;
 }
 
 .card {

@@ -545,7 +545,7 @@ export const Login = async (req, res) => {
 
 export const ProfileFill = async (req, res) => {
   const { birthdate, gender, orientation, interests, bio } = req.body;
-  const tags = interests.join(', ')
+  const tags = interests.join(", ");
   if (!(birthdate && gender && orientation && interests && bio)) {
     return res.status(400).json({
       msg: "All fields are required",
@@ -558,7 +558,7 @@ export const ProfileFill = async (req, res) => {
     },
   });
   const userId = user[0].id;
-  res.status(200)
+  res.status(200);
   try {
     await Users.update(
       {

@@ -11,7 +11,7 @@ import {
   resetPass,
   updateProfile,
   accountActivation,
-  getCoordinates,
+ // getCoordinates,
   updatePassword,
 } from "../controllers/Users.js";
 import {
@@ -34,7 +34,7 @@ router.get("/users/verify", verifyToken);
 router.get("/token", refreshToken);
 router.get("/user/pictures/:id", getPicsById, getPicPath);
 router.get("/users/:id", getRandomUser);
-router.get("/coordinates", getCoordinates);
+//router.get("/coordinates", getCoordinates);
 //router.get("/user/blocked/:id", getBlockedUsers);
 
 router.post("/activate/:hash", accountActivation);

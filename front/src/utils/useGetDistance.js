@@ -1,11 +1,15 @@
+/* eslint-disable */
 import { useEffect, useState } from "react";
 import { getDistance } from "geolib";
+import { useCookies } from "react-cookie";
 import axios from "axios";
 import useGeoLocation from "./useGeoLocation";
 
 const useGetDistance = () => {
   const location = useGeoLocation();
   const [matchLocation, setMatchLocation] = useState([]);
+  
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
 
   useEffect(() => {
     getCoordinates();
@@ -13,7 +17,7 @@ const useGetDistance = () => {
 
   const getCoordinates = async () => {
     try{
-      const response = await axios.get("http://localhost:5000/coordinates");
+      const response = await axios.get( `http://localhost:5000/users/info/${cookie.refreshToken}`);
       setMatchLocation(response.data);
     }
     catch (error) {

@@ -56,17 +56,17 @@ const ProfileRandom = () => {
     }
   };
 
-  var location = { ...distance };
-  if (location[id - 1]) {
-    var getDistance = location[id - 1].distance / 1000;
-  }
+  // var location = { ...distance };
+  // if (location[id - 1]) {
+  //   var getDistance = location[id - 1].distance / 1000;
+  // }
 
-  console.log(selectedUser.id);
+  console.log(distance);
 
   if (!cookie.refreshToken) {
     history.push("/");
   }
-  if (!selectedUser) {
+  if (!selectedUser && !distance) {
     return <div>Loading...</div>;
   } else {
     return (
@@ -80,7 +80,7 @@ const ProfileRandom = () => {
             <Gallery galleryImages={pics} />
             <div className="card-body">
               <h5 className="card-title">{selectedUser.username}</h5>
-              <p className="card-text">{getDistance} km away</p>
+              {/* <p className="card-text">{distance && distance[0].distance} km away</p> */}
               <label>Age</label>
               <p className="card-text">{selectedUser.birthdate}</p>
               <label>Bio</label>

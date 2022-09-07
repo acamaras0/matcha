@@ -14,12 +14,27 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const getCoordinates = async (req, res) => {
-  const coordinates = await Users.findAll({
-    attributes: ["id", "geo_lat", "geo_long"],
-  });
-  res.json(coordinates);
-};
+// export const getCoordinates = async (req, res) => {
+//   const coordinates = await Users.findAll({
+//     attributes: [
+//       "id",
+//       "username",
+//       "gender",
+//       "interests",
+//       "bio",
+//       "profile_pic",
+//       "geo_lat",
+//       "geo_long",
+//       "birthdate",
+//     ],
+//     where: {
+//       profile_pic: {
+//         [Op.ne]: null,
+//       },
+//     },
+//   });
+//   res.json(coordinates);
+// };
 
 export const accountActivation = async (req, res) => {
   const hash = req.params.hash;
@@ -277,7 +292,6 @@ export const getRandomUser = async (req, res) => {
 
 export const getUsers = async (req, res) => {
   const token = req.params.token;
-  //const distance = req.params.distance;
   const loggedIn = await Users.findOne({
     where: {
       refresh_token: token,

@@ -14,7 +14,7 @@ const Dashboard = () => {
   const [message, setMessage] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
-  //const distance = useGetDistance();
+  const distance = useGetDistance();
 
   useEffect(() => {
     getLoggedIn();
@@ -77,8 +77,6 @@ const Dashboard = () => {
     }
   };
 
-  //var merge = [...users, ...distance];
-
   if (!cookie.refreshToken) {
     history.push("/");
   }
@@ -101,9 +99,9 @@ const Dashboard = () => {
       </div>{" "}
       <br />
       <div className="">
-        {users &&
+        {distance &&
           // eslint-disable-next-line
-          users.map((user) => {
+          distance.map((user) => {
             if (user.profile_pic) {
               return (
                 <div key={user.id} className="card mb-3">
@@ -122,8 +120,7 @@ const Dashboard = () => {
                           {user.username}, {user.birthdate}
                         </h5>
                         <StarRating rating={5} /> <br />
-                        {/* <label>Distance</label>
-                        <p className="card-text">{user.distance}</p> */}
+                        <p className="card-text">About {user.distance/ 1000} km away</p>
                         <label>Gender</label>
                         <p className="card-text">{user.gender}</p>
                         <label>Bio</label>

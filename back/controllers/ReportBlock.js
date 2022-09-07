@@ -2,6 +2,16 @@ import Report from "../models/ReportModel.js";
 import Block from "../models/BlockModel.js";
 import Users from "../models/UserModel.js";
 import Matches from "../models/MatchModel.js";
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "add349a94e8fe5",
+    pass: "161004143cb79c",
+  },
+});
 
 export const report = async (req, res) => {
   const id = req.params.user_id;
@@ -20,8 +30,22 @@ export const report = async (req, res) => {
     } catch (err) {
       console.log(err);
     }
+    const mailOptions = {
+      from: "matcha@gmail.com",
+      to: "sixty-ninety@proton.me",
+      subject: "Report",
+      text: "User " + id + " reported user " + reported,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        return res.status(200).json({ msg: "Email sent!" });
+      }
+    });
   }
 };
+
 export const block = async (req, res) => {
   const id = req.params.user_id;
   const blocked = req.params.blocked_id;

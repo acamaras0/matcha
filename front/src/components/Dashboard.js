@@ -17,6 +17,7 @@ const Dashboard = () => {
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   const distance = useGetDistance();
+  console.log(distance);
 
   useEffect(() => {
     //refreshToken();

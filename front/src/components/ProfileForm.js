@@ -20,7 +20,6 @@ const ProfileForm = () => {
   const history = useHistory();
   const [cookie, setCookie] = useCookies(["refreshToken"]);
 
-
   useEffect(() => {
     const getLoggedIn = async () => {
       try {

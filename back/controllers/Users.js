@@ -297,7 +297,6 @@ export const getUsers = async (req, res) => {
     return item.dataValues.blocked_id;
   });
   const toStr = block.toString();
-  console.log("BLOCK", toStr);
 
   if (orientation === "heterosexual" && gender === "female") {
     try {
@@ -310,7 +309,7 @@ export const getUsers = async (req, res) => {
       });
       const end = users.sort((a, b) => {
         return a.geo_lat - b.geo_long;
-    });
+      });
       res.json(end);
     } catch (error) {
       console.log(error);
@@ -326,7 +325,7 @@ export const getUsers = async (req, res) => {
       });
       const end = users.sort((a, b) => {
         return a.geo_lat - b.geo_long;
-    });
+      });
       res.json(end);
     } catch (error) {
       console.log(error);
@@ -342,7 +341,7 @@ export const getUsers = async (req, res) => {
       });
       const end = users.sort((a, b) => {
         return a.geo_lat - b.geo_long;
-    });
+      });
       res.json(end);
     } catch (error) {
       console.log(error);
@@ -358,7 +357,7 @@ export const getUsers = async (req, res) => {
       });
       const end = users.sort((a, b) => {
         return a.geo_lat - b.geo_long;
-    });
+      });
       res.json(end);
     } catch (error) {
       console.log(error);
@@ -376,7 +375,7 @@ export const getUsers = async (req, res) => {
       });
       const end = users.sort((a, b) => {
         return a.geo_lat - b.geo_long;
-    });
+      });
       res.json(end);
     } catch (error) {
       console.log(error);
@@ -390,7 +389,7 @@ export const getUsers = async (req, res) => {
       });
       const end = users.sort((a, b) => {
         return a.geo_lat - b.geo_long;
-    });
+      });
       res.json(end);
     } catch (error) {
       console.log(error);
@@ -546,6 +545,7 @@ export const Login = async (req, res) => {
 
 export const ProfileFill = async (req, res) => {
   const { birthdate, gender, orientation, interests, bio } = req.body;
+  const tags = interests.join(', ')
   if (!(birthdate && gender && orientation && interests && bio)) {
     return res.status(400).json({
       msg: "All fields are required",
@@ -558,13 +558,14 @@ export const ProfileFill = async (req, res) => {
     },
   });
   const userId = user[0].id;
+  res.status(200)
   try {
     await Users.update(
       {
         birthdate: birthdate,
         gender: gender,
         orientation: orientation,
-        interests: interests,
+        interests: tags,
         bio: bio,
       },
       {

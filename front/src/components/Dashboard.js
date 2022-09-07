@@ -10,33 +10,16 @@ import useGetDistance from "../utils/useGetDistance";
 
 const Dashboard = () => {
   const [loggedIn, setLoggedin] = useState("");
-  //const [token, setToken] = useState("");
-  //const [expire, setExpire] = useState("");
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   const distance = useGetDistance();
-  console.log(distance);
 
   useEffect(() => {
-    //refreshToken();
     getLoggedIn();
     getUsers();
   }, []);
-
-  // const refreshToken = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:5000/token");
-  //     //setToken(response.data.accessToken);
-  //     const decoded = jwt_decode(response.data.accessToken);
-  //     //setExpire(decoded.exp);
-  //   } catch (error) {
-  //     if (error.response) {
-  //       history.push("/");
-  //     }
-  //   }
-  // };
 
   const getUsers = async () => {
     const response = await axios.get(

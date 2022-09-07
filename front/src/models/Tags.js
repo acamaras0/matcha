@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-//import { MultiSelect } from "react-multi-select-component";
-import Select from "react-select";
+import React, { useEffect, useState } from "react";
+import { MultiSelect } from "react-multi-select-component";
+//import Select from "react-select";
 
 const options = [
   { label: "Travel", value: "travel" },
@@ -17,16 +17,15 @@ const options = [
 
 const Tags = ({ setInterests }) => {
   const [selected, setSelected] = useState([]);
-
+  useEffect(() => {
+    setInterests(selected.map((interest) => interest.value));
+  }, [selected, setInterests]);
   return (
     <div>
-      <Select
+      <MultiSelect
         options={options}
-        onChange={(choice) => {
-          setSelected(choice.value);
-          setInterests(choice.value);
-          console.log(selected);
-        }}
+        value={selected}
+        onChange={setSelected}
         labelledBy="Select"
       />
     </div>
@@ -34,20 +33,3 @@ const Tags = ({ setInterests }) => {
 };
 
 export default Tags;
-
-// const Tags = () => {
-//   const [selected, setSelected] = useState([]);
-
-//   return (
-//     <div>
-//       <MultiSelect
-//         options={options}
-//         value={selected}
-//         onChange={setSelected}
-//         labelledBy="Select"
-//       />
-//     </div>
-//   );
-// };
-
-// export default Tags;

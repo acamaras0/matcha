@@ -283,15 +283,100 @@ export const getUsers = async (req, res) => {
     },
   });
   let id = loggedIn.dataValues.id;
-  try {
-    const users = await Users.findAll({
-      where: {
-        id: { [Op.ne]: id },
-      },
-    });
-    res.json(users);
-  } catch (error) {
-    console.log(error);
+  let orientation = loggedIn.dataValues.orientation;
+  let gender = loggedIn.dataValues.gender;
+
+  const blocked = await Block.findAll({
+    where: {
+      user_id: id,
+    },
+  });
+  //console.log("BLOCKED", blocked);
+
+  const block = blocked.map((item) => {
+    return item.dataValues.blocked_id;
+  });
+  const toStr = block.toString();
+  console.log("BLOCK", toStr);
+
+  if (orientation === "heterosexual" && gender === "female") {
+    try {
+      const users = await Users.findAll({
+        where: {
+          id: { [Op.notIn]: [id, toStr] },
+          gender: { [Op.eq]: "male" },
+          orientation: { [Op.eq]: "heterosexual" },
+        },
+      });
+      res.json(users);
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (orientation === "heterosexual" && gender === "male") {
+    try {
+      const users = await Users.findAll({
+        where: {
+          id: { [Op.ne]: id },
+          orientation: { [Op.eq]: "heterosexual" },
+          gender: { [Op.eq]: "female" },
+        },
+      });
+      res.json(users);
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (orientation === "homosexual" && gender === "female") {
+    try {
+      const users = await Users.findAll({
+        where: {
+          id: { [Op.ne]: id },
+          gender: { [Op.eq]: "female" },
+          orientation: { [Op.eq]: "homosexual" },
+        },
+      });
+      res.json(users);
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (orientation === "homosexual" && gender === "male") {
+    try {
+      const users = await Users.findAll({
+        where: {
+          id: { [Op.ne]: id },
+          gender: { [Op.eq]: "male" },
+          orientation: { [Op.eq]: "homosexual" },
+        },
+      });
+      res.json(users);
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (
+    orientation === "bisexual" &&
+    (gender === "male" || gender === "female")
+  ) {
+    try {
+      const users = await Users.findAll({
+        where: {
+          id: { [Op.ne]: id },
+          orientation: { [Op.eq]: "bisexual" },
+        },
+      });
+      res.json(users);
+    } catch (error) {
+      console.log(error);
+    }
+  } else if (gender === "other") {
+    try {
+      const users = await Users.findAll({
+        where: {
+          id: { [Op.ne]: id },
+        },
+      });
+      res.json(users);
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 

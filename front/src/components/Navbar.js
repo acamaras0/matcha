@@ -38,8 +38,10 @@ const Navbar = () => {
             <img onClick={Dashboard} src={logo} alt="logo" />
           </div>
         </div>
+      
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-end">
+            
             <div className="navbar-item">
               <div className="buttons">
                 <button

@@ -300,6 +300,24 @@ export const getUsers = async (req, res) => {
   let id = loggedIn.dataValues.id;
   let orientation = loggedIn.dataValues.orientation;
   let gender = loggedIn.dataValues.gender;
+  // function getDistanceFromLatLonInKm(lat2, lon2) {
+  //   const deg2rad = (deg) => (deg * Math.PI) / 180.0;
+
+  //   let geo_lat = loggedIn.dataValues.geo_lat;
+  //   let geo_long = loggedIn.dataValues.geo_long;
+  //   var R = 6371; // Radius of the earth in km
+  //   var dLat = deg2rad(lat2 - geo_lat); // deg2rad below
+  //   var dLon = deg2rad(lon2 - geo_long);
+  //   var a =
+  //     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+  //     Math.cos(deg2rad(geo_lat)) *
+  //       Math.cos(deg2rad(lat2)) *
+  //       Math.sin(dLon / 2) *
+  //       Math.sin(dLon / 2);
+  //   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  //   var d = R * c; // Distance in km
+  //   return d;
+  // }
 
   const blocked = await Block.findAll({
     where: {
@@ -401,10 +419,11 @@ export const getUsers = async (req, res) => {
           id: { [Op.notIn]: [id, toStr] },
         },
       });
-      const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_lat;
-      });
-      res.json(end);
+      // const distance = users.map((item) => {
+      //   return getDistanceFromLatLonInKm(item.geo_lat, item.geo_long);
+      // });
+      // console.log("Distance", distance);
+      res.json(users);
     } catch (error) {
       console.log(error);
     }

@@ -80,6 +80,7 @@ const Dashboard = () => {
   if (!cookie.refreshToken) {
     history.push("/");
   }
+  distance.sort((a, b) => a.distance - b.distance);
 
   if (users.length === 0)
     return (

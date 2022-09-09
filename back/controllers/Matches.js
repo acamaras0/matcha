@@ -4,19 +4,22 @@ import Users from "../models/UserModel.js";
 export const insertLike = async (req, res) => {
   const user1 = req.params.user1;
   const user2 = req.params.user2;
+
+  console.log("user1", user1); //john
+  console.log("user2", user2); // ana
   const fame = await Users.findOne({
     attributes: ["fame"],
     where: {
       id: user2,
     },
   });
-  const check = await Matches.findOne({
-    where: { user1, user2 },
-  });
   const check1 = await Matches.findOne({
     where: { user1: user2, user2: user1 },
   });
-  if (check1) {
+  const check = await Matches.findOne({
+    where: { user1, user2 },
+  });
+  if (check1 && check1.dataValues.match_status === 0) {
     try {
       await Matches.update(
         {
@@ -44,9 +47,9 @@ export const insertLike = async (req, res) => {
     } catch (err) {
       console.log(err);
     }
-  } else if (check)
+  } else if (check) {
     return res.status(200).send({ msg: "You can like only once." });
-  else if (!check && !check1) {
+  } else if (!check && !check1) {
     try {
       await Matches.create({
         user1: user1,
@@ -103,7 +106,7 @@ export const unLike = async (req, res) => {
       },
     });
     res.status(200).send({ msg: "Disliked!" });
-  } else if (check1) {
+  } else if (check1 && check1.dataValues.match_status == 1) {
     await Matches.update(
       {
         match_status: 0,
@@ -115,8 +118,18 @@ export const unLike = async (req, res) => {
         },
       }
     );
+    await Users.update(
+      {
+        fame: fame.fame - 1,
+      },
+      {
+        where: {
+          id: user2,
+        },
+      }
+    );
     res.status(200).send({ msg: "Unmatched!" });
-  }
+  } else res.status(200).send({ msg: "Nothing to do here!" });
 };
 
 export const getMatches = async (req, res) => {

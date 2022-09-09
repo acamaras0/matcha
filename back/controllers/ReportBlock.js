@@ -59,13 +59,14 @@ export const block = async (req, res) => {
       blocked_id: blocked,
     });
     res.status(200).send({ msg: "Blocked!" });
+    console.log("BLOCKED", blocked);
     await Matches.update(
       {
         match_status: 0,
       },
       {
         where: {
-          user2: blocked,
+          user1: blocked,
         },
       }
     );

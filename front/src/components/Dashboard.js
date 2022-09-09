@@ -7,11 +7,13 @@ import StarRating from "../models/StarRating";
 import img from "../assets/yellow-heart.png";
 import img1 from "../assets/broken-heart.png";
 import useGetDistance from "../utils/useGetDistance";
+import PopUp from "../models/PopUp";
 
 const Dashboard = () => {
   const [loggedIn, setLoggedin] = useState("");
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   const distance = useGetDistance();
@@ -76,7 +78,18 @@ const Dashboard = () => {
       if (error.response) console.log("error", error.response.data);
     }
   };
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  };
 
+  const f1 = (id) => {
+    togglePopup();
+    handleUnLike(id);
+  };
+  const f2 = (id) => {
+    togglePopup();
+    handleLike(id);
+  };
   if (!cookie.refreshToken) {
     history.push("/");
   }
@@ -97,7 +110,7 @@ const Dashboard = () => {
       <div className="text-center">
         <a href={`http://localhost:3000/profile/${loggedIn}`}>
           <button className="btn btn-outline-warning">My profile</button>
-          <p className="message">{message}</p>
+          {/* <p className="message">{message}</p> */}
         </a>
       </div>{" "}
       <br />
@@ -133,7 +146,7 @@ const Dashboard = () => {
                         <div className="container">
                           <div className="like-container">
                             <img
-                              onClick={() => handleLike(user.id)}
+                              onClick={() => f2(user.id)}
                               className="like"
                               src={img}
                               alt="Card cap"
@@ -141,11 +154,23 @@ const Dashboard = () => {
                           </div>
                           <div className="dislike-container">
                             <img
-                              onClick={() => handleUnLike(user.id)}
+                              onClick={() => f1(user.id)}
                               className="dislike"
                               src={img1}
                               alt="Card cap"
                             />
+                            <div>
+                              {isOpen && (
+                                <PopUp
+                                  content={
+                                    <>
+                                      <p className="message">{message}</p>
+                                    </>
+                                  }
+                                  handleClose={togglePopup}
+                                />
+                              )}
+                            </div>
                           </div>
                         </div>
                         <div className="text-center">

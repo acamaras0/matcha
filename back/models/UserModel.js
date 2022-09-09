@@ -63,6 +63,10 @@ const Users = db.define(
     profile_pic: {
       type: DataTypes.STRING,
     },
+    fame: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     online: {
       type: DataTypes.INTEGER,
       defaultValue: 0,

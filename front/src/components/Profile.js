@@ -6,6 +6,9 @@ import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import PicturesForm from "./PicturesForm";
 import { useCookies } from "react-cookie";
+import Gender from "../models/Gender";
+import Orientation from "../models/Orientation";
+import Tags from "../models/Tags";
 //import useGetDistance from "../utils/useGetDistance";
 
 const Profile = () => {
@@ -16,7 +19,7 @@ const Profile = () => {
   const [newLastName, setNewLastName] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [newBio, setNewBio] = useState("");
-  const [newInterest, setNewInterest] = useState("");
+  const [newInterest, setNewInterest] = useState([]);
   const [newGender, setNewGender] = useState("");
   const [newOrientation, setNewOrientation] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -62,9 +65,9 @@ const Profile = () => {
           username: newUsername.value,
           email: newEmail.value,
           bio: newBio.value,
-          interests: newInterest.value,
-          gender: newGender.value,
-          orientation: newOrientation.value,
+          interests: newInterest,
+          gender: newGender,
+          orientation: newOrientation,
           password: newPassword.value,
           passwordConfirm: newPasswordConfirm.value,
           geoLat: newGeoLat.value,
@@ -112,6 +115,7 @@ const Profile = () => {
       }
     }
   };
+  console.log("gender",newGender);
 
   if (!cookie.refreshToken) {
     history.push("/");
@@ -249,33 +253,12 @@ const Profile = () => {
                 }}
               />
               <label>✎ Gender</label>
-              <EditText
-                name="textbox1"
-                defaultValue={loggedIn.gender}
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewGender(value);
-                  } else {
-                    setNewGender(loggedIn.gender);
-                  }
-                  console.log(value);
-                }}
-              />
+              <Gender setGender ={setNewGender} />
               <label>✎ Sexual orientation</label>
-              <EditText
-                name="textbox1"
-                defaultValue={loggedIn.orientation}
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewOrientation(value);
-                  } else {
-                    setNewOrientation(loggedIn.orientation);
-                  }
-                  console.log(value);
-                }}
-              />
+              <Orientation setOrientation ={setNewOrientation} />
               <label>✎ Interests</label>
-              <EditText
+              <Tags setInterests={setNewInterest} />
+              {/* <EditText
                 name="textbox1"
                 defaultValue={loggedIn.interests}
                 onSave={(value) => {
@@ -286,7 +269,7 @@ const Profile = () => {
                   }
                   console.log(value);
                 }}
-              />
+              /> */}
               <label>✎ Bio</label>
               <EditTextarea
                 name="textbox1"

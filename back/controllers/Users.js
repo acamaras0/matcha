@@ -107,6 +107,7 @@ export const updateProfile = async (req, res) => {
     geoLat,
     geoLng,
   } = req.body;
+  const tags = interests.join(", ");
   if (firstName) {
     await Users.update(
       {
@@ -160,7 +161,7 @@ export const updateProfile = async (req, res) => {
   if (interests) {
     await Users.update(
       {
-        interests: interests,
+        interests: tags,
       },
       {
         where: { id },
@@ -328,21 +329,17 @@ export const getUsers = async (req, res) => {
   const block = blocked.map((item) => {
     return item.dataValues.blocked_id;
   });
-  const toStr = block.toString();
 
   if (orientation === "heterosexual" && gender === "female") {
     try {
       const users = await Users.findAll({
         where: {
-          id: { [Op.notIn]: [id, toStr] },
+          id: { [Op.notIn]: [...block, id] },
           gender: { [Op.eq]: "male" },
           orientation: { [Op.eq]: "heterosexual" },
         },
       });
-      const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_lat;
-      });
-      res.json(end);
+      res.json(users);
     } catch (error) {
       console.log(error);
     }
@@ -350,15 +347,12 @@ export const getUsers = async (req, res) => {
     try {
       const users = await Users.findAll({
         where: {
-          id: { [Op.notIn]: [id, toStr] },
+          id: { [Op.notIn]: [...block, id] },
           orientation: { [Op.eq]: "heterosexual" },
           gender: { [Op.eq]: "female" },
         },
       });
-      const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_lat;
-      });
-      res.json(end);
+      res.json(users);
     } catch (error) {
       console.log(error);
     }
@@ -366,15 +360,12 @@ export const getUsers = async (req, res) => {
     try {
       const users = await Users.findAll({
         where: {
-          id: { [Op.notIn]: [id, toStr] },
+          id: { [Op.notIn]: [...block, id] },
           gender: { [Op.eq]: "female" },
           orientation: { [Op.eq]: "homosexual" },
         },
       });
-      const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_lat;
-      });
-      res.json(end);
+      res.json(users);
     } catch (error) {
       console.log(error);
     }
@@ -382,15 +373,12 @@ export const getUsers = async (req, res) => {
     try {
       const users = await Users.findAll({
         where: {
-          id: { [Op.notIn]: [id, toStr] },
+          id: { [Op.notIn]: [...block, id] },
           gender: { [Op.eq]: "male" },
           orientation: { [Op.eq]: "homosexual" },
         },
       });
-      const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_lat;
-      });
-      res.json(end);
+      res.json(users);
     } catch (error) {
       console.log(error);
     }
@@ -401,14 +389,11 @@ export const getUsers = async (req, res) => {
     try {
       const users = await Users.findAll({
         where: {
-          id: { [Op.notIn]: [id, toStr] },
+          id: { [Op.notIn]: [...block, id] },
           orientation: { [Op.eq]: "bisexual" },
         },
       });
-      const end = users.sort((a, b) => {
-        return a.geo_lat - b.geo_lat;
-      });
-      res.json(end);
+      res.json(users);
     } catch (error) {
       console.log(error);
     }
@@ -416,7 +401,7 @@ export const getUsers = async (req, res) => {
     try {
       const users = await Users.findAll({
         where: {
-          id: { [Op.notIn]: [id, toStr] },
+          id: { [Op.notIn]: [...block, id] },
         },
       });
       // const distance = users.map((item) => {

@@ -80,7 +80,9 @@ const Dashboard = () => {
   if (!cookie.refreshToken) {
     history.push("/");
   }
-  distance.sort((a, b) => a.distance - b.distance);
+  if (distance) {
+    distance.sort((a, b) => a.distance - b.distance);
+  }
 
   if (users.length === 0)
     return (
@@ -120,8 +122,10 @@ const Dashboard = () => {
                         <h5 className="card-title">
                           {user.username}, {user.birthdate}
                         </h5>
-                        <StarRating rating={5} /> <br />
-                        <p className="card-text">About {Math.round(user.distance/ 1000)} km away</p>
+                        <StarRating rating={user.fame} /> <br />
+                        <p className="card-text">
+                          About {Math.round(user.distance / 1000)} km away
+                        </p>
                         <label>Gender</label>
                         <p className="card-text">{user.gender}</p>
                         <label>Bio</label>

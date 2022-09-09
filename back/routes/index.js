@@ -11,7 +11,7 @@ import {
   resetPass,
   updateProfile,
   accountActivation,
- // getCoordinates,
+  // getCoordinates,
   updatePassword,
 } from "../controllers/Users.js";
 import {
@@ -21,7 +21,7 @@ import {
   getPicPath,
 } from "../controllers/Images.js";
 import { report, block } from "../controllers/ReportBlock.js";
-import { insertLike, unLike } from "../controllers/Matches.js";
+import { insertLike, unLike, getFame } from "../controllers/Matches.js";
 import { upload } from "../middleware/Upload.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
@@ -34,6 +34,7 @@ router.get("/users/verify", verifyToken);
 router.get("/token", refreshToken);
 router.get("/user/pictures/:id", getPicsById, getPicPath);
 router.get("/users/:id", getRandomUser);
+router.get("/user/fame/:user", getFame);
 //router.get("/coordinates", getCoordinates);
 //router.get("/user/blocked/:id", getBlockedUsers);
 

@@ -12,6 +12,7 @@ const ProfileRandom = () => {
   const { id } = useParams();
   const { selectedUser, setSelectedUser } = useContext(UserContext);
   const [pics, setPics] = useState([]);
+  const [likes, setLikes] = useState("");
   const [loggedIn, setLoggedIn] = useState("");
   const history = useHistory();
   const distance = useGetDistance();
@@ -45,7 +46,17 @@ const ProfileRandom = () => {
       setLoggedIn(response.data.id);
     };
     getLoggedIn();
-  }, [id, setSelectedUser]);
+
+    const count = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/user/fame/${id}`);
+        setLikes(response.data.fame);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    count();
+  }, [id, setSelectedUser, setLikes]);
 
   const block = async (id) => {
     try {
@@ -61,7 +72,7 @@ const ProfileRandom = () => {
   //   var getDistance = location[id - 1].distance / 1000;
   // }
 
-  console.log(distance);
+  console.log(likes);
 
   if (!cookie.refreshToken) {
     history.push("/");
@@ -75,7 +86,7 @@ const ProfileRandom = () => {
           <h2 className="text-center">
             {selectedUser.firstname} {selectedUser.lastname}
           </h2>
-          <StarRating rating={5} />
+          <StarRating rating={likes} />
           <div className="card-profile">
             <Gallery galleryImages={pics} />
             <div className="card-body">

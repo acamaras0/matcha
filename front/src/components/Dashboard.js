@@ -9,12 +9,14 @@ import img1 from "../assets/broken-heart.png";
 import useGetDistance from "../utils/useGetDistance";
 import PopUp from "../models/PopUp";
 
-const Dashboard = () => {
+const Dashboard = ({ socket, user }) => {
   const [loggedIn, setLoggedin] = useState("");
+  const [sender, setSender] = useState("");
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const [liked, setLiked] = useState(false);
   const history = useHistory();
   const distance = useGetDistance();
 
@@ -37,9 +39,24 @@ const Dashboard = () => {
       {}
     );
     setLoggedin(response.data.id);
+    setSender(response.data.username);
   };
 
+  // const handleNotification = (type, username) => {
+  //   setLiked(true);
+  //   socket.emit("sendNotification", {
+  //     senderName: loggedIn,
+  //     receiverName: username,
+  //     type,
+  //   });
+  // };
+
   const handleUserSelect = async (id) => {
+    socket.emit("sendNotification", {
+      senderName: sender,
+      receiverName: id,
+      type: "profile view",
+    });
     history.push(`/users/${id}`);
   };
 
@@ -55,6 +72,12 @@ const Dashboard = () => {
         console.log("error", error.response.data);
       }
     }
+    setLiked(true);
+    socket.emit("sendNotification", {
+      senderName: sender,
+      receiverName: id,
+      type: "like",
+    });
   };
 
   const handleUnLike = async (id) => {
@@ -66,6 +89,12 @@ const Dashboard = () => {
     } catch (error) {
       if (error.response) console.log("error", error.response.data);
     }
+    setLiked(true);
+    socket.emit("sendNotification", {
+      senderName: sender,
+      receiverName: id,
+      type: "dislike",
+    });
   };
 
   const handleReport = async (id) => {

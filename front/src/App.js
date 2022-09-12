@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { BrowserRouter, Route, Switch} from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { UserContextProvider } from "./context/UserContext";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
@@ -13,20 +13,48 @@ import ProfileRandom from "./components/ProfileRandom";
 import Footer from "./models/Footer";
 import ResetPassword from "./components/ResetPassword";
 import Activation from "./components/Activation";
-// import { useState } from "react";
-// import { useCookies } from "react-cookie";
-// import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
-// import axios from "axios";
-//import socketIOClient from "socket.io-client";
+import axios from "axios";
+// import socketIOClient from "socket.io-client";
+import { io } from "socket.io-client";
 //import jwt_decode from "jwt-decode";
 // const ENDPOINT = "http://localhost:5000";
 // const socket = socketIOClient(ENDPOINT);
 
 function App() {
-  // const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const [user, setUser] = useState("");
+  const [socket, setSocket] = useState(null);
 
-  // console.log("cookie", cookie.refreshToken);
+  //console.log("cookie", cookie.refreshToken);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+    if (cookie.refreshToken) {
+      const getLoggedIn = async () => {
+        const response = await axios.get(
+          `http://localhost:5000/user/${cookie.refreshToken}`,
+          {}
+        );
+        setUser(response.data);
+      };
+      getLoggedIn();
+      //   if (user) {
+      //     socket.emit("addOnlineUser", user.username);
+      //   }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      socket.emit("addOnlineUser", user);
+    }
+  }, [user.username]);
+
+  // console.log("user", user.id);
+  //console.log(socket);
 
   return (
     <>
@@ -49,23 +77,23 @@ function App() {
               <Activation />
             </Route>
             <Route path="/completeprofile">
-              <Navbar />
+              <Navbar socket={socket} />
               <ProfileForm />
             </Route>
             <Route path="/pictures">
-              <Navbar />
+              <Navbar socket={socket} />
               <PicturesForm />
             </Route>
             <Route path="/dashboard">
-              <Navbar />
-              <Dashboard />
+              <Navbar socket={socket} />
+              <Dashboard socket={socket} user={user} />
             </Route>
             <Route path="/profile/:id">
-              <Navbar />
+              <Navbar socket={socket} />
               <Profile />
             </Route>
             <Route path="/users/:id">
-              <Navbar />
+              <Navbar socket={socket} />
               <ProfileRandom />
             </Route>
             {/* <Route path="/">

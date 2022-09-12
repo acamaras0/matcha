@@ -113,6 +113,17 @@ img.card-img-top {
   display: flex;
   justify-content: center;
 }
+
+.iconImg {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+}
 .Auth-form-container {
   display: flex;
   justify-content: center;
@@ -339,7 +350,7 @@ a:active {
   top: 0;
   left: 0;
 }
- 
+
 .box {
   position: relative;
   width: 70%;
@@ -353,9 +364,9 @@ a:active {
   border: 1px solid #999;
   overflow: auto;
 }
- 
+
 .close-icon {
-  content: 'x';
+  content: "x";
   cursor: pointer;
   position: fixed;
   right: calc(15% - 30px);

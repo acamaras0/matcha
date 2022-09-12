@@ -2,6 +2,9 @@ import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import logo from "../assets/logo.png";
+import chat from "../assets/chat.png";
+import notification from "../assets/notification.png";
+import logout from "../assets/logout.png";
 
 const Navbar = () => {
   const history = useHistory();
@@ -38,31 +41,26 @@ const Navbar = () => {
             <img onClick={Dashboard} src={logo} alt="logo" />
           </div>
         </div>
-      
+
         <div id="navbarBasicExample" className="navbar-menu">
           <div className="navbar-end">
-            
             <div className="navbar-item">
               <div className="buttons">
-                <button
+                <img
                   onClick={Notifications}
-                  className="btn btn-outline-warning"
-                >
-                  {" "}
-                  Notifications{" "}
-                </button>
-                <button onClick={Chat} className="btn btn-outline-warning">
-                  {" "}
-                  Chat{" "}
-                </button>
-                <button
-                  id="logout"
+                  src={notification}
+                  className="iconImg"
+                  alt="notif"
+                />
+                <div className="counter">2</div>
+                <img onClick={Chat} src={chat} alt="chat" className="iconImg" />
+                <div className="counter">2</div>
+                <img
                   onClick={Logout}
-                  className="btn btn-warning"
-                >
-                  {" "}
-                  Log Out{" "}
-                </button>
+                  src={logout}
+                  alt="logout"
+                  className="iconImg"
+                />
               </div>
             </div>
           </div>

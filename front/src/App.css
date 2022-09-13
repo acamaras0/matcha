@@ -142,16 +142,17 @@ img.card-img-top {
   position: relative;
 }
 .notifications {
-  width: 100;
   position: absolute;
   top: 120px;
-  right: 45px;
+  right: 13vw;
   background-color: white;
   display: inline-grid;
   border: solid 3px rgb(236, 189, 0);
   border-radius: 8px;
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
   z-index: 99999;
+  align-items: center;
+  justify-items: center;
 }
 .notification {
   padding: 5px;
@@ -159,6 +160,15 @@ img.card-img-top {
 .buttons {
   display: flex;
 }
+
+/* .nButton {
+  width: 80%;
+  padding: 5px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+} */
+
 .Auth-form-container {
   display: flex;
   justify-content: center;

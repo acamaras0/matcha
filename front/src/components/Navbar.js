@@ -22,7 +22,7 @@ const Navbar = ({ socket }) => {
     }
   }, [socket]);
 
-  console.log("notif", notifications);
+  // console.log("notif", notifications);
 
   const displayNotifications = ({ senderName, type }) => {
     let action;
@@ -45,9 +45,10 @@ const Navbar = ({ socket }) => {
     }
   };
 
-  // const Notifications = () => {
-  //   history.push("/notifications");
-  // };
+  const handleRead = () => {
+    setNotifications([]);
+    setOpen(false);
+  };
 
   // const Chat = () => {
   //   history.push("/chat");
@@ -76,13 +77,10 @@ const Navbar = ({ socket }) => {
               <div className="navbar-item">
                 <div className="buttons">
                   <div className="icon" onClick={() => setOpen(!open)}>
-                    <img
-                      // onClick={Notifications}
-                      src={notification}
-                      className="iconImg"
-                      alt="notif"
-                    />
-                    <div className="counter">2</div>
+                    <img src={notification} className="iconImg" alt="notif" />
+                    {notifications.length > 0 && (
+                      <div className="counter"></div>
+                    )}
                   </div>
                   <div className="icon" onClick={() => setOpen(!open)}>
                     <img
@@ -91,7 +89,7 @@ const Navbar = ({ socket }) => {
                       alt="chat"
                       className="iconImg"
                     />
-                    <div className="counter">2</div>
+                    <div className="counter"></div>
                   </div>
                   <div className="icon">
                     <img
@@ -110,6 +108,9 @@ const Navbar = ({ socket }) => {
       {open && (
         <div className="notifications">
           {notifications.map((n) => displayNotifications(n))}
+          <button className="btn btn-warning" onClick={handleRead}>
+            Mark as read
+          </button>
         </div>
       )}
     </>

@@ -28,8 +28,6 @@ function App() {
   const [user, setUser] = useState("");
   const [socket, setSocket] = useState(null);
 
-  //console.log("cookie", cookie.refreshToken);
-
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
     if (cookie.refreshToken) {
@@ -41,9 +39,6 @@ function App() {
         setUser(response.data);
       };
       getLoggedIn();
-      //   if (user) {
-      //     socket.emit("addOnlineUser", user.username);
-      //   }
     }
   }, []);
 

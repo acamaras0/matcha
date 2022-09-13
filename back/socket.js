@@ -35,6 +35,15 @@ export const socketServer = (server) => {
         type,
       });
     });
+
+    socket.on("sendText", ({ senderName, receiverName, text }) => {
+        const reciever = getOnlineUser(receiverName);
+        io.to(reciever.socketId).emit("getText", {
+          senderName,
+          text,
+        });
+      });
+
     socket.on("disconnect", () => {
       removeOnlineUser(socket.id);
     });

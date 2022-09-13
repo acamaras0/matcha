@@ -107,6 +107,7 @@ img.card-img-top {
   margin-top: 10px;
   margin-left: 20px;
   margin-bottom: 15px;
+  cursor: pointer;
 }
 
 .logo {
@@ -120,6 +121,7 @@ img.card-img-top {
   width: 35px;
   height: 35px;
   cursor: pointer;
+  margin-right: 10px;
 }
 
 .icon {
@@ -159,6 +161,10 @@ img.card-img-top {
 }
 .buttons {
   display: flex;
+}
+
+.btn.btn-warning {
+  margin: 5px;
 }
 
 /* .nButton {

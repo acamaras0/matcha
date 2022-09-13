@@ -51,6 +51,14 @@ const Dashboard = ({ socket, user }) => {
   //   });
   // };
 
+  const handleMessage = (text) => {
+    socket.emit("sendText", {
+      senderName: loggedIn,
+      receiverName: id,
+      text,
+    });
+  };
+
   const handleUserSelect = async (id) => {
     socket.emit("sendNotification", {
       senderName: sender,
@@ -129,19 +137,11 @@ const Dashboard = ({ socket, user }) => {
   if (users.length === 0)
     return (
       <div className="text-center">
-        <a href={`http://localhost:3000/profile/${loggedIn}`}>My Profile</a>
-        <br />
         <p>Loading...</p>
       </div>
     );
   return (
     <div className="">
-      <div className="text-center">
-        <a href={`http://localhost:3000/profile/${loggedIn}`}>
-          <button className="btn btn-outline-warning">My profile</button>
-          {/* <p className="message">{message}</p> */}
-        </a>
-      </div>{" "}
       <br />
       <div className="">
         {distance &&

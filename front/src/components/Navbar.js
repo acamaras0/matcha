@@ -6,11 +6,16 @@ import logo from "../assets/logo.png";
 import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
 import logout from "../assets/logout.png";
+import user from "../assets/user.png";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useCookies } from "react-cookie";
 
 const Navbar = ({ socket }) => {
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const [loggedIn, setLoggedin] = useState("");
   const [notifications, setNotifications] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
@@ -19,8 +24,28 @@ const Navbar = ({ socket }) => {
       socket.on("getNotification", (data) => {
         setNotifications((prev) => [...prev, data]);
       });
+      socket.on("getText", (data) => {
+        setMessages((prev) => [...prev, data]);
+      });
     }
+    const getLoggedIn = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/user/${cookie.refreshToken}`,
+        {}
+      );
+      setLoggedin(response.data);
+    };
+    getLoggedIn();
   }, [socket]);
+
+  // const dispayMessage = ({ senderName, text }) => {
+  //   return (
+  //     <div className="message">
+  //       <p>{senderName}</p>
+  //       <p>{text}</p>
+  //     </div>
+  //   );
+  // };
 
   const displayNotifications = ({ senderName, type }) => {
     let action;
@@ -31,7 +56,12 @@ const Navbar = ({ socket }) => {
     } else if (type === "profile view") {
       action = "viewed your profile";
     }
-    return <span className="notification" key={type}>{`${senderName} ${action}`}</span>;
+    return (
+      <span
+        className="notification"
+        key={type}
+      >{`${senderName} ${action}`}</span>
+    );
   };
 
   const handleRead = () => {
@@ -39,9 +69,13 @@ const Navbar = ({ socket }) => {
     setOpen(false);
   };
 
-  // const Chat = () => {
-  //   history.push("/chat");
-  // };
+  const Chat = () => {
+    history.push(`/chat/${loggedIn.id}`);
+  };
+
+  const MyProfile = () => {
+    history.push(`/profile/${loggedIn.id}`);
+  };
 
   const Logout = async () => {
     try {
@@ -76,20 +110,23 @@ const Navbar = ({ socket }) => {
             <div className="navbar-end">
               <div className="navbar-item">
                 <div className="buttons">
+                  <div className="icon" onClick={MyProfile}>
+                    <img src={user} className="iconImg" alt="profile" />
+                  </div>
                   <div className="icon" onClick={() => setOpen(!open)}>
                     <img src={notification} className="iconImg" alt="notif" />
                     {notifications.length > 0 && (
                       <div className="counter"></div>
                     )}
                   </div>
-                  <div className="icon" onClick={() => setOpen(!open)}>
+                  <div className="icon">
                     <img
-                      // onClick={Chat}
+                      onClick={Chat}
                       src={chat}
                       alt="chat"
                       className="iconImg"
                     />
-                    <div className="counter"></div>
+                    {messages.length > 0 && <div className="counter"></div>}
                   </div>
                   <div className="icon">
                     <img

@@ -13,6 +13,7 @@ import ProfileRandom from "./components/ProfileRandom";
 import Footer from "./models/Footer";
 import ResetPassword from "./components/ResetPassword";
 import Activation from "./components/Activation";
+import Chat from "./components/Chat";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
@@ -90,6 +91,10 @@ function App() {
             <Route path="/users/:id">
               <Navbar socket={socket} />
               <ProfileRandom />
+            </Route>
+            <Route path="/chat/:id">
+              <Navbar socket={socket} />
+              <Chat />
             </Route>
             {/* <Route path="/">
               {loggedIn.birthdate !== 0 ? (

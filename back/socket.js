@@ -30,19 +30,23 @@ export const socketServer = (server) => {
 
     socket.on("sendNotification", ({ senderName, receiverName, type }) => {
       const reciever = getOnlineUser(receiverName);
-      io.to(reciever.socketId).emit("getNotification", {
-        senderName,
-        type,
-      });
+      if (reciever) {
+        io.to(reciever.socketId).emit("getNotification", {
+          senderName,
+          type,
+        });
+      }
     });
 
     socket.on("sendText", ({ senderName, receiverName, text }) => {
-        const reciever = getOnlineUser(receiverName);
+      const reciever = getOnlineUser(receiverName);
+      if (reciever) {
         io.to(reciever.socketId).emit("getText", {
           senderName,
           text,
         });
-      });
+      }
+    });
 
     socket.on("disconnect", () => {
       removeOnlineUser(socket.id);

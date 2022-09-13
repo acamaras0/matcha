@@ -1,6 +1,6 @@
-/* .App {
+.App {
   background-color: rgb(250, 239, 182);
-} */
+}
 
 .footer-content {
   font-style: italic;
@@ -142,6 +142,29 @@ img.card-img-top {
   align-items: center;
   right: 12px;
   position: relative;
+}
+p.online {
+  margin-top: 5px;
+  margin-left: 8px;
+  width: 5px;
+  height: 5px;
+  background-color: rgb(33, 215, 1);
+  border-radius: 50%;
+  padding: 7px;
+}
+p.offline {
+  margin-top: 5px;
+  margin-left: 8px;
+  width: 5px;
+  height: 5px;
+  background-color: rgb(244, 0, 0);
+  border-radius: 50%;
+  padding: 7px;
+}
+.card-title {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
 }
 .notifications {
   position: absolute;
@@ -404,12 +427,12 @@ a:active {
 
 .box {
   position: relative;
-  width: 70%;
+  width: 50%;
   margin: 0 auto;
   height: auto;
   max-height: 70vh;
   margin-top: calc(100vh - 85vh - 20px);
-  background: #fff;
+  background: rgb(255, 255, 255);
   border-radius: 4px;
   padding: 20px;
   border: 1px solid #999;
@@ -420,9 +443,9 @@ a:active {
   content: "x";
   cursor: pointer;
   position: fixed;
-  right: calc(15% - 30px);
-  top: calc(100vh - 85vh - 33px);
-  background: #ededed;
+  right: calc(15% - -117px);
+  top: calc(100vh - 85vh - 35px);
+  background: rgb(190, 190, 190);
   width: 25px;
   height: 25px;
   border-radius: 50%;

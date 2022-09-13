@@ -41,16 +41,6 @@ const Dashboard = ({ socket, user }) => {
     setLoggedin(response.data.id);
     setSender(response.data.username);
   };
-
-  // const handleNotification = (type, username) => {
-  //   setLiked(true);
-  //   socket.emit("sendNotification", {
-  //     senderName: loggedIn,
-  //     receiverName: username,
-  //     type,
-  //   });
-  // };
-
   const handleMessage = (text) => {
     socket.emit("sendText", {
       senderName: loggedIn,
@@ -162,7 +152,12 @@ const Dashboard = ({ socket, user }) => {
                     <div className="col-md-8">
                       <div className="card-body">
                         <h5 className="card-title">
-                          {user.username}, {user.birthdate}
+                          {user.username}, {user.birthdate}{" "}
+                          {user.online === 1 ? (
+                            <p className="online"></p>
+                          ) : (
+                            <p className="offline"></p>
+                          )}
                         </h5>
                         <StarRating rating={user.fame} /> <br />
                         <p className="card-text">
@@ -188,7 +183,7 @@ const Dashboard = ({ socket, user }) => {
                               src={img1}
                               alt="Card cap"
                             />
-                            <div>
+                            {/* <div>
                               {isOpen && (
                                 <PopUp
                                   content={
@@ -199,7 +194,7 @@ const Dashboard = ({ socket, user }) => {
                                   handleClose={togglePopup}
                                 />
                               )}
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                         <div className="text-center">
@@ -209,6 +204,7 @@ const Dashboard = ({ socket, user }) => {
                           >
                             Report fake account
                           </a>
+                          <p className="report">Last seen {user.updatedAt.slice(-0, -14)}</p>
                         </div>
                       </div>
                     </div>
@@ -217,6 +213,18 @@ const Dashboard = ({ socket, user }) => {
               );
             }
           })}
+      </div>
+      <div>
+        {isOpen && (
+          <PopUp
+            content={
+              <>
+                <p className="message">{message}</p>
+              </>
+            }
+            handleClose={togglePopup}
+          />
+        )}
       </div>
     </div>
   );

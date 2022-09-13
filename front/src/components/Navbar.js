@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -18,11 +19,8 @@ const Navbar = ({ socket }) => {
       socket.on("getNotification", (data) => {
         setNotifications((prev) => [...prev, data]);
       });
-      console.log("notiffff", socket.id);
     }
   }, [socket]);
-
-  // console.log("notif", notifications);
 
   const displayNotifications = ({ senderName, type }) => {
     let action;
@@ -33,16 +31,7 @@ const Navbar = ({ socket }) => {
     } else if (type === "profile view") {
       action = "viewed your profile";
     }
-    return <span className="notification">{`${senderName} ${action}`}</span>;
-  };
-
-  const Logout = async () => {
-    try {
-      await axios.delete("http://localhost:5000/logout");
-      history.push("/");
-    } catch (error) {
-      console.log(error);
-    }
+    return <span className="notification" key={type}>{`${senderName} ${action}`}</span>;
   };
 
   const handleRead = () => {
@@ -53,10 +42,21 @@ const Navbar = ({ socket }) => {
   // const Chat = () => {
   //   history.push("/chat");
   // };
+
+  const Logout = async () => {
+    try {
+      await axios.delete("http://localhost:5000/logout");
+      history.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const Dashboard = () => {
     history.push("/dashboard");
   };
-  console.log("socket", socket);
+  //console.log("socket", socket);
+
+  console.log("notiffff", notifications);
 
   return (
     <>

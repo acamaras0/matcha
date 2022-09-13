@@ -454,3 +454,78 @@ a:active {
   border: 1px solid #999;
   font-size: 20px;
 }
+
+/* Chat */
+
+.messenger {
+  height: calc(100vh - 70px);
+  display: flex;
+}
+
+.chatMenu {
+  flex: 3;
+}
+
+.chatBox {
+  flex: 5.5;
+}
+
+.chatOnline {
+  flex: 3;
+}
+
+.chatMenuWrapper,
+.chatOnlineWrapper,
+.chatBoxWrapper {
+  padding: 10px;
+  height: 100%;
+}
+.chatMenuInput {
+  width: 90%;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.conversations {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.conversations:hover {
+  background-color: rgba(236, 189, 0, 0.368);
+}
+
+.conversationImg {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.conversationName {
+  font-weight: 400;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+}
+
+.msgImg {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.msgText {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(236, 189, 0, 0.368);
+}

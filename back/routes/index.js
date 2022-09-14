@@ -20,6 +20,7 @@ import {
   deletePic,
   getPicPath,
 } from "../controllers/Images.js";
+import { newConversation, getConversation, getMessages, newMessages} from "../controllers/Chat.js";
 import { report, block } from "../controllers/ReportBlock.js";
 import { insertLike, unLike, getFame } from "../controllers/Matches.js";
 import { upload } from "../middleware/Upload.js";
@@ -47,13 +48,16 @@ router.post("/users", Register);
 router.post("/login", Login);
 router.post("/fill", ProfileFill);
 router.post("/upload", upload.single("file"), UploadPic);
-
 router.post("/like/:user1/:user2", insertLike);
 router.post("/unlike/:user1/:user2", unLike);
-
 router.post("/report/:user_id/:reported_id", report);
 router.post("/block/:user_id/:blocked_id", block);
 //router.post("/unblock/:user_id/:blocked_id", unblock);
+
+router.get("/newConvo/:userId", getConversation);
+router.post("/newConvo", newConversation);
+router.get("/messages/:chat_id", getMessages);
+router.post("/messages", newMessages);
 
 router.delete("/logout", Logout);
 router.delete("/user/picture/:id", deletePic);

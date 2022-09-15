@@ -9,6 +9,8 @@ import ChatMatches from "../models/ChatMatches";
 
 const Chat = () => {
   const [conversations, setConversations] = useState([]);
+  const [currentChat, setCurrentChat] = useState(null);
+  const [messages, setMessages] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   const id = useParams().id;
@@ -16,9 +18,8 @@ const Chat = () => {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await axios.get(
-          `http://localhost:5000/newConvo/${id}`
-        );
+        const res = await axios.get(`http://localhost:5000/newConvo/${id}`);
+        setConversations(res.data);
         console.log(res);
       } catch (err) {
         console.log(err);
@@ -26,6 +27,22 @@ const Chat = () => {
     };
     getConversations();
   }, [id]);
+
+  useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/messages/${currentChat.id}`
+        );
+        setMessages(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getMessages();
+  }, [currentChat]);
+
+  console.log("messages", currentChat);
 
   if (!cookie.refreshToken) {
     history.push("/");
@@ -36,26 +53,41 @@ const Chat = () => {
       <div className="chatMenu">
         <div className="chatMenuWrapper">
           <input placeholder="Search for friends" className="chatMenuInput" />
-          <Conversations />
-          <Conversations />
-          <Conversations />
-          <Conversations />
+          {conversations.map((c) => (
+            <div onClick={() => setCurrentChat(c)}>
+              <Conversations conversations={c} currentUser={id} />
+            </div>
+          ))}
         </div>
       </div>
       <div className="chatBox">
         <div className="chatBoxWrapper">
-          <div className="chatBoxTop">
-            <Message />
-            <Message own={true} />
-            <Message />
-            <Message own={true} />
-          </div>
-          <div className="chatBoxBottom"> </div>
-          <textarea
-            placeholder="Write something ..."
-            className="chatMessageInput"
-          ></textarea>
-          <button className="chatSubmitButton">Send</button>
+          {currentChat ? (
+            <>
+              <div className="chatBoxTop">
+                {/* {messages.map((m) => (
+                    <div ref={scrollRef}>
+                      <Message message={m} own={m.sender === user._id} />
+                    </div>
+                  ))} */}
+              </div>
+              <div className="chatBoxBottom">
+                <textarea
+                  className="chatMessageInput"
+                  placeholder="write something..."
+                  // onChange={(e) => setNewMessage(e.target.value)}
+                  // value={newMessage}
+                ></textarea>
+                {/* <button className="chatSubmitButton" onClick={handleSubmit}>
+                  Send
+                </button> */}
+              </div>
+            </>
+          ) : (
+            <span className="noConversationText">
+              Open a conversation to start a chat.
+            </span>
+          )}
         </div>
       </div>
       <div className="chatOnline">

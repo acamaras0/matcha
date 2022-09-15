@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, Redirect, Navigate } from "react-router-dom";
 import Gender from "../models/Gender";
 import Tags from "../models/Tags";
 import Age from "../models/Age";
@@ -57,6 +57,7 @@ const ProfileForm = () => {
   if (!cookie.refreshToken) {
     history.push("/");
   }
+  console.log("logged",loggedIn)
   if (loggedIn && loggedIn.birthdate) {
     return <Redirect to={"/dashboard"} />;
   }

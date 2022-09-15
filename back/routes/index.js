@@ -1,18 +1,18 @@
 import express from "express";
 import {
-  getUsers,
   Register,
   Login,
+  accountActivation,
+  getUsers,
+  getLoggedIn,
   ProfileFill,
   Logout,
-  getLoggedIn,
-  getRandomUser,
-  forgotPass,
-  resetPass,
-  updateProfile,
-  accountActivation,
-  // getCoordinates,
   updatePassword,
+  // getRandomUser,
+  forgotPass,
+  // resetPass,
+  // updateProfile,
+  // getCoordinates,
 } from "../controllers/Users.js";
 import {
   UploadPic,
@@ -20,44 +20,44 @@ import {
   deletePic,
   getPicPath,
 } from "../controllers/Images.js";
-import { newConversation, getConversation, getMessages, newMessages} from "../controllers/Chat.js";
-import { report, block } from "../controllers/ReportBlock.js";
-import { insertLike, unLike, getFame } from "../controllers/Matches.js";
+// import { newConversation, getConversation, getMessages, newMessages} from "../controllers/Chat.js";
+// import { report, block } from "../controllers/ReportBlock.js";
+// import { insertLike, unLike, getFame } from "../controllers/Matches.js";
 import { upload } from "../middleware/Upload.js";
-import { verifyToken } from "../middleware/VerifyToken.js";
-import { refreshToken } from "../controllers/RefreshToken.js";
+// import { verifyToken } from "../middleware/VerifyToken.js";
+// import { refreshToken } from "../controllers/RefreshToken.js";
 
 const router = express.Router();
 
 router.get("/users/info/:token", getUsers);
 router.get("/user/:token", getLoggedIn);
-router.get("/users/verify", verifyToken);
-router.get("/token", refreshToken);
+// router.get("/users/verify", verifyToken);
+// router.get("/token", refreshToken);
 router.get("/user/pictures/:id", getPicsById, getPicPath);
-router.get("/users/:id", getRandomUser);
-router.get("/user/fame/:user", getFame);
+// router.get("/users/:id", getRandomUser);
+// router.get("/user/fame/:user", getFame);
 //router.get("/coordinates", getCoordinates);
 //router.get("/user/blocked/:id", getBlockedUsers);
 
-router.post("/activate/:hash", accountActivation);
-router.post("/user/updatePassword/:id", updatePassword);
-router.post("/user/update/:id", updateProfile);
-router.post("/resetpassword/:token", resetPass);
-router.post("/users/forgotpassword", forgotPass);
 router.post("/users", Register);
+router.post("/activate/:hash", accountActivation);
 router.post("/login", Login);
 router.post("/fill", ProfileFill);
+router.post("/user/updatePassword/:id", updatePassword);
+// router.post("/user/update/:id", updateProfile);
+// router.post("/resetpassword/:token", resetPass);
+router.post("/users/forgotpassword", forgotPass);
 router.post("/upload", upload.single("file"), UploadPic);
-router.post("/like/:user1/:user2", insertLike);
-router.post("/unlike/:user1/:user2", unLike);
-router.post("/report/:user_id/:reported_id", report);
-router.post("/block/:user_id/:blocked_id", block);
+// router.post("/like/:user1/:user2", insertLike);
+// router.post("/unlike/:user1/:user2", unLike);
+// router.post("/report/:user_id/:reported_id", report);
+// router.post("/block/:user_id/:blocked_id", block);
 //router.post("/unblock/:user_id/:blocked_id", unblock);
 
-router.get("/newConvo/:userId", getConversation);
-router.post("/newConvo", newConversation);
-router.get("/messages/:chat_id", getMessages);
-router.post("/messages", newMessages);
+// router.get("/newConvo/:userId", getConversation);
+// router.post("/newConvo", newConversation);
+// router.get("/messages/:chat_id", getMessages);
+// router.post("/messages", newMessages);
 
 router.delete("/logout", Logout);
 router.delete("/user/picture/:id", deletePic);

@@ -1,8 +1,48 @@
-import {Sequelize} from "sequelize";
+import mysql from "mysql";
 
-const db = new Sequelize('matcha','root','123456',{
-    host: "localhost",
-    dialect: "mysql",
+const db = mysql.createConnection({
+  user: "root",
+  host: "localhost",
+  password: "123456",
+  database: "matcha_db",
+});
+
+db.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+  var sql =
+    "CREATE TABLE IF NOT EXISTS users (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+    firstname VARCHAR(255), lastname VARCHAR(255), username VARCHAR(255), \
+    email VARCHAR(255), password VARCHAR(255), activ_status INT(11) DEFAULT 0,\
+    birthdate INT(11), gender VARCHAR(255) ,orientation VARCHAR(255) DEFAULT 'bisexual',\
+    interests VARCHAR(500), bio VARCHAR(500), geo_lat DOUBLE, geo_long DOUBLE,\
+    dist_min INT(11) DEFAULT 0, dist_max INT(11) DEFAULT 0, profile_pic VARCHAR(500),\
+    fame INT(11), online INT(11) DEFAULT 0, refresh_token VARCHAR(500), activ_token VARCHAR(500),\
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)";
+  db.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("User table created");
+  });
+  var block =
+    "CREATE TABLE IF NOT EXISTS block (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+    user_id INT(11), blocked_id INT(11))";
+  db.query(block, function (err, result) {
+    if (err) throw err;
+    console.log("Block table created");
+  });
+  var user_images =
+    "CREATE TABLE IF NOT EXISTS user_images (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+    user_id INT(11), pic_name VARCHAR(255), img VARCHAR(500))";
+  db.query(user_images, function (err, result) {
+    if (err) throw err;
+    console.log("Images table created");
+  });
+  var chat =
+    "CREATE TABLE IF NOT EXISTS chat (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, user1 INT(11), user2 INT(11))";
+  db.query(chat, function (err, result) {
+    if (err) throw err;
+    console.log("Chat table created");
+  });
 });
 
 export default db;

@@ -545,6 +545,7 @@ a:active {
 .chatBoxWrapper {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .chatMenuInput {
@@ -611,4 +612,9 @@ a:active {
 .messages.own .msgText {
   background-color: rgba(241, 241, 241, 0.642);
   color: black;
+}
+
+.noConversationText{
+  position:absolute;
+  top: 10%;
 }

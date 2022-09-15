@@ -45,15 +45,14 @@ export const newMessages = async (req, res) => {
 };
 
 export const getMessages = async (req, res) => {
-  const chat_id = req.params.chat_id;
-  try {
-    const messages = await Message.findAll({
-      where: {
-        chat_id,
-      },
-    });
-    res.status(200).json(messages);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-};
+    const chat_id = req.params.chat_id;
+    try {
+        const messages = await Message.findAll({
+        where: {
+            chat_id,
+        },
+        });
+        res.status(200).json(messages);
+    } catch (err) {
+        res.status(500).json(err);
+    }};

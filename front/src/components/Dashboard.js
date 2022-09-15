@@ -204,7 +204,7 @@ const Dashboard = ({ socket, user }) => {
                           >
                             Report fake account
                           </a>
-                          <p className="report">Last seen {user.updatedAt.slice(-0, -14)}</p>
+                          <p className="report">Last seen {user.updated_at.slice(-0, -14)}</p>
                         </div>
                       </div>
                     </div>

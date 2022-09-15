@@ -72,8 +72,6 @@ const ProfileRandom = () => {
   //   var getDistance = location[id - 1].distance / 1000;
   // }
 
-  console.log(likes);
-
   if (!cookie.refreshToken) {
     history.push("/");
   }
@@ -90,7 +88,6 @@ const ProfileRandom = () => {
           <div className="card-profile">
             <Gallery galleryImages={pics} />
             <div className="card-body">
-              <h5 className="card-title">{selectedUser.username}</h5>
               {/* <p className="card-text">{distance && distance[0].distance} km away</p> */}
               <label>Age</label>
               <p className="card-text">{selectedUser.birthdate}</p>

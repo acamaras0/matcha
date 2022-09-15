@@ -1,76 +1,35 @@
-import Matches from "../models/MatchModel.js";
-import Users from "../models/UserModel.js";
+import db from "../config/Database.js";
 
 export const insertLike = async (req, res) => {
   const user1 = req.params.user1;
-  const user2 = req.params.user2;
+  const user2 = req.params.user2;//logged in user
 
-  console.log("user1", user1); //john
-  console.log("user2", user2); // ana
-  const fame = await Users.findOne({
-    attributes: ["fame"],
-    where: {
-      id: user2,
-    },
-  });
-  const check1 = await Matches.findOne({
-    where: { user1: user2, user2: user1 },
-  });
-  const check = await Matches.findOne({
-    where: { user1, user2 },
-  });
-  if (check1 && check1.dataValues.match_status === 0) {
-    try {
-      await Matches.update(
-        {
-          match_status: 1,
-        },
-        {
-          where: {
-            user1: user2,
-            user2: user1,
-          },
+  db.query("SELECT fame FROM users WHERE id = ?", [user1], (err, result) => {
+    if (err) console.log(err);
+    db.query(
+      "SELECT * FROM matches WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?)",
+      [user1, user2, user2, user1],
+      (err, result1) => {
+        if (result1 && result1[0].match_status === 0) {
+          db.query(
+            "UPDATE matches SET match_status = 1 WHERE (user1 = ? AND user2 =? )OR (user1 = ? AND user2 = ?)",
+            [user1, user2, user2, user1]
+          );
+          return res.json({ msg: "You got a match!" });
+          // db.query("UPDATE users SET fame = ?", [result.data.fame + 1])
+          // db.query("INSERT INTO chat() VALUES () ")
         }
-      );
-
-      await Users.update(
-        {
-          fame: fame.fame + 1,
-        },
-        {
-          where: {
-            id: user2,
-          },
+        else if (!result1){
+          db.query("INSERT INTO matches (user1, user2, match_status) VALUES (?, ?, ?)", 
+          [user1, user2, 0])
+          return res.status(200).send({ msg: "Liked" })
         }
-      );
-      res.status(200).send({ msg: "You got a match!" });
-    } catch (err) {
-      console.log(err);
-    }
-  } else if (check) {
-    return res.status(200).send({ msg: "You can like only once." });
-  } else if (!check && !check1) {
-    try {
-      await Matches.create({
-        user1: user1,
-        user2: user2,
-        match_status: 0,
-      });
-      await Users.update(
-        {
-          fame: fame.fame + 1,
-        },
-        {
-          where: {
-            id: user2,
-          },
+        else{
+          return res.status(200).send({ msg: "You can like only once." });
         }
-      );
-      res.status(200).send({ msg: "Liked!" });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+      }
+    );
+  });
 };
 
 export const unLike = async (req, res) => {
@@ -134,6 +93,14 @@ export const unLike = async (req, res) => {
 
 export const getMatches = async (req, res) => {
   const user = req.params.user;
+  db.query(
+    "SELECT * FROM matches WHERE user1 = ? OR user2 = ? AND match_status = 1",
+    [user, user],
+    (err, result) => {
+      if (err) console.log(err);
+      if (result) res.json(result[0]);
+    }
+  );
   const matches = await Matches.findAll({
     where: {
       user1: user,
@@ -145,11 +112,8 @@ export const getMatches = async (req, res) => {
 
 export const getFame = async (req, res) => {
   const user = req.params.user;
-  const count = await Users.findOne({
-    attributes: ["fame"],
-    where: {
-      id: user,
-    },
+  db.query("SELECT fame FROM users WHERE id = ?", [user], (err, result) => {
+    if (err) console.log(err);
+    if (result) res.json(result[0]);
   });
-  res.json(count);
 };

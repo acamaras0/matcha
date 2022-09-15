@@ -94,213 +94,156 @@ export const updatePassword = async (req, res) => {
   }
 };
 
-// export const updateProfile = async (req, res) => {
-//   const { id } = req.params;
-//   const {
-//     username,
-//     firstName,
-//     lastName,
-//     email,
-//     bio,
-//     interests,
-//     gender,
-//     orientation,
-//     geoLat,
-//     geoLng,
-//   } = req.body;
-//   const tags = interests.join(", ");
-//   if (firstName) {
-//     await Users.update(
-//       {
-//         firstname: firstName,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   if (lastName) {
-//     await Users.update(
-//       {
-//         lastname: lastName,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   if (username) {
-//     await Users.update(
-//       {
-//         username: username,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   if (email) {
-//     await Users.update(
-//       {
-//         email: email,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   if (bio) {
-//     await Users.update(
-//       {
-//         bio: bio,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   if (interests) {
-//     await Users.update(
-//       {
-//         interests: tags,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   if (gender) {
-//     await Users.update(
-//       {
-//         gender: gender,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   if (orientation) {
-//     await Users.update(
-//       {
-//         orientation: orientation,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   if (geoLat) {
-//     await Users.update(
-//       {
-//         geo_lat: geoLat,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   if (geoLng) {
-//     await Users.update(
-//       {
-//         geo_long: geoLng,
-//       },
-//       {
-//         where: { id },
-//       }
-//     );
-//   }
-//   res.status(200).json({
-//     msg: "Profile updated",
-//   });
-// };
+export const updateProfile = async (req, res) => {
+  const { id } = req.params;
+  const {
+    username,
+    firstName,
+    lastName,
+    email,
+    bio,
+    interests,
+    gender,
+    orientation,
+    geoLat,
+    geoLng,
+  } = req.body;
+  const tags = interests.join(", ");
 
-// export const resetPass = async (req, res) => {
-//   const { token } = req.params;
-//   const check = await Users.findAll({
-//     where: {
-//       reset_token: token,
-//     },
-//   });
-//   const { password } = req.body;
-//   const { confPassword } = req.body;
-//   if (password !== confPassword) {
-//     return res.status(200).send("Passwords do not match");
-//   } else if (password.length < 8 || password.length > 20) {
-//     return res.status(200).send("Password must be at least 8 characters");
-//   } else if (token === check.reset_token) {
-//     return res.status(200).send("Invalid token");
-//   } else {
-//     const salt = await bcrypt.genSalt(10);
-//     const hash = await bcrypt.hash(password, salt);
-//     await Users.update(
-//       {
-//         password: hash,
-//         reset_token: null,
-//       },
-//       {
-//         where: {
-//           reset_token: token,
-//         },
-//       }
-//     );
-//     return res.status(200).send("Password reset");
-//   }
-// };
+  if (firstName) {
+    db.query("UPDATE users SET firstname = ? WHERE id = ?", [firstName, id]);
+  }
+  if (lastName) {
+    db.query("UPDATE users SET lastname = ? WHERE id = ?", [lastName, id]);
+  }
+  if (username) {
+    db.query("UPDATE users SET username = ? WHERE id = ?", [username, id]);
+  }
+  if (email) {
+    db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
+      if (err) console.log(err);
+      if (!result) {
+        db.query("UPDATE users SET email = ? WHERE id = ?", [email, id]);
+      } else
+        return res.status(200).json({
+          msg: "Email already exists!",
+        });
+    });
+  }
+  if (bio) {
+    db.query("UPDATE users SET bio = ? WHERE id = ?", [bio, id]);
+  }
+  if (interests) {
+    db.query("UPDATE users SET interests = ? WHERE id = ?", [tags, id]);
+  }
+  if (gender) {
+    db.query("UPDATE users SET gender = ? WHERE id = ?", [gender, id]);
+  }
+  if (orientation) {
+    db.query("UPDATE users SET orientation = ? WHERE id = ?", [
+      orientation,
+      id,
+    ]);
+  }
+  if (geoLat) {
+    db.query("UPDATE users SET geo_lat = ? WHERE id = ?", [geoLat, id]);
+  }
+  if (geoLng) {
+    db.query("UPDATE users SET geo_long = ? WHERE id = ?", [geoLng, id]);
+  }
+  res.status(200).json({
+    msg: "Profile updated",
+  });
+};
+
+export const resetPass = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+  const { confPassword } = req.body;
+  if (password !== confPassword) {
+    return res.status(200).send("Passwords do not match");
+  } else if (password.length < 8 || password.length > 20) {
+    return res.status(200).send("Password must be at least 8 characters");
+  } else {
+    db.query(
+      "SELECT * FROM users WHERE reset_token = ?",
+      [token],
+      (err, result) => {
+        if (err) {
+          res.send({ err: err });
+        }
+        if (result && result[0].reset_token === token) {
+          const saltRounds = 10;
+          bcrypt.hash(password, saltRounds, function (err, hash) {
+            db.query(
+              "UPDATE users SET reset_token = 0, password = ? WHERE reset_token = ?",
+              [hash, token],
+              (err, result) => {
+                if (err) {
+                  res.send({ err: err });
+                }
+              }
+            );
+          });
+        } else {
+          return res.status(200).send("Invalid token");
+        }
+      }
+    );
+  }
+};
 
 export const forgotPass = async (req, res) => {
   const { email } = req.body;
   const token = process.env.ACCESS_TOKEN_SECRET;
 
-  db.query("SELECT * FROM users WHERE email = ?", [email], 
-  (err, result) => {
-    if (err)
-     return console.log(err);
-    if (result){
-      
+  db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
+    if (err) return console.log(err);
+    if (result) {
+      db.query(
+        "UPDATE users SET reset_token = ? WHERE email = ?",
+        [token, email],
+        (err, result) => {
+          if (err) return console.log(err);
+          if (result) {
+            const mailOptions = {
+              from: "Matcha",
+              to: email,
+              subject: "Reset your password",
+              html: `<p>Click <a href="http://localhost:3000/resetPassword/${token}">here</a> to reset your password</p>`,
+            };
+            transporter.sendMail(mailOptions, (err, info) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("Email sent: " + info.response);
+              }
+            });
+            res.status(200).json({
+              msg: "Email sent",
+            });
+          } else {
+            res.status(200).json({
+              msg: "Email not found",
+            });
+          }
+        }
+      );
     }
   });
-  // const user = await Users.findOne({ email });
-  // if (!user) {
-  //   return res.status(404).json({ msg: "User not found" });
-  // } else {
-  //   await Users.update(
-  //     {
-  //       reset_token: token,
-  //     },
-  //     {
-  //       where: {
-  //         email: email,
-  //       },
-  //     }
-  //   );
-  //   const mailOptions = {
-  //     from: "matcha@gmail.com",
-  //     to: email,
-  //     subject: "Password Reset",
-  //     text:
-  //       "Reset your password by clicking the following link: http://localhost:3000/resetpassword/" +
-  //       token,
-  //   };
-  //   transporter.sendMail(mailOptions, function (error, info) {
-  //     if (error) {
-  //       console.log(error);
-  //     } else {
-  //       return res.status(200).json({ msg: "Email sent!" });
-  //     }
-  //   });
-  // }
 };
 
-// export const getRandomUser = async (req, res) => {
-//   const { id } = req.params;
-//   const user = await Users.findOne({
-//     where: {
-//       id: id,
-//     },
-//   });
-//   console.log(user.dataValues);
-//    res.json(user.dataValues);
-// };
+export const getRandomUser = async (req, res) => {
+  const { id } = req.params;
+  db.query("SELECT * FROM users WHERE id = ?", [id], (err, result) => {
+    if (err) {
+      res.send({ err: err });
+    }
+    if (result) {
+      res.json(result[0]);
+    }
+  });
+};
 
 export const getUsers = async (req, res) => {
   const token = req.params.token;
@@ -330,7 +273,7 @@ export const getUsers = async (req, res) => {
       // );
       if (orientation === "heterosexual" && gender === "female") {
         db.query(
-          "SELECT * FROM users WHERE id != ? AND gender = 'male' AND orientation = 'heterosexual'",
+          "SELECT * FROM users WHERE id != ? AND gender = 'male' AND orientation = 'heterosexual' OR orientation = 'bisexual'",
           [loggedIn],
           (err, result) => {
             if (err) return res.json({ err: err });
@@ -340,7 +283,7 @@ export const getUsers = async (req, res) => {
         );
       } else if (orientation === "heterosexual" && gender === "male") {
         db.query(
-          "SELECT * FROM users WHERE id != ? AND gender = 'female' AND orientation = 'heterosexual'",
+          "SELECT * FROM users WHERE id != ? AND gender = 'female' AND orientation = 'heterosexual' OR orientation = 'bisexual'",
           [loggedIn],
           (err, result) => {
             if (err) return res.json({ err: err });
@@ -367,7 +310,7 @@ export const getUsers = async (req, res) => {
         );
       } else if (orientation === "bisexual") {
         db.query(
-          "SELECT * FROM users WHERE id != ? AND orientation = 'bisexual'",
+          "SELECT * FROM users WHERE id != ? ",
           [loggedIn],
           (err, result) => {
             if (err) return res.json({ err: err });
@@ -435,9 +378,7 @@ export const Register = async (req, res) => {
     from: "matcha@gmail.com",
     to: email,
     subject: "Account activation",
-    text:
-      "Activate your account by clicking the following link: http://localhost:3000/activate/" +
-      activ_code,
+    html: `<p>Click <a href="http://localhost:3000/activate/${activ_code}">here</a> to activate your account!</p>`,
   };
   const saltRounds = 10;
   if (username && password && confPassword && firstName && lastName && email) {
@@ -472,7 +413,7 @@ export const Register = async (req, res) => {
           if (err) {
             res.send({ err: err });
           }
-          const here = db.query(
+          db.query(
             "INSERT INTO users (firstName, lastName, username, email, password, activ_token) VALUES (?, ?, ?, ?, ?, ?)",
             [firstName, lastName, username, email, hash, activ_code],
             (err, result) => {

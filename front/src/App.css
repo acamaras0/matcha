@@ -47,10 +47,8 @@ img.dislike {
 
 div.container {
   display: flex;
-  justify-content: space-between;
-  padding-left: 5vw;
-  padding-right: 5vw;
-  padding-top: 5vh;
+  justify-content: center;
+  padding-top: 2vh;
 }
 h3 {
   color: rgb(236, 189, 0);
@@ -614,7 +612,10 @@ a:active {
   color: black;
 }
 
-.noConversationText{
-  position:absolute;
+.noConversationText {
+  position: absolute;
   top: 10%;
+  color: #ccc;
+  font-size: larger;
+  padding: 10vw;
 }

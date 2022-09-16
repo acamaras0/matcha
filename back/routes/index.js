@@ -20,9 +20,13 @@ import {
   deletePic,
   getPicPath,
 } from "../controllers/Images.js";
-// import { newConversation, getConversation, getMessages, newMessages} from "../controllers/Chat.js";
-// import { report, block } from "../controllers/ReportBlock.js";
-import { insertLike, unLike, getFame } from "../controllers/Matches.js";
+import {
+  getConversation,
+  getMessages,
+  newMessages,
+} from "../controllers/Chat.js";
+import { report, block, getBlockedUsers } from "../controllers/ReportBlock.js";
+import { insertLike, getFame } from "../controllers/Matches.js";
 import { upload } from "../middleware/Upload.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
@@ -37,7 +41,7 @@ router.get("/user/pictures/:id", getPicsById, getPicPath);
 router.get("/users/:id", getRandomUser);
 router.get("/user/fame/:user", getFame);
 //router.get("/coordinates", getCoordinates);
-//router.get("/user/blocked/:id", getBlockedUsers);
+router.get("/user/blocked/:id", getBlockedUsers);
 
 router.post("/users", Register);
 router.post("/activate/:hash", accountActivation);
@@ -49,15 +53,13 @@ router.post("/resetpassword/:token", resetPass);
 router.post("/users/forgotpassword", forgotPass);
 router.post("/upload", upload.single("file"), UploadPic);
 router.post("/like/:user1/:user2", insertLike);
-router.post("/unlike/:user1/:user2", unLike);
-// router.post("/report/:user_id/:reported_id", report);
-// router.post("/block/:user_id/:blocked_id", block);
+router.post("/report/:user_id/:reported_id", report);
+router.post("/block/:user_id/:blocked_id", block);
 //router.post("/unblock/:user_id/:blocked_id", unblock);
 
-// router.get("/newConvo/:userId", getConversation);
-// router.post("/newConvo", newConversation);
-// router.get("/messages/:chat_id", getMessages);
-// router.post("/messages", newMessages);
+router.get("/newConvo/:userId", getConversation);
+router.get("/messages/:chat_id", getMessages);
+router.post("/messages", newMessages);
 
 router.delete("/logout", Logout);
 router.delete("/user/picture/:id", deletePic);

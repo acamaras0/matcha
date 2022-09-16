@@ -1,11 +1,7 @@
-// import Users from "../models/UserModel.js";
-// import Block from "../models/BlockModel.js";
-// import { Op } from "sequelize";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import db from "../config/Database.js";
-// const db = require("../config/db");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
@@ -273,7 +269,7 @@ export const getUsers = async (req, res) => {
       // );
       if (orientation === "heterosexual" && gender === "female") {
         db.query(
-          "SELECT * FROM users WHERE id != ? AND gender = 'male' AND orientation = 'heterosexual' OR orientation = 'bisexual'",
+          "SELECT * FROM users WHERE id != ? AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
           [loggedIn],
           (err, result) => {
             if (err) return res.json({ err: err });
@@ -283,7 +279,7 @@ export const getUsers = async (req, res) => {
         );
       } else if (orientation === "heterosexual" && gender === "male") {
         db.query(
-          "SELECT * FROM users WHERE id != ? AND gender = 'female' AND orientation = 'heterosexual' OR orientation = 'bisexual'",
+          "SELECT * FROM users WHERE id != ? AND gender = 'female' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
           [loggedIn],
           (err, result) => {
             if (err) return res.json({ err: err });

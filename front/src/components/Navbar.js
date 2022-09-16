@@ -90,7 +90,7 @@ const Navbar = ({ socket }) => {
   };
   //console.log("socket", socket);
 
-  console.log("notiffff", notifications);
+  //console.log("notiffff", notifications);
 
   return (
     <>

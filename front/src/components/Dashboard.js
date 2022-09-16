@@ -8,6 +8,8 @@ import img from "../assets/yellow-heart.png";
 import img1 from "../assets/broken-heart.png";
 import useGetDistance from "../utils/useGetDistance";
 import PopUp from "../models/PopUp";
+import { format } from "timeago.js";
+
 
 const Dashboard = ({ socket, user }) => {
   const [loggedIn, setLoggedin] = useState("");
@@ -70,28 +72,10 @@ const Dashboard = ({ socket, user }) => {
         console.log("error", error.response.data);
       }
     }
-    setLiked(true);
     socket.emit("sendNotification", {
       senderName: sender,
       receiverName: id,
       type: "like",
-    });
-  };
-
-  const handleUnLike = async (id) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:5000/unlike/${loggedIn}/${id}`
-      );
-      setMessage(response.data.msg);
-    } catch (error) {
-      if (error.response) console.log("error", error.response.data);
-    }
-    setLiked(true);
-    socket.emit("sendNotification", {
-      senderName: sender,
-      receiverName: id,
-      type: "dislike",
     });
   };
 
@@ -111,11 +95,13 @@ const Dashboard = ({ socket, user }) => {
 
   const f1 = (id) => {
     togglePopup();
-    handleUnLike(id);
+    handleLike(id);
+    setLiked(true);
   };
   const f2 = (id) => {
     togglePopup();
     handleLike(id);
+    setLiked(false);
   };
   if (!cookie.refreshToken) {
     history.push("/");
@@ -168,35 +154,26 @@ const Dashboard = ({ socket, user }) => {
                         <label>Bio</label>
                         <p className="card-text">{user.bio}</p>
                         <div className="container">
-                          <div className="like-container">
-                            <img
-                              onClick={() => f2(user.id)}
-                              className="like"
-                              src={img}
-                              alt="Card cap"
-                            />
-                          </div>
-                          <div className="dislike-container">
-                            <img
-                              onClick={() => f1(user.id)}
-                              className="dislike"
-                              src={img1}
-                              alt="Card cap"
-                            />
-                            {/* <div>
-                              {isOpen && (
-                                <PopUp
-                                  content={
-                                    <>
-                                      <p className="message">{message}</p>
-                                    </>
-                                  }
-                                  handleClose={togglePopup}
-                                />
-                              )}
-                            </div> */}
-                          </div>
-                        </div>
+                          {liked ? (
+                            <div className="like-container">
+                              <img
+                                onClick={() => f2(user.id)}
+                                className="like"
+                                src={img}
+                                alt="Card cap"
+                              />
+                            </div>
+                          ) : (
+                            <div className="dislike-container">
+                              <img
+                                onClick={() => f1(user.id)}
+                                className="dislike"
+                                src={img1}
+                                alt="Card cap"
+                              />
+                            </div>
+                          )}
+                        </div> <br />
                         <div className="text-center">
                           <a
                             onClick={() => handleReport(user.id)}
@@ -204,7 +181,9 @@ const Dashboard = ({ socket, user }) => {
                           >
                             Report fake account
                           </a>
-                          <p className="report">Last seen {user.updated_at.slice(-0, -14)}</p>
+                          <p className="report">
+                            Last seen {format(user.updated_at)}
+                          </p>
                         </div>
                       </div>
                     </div>

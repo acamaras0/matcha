@@ -41,7 +41,7 @@ const Register = () => {
 
   return (
     <div>
-      <div className="logo">
+      <div className="logo1">
         <img src={logo} alt="logo" />
       </div>
       <div className="Auth-form-container">

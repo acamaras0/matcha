@@ -94,15 +94,11 @@ const Navbar = ({ socket }) => {
 
   return (
     <>
-      <nav
-        className="navbar is-light"
-        role="navigation"
-        aria-label="main navigation"
-      >
+      <nav className="navbar navbar-light bg-white" role="navigation">
         <div className="container">
           <div className="navbar-brand">
             <div className="Nav-logo">
-              <img onClick={Dashboard} src={logo} alt="logo" />
+              <img onClick={Dashboard} src={logo} className="logo" />
             </div>
           </div>
 

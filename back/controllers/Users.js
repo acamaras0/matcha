@@ -51,13 +51,13 @@ export const accountActivation = async (req, res) => {
             if (err) {
               res.send({ err: err });
             }
-            res.status(400).json({
+            res.status(200).json({
               msg: "Now you can login",
             });
           }
         );
       } else {
-        res.status(400).json({
+        res.status(200).json({
           msg: "An error has occured. Please try again later.",
         });
       }
@@ -254,19 +254,19 @@ export const getUsers = async (req, res) => {
       const orientation = result[0].orientation;
       const gender = result[0].gender;
 
-      // db.query(
-      //   "SELECT * FROM block WHERE user_id=?",
-      //   [loggedIn],
-      //   (err, result) => {
-      //     if (err) {
-      //       return res.json({ err: err });
-      //     }
-      //     if (result.length > 0) {
-      //       const blocked = result.map((item) => item.blocked_id);
-      //        console.log(blocked);
-      //     }
-      //   }
-      // );
+      db.query(
+        "SELECT * FROM block WHERE user_id=?",
+        [loggedIn],
+        (err, result) => {
+          if (err) {
+            return res.json({ err: err });
+          }
+          if (result.length > 0) {
+            const blocked = result.map((item) => item.blocked_id);
+            console.log(blocked);
+          }
+        }
+      );
       if (orientation === "heterosexual" && gender === "female") {
         db.query(
           "SELECT * FROM users WHERE id != ? AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
@@ -383,25 +383,25 @@ export const Register = async (req, res) => {
         res.send({ err: err });
       }
       if (password !== confPassword) {
-        res.status(400).json({
+        res.status(200).json({
           msg: "Passwords do not match",
         });
       } else if (password >= 8) {
-        res.status(400).json({
+        res.status(200).json({
           msg: "Password has to be at least 8 characters long.",
         });
       } else if (
         result.length > 0 &&
         result.some((user) => user.username === username)
       ) {
-        res.status(400).json({
+        res.status(200).json({
           msg: "Username already exists",
         });
       } else if (
         result.length > 0 &&
         result.some((user) => user.email === email)
       ) {
-        res.status(400).json({
+        res.status(200).json({
           msg: "Email already exists",
         });
       } else {
@@ -421,7 +421,7 @@ export const Register = async (req, res) => {
                   console.log({ err: error });
                 }
               });
-              res.status(400).json({
+              res.status(200).json({
                 msg: "User created! Activate your account!",
               });
             }
@@ -453,7 +453,7 @@ export const Login = async (req, res) => {
             const email = result[0].email;
             const activ_status = result[0].activ_status;
             if (activ_status === 0) {
-              return res.status(400).json({
+              return res.status(200).json({
                 msg: "Please activate your account",
               });
             }
@@ -481,7 +481,7 @@ export const Login = async (req, res) => {
               [lat, lng, refreshToken, userId]
             );
           } else {
-            return res.status(400).json({
+            return res.status(200).json({
               msg: "Wrong username/password combination!",
             });
           }
@@ -495,7 +495,7 @@ export const ProfileFill = async (req, res) => {
   const { birthdate, gender, orientation, interests, bio } = req.body;
   const tags = interests.join(", ");
   if (!(birthdate && gender && orientation && interests && bio)) {
-    return res.status(400).json({
+    return res.status(200).json({
       msg: "All fields are required",
     });
   }

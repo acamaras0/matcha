@@ -10,7 +10,6 @@ export const insertLike = async (req, res) => {
       "SELECT * FROM matches WHERE (liker = ? AND liked = ?) OR (liker = ? AND liked = ?)",
       [liker, liked, liked, liker],
       (err, result1) => {
-        // console.log(result1[0].liker);
         if (
           result1[0] &&
           result1[0].match_status == 0 &&
@@ -66,6 +65,10 @@ export const insertLike = async (req, res) => {
             result[0].fame - 1,
             liked,
           ]);
+          db.query(
+            "DELETE FROM chat WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?)",
+            [liker, liked, liked, liker]
+          );
           return res.status(200).send({ msg: "Unmatched" });
         }
       }
@@ -83,13 +86,6 @@ export const getMatches = async (req, res) => {
       if (result) res.json(result[0]);
     }
   );
-  const matches = await Matches.findAll({
-    where: {
-      user1: user,
-      match_status: 1,
-    },
-  });
-  res.status(200).send(matches);
 };
 
 export const getFame = async (req, res) => {

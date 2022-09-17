@@ -55,7 +55,6 @@ router.post("/upload", upload.single("file"), UploadPic);
 router.post("/like/:user1/:user2", insertLike);
 router.post("/report/:user_id/:reported_id", report);
 router.post("/block/:user_id/:blocked_id", block);
-//router.post("/unblock/:user_id/:blocked_id", unblock);
 
 router.get("/newConvo/:userId", getConversation);
 router.get("/messages/:chat_id", getMessages);

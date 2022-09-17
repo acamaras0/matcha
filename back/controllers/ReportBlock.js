@@ -56,6 +56,14 @@ export const block = async (req, res) => {
         id,
         blocked,
       ]);
+      db.query(
+        "DELETE FROM matches WHERE (liked= ? AND liker = ?) OR (liked = ? AND liker = ?)",
+        [id, blocked, blocked, id]
+      );
+      db.query(
+        "DELETE FROM chat WHERE (user1= ? AND user2 = ?) OR (user1 = ? AND user2 = ?)",
+        [id, blocked, blocked, id]
+      );
       return res.status(200).json({ msg: "User blocked!" });
     }
   );

@@ -1,9 +1,9 @@
 /* eslint-disable */
+import useGetDistance from "../utils/useGetDistance";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
-import useGetDistance from "../utils/useGetDistance";
 import StarRating from "../models/StarRating";
 import Gallery from "../models/Gallery";
 import { useCookies } from "react-cookie";
@@ -49,7 +49,9 @@ const ProfileRandom = () => {
 
     const count = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/user/fame/${id}`);
+        const response = await axios.get(
+          `http://localhost:5000/user/fame/${id}`
+        );
         setLikes(response.data.fame);
       } catch (error) {
         console.log(error);
@@ -71,6 +73,7 @@ const ProfileRandom = () => {
   // if (location[id - 1]) {
   //   var getDistance = location[id - 1].distance / 1000;
   // }
+  console.log(selectedUser);
 
   if (!cookie.refreshToken) {
     history.push("/");
@@ -84,28 +87,35 @@ const ProfileRandom = () => {
           <h2 className="text-center">
             {selectedUser.firstname} {selectedUser.lastname}
           </h2>
+          <p className="card-text">{selectedUser.username}</p>
+          {/* <p className="text-center">
+                About {distance && Math.round(distance[0].distance / 1000)} km away
+              </p> */}
           <StarRating rating={likes} />
-          <div className="card-profile">
+          <div className="card-img">
             <Gallery galleryImages={pics} />
-            <div className="card-body">
-              {/* <p className="card-text">{distance && distance[0].distance} km away</p> */}
-              <label>Age</label>
-              <p className="card-text">{selectedUser.birthdate}</p>
-              <label>Bio</label>
-              <p className="card-text">{selectedUser.bio}</p>
-              <label>Gender</label>
-              <p className="card-text">{selectedUser.gender}</p>
-              <label>Interests</label>
-              <p className="card-text">{selectedUser.interests}</p>
-            </div>
-          </div>{" "}
-          <br />
-          <button
-            onClick={() => block(selectedUser.id)}
-            className="btn btn-danger"
-          >
-            Block
-          </button>
+          </div>
+          <div style={{ margin: "10%" }}>
+            <div className="card">
+              <div className="card-body">
+                <label>Age</label>
+                <p className="card-text">{selectedUser.birthdate}</p>
+                <label>Bio</label>
+                <p className="card-text">{selectedUser.bio}</p>
+                <label>Gender</label>
+                <p className="card-text">{selectedUser.gender}</p>
+                <label>Interests</label>
+                <p className="card-text">{selectedUser.interests}</p>
+              </div>
+            </div>{" "}
+            <br />
+            <button
+              onClick={() => block(selectedUser.id)}
+              className="btn btn-danger"
+            >
+              Block
+            </button>
+          </div>
         </div>
       </div>
     );

@@ -13,7 +13,7 @@ export const getPicPath = async (req, res) => {
       if (result.length > 0) {
         res.send(result);
       } else {
-        res.send({ message: "No images found" });
+        res.status(200).json({ message: "No images found" });
       }
     }
   );
@@ -29,9 +29,9 @@ export const getPicsById = async (req, res) => {
         res.send({ err: err });
       }
       if (result.length > 0) {
-        res.send(result);
+        res.status(200).json(result);
       } else {
-        res.send({ message: "No images found" });
+        res.status(200).json({ message: "No images found" });
       }
     }
   );
@@ -66,9 +66,8 @@ export const UploadPic = async (req, res) => {
                 (err, result) => {
                   if (err) {
                     console.log(err);
-                  } else {
-                    console.log(result);
                   }
+                  res.status(200).json("Image uploaded");
                 }
               );
               db.query(
@@ -77,8 +76,6 @@ export const UploadPic = async (req, res) => {
                 (err, result) => {
                   if (err) {
                     console.log(err);
-                  } else {
-                    console.log(result);
                   }
                 }
               );
@@ -101,7 +98,7 @@ export const deletePic = async (req, res) => {
     [token],
     (err, result) => {
       if (err) {
-        res.send({ err: err });
+        res.status(200).json({ err: err });
       }
       if (result) {
         const user_id = result[0].id;
@@ -110,7 +107,7 @@ export const deletePic = async (req, res) => {
           [user_id],
           (err, result) => {
             if (err) {
-              res.send({ err: err });
+              res.status(200).json({ err: err });
             }
             if (result[0].count > 1) {
               db.query(
@@ -118,20 +115,20 @@ export const deletePic = async (req, res) => {
                 [pic_id],
                 (err, result) => {
                   if (err) {
-                    res.send({ err: err });
+                    res.status(200).json({ err: err });
                   }
                   if (result.length > 0) {
                     let path = String(`./uploads/${result[0].pic_name}`);
                     fs.unlink(path, (err) => {
                       if (err) throw err;
-                      console.log("picture deleted");
+                      res.status(200).json("picture deleted");
                     });
                     db.query(
                       "DELETE FROM user_images WHERE id = ?",
                       [pic_id],
                       (err, result) => {
                         if (err) {
-                          res.send({ err: err });
+                          res.status(200).json({ err: err });
                         }
                       }
                     );

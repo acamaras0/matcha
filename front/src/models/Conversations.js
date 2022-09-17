@@ -22,7 +22,6 @@ export default function Conversations({ conversations, currentUser }) {
     getUser();
   }, [conversations.user1, conversations.user2, currentUser]);
 
-  console.log("conversations", currentUser);
   return (
     <div className="conversations">
       <img src={user && user.profile_pic} alt="" className="conversationImg" />

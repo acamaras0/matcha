@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
@@ -10,9 +10,11 @@ const Chat = () => {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   const id = useParams().id;
+  const scrollRef = useRef();
 
   useEffect(() => {
     const getConversations = async () => {
@@ -42,6 +44,30 @@ const Chat = () => {
     }
   }, [currentChat]);
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const message = {
+      sender: id,
+      text: newMessage,
+      chat_id: currentChat.id,
+    };
+    setMessages([...messages, message]);
+    setNewMessage("");
+    try {
+      const res = await axios.post("http://localhost:5000/messages", message);
+      // setMessages([...messages, res.data]);
+      // setNewMessage("");
+      // console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // console.log(messages)
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   if (!cookie.refreshToken) {
     history.push("/");
   }
@@ -53,7 +79,7 @@ const Chat = () => {
           <input placeholder="Search for friends" className="chatMenuInput" />
           {conversations &&
             conversations.map((c) => (
-              <div onClick={() => setCurrentChat(c)}>
+              <div key={id} onClick={() => setCurrentChat(c)}>
                 <Conversations conversations={c} currentUser={id} />
               </div>
             ))}
@@ -65,7 +91,7 @@ const Chat = () => {
             <>
               <div className="chatBoxTop">
                 {messages.map((m) => (
-                  <div>
+                  <div key={m.id} ref={scrollRef}>
                     <Message message={m} own={m.sender === id} />
                   </div>
                 ))}
@@ -74,13 +100,10 @@ const Chat = () => {
                 <textarea
                   className="chatMessageInput"
                   placeholder="write something..."
-                  // onChange={(e) => setNewMessage(e.target.value)}
-                  // value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  value={newMessage}
                 ></textarea>
-                <button
-                  className="chatSubmitButton"
-                  // onClick={handleSubmit}
-                >
+                <button className="chatSubmitButton" onClick={handleSubmit}>
                   Send
                 </button>
               </div>

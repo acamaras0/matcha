@@ -117,20 +117,20 @@ const Dashboard = ({ socket, user }) => {
       </div>
     );
   return (
-    <div className="">
+    <div className="" >
       <br />
-      <div className="">
+      <div className="dashboard" >
         {distance &&
           // eslint-disable-next-line
           distance.map((user) => {
             if (user.profile_pic) {
               return (
-                <div key={user.id} className="card mb-3">
+                <div key={user.id} className="card mb-4" style={{ width: "20rem" }}>
                   <div className="row no-gutters">
-                    <div className="col-md-4">
-                      <img
+                    <div>
+                      <img 
                         onClick={() => handleUserSelect(user.id)}
-                        className="card-img"
+                        className="card-img img-fluid"
                         src={user.profile_pic}
                         alt="Card cap"
                       />
@@ -153,7 +153,7 @@ const Dashboard = ({ socket, user }) => {
                         <p className="card-text">{user.gender}</p>
                         <label>Bio</label>
                         <p className="card-text">{user.bio}</p>
-                        <div className="container">
+                        <div className="heart-container">
                           {liked ? (
                             <div className="like-container">
                               <img

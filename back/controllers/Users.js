@@ -253,7 +253,6 @@ export const getUsers = async (req, res) => {
       const loggedIn = result[0].id;
       const orientation = result[0].orientation;
       const gender = result[0].gender;
-
       db.query(
         "SELECT * FROM block WHERE user_id=?",
         [loggedIn],
@@ -263,57 +262,102 @@ export const getUsers = async (req, res) => {
           }
           if (result.length > 0) {
             const blocked = result.map((item) => item.blocked_id);
-            console.log(blocked);
+            if (orientation === "heterosexual" && gender === "female") {
+              db.query(
+                "SELECT * FROM users WHERE id != ? AND id != ? AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
+                [loggedIn, ...blocked],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            } else if (orientation === "heterosexual" && gender === "male") {
+              db.query(
+                "SELECT * FROM users WHERE id != ? AND id != ? AND gender = 'female' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
+                [loggedIn, ...blocked],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            } else if (orientation === "homosexual" && gender === "female") {
+              db.query(
+                "SELECT * FROM users WHERE id != ? AND id != ? AND gender = 'female' AND orientation = 'homosexual'",
+                [loggedIn],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            } else if (orientation === "homosexual" && gender === "male") {
+              db.query(
+                "SELECT * FROM users WHERE id != ? AND id != ? AND gender = 'male' AND orientation = 'homosexual'",
+                [loggedIn, ...blocked],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            } else if (orientation === "bisexual") {
+              db.query(
+                "SELECT * FROM users WHERE id != ? AND id != ?",
+                [loggedIn, ...blocked],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            }
+          } else {
+            if (orientation === "heterosexual" && gender === "female") {
+              db.query(
+                "SELECT * FROM users WHERE id != ? AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
+                [loggedIn],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            } else if (orientation === "heterosexual" && gender === "male") {
+              db.query(
+                "SELECT * FROM users WHERE id != ? AND gender = 'female' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
+                [loggedIn],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            } else if (orientation === "homosexual" && gender === "female") {
+              db.query(
+                "SELECT * FROM users WHERE id != ? AND gender = 'female' AND orientation = 'homosexual'",
+                [loggedIn],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            } else if (orientation === "homosexual" && gender === "male") {
+              db.query(
+                "SELECT * FROM users WHERE id != ? AND gender = 'male' AND orientation = 'homosexual'",
+                [loggedIn],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            } else if (orientation === "bisexual") {
+              db.query(
+                "SELECT * FROM users WHERE id != ?",
+                [loggedIn],
+                (err, result) => {
+                  if (err) return res.json({ err: err });
+                  res.json(result);
+                }
+              );
+            }
           }
         }
       );
-      if (orientation === "heterosexual" && gender === "female") {
-        db.query(
-          "SELECT * FROM users WHERE id != ? AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
-          [loggedIn],
-          (err, result) => {
-            if (err) return res.json({ err: err });
-            res.json(result);
-            console.log(result);
-          }
-        );
-      } else if (orientation === "heterosexual" && gender === "male") {
-        db.query(
-          "SELECT * FROM users WHERE id != ? AND gender = 'female' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
-          [loggedIn],
-          (err, result) => {
-            if (err) return res.json({ err: err });
-            res.json(result);
-          }
-        );
-      } else if (orientation === "homosexual" && gender === "female") {
-        db.query(
-          "SELECT * FROM users WHERE id != ? AND gender = 'female' AND orientation = 'homosexual'",
-          [loggedIn],
-          (err, result) => {
-            if (err) return res.json({ err: err });
-            res.json(result);
-          }
-        );
-      } else if (orientation === "homosexual" && gender === "male") {
-        db.query(
-          "SELECT * FROM users WHERE id != ? AND gender = 'male' AND orientation = 'homosexual'",
-          [loggedIn],
-          (err, result) => {
-            if (err) return res.json({ err: err });
-            res.json(result);
-          }
-        );
-      } else if (orientation === "bisexual") {
-        db.query(
-          "SELECT * FROM users WHERE id != ? ",
-          [loggedIn],
-          (err, result) => {
-            if (err) return res.json({ err: err });
-            res.json(result);
-          }
-        );
-      }
     }
   );
 
@@ -453,7 +497,7 @@ export const Login = async (req, res) => {
             const email = result[0].email;
             const activ_status = result[0].activ_status;
             if (activ_status === 0) {
-              return res.status(200).json({
+              return res.json({
                 msg: "Please activate your account",
               });
             }
@@ -481,7 +525,7 @@ export const Login = async (req, res) => {
               [lat, lng, refreshToken, userId]
             );
           } else {
-            return res.status(200).json({
+            return res.json({
               msg: "Wrong username/password combination!",
             });
           }

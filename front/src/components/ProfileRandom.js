@@ -73,7 +73,6 @@ const ProfileRandom = () => {
   // if (location[id - 1]) {
   //   var getDistance = location[id - 1].distance / 1000;
   // }
-  console.log(selectedUser);
 
   if (!cookie.refreshToken) {
     history.push("/");
@@ -104,6 +103,8 @@ const ProfileRandom = () => {
                 <p className="card-text">{selectedUser.bio}</p>
                 <label>Gender</label>
                 <p className="card-text">{selectedUser.gender}</p>
+                <label>Sexual Orientation</label>
+                <p className="card-text">{selectedUser.orientation}</p>
                 <label>Interests</label>
                 <p className="card-text">{selectedUser.interests}</p>
               </div>

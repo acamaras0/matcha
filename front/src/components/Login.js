@@ -17,18 +17,16 @@ const Login = () => {
 
   const Auth = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:5000/login", {
-        username: username,
-        password: password,
-        lat: location.coordinates.lat,
-        lng: location.coordinates.lng,
-      });
+
+    const res = await axios.post("http://localhost:5000/login", {
+      username: username,
+      password: password,
+      lat: location.coordinates.lat,
+      lng: location.coordinates.lng,
+    });
+    setMessage(res.data.msg);
+    if (res.data.accessToken) {
       history.push("/completeprofile");
-    } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data.msg);
-      }
     }
   };
 

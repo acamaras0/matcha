@@ -238,6 +238,7 @@ export const getRandomUser = async (req, res) => {
     if (result) {
       res.json(result[0]);
     }
+    console.log(id)
   });
 };
 

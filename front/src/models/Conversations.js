@@ -7,9 +7,9 @@ export default function Conversations({ conversations, currentUser }) {
 
   useEffect(() => {
     const friendId =
-      conversations.user1 === currentUser
-        ? conversations.user1
-        : conversations.user2;
+      conversations.user1 == currentUser
+        ? conversations.user2
+        : conversations.user1;
 
     const getUser = async () => {
       try {
@@ -21,6 +21,8 @@ export default function Conversations({ conversations, currentUser }) {
     };
     getUser();
   }, [conversations.user1, conversations.user2, currentUser]);
+
+  console.log(user);
 
   return (
     <div className="conversations">

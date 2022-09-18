@@ -79,7 +79,7 @@ export const insertLike = async (req, res) => {
 export const getMatches = async (req, res) => {
   const user = req.params.user;
   db.query(
-    "SELECT * FROM matches WHERE user1 = ? OR user2 = ? AND match_status = 1",
+    "SELECT * FROM matches WHERE liker = ? OR liked = ? AND match_status = 1",
     [user, user],
     (err, result) => {
       if (err) console.log(err);

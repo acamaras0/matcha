@@ -26,6 +26,7 @@ export const socketServer = (server) => {
   io.on("connection", (socket) => {
     socket.on("addOnlineUser", (user) => {
       addOnlineUser(user, socket.id);
+      io.emit("getUsers", onlineUsers);
     });
 
     socket.on("sendNotification", ({ senderName, receiverName, type }) => {
@@ -38,11 +39,11 @@ export const socketServer = (server) => {
       }
     });
 
-    socket.on("sendText", ({ senderName, receiverName, text }) => {
-      const reciever = getOnlineUser(receiverName);
-      if (reciever) {
-        io.to(reciever.socketId).emit("getText", {
-          senderName,
+    socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+      const user = getOnlineUser(receiverId);
+      if (user) {
+        io.to(user.socketId).emit("getMessage", {
+          senderId,
           text,
         });
       }

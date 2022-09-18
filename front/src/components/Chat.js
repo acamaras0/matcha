@@ -6,12 +6,14 @@ import axios from "axios";
 import Conversations from "../models/Conversations";
 import Message from "../models/Message";
 
-const Chat = () => {
+const Chat = ({ socket }) => {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [arrivalMessage, setArrivalMessage] = useState(null);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
+
   const history = useHistory();
   const id = useParams().id;
   const scrollRef = useRef();
@@ -51,6 +53,17 @@ const Chat = () => {
       text: newMessage,
       chat_id: currentChat.id,
     };
+
+    // const receiverId =
+    //   currentChat.user1 === id ? currentChat.user1 : currentChat.user2;
+    // console.log(receiverId)
+
+    // socket.emit("sendMessage", {
+    //   senderId: id,
+    //   receiverId: receiverId,
+    //   text: newMessage,
+    // });
+
     setMessages([...messages, message]);
     setNewMessage("");
     try {
@@ -62,11 +75,27 @@ const Chat = () => {
       console.log(err);
     }
   };
-  // console.log(messages)
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // useEffect(() => {
+  //   socket.on("getMessage", (data) => {
+  //     setArrivalMessage({
+  //       sender: data.senderId,
+  //       text: data.text,
+  //       time: Date.now(),
+  //     });
+  //   });
+  // }, [socket]);
+  
+  // useEffect(() => {
+  //   arrivalMessage && console.log("here",arrivalMessage)
+  //   arrivalMessage &&
+  //     currentChat.includes(arrivalMessage.sender) &&
+  //     setMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalMessage, currentChat]);
 
   if (!cookie.refreshToken) {
     history.push("/");

@@ -29,7 +29,7 @@ const Activation = () => {
   return (
     <>
       <div className="text-center">
-        <img src={logo} alt="logo" />
+        <img className="logo" src={logo} alt="logo" />
       </div>
       <div className="activ">
         <div className=" text-center">

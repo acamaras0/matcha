@@ -74,18 +74,18 @@ const Dashboard = ({ socket, user }) => {
         console.log("error", error.response.data);
       }
     }
-      socket.emit("sendNotification", {
-        senderName: sender,
-        senderId: senderId,
-        receiverName: id,
-        type: "like",
-      });
-      // socket.emit("sendNotification", {
-      //   senderName: sender,
-      //   senderId: senderId,
-      //   receiverName: id,
-      //   type: "match",
-      // });
+    socket.emit("sendNotification", {
+      senderName: sender,
+      senderId: senderId,
+      receiverName: id,
+      type: "like",
+    });
+    // socket.emit("sendNotification", {
+    //   senderName: sender,
+    //   senderId: senderId,
+    //   receiverName: id,
+    //   type: "match",
+    // });
   };
 
   const handleDislike = async (id) => {

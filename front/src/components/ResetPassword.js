@@ -35,7 +35,7 @@ const ResetPassword = () => {
   return (
     <div>
       <div className="logo1">
-        <img src={logo} alt="logo" />
+        <img className="logo" src={logo} alt="logo" />
       </div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={ResetPassword}>

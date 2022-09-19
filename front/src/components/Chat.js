@@ -105,8 +105,8 @@ const Chat = ({ socket }) => {
   return (
     <div className="messenger">
       <div className="chatMenu">
-        <div className="chatMenuWrapper">
-          <input placeholder="Search for friends" className="chatMenuInput" />
+        <div className="card">
+          <p className="chatMenuInput text-center" > Your Matches </p>
           {conversations &&
             conversations.map((c) => (
               <div key={uuidv4()} onClick={() => setCurrentChat(c)}>

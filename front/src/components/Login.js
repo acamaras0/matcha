@@ -36,7 +36,7 @@ const Login = () => {
   return (
     <div>
       <div className="logo1">
-        <img src={logo} alt="logo" />
+        <img className="logo" src={logo} alt="logo" />
       </div>
       {/* {location.loaded ? JSON.stringify(location) : "No permission."} */}
       <div className="Auth-form-container">

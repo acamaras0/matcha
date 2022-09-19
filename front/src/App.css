@@ -114,7 +114,7 @@ img.card-img-top {
   flex-wrap: wrap;
 }
 
-img.card-img.img-fluid{
+img.card-img.img-fluid {
   width: 100%;
   height: 100%;
   border-radius: 1%;
@@ -123,9 +123,9 @@ img.card-img.img-fluid{
 
 .logo {
   margin-bottom: 8px;
-  width: 30vh;
+  width: 25vh;
 }
-.logo1{
+.logo1 {
   padding-top: 30px;
   display: flex;
   justify-content: center;
@@ -133,8 +133,8 @@ img.card-img.img-fluid{
 }
 
 .iconImg {
-  width: 35px;
-  height: 35px;
+  width: 26px;
+  height: 26px;
   cursor: pointer;
   margin-right: 10px;
 }
@@ -183,8 +183,8 @@ p.offline {
 }
 .notifications {
   position: absolute;
-  top: 120px;
-  right: 13vw;
+  top: 83px;
+  right: 8vw;
   background-color: white;
   display: inline-grid;
   border: solid 3px rgb(236, 189, 0);
@@ -471,8 +471,6 @@ a:active {
 .messenger {
   height: calc(100vh - 220px);
   display: flex;
-  padding-left: 10vh;
-  padding-right: 10vh;
   /* height: calc(100vh - 220px);
   display: inline-flex; */
 }
@@ -562,10 +560,11 @@ a:active {
   position: relative;
 }
 
-.chatMenuInput {
+p.chatMenuInput {
   width: 90%;
   padding: 10px 0;
   border: none;
+  margin-left: 10px;
   border-bottom: 1px solid #ccc;
 }
 

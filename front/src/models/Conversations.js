@@ -1,14 +1,15 @@
-/* eslint-disable */
+// /* eslint-disable */
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Conversations({ conversations, currentUser }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const friendId =
-      conversations.user1 == currentUser
+      conversations.user1 === parseInt(currentUser)
         ? conversations.user2
         : conversations.user1;
 
@@ -23,12 +24,12 @@ export default function Conversations({ conversations, currentUser }) {
     getUser();
   }, [conversations.user1, conversations.user2, currentUser]);
 
-  console.log(user);
-
   return (
     <div className="conversations">
       <img src={user && user.profile_pic} alt="" className="conversationImg" />
-      <span className="conversationName">{user && user.username}</span>
+      <span key={uuidv4()} className="conversationName">
+        {user && user.username}
+      </span>
     </div>
   );
 }

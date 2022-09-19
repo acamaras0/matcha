@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import Conversations from "../models/Conversations";
 import Message from "../models/Message";
+import { v4 as uuidv4 } from "uuid";
 
 const Chat = ({ socket }) => {
   const [conversations, setConversations] = useState([]);
@@ -89,7 +90,7 @@ const Chat = ({ socket }) => {
   //     });
   //   });
   // }, [socket]);
-  
+
   // useEffect(() => {
   //   arrivalMessage && console.log("here",arrivalMessage)
   //   arrivalMessage &&
@@ -108,7 +109,7 @@ const Chat = ({ socket }) => {
           <input placeholder="Search for friends" className="chatMenuInput" />
           {conversations &&
             conversations.map((c) => (
-              <div key={id} onClick={() => setCurrentChat(c)}>
+              <div key={uuidv4()} onClick={() => setCurrentChat(c)}>
                 <Conversations conversations={c} currentUser={id} />
               </div>
             ))}
@@ -120,7 +121,7 @@ const Chat = ({ socket }) => {
             <>
               <div className="chatBoxTop">
                 {messages.map((m) => (
-                  <div key={m.id} ref={scrollRef}>
+                  <div key={uuidv4()} ref={scrollRef}>
                     <Message message={m} own={m.sender === id} />
                   </div>
                 ))}

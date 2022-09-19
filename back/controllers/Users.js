@@ -36,28 +36,6 @@ export const markNotifications = async (req, res) => {
   );
 };
 
-// export const getCoordinates = async (req, res) => {
-//   const coordinates = await Users.findAll({
-//     attributes: [
-//       "id",
-//       "username",
-//       "gender",
-//       "interests",
-//       "bio",
-//       "profile_pic",
-//       "geo_lat",
-//       "geo_long",
-//       "birthdate",
-//     ],
-//     where: {
-//       profile_pic: {
-//         [Op.ne]: null,
-//       },
-//     },
-//   });
-//   res.json(coordinates);
-// };
-
 export const accountActivation = async (req, res) => {
   const hash = req.params.hash;
   db.query(

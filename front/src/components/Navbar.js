@@ -10,6 +10,7 @@ import user from "../assets/user.png";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+import { v4 as uuidv4 } from "uuid";
 
 const Navbar = ({ socket }) => {
   const [cookie, setCookie] = useCookies(["refreshToken"]);
@@ -47,19 +48,10 @@ const Navbar = ({ socket }) => {
     getNotifications();
   }, [socket, cookie.refreshToken, loggedIn.id]);
 
-  // const dispayMessage = ({ senderName, text }) => {
-  //   return (
-  //     <div className="message">
-  //       <p>{senderName}</p>
-  //       <p>{text}</p>
-  //     </div>
-  //   );
-  // };
-
   const displayNotifications = ({ sender_name, type }) => {
     let action;
+    let id = 0;
     if (type === "like") {
-      // action = "Someone liked you";
       action = "liked you";
     } else if (type === "unlike") {
       action = "unliked you";
@@ -70,11 +62,14 @@ const Navbar = ({ socket }) => {
     }
 
     return (
-      <p className="notification" key={type}>{`${sender_name} ${action}`}</p>
+      <p
+        className="notification"
+        key={uuidv4()}
+      >{`${sender_name} ${action}`}</p>
     );
   };
 
-  const handleRead = async() => {
+  const handleRead = async () => {
     setNotifications([]);
     setOpen(false);
     await axios.post(`http://localhost:5000/user/mark/${loggedIn.id}`);

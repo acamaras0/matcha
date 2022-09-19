@@ -47,7 +47,7 @@ function App() {
     if (user) {
       socket.emit("addOnlineUser", user);
       // socket.on("getUsers", (users) => {
-      //   console.log(users);
+      //   console.log("Users", users);
       // });
     }
   }, [user.username]);
@@ -106,7 +106,7 @@ function App() {
               )}
             </Route> */}
           </Switch>
-          {/* <Footer /> */}
+          <Footer />
         </BrowserRouter>
       </UserContextProvider>
     </>

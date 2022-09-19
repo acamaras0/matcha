@@ -50,7 +50,6 @@ const Navbar = ({ socket }) => {
 
   const displayNotifications = ({ sender_name, type }) => {
     let action;
-    let id = 0;
     if (type === "like") {
       action = "liked you";
     } else if (type === "unlike") {

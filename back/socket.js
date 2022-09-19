@@ -48,7 +48,9 @@ export const socketServer = (server) => {
 
     socket.on("sendMessage", ({ senderId, receiverId, text }) => {
       const user = getOnlineUser(receiverId);
+      console.log("HERE", user)
       if (user) {
+        console.log(senderId, receiverId, text);
         io.to(user.socketId).emit("getMessage", {
           senderId,
           text,

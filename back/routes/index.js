@@ -13,6 +13,8 @@ import {
   resetPass,
   updateProfile,
   // getCoordinates,
+  getNotifications,
+  markNotifications,
 } from "../controllers/Users.js";
 import {
   UploadPic,
@@ -42,6 +44,7 @@ router.get("/users/:id", getRandomUser);
 router.get("/user/fame/:user", getFame);
 //router.get("/coordinates", getCoordinates);
 router.get("/user/blocked/:id", getBlockedUsers);
+router.get("/user/notifications/:id", getNotifications);
 
 router.post("/users", Register);
 router.post("/activate/:hash", accountActivation);
@@ -55,6 +58,7 @@ router.post("/upload", upload.single("file"), UploadPic);
 router.post("/like/:user1/:user2", insertLike);
 router.post("/report/:user_id/:reported_id", report);
 router.post("/block/:user_id/:blocked_id", block);
+router.post("/user/mark/:id", markNotifications);
 
 router.get("/newConvo/:userId", getConversation);
 router.get("/messages/:chat_id", getMessages);

@@ -72,8 +72,9 @@ db.connect(function (err) {
     if (err) throw err;
     console.log("Report table created");
   });
-  var notifications = "CREATE TABLE IF NOT EXISTS notifications (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\
-  sender_id INT(11) NOT NULL, reciever_id INT(11) NOT NULL, type VARCHAR(255) NOT NULL, time TIMESTAMP NOT NULL)";
+  var notifications =
+    "CREATE TABLE IF NOT EXISTS notifications (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\
+  sender_id INT(11) NOT NULL, sender_name VARCHAR(500),reciever_id INT(11) NOT NULL, type VARCHAR(255) NOT NULL, mark INT(11) DEFAULT 0,time TIMESTAMP NOT NULL)";
   db.query(notifications, function (err, result) {
     if (err) throw err;
     console.log("Notifications table created");

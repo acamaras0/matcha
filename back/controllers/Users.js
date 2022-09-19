@@ -12,6 +12,30 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export const getNotifications = async (req, res) => {
+  const userId = req.params.id;
+  db.query(
+    "SELECT * FROM notifications WHERE reciever_id = ? AND mark = 0",
+    [userId],
+    (err, result) => {
+      if (err) console.log(err);
+      return res.json(result);
+    }
+  );
+};
+
+export const markNotifications = async (req, res) => {
+  const userId = req.params.id;
+  db.query(
+    "UPDATE notifications SET mark = 1 WHERE reciever_id = ?",
+    [userId],
+    (err, result) => {
+      if (err) console.log(err);
+      return res.json(result);
+    }
+  );
+};
+
 // export const getCoordinates = async (req, res) => {
 //   const coordinates = await Users.findAll({
 //     attributes: [
@@ -251,11 +275,10 @@ export const getUsers = async (req, res) => {
         return res.json({ err: err });
       }
       let loggedIn, orientation, gender;
-      if (result){
+      if (result) {
         loggedIn = result[0].id;
         orientation = result[0].orientation;
         gender = result[0].gender;
-
       }
       db.query(
         "SELECT * FROM block WHERE user_id=?",

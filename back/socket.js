@@ -13,7 +13,6 @@ export const socketServer = (server) => {
   const addOnlineUser = (user, socketId) => {
     !onlineUsers.some((u) => u.userId === user.id) &&
       onlineUsers.push({ userId: user.id, username: user.username, socketId });
-    console.log("OKADJBGSMKA", onlineUsers);
   };
 
   const removeOnlineUser = (socketId) => {
@@ -33,10 +32,9 @@ export const socketServer = (server) => {
     socket.on(
       "sendNotification",
       ({ senderName, senderId, receiverName, type }) => {
-        console.log(senderId, receiverName, type);
         db.query(
-          "INSERT INTO notifications (sender_id, reciever_id, type) VALUES (?,?,?)",
-          [senderId, receiverName, type]
+          "INSERT INTO notifications (sender_id, sender_name ,reciever_id, type) VALUES (?,?,?,?)",
+          [senderId, senderName, receiverName, type]
         );
         const reciever = getOnlineUser(receiverName);
         if (reciever) {

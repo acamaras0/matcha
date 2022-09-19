@@ -36,7 +36,16 @@ const Navbar = ({ socket }) => {
       setLoggedin(response.data);
     };
     getLoggedIn();
-  }, [socket]);
+
+    const getNotifications = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/user/notifications/${loggedIn.id}`,
+        {}
+      );
+      setNotifications(response.data);
+    };
+    getNotifications();
+  }, [socket, cookie.refreshToken, loggedIn.id]);
 
   // const dispayMessage = ({ senderName, text }) => {
   //   return (
@@ -47,9 +56,10 @@ const Navbar = ({ socket }) => {
   //   );
   // };
 
-  const displayNotifications = ({ senderName, type }) => {
+  const displayNotifications = ({ sender_name, type }) => {
     let action;
     if (type === "like") {
+      // action = "Someone liked you";
       action = "liked you";
     } else if (type === "unlike") {
       action = "unliked you";
@@ -60,18 +70,14 @@ const Navbar = ({ socket }) => {
     }
 
     return (
-      <span
-        className="notification"
-        key={type}
-      >{`${senderName} ${action}`}</span>
+      <p className="notification" key={type}>{`${sender_name} ${action}`}</p>
     );
   };
 
-  console.log(notifications);
-
-  const handleRead = () => {
+  const handleRead = async() => {
     setNotifications([]);
     setOpen(false);
+    await axios.post(`http://localhost:5000/user/mark/${loggedIn.id}`);
   };
 
   const Chat = () => {
@@ -103,7 +109,7 @@ const Navbar = ({ socket }) => {
         <div className="container">
           <div className="navbar-brand">
             <div className="Nav-logo">
-              <img onClick={Dashboard} src={logo} className="logo" />
+              <img onClick={Dashboard} src={logo} className="logo" alt="" />
             </div>
           </div>
 

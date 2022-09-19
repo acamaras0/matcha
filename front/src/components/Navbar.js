@@ -51,11 +51,14 @@ const Navbar = ({ socket }) => {
     let action;
     if (type === "like") {
       action = "liked you";
-    } else if (type === "dislike") {
+    } else if (type === "unlike") {
       action = "unliked you";
     } else if (type === "profile view") {
       action = "viewed your profile";
+    } else if (type === "match") {
+      action = "You got a match!";
     }
+
     return (
       <span
         className="notification"
@@ -63,6 +66,8 @@ const Navbar = ({ socket }) => {
       >{`${senderName} ${action}`}</span>
     );
   };
+
+  console.log(notifications);
 
   const handleRead = () => {
     setNotifications([]);

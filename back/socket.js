@@ -1,4 +1,5 @@
 import { Server } from "socket.io";
+import db from "./config/Database.js";
 
 export const socketServer = (server) => {
   const io = new Server(server, {
@@ -29,15 +30,23 @@ export const socketServer = (server) => {
       io.emit("getUsers", onlineUsers);
     });
 
-    socket.on("sendNotification", ({ senderName, receiverName, type }) => {
-      const reciever = getOnlineUser(receiverName);
-      if (reciever) {
-        io.to(reciever.socketId).emit("getNotification", {
-          senderName,
-          type,
-        });
+    socket.on(
+      "sendNotification",
+      ({ senderName, senderId, receiverName, type }) => {
+        console.log(senderId, receiverName, type);
+        db.query(
+          "INSERT INTO notifications (sender_id, reciever_id, type) VALUES (?,?,?)",
+          [senderId, receiverName, type]
+        );
+        const reciever = getOnlineUser(receiverName);
+        if (reciever) {
+          io.to(reciever.socketId).emit("getNotification", {
+            senderName,
+            type,
+          });
+        }
       }
-    });
+    );
 
     socket.on("sendMessage", ({ senderId, receiverId, text }) => {
       const user = getOnlineUser(receiverId);

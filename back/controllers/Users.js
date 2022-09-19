@@ -238,7 +238,6 @@ export const getRandomUser = async (req, res) => {
     if (result) {
       res.json(result[0]);
     }
-    console.log(id)
   });
 };
 
@@ -251,9 +250,13 @@ export const getUsers = async (req, res) => {
       if (err) {
         return res.json({ err: err });
       }
-      const loggedIn = result[0].id;
-      const orientation = result[0].orientation;
-      const gender = result[0].gender;
+      let loggedIn, orientation, gender;
+      if (result){
+        loggedIn = result[0].id;
+        orientation = result[0].orientation;
+        gender = result[0].gender;
+
+      }
       db.query(
         "SELECT * FROM block WHERE user_id=?",
         [loggedIn],
@@ -263,9 +266,10 @@ export const getUsers = async (req, res) => {
           }
           if (result.length > 0) {
             const blocked = result.map((item) => item.blocked_id);
+            // console.log(blocked);
             if (orientation === "heterosexual" && gender === "female") {
               db.query(
-                "SELECT * FROM users WHERE id != ? AND id != ? AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
+                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
                 [loggedIn, ...blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
@@ -274,17 +278,18 @@ export const getUsers = async (req, res) => {
               );
             } else if (orientation === "heterosexual" && gender === "male") {
               db.query(
-                "SELECT * FROM users WHERE id != ? AND id != ? AND gender = 'female' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
+                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'female' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
                 [loggedIn, ...blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
                   res.json(result);
+                  // console.log(result);
                 }
               );
             } else if (orientation === "homosexual" && gender === "female") {
               db.query(
-                "SELECT * FROM users WHERE id != ? AND id != ? AND gender = 'female' AND orientation = 'homosexual'",
-                [loggedIn],
+                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'female' AND orientation = 'homosexual'",
+                [loggedIn, ...blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
                   res.json(result);
@@ -292,7 +297,7 @@ export const getUsers = async (req, res) => {
               );
             } else if (orientation === "homosexual" && gender === "male") {
               db.query(
-                "SELECT * FROM users WHERE id != ? AND id != ? AND gender = 'male' AND orientation = 'homosexual'",
+                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'male' AND orientation = 'homosexual'",
                 [loggedIn, ...blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
@@ -301,7 +306,7 @@ export const getUsers = async (req, res) => {
               );
             } else if (orientation === "bisexual") {
               db.query(
-                "SELECT * FROM users WHERE id != ? AND id != ?",
+                "SELECT * FROM users WHERE id NOT IN (?, ?)",
                 [loggedIn, ...blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });

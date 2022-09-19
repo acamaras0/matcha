@@ -10,10 +10,10 @@ import useGetDistance from "../utils/useGetDistance";
 import PopUp from "../models/PopUp";
 import { format } from "timeago.js";
 
-
 const Dashboard = ({ socket, user }) => {
   const [loggedIn, setLoggedin] = useState("");
   const [sender, setSender] = useState("");
+  const [senderId, setSenderId] = useState("");
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -42,6 +42,7 @@ const Dashboard = ({ socket, user }) => {
     );
     setLoggedin(response.data.id);
     setSender(response.data.username);
+    setSenderId(response.data.id);
   };
   const handleMessage = (text) => {
     socket.emit("sendText", {
@@ -54,6 +55,7 @@ const Dashboard = ({ socket, user }) => {
   const handleUserSelect = async (id) => {
     socket.emit("sendNotification", {
       senderName: sender,
+      senderId: senderId,
       receiverName: id,
       type: "profile view",
     });
@@ -72,10 +74,37 @@ const Dashboard = ({ socket, user }) => {
         console.log("error", error.response.data);
       }
     }
+      socket.emit("sendNotification", {
+        senderName: sender,
+        senderId: senderId,
+        receiverName: id,
+        type: "like",
+      });
+      // socket.emit("sendNotification", {
+      //   senderName: sender,
+      //   senderId: senderId,
+      //   receiverName: id,
+      //   type: "match",
+      // });
+  };
+
+  const handleDislike = async (id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/like/${loggedIn}/${id}`,
+        {}
+      );
+      setMessage(response.data.msg);
+    } catch (error) {
+      if (error.response) {
+        console.log("error", error.response.data);
+      }
+    }
     socket.emit("sendNotification", {
       senderName: sender,
+      senderId: senderId,
       receiverName: id,
-      type: "like",
+      type: "unlike",
     });
   };
 
@@ -100,7 +129,7 @@ const Dashboard = ({ socket, user }) => {
   };
   const f2 = (id) => {
     togglePopup();
-    handleLike(id);
+    handleDislike(id);
     setLiked(false);
   };
   if (!cookie.refreshToken) {
@@ -117,18 +146,22 @@ const Dashboard = ({ socket, user }) => {
       </div>
     );
   return (
-    <div className="" >
+    <div className="">
       <br />
-      <div className="dashboard" >
+      <div className="dashboard">
         {distance &&
           // eslint-disable-next-line
           distance.map((user) => {
             if (user.profile_pic) {
               return (
-                <div key={user.id} className="card mb-4" style={{ width: "20rem" }}>
+                <div
+                  key={user.id}
+                  className="card mb-4"
+                  style={{ width: "20rem" }}
+                >
                   <div className="row no-gutters">
                     <div>
-                      <img 
+                      <img
                         onClick={() => handleUserSelect(user.id)}
                         className="card-img img-fluid"
                         src={user.profile_pic}
@@ -173,7 +206,8 @@ const Dashboard = ({ socket, user }) => {
                               />
                             </div>
                           )}
-                        </div> <br />
+                        </div>{" "}
+                        <br />
                         <div className="text-center">
                           <a
                             onClick={() => handleReport(user.id)}

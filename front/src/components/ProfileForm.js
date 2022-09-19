@@ -57,7 +57,6 @@ const ProfileForm = () => {
   if (!cookie.refreshToken) {
     history.push("/");
   }
-  console.log("logged",loggedIn)
   if (loggedIn && loggedIn.birthdate) {
     return <Redirect to={"/dashboard"} />;
   }

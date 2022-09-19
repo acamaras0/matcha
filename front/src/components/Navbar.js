@@ -25,7 +25,7 @@ const Navbar = ({ socket }) => {
       socket.on("getNotification", (data) => {
         setNotifications((prev) => [...prev, data]);
       });
-      socket.on("getText", (data) => {
+      socket.on("getMessage", (data) => {
         setMessages((prev) => [...prev, data]);
       });
     }
@@ -59,7 +59,6 @@ const Navbar = ({ socket }) => {
     } else if (type === "match") {
       action = "You got a match!";
     }
-
     return (
       <p
         className="notification"
@@ -75,6 +74,7 @@ const Navbar = ({ socket }) => {
   };
 
   const Chat = () => {
+    setMessages([]);
     history.push(`/chat/${loggedIn.id}`);
   };
 

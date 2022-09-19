@@ -46,9 +46,9 @@ function App() {
   useEffect(() => {
     if (user) {
       socket.emit("addOnlineUser", user);
-      // socket.on("getUsers", (users) => {
-      //   console.log("Users", users);
-      // });
+      socket.on("getUsers", (users) => {
+        console.log("Users", users);
+      });
     }
   }, [user.username]);
 
@@ -96,7 +96,7 @@ function App() {
             </Route>
             <Route path="/chat/:id">
               <Navbar socket={socket} />
-              <Chat />
+              <Chat socket={socket}/>
             </Route>
             {/* <Route path="/">
               {loggedIn.birthdate !== 0 ? (

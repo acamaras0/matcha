@@ -6,30 +6,18 @@ import axios from "axios";
 import Conversations from "../models/Conversations";
 import Message from "../models/Message";
 import { v4 as uuidv4 } from "uuid";
-import { io } from "socket.io-client";
 
-const Chat = () => {
+const Chat = ({socket}) => {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const socket = useRef();
   const [cookie, setCookie] = useCookies(["refreshToken"]);
 
   const history = useHistory();
   const id = useParams().id;
   const scrollRef = useRef();
-
-  useEffect(() => {
-    socket.current = io("ws://localhost:5000");
-  }, []);
-
-  useEffect(() => {
-    socket.current.on("getUsers", (users) => {
-      console.log("Users", users);
-    });
-  }, []);
 
   console.log("socket here", socket);
 
@@ -71,11 +59,9 @@ const Chat = () => {
 
     const receiverId =
       parseInt(currentChat.user1) !== parseInt(id) ? parseInt(currentChat.user1) : parseInt(currentChat.user2);
-    //   console.log("user1", currentChat.user1);  
-    //   console.log("user2", currentChat.user2);
-    // console.log("reciever", receiverId);
+  
 
-    socket.current.emit("sendMessage", {
+    socket.emit("sendMessage", {
       senderId: id,
       receiverId: receiverId,
       text: newMessage,
@@ -98,21 +84,21 @@ const Chat = () => {
   }, [messages]);
 
   useEffect(() => {
-
-    socket.current.on("getMessage", (data) => {
-      console.log("data", data);
+    socket.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
         text: data.text,
-        createdAt: Date.now(),
+        time: Date.now(),
       });
     });
   }, []);
 
+  console.log("arrivalMessage", arrivalMessage);
 
   useEffect(() => {
+    console.log("here", currentChat)
     arrivalMessage &&
-      // currentChat?.user1 === arrivalMessage.sender && 
+      currentChat?.user1 || currentChat?.user2 === arrivalMessage.sender && 
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 

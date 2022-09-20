@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
+
 import logo from "../assets/logo.png";
 const Activation = () => {
   const hash = useParams().hash;

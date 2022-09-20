@@ -20,7 +20,7 @@ const Register = () => {
   const Register = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/users", {
+      const res = await axios.post("http://localhost:5000/users", {
         firstName: firstNameReg,
         lastName: lastNameReg,
         username: usernameReg,
@@ -28,9 +28,13 @@ const Register = () => {
         password: passwordReg,
         confPassword: confirmPasswordReg,
       });
-      history.push("/");
+      setMessage(res.data.msg);
+      if (res.data.message === "success") {
+        history.push("/");
+      }
     } catch (error) {
       if (error.response) {
+        console.log("error", error.response.data);
         setMessage(error.response.data.msg);
       }
     }
@@ -111,6 +115,7 @@ const Register = () => {
             <div className="d-grid gap-2 mt-3">
               <button className="btn btn-outline-warning"> Register </button>
             </div>
+            <br />
             <p className="error">{message}</p>
             <p className="forgot-password text-right mt-2">
               Already have an account?

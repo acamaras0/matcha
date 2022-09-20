@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+import validator from "validator";
 import db from "../config/Database.js";
 
 const transporter = nodemailer.createTransport({
@@ -72,7 +73,7 @@ export const updatePassword = async (req, res) => {
   const { password, passwordConfirm } = req.body;
   if (password !== passwordConfirm) {
     return res.status(200).send("Passwords do not match");
-  } else if (password.length < 8 || password.length > 20) {
+  } else if (validator.isStrongPassword(password)) {
     return res.status(200).send("Password must be at least 8 characters");
   } else {
     const salt = await bcrypt.genSalt(10);
@@ -428,31 +429,32 @@ export const Register = async (req, res) => {
     html: `<p>Click <a href="http://localhost:3000/activate/${activ_code}">here</a> to activate your account!</p>`,
   };
   const saltRounds = 10;
+  console.log("Register", validator.isStrongPassword(password));
   if (username && password && confPassword && firstName && lastName && email) {
     db.query("SELECT username, email FROM users;", (err, result) => {
       if (err) {
         res.send({ err: err });
       }
       if (password !== confPassword) {
-        res.status(200).json({
+        return res.json({
           msg: "Passwords do not match",
         });
-      } else if (password >= 8) {
-        res.status(200).json({
-          msg: "Password has to be at least 8 characters long.",
+      } else if (validator.isStrongPassword(password) === false) {
+        return res.json({
+          msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
         });
       } else if (
         result.length > 0 &&
         result.some((user) => user.username === username)
       ) {
-        res.status(200).json({
+        return res.json({
           msg: "Username already exists",
         });
       } else if (
         result.length > 0 &&
         result.some((user) => user.email === email)
       ) {
-        res.status(200).json({
+        return res.json({
           msg: "Email already exists",
         });
       } else {
@@ -472,7 +474,7 @@ export const Register = async (req, res) => {
                   console.log({ err: error });
                 }
               });
-              res.status(200).json({
+              return res.json({
                 msg: "User created! Activate your account!",
               });
             }
@@ -481,7 +483,7 @@ export const Register = async (req, res) => {
       }
     });
   } else {
-    res.send({ error: "Please fill in all fields" });
+    return res.send({ error: "Please fill in all fields" });
   }
 };
 

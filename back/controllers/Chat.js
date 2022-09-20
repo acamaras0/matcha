@@ -1,4 +1,5 @@
 import db from "../config/Database.js";
+import validator from "validator";
 
 export const getConversation = async (req, res) => {
   const userId = req.params.userId;
@@ -18,7 +19,8 @@ export const newMessages = async (req, res) => {
   const chat_id = req.body.chat_id;
   const sender = req.body.sender;
   const receiver = req.body.receiver;
-  const text = req.body.text;
+  const text = validator.escape(req.body.text);
+
   db.query(
     "INSERT INTO messages (chat_id, sender, receiver, text) VALUES (?, ?, ?, ?)",
     [chat_id, sender, receiver, text],

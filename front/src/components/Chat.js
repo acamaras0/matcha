@@ -7,7 +7,7 @@ import Conversations from "../models/Conversations";
 import Message from "../models/Message";
 import { v4 as uuidv4 } from "uuid";
 
-const Chat = ({socket}) => {
+const Chat = ({ socket }) => {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -18,8 +18,6 @@ const Chat = ({socket}) => {
   const history = useHistory();
   const id = useParams().id;
   const scrollRef = useRef();
-
-  console.log("socket here", socket);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -58,10 +56,12 @@ const Chat = ({socket}) => {
     };
 
     const receiverId =
-      parseInt(currentChat.user1) !== parseInt(id) ? parseInt(currentChat.user1) : parseInt(currentChat.user2);
-  
+      parseInt(currentChat.user1) !== parseInt(id)
+        ? parseInt(currentChat.user1)
+        : parseInt(currentChat.user2);
 
     socket.emit("sendMessage", {
+      chat_id: currentChat.id,
       senderId: id,
       receiverId: receiverId,
       text: newMessage,
@@ -84,21 +84,21 @@ const Chat = ({socket}) => {
   }, [messages]);
 
   useEffect(() => {
-    socket.on("getMessage", (data) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        time: Date.now(),
+    if (socket) {
+      socket.on("getMessage", (data) => {
+        setArrivalMessage({
+          chat_id: data.chat_id,
+          sender: data.senderId,
+          text: data.text,
+          time: Date.now(),
+        });
       });
-    });
-  }, []);
-
-  console.log("arrivalMessage", arrivalMessage);
+    }
+  }, [socket]);
 
   useEffect(() => {
-    console.log("here", currentChat)
     arrivalMessage &&
-      currentChat?.user1 || currentChat?.user2 === arrivalMessage.sender && 
+      currentChat?.id === arrivalMessage?.chat_id &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
@@ -124,7 +124,7 @@ const Chat = ({socket}) => {
           {currentChat ? (
             <>
               <div className="chatBoxTop">
-                {messages.map((m) => (
+                {messages?.map((m) => (
                   <div key={uuidv4()} ref={scrollRef}>
                     <Message message={m} own={m.sender === id} />
                   </div>

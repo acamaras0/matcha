@@ -20,7 +20,6 @@ export const socketServer = (server) => {
   };
 
   const getOnlineUser = (userId) => {
-    console.log("userid", userId)
     return onlineUsers.find((u) => u.userId === userId);
   };
 
@@ -47,16 +46,15 @@ export const socketServer = (server) => {
       }
     );
 
-    socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+    socket.on("sendMessage", ({ chat_id, senderId, receiverId, text }) => {
       const user = getOnlineUser(receiverId);
-      console.log(senderId, receiverId, text);
-
-        console.log("HERE", user.socketId)
+      if (user) {
         io.to(user.socketId).emit("getMessage", {
+          chat_id,
           senderId,
           text,
         });
-      
+      }
     });
 
     socket.on("disconnect", () => {

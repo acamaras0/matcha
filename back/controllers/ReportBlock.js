@@ -31,13 +31,12 @@ export const report = async (req, res) => {
         subject: "Report",
         text: "User " + id + " reported user " + reported,
       };
-      return transporter.sendMail(mailOptions, function (error, info) {
+      transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          console.log(error);
-        } else {
-          return res.status(200).json({ msg: "User reported!" });
+          return console.log(error);
         }
       });
+      return res.status(200).send({ msg: "User reported!" });
     }
   );
 };

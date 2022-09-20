@@ -5,7 +5,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Conversations({ conversations, currentUser }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     const friendId =
@@ -22,6 +22,9 @@ export default function Conversations({ conversations, currentUser }) {
       }
     };
     getUser();
+    return () => {
+      setUser({});
+    };
   }, [conversations.user1, conversations.user2, currentUser]);
 
   return (

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useCookies } from "react-cookie";
+
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");

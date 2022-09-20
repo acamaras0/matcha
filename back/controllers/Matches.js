@@ -90,6 +90,27 @@ export const getMatches = async (req, res) => {
   );
 };
 
+export const checkIfLiked = async (req, res) => {
+  const liker = req.params.user_id;
+  const liked = req.params.id;
+  db.query(
+    "SELECT * FROM matches WHERE (liker = ? AND liked = ?) OR (liker = ? AND liked = ?)",
+    [liker, liked, liked, liker],
+    (err, result) => {
+      if (err) console.log(err);
+      if (result.length > 0) {
+        if (result[0].match_status == 1) {
+          return res.status(200).send({ msg: "match" });
+        } else {
+          return res.status(200).send({ msg: "like" });
+        }
+      } else {
+        return res.status(200).send({ msg: "dislike" });
+      }
+    }
+  );
+};
+
 export const getFame = async (req, res) => {
   const user = req.params.user;
   db.query("SELECT fame FROM users WHERE id = ?", [user], (err, result) => {

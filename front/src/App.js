@@ -16,13 +16,8 @@ import Activation from "./components/Activation";
 import Chat from "./components/Chat";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
-// import { useHistory } from "react-router-dom";
 import axios from "axios";
-// import socketIOClient from "socket.io-client";
 import { io } from "socket.io-client";
-//import jwt_decode from "jwt-decode";
-// const ENDPOINT = "http://localhost:5000";
-// const socket = socketIOClient(ENDPOINT);
 
 function App() {
   const [cookie, setCookie] = useCookies(["refreshToken"]);
@@ -90,19 +85,12 @@ function App() {
             </Route>
             <Route path="/users/:id">
               <Navbar socket={socket} />
-              <ProfileRandom />
+              <ProfileRandom socket={socket} />
             </Route>
             <Route path="/chat/:id">
               <Navbar socket={socket} />
-              <Chat socket={socket}/>
+              <Chat socket={socket} />
             </Route>
-            {/* <Route path="/">
-              {loggedIn.birthdate !== 0 ? (
-                <Redirect to="/profile" />
-              ) : (
-                <Redirect to="/completeprofile" />
-              )}
-            </Route> */}
           </Switch>
           <Footer />
         </BrowserRouter>
@@ -112,57 +100,3 @@ function App() {
 }
 
 export default App;
-
-// if (!loggedIn)
-// return (
-//   <UserContextProvider>
-//     <BrowserRouter>
-//       <Switch>
-//         <Route exact path="/">
-//           <Login />
-//         </Route>
-//         <Route path="/forgotpassword">
-//           <ForgotPasswords />
-//         </Route>
-//         <Route path="/register">
-//           <Register />
-//         </Route>
-//       </Switch>
-//     </BrowserRouter>
-//   </UserContextProvider>
-// );
-// return (
-// <>
-//   <UserContextProvider>
-//     <BrowserRouter>
-//       <Switch>
-//         <Route path="/completeprofile">
-//           <Navbar />
-//           <ProfileForm />
-//         </Route>
-//         <Route path="/pictures">
-//           <Navbar />
-//           <PicturesForm />
-//         </Route>
-//         <Route path="/dashboard">
-//           <Navbar />
-//           <Dashboard />
-//         </Route>
-//         <Route path="/profile">
-//           <Navbar />
-//           <Profile />
-//         </Route>
-//         <Route path="/">
-//           {loggedIn.birthdate !== 0 ? (
-//             <Redirect to="/profile" />
-//           ) : (
-//             <Redirect to="/completeprofile" />
-//           )}
-//         </Route>
-
-//       </Switch>
-//     </BrowserRouter>
-//   </UserContextProvider>
-// </>
-// );
-// }

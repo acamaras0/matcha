@@ -4,10 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import StarRating from "../models/StarRating";
-import img from "../assets/yellow-heart.png";
-import img1 from "../assets/broken-heart.png";
 import useGetDistance from "../utils/useGetDistance";
-import PopUp from "../models/PopUp";
 import { format } from "timeago.js";
 
 const Dashboard = ({ socket, user }) => {
@@ -16,9 +13,7 @@ const Dashboard = ({ socket, user }) => {
   const [senderId, setSenderId] = useState("");
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
-  const [liked, setLiked] = useState(false);
   const history = useHistory();
   const distance = useGetDistance();
 
@@ -44,13 +39,6 @@ const Dashboard = ({ socket, user }) => {
     setSender(response.data.username);
     setSenderId(response.data.id);
   };
-  const handleMessage = (text) => {
-    socket.emit("sendText", {
-      senderName: loggedIn,
-      receiverName: id,
-      text,
-    });
-  };
 
   const handleUserSelect = async (id) => {
     socket.emit("sendNotification", {
@@ -62,52 +50,6 @@ const Dashboard = ({ socket, user }) => {
     history.push(`/users/${id}`);
   };
 
-  const handleLike = async (id) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:5000/like/${loggedIn}/${id}`,
-        {}
-      );
-      setMessage(response.data.msg);
-    } catch (error) {
-      if (error.response) {
-        console.log("error", error.response.data);
-      }
-    }
-    socket.emit("sendNotification", {
-      senderName: sender,
-      senderId: senderId,
-      receiverName: id,
-      type: "like",
-    });
-    // socket.emit("sendNotification", {
-    //   senderName: sender,
-    //   senderId: senderId,
-    //   receiverName: id,
-    //   type: "match",
-    // });
-  };
-
-  const handleDislike = async (id) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:5000/like/${loggedIn}/${id}`,
-        {}
-      );
-      setMessage(response.data.msg);
-    } catch (error) {
-      if (error.response) {
-        console.log("error", error.response.data);
-      }
-    }
-    socket.emit("sendNotification", {
-      senderName: sender,
-      senderId: senderId,
-      receiverName: id,
-      type: "unlike",
-    });
-  };
-
   const handleReport = async (id) => {
     try {
       const response = await axios.post(
@@ -117,20 +59,6 @@ const Dashboard = ({ socket, user }) => {
     } catch (error) {
       if (error.response) console.log("error", error.response.data);
     }
-  };
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const f1 = (id) => {
-    togglePopup();
-    handleLike(id);
-    setLiked(true);
-  };
-  const f2 = (id) => {
-    togglePopup();
-    handleDislike(id);
-    setLiked(false);
   };
   if (!cookie.refreshToken) {
     history.push("/");
@@ -147,6 +75,7 @@ const Dashboard = ({ socket, user }) => {
     );
   return (
     <div className="">
+      <p className="error">{message}</p>
       <br />
       <div className="dashboard">
         {distance &&
@@ -182,33 +111,7 @@ const Dashboard = ({ socket, user }) => {
                         <p className="card-text">
                           About {Math.round(user.distance / 1000)} km away
                         </p>
-                        <label>Gender</label>
-                        <p className="card-text">{user.gender}</p>
-                        <label>Bio</label>
-                        <p className="card-text">{user.bio}</p>
-                        <div className="heart-container">
-                          {liked ? (
-                            <div className="like-container">
-                              <img
-                                onClick={() => f2(user.id)}
-                                className="like"
-                                src={img}
-                                alt="Card cap"
-                              />
-                            </div>
-                          ) : (
-                            <div className="dislike-container">
-                              <img
-                                onClick={() => f1(user.id)}
-                                className="dislike"
-                                src={img1}
-                                alt="Card cap"
-                              />
-                            </div>
-                          )}
-                        </div>{" "}
-                        <br />
-                        <div className="text-center">
+                        <div>
                           <a
                             onClick={() => handleReport(user.id)}
                             className="report"
@@ -226,18 +129,6 @@ const Dashboard = ({ socket, user }) => {
               );
             }
           })}
-      </div>
-      <div>
-        {isOpen && (
-          <PopUp
-            content={
-              <>
-                <p className="message">{message}</p>
-              </>
-            }
-            handleClose={togglePopup}
-          />
-        )}
       </div>
     </div>
   );

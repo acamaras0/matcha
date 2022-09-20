@@ -50,9 +50,9 @@ const Chat = ({ socket }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const receiverId =
-    parseInt(currentChat.user1) !== parseInt(id)
-      ? parseInt(currentChat.user1)
-      : parseInt(currentChat.user2);
+      parseInt(currentChat.user1) !== parseInt(id)
+        ? parseInt(currentChat.user1)
+        : parseInt(currentChat.user2);
 
     const message = {
       sender: id,
@@ -60,7 +60,6 @@ const Chat = ({ socket }) => {
       text: newMessage,
       chat_id: currentChat.id,
     };
-
 
     socket.emit("sendMessage", {
       chat_id: currentChat.id,

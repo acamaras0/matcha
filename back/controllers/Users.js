@@ -253,7 +253,7 @@ export const getUsers = async (req, res) => {
         return res.json({ err: err });
       }
       let loggedIn, orientation, gender;
-      if (result) {
+      if (result.length > 0) {
         loggedIn = result[0].id;
         orientation = result[0].orientation;
         gender = result[0].gender;

@@ -26,6 +26,7 @@ import {
   getConversation,
   getMessages,
   newMessages,
+  getMessagesNotif,
 } from "../controllers/Chat.js";
 import { report, block, getBlockedUsers } from "../controllers/ReportBlock.js";
 import { insertLike, getFame } from "../controllers/Matches.js";
@@ -62,6 +63,7 @@ router.post("/user/mark/:id", markNotifications);
 
 router.get("/newConvo/:userId", getConversation);
 router.get("/messages/:chat_id", getMessages);
+router.get("/messages/:id", getMessagesNotif);
 router.post("/messages", newMessages);
 
 router.delete("/logout", Logout);

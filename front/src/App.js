@@ -46,13 +46,11 @@ function App() {
   useEffect(() => {
     if (user) {
       socket.emit("addOnlineUser", user);
-      socket.on("getUsers", (users) => {
-        console.log("Users", users);
-      });
+      // socket.on("getUsers", (users) => {
+      //   console.log("Users", users);
+      // });
     }
   }, [user.username]);
-
-  console.log(socket);
 
   return (
     <>

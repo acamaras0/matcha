@@ -53,7 +53,7 @@ db.connect(function (err) {
   });
   var messages =
     "CREATE TABLE IF NOT EXISTS messages (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\
-     chat_id INT(11), sender VARCHAR(500), text VARCHAR(500), read_status INT(11) DEFAULT 0, time TIMESTAMP NOT NULL)";
+     chat_id INT(11), sender VARCHAR(500), receiver VARCHAR(500), text VARCHAR(500), read_status INT(11) DEFAULT 0, time TIMESTAMP NOT NULL)";
   db.query(messages, function (err, result) {
     if (err) throw err;
     console.log("Messages table created");

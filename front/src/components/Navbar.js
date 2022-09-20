@@ -38,15 +38,47 @@ const Navbar = ({ socket }) => {
     };
     getLoggedIn();
 
-    const getNotifications = async () => {
-      const response = await axios.get(
-        `http://localhost:5000/user/notifications/${loggedIn.id}`,
-        {}
-      );
-      setNotifications(response.data);
-    };
-    getNotifications();
+    // const getNotifications = async () => {
+    //   const response = await axios.get(
+    //     `http://localhost:5000/user/notifications/${loggedIn.id}`,
+    //     {}
+    //   );
+    //   setNotifications(response.data);
+    // };
+    // getNotifications();
+
+    // const getMessagesNotif = async () => {
+    //   const response = await axios.get(
+    //     `http://localhost:5000/messages/${loggedIn.id}`,
+    //     {}
+    //   );
+    //   setMessages(response.data);
+    // };
+    // getMessagesNotif();
   }, [socket, cookie.refreshToken, loggedIn.id]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const getNotifications = async () => {
+        const response = await axios.get(
+          `http://localhost:5000/user/notifications/${loggedIn.id}`,
+          {}
+        );
+        setNotifications(response.data);
+      };
+      getNotifications();
+
+      const getMessagesNotif = async () => {
+        const response = await axios.get(
+          `http://localhost:5000/messages/${loggedIn.id}`,
+          {}
+        );
+        setMessages(response.data);
+      };
+      getMessagesNotif();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [loggedIn.id]);
 
   const displayNotifications = ({ sender_name, type }) => {
     let action;
@@ -93,10 +125,6 @@ const Navbar = ({ socket }) => {
   const Dashboard = () => {
     history.push("/dashboard");
   };
-  //console.log("socket", socket);
-
-  //console.log("notiffff", notifications);
-
   return (
     <>
       <nav className="navbar navbar-light bg-white" role="navigation">
@@ -106,7 +134,6 @@ const Navbar = ({ socket }) => {
               <img onClick={Dashboard} src={logo} className="logo" alt="" />
             </div>
           </div>
-
           <div id="navbarBasicExample" className="navbar-menu">
             <div className="navbar-end">
               <div className="navbar-item">

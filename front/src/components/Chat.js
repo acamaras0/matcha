@@ -49,16 +49,18 @@ const Chat = ({ socket }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const receiverId =
+    parseInt(currentChat.user1) !== parseInt(id)
+      ? parseInt(currentChat.user1)
+      : parseInt(currentChat.user2);
+
     const message = {
       sender: id,
+      receiver: receiverId,
       text: newMessage,
       chat_id: currentChat.id,
     };
 
-    const receiverId =
-      parseInt(currentChat.user1) !== parseInt(id)
-        ? parseInt(currentChat.user1)
-        : parseInt(currentChat.user2);
 
     socket.emit("sendMessage", {
       chat_id: currentChat.id,
@@ -71,9 +73,6 @@ const Chat = ({ socket }) => {
     setNewMessage("");
     try {
       await axios.post("http://localhost:5000/messages", message);
-      // setMessages([...messages, res.data]);
-      // setNewMessage("");
-      // console.log(res);
     } catch (err) {
       console.log(err);
     }

@@ -38,49 +38,49 @@ const Navbar = ({ socket }) => {
     };
     getLoggedIn();
 
-    // const getNotifications = async () => {
-    //   const response = await axios.get(
-    //     `http://localhost:5000/user/notifications/${loggedIn.id}`,
-    //     {}
-    //   );
-    //   setNotifications(response.data);
-    // };
-    // getNotifications();
+    const getNotifications = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/user/notifications/${loggedIn.id}`,
+        {}
+      );
+      setNotifications(response.data);
+    };
+    getNotifications();
 
-    // const getMessagesNotif = async () => {
-    //   const response = await axios.get(
-    //     `http://localhost:5000/messages/${loggedIn.id}`,
-    //     {}
-    //   );
-    //   setMessages(response.data);
-    // };
-    // getMessagesNotif();
+    const getMessagesNotif = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/messages/${loggedIn.id}`,
+        {}
+      );
+      setMessages(response.data);
+    };
+    getMessagesNotif();
   }, [socket, cookie.refreshToken, loggedIn.id]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const getNotifications = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/user/notifications/${loggedIn.id}`,
-          {}
-        );
-        setNotifications(response.data);
-      };
-      getNotifications();
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const getNotifications = async () => {
+  //       const response = await axios.get(
+  //         `http://localhost:5000/user/notifications/${loggedIn.id}`,
+  //         {}
+  //       );
+  //       setNotifications(response.data);
+  //     };
+  //     getNotifications();
 
-      const getMessagesNotif = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/messages/${loggedIn.id}`,
-          {}
-        );
-        setMessages(response.data);
-      };
-      getMessagesNotif();
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [loggedIn.id]);
+  //     const getMessagesNotif = async () => {
+  //       const response = await axios.get(
+  //         `http://localhost:5000/messages/${loggedIn.id}`,
+  //         {}
+  //       );
+  //       setMessages(response.data);
+  //     };
+  //     getMessagesNotif();
+  //   }, 1000);
+  //   return () => clearInterval(interval);
+  // }, [loggedIn.id]);
 
-  const displayNotifications = ({ sender_name, type }) => {
+  const displayNotifications = ({ sender_name, senderName, type }) => {
     let action;
     if (type === "like") {
       action = "liked you";
@@ -91,13 +91,15 @@ const Navbar = ({ socket }) => {
     } else if (type === "match") {
       action = "You got a match!";
     }
+
     return (
-      <p
-        className="notification"
-        key={uuidv4()}
-      >{`${sender_name} ${action}`}</p>
+      <p className="notification" key={uuidv4()}>{`${
+        sender_name ? sender_name : senderName
+      } ${action}`}</p>
     );
   };
+
+  console.log(notifications);
 
   const handleRead = async () => {
     setNotifications([]);
@@ -143,7 +145,7 @@ const Navbar = ({ socket }) => {
                   </div>
                   <div className="icon" onClick={() => setOpen(!open)}>
                     <img src={notification} className="iconImg" alt="notif" />
-                    {notifications.length > 0 && (
+                    {notifications?.length > 0 && (
                       <div className="counter"></div>
                     )}
                   </div>
@@ -154,7 +156,7 @@ const Navbar = ({ socket }) => {
                       alt="chat"
                       className="iconImg"
                     />
-                    {messages.length > 0 && <div className="counter"></div>}
+                    {messages?.length > 0 && <div className="counter"></div>}
                   </div>
                   <div className="icon">
                     <img
@@ -172,7 +174,7 @@ const Navbar = ({ socket }) => {
       </nav>
       {open && (
         <div className="notifications">
-          {notifications.map((n) => displayNotifications(n))}
+          {notifications?.map((n) => displayNotifications(n))}
           <button className="btn btn-warning" onClick={handleRead}>
             Mark as read
           </button>

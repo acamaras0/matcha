@@ -127,18 +127,21 @@ export const updateProfile = async (req, res) => {
   if (lastName) {
     db.query("UPDATE users SET lastname = ? WHERE id = ?", [lastName, id]);
   }
-  if (username) {
+  if (
+    username &&
+    validator.isAlphanumeric(username) &&
+    username < 10 &&
+    username > 2
+  ) {
     db.query("UPDATE users SET username = ? WHERE id = ?", [username, id]);
   }
-  if (email && validator.isEmail(email)) {
+  if (email) {
     db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
       if (err) console.log(err);
-      if (!result) {
-        db.query("UPDATE users SET email = ? WHERE id = ?", [email, id]);
-      } else
-        return res.status(200).json({
-          msg: "Email already exists!",
-        });
+      console.log(result);
+      if (result) {
+        return res.status(200).json({ msg: "Email already exists" });
+      } else db.query("UPDATE users SET email = ? WHERE id = ?", [email, id]);
     });
   }
   if (bio && bio.length <= 500) {
@@ -162,9 +165,6 @@ export const updateProfile = async (req, res) => {
   if (geoLng && validator.isLatLong(geoLng)) {
     db.query("UPDATE users SET geo_long = ? WHERE id = ?", [geoLng, id]);
   }
-  res.status(200).json({
-    msg: "Profile updated",
-  });
 };
 
 export const resetPass = async (req, res) => {

@@ -201,44 +201,6 @@ const Profile = () => {
                 console.log(value);
               }}
             />
-            <label>Age</label>
-            <p>{loggedIn.birthdate}</p>
-            <label>Coordinates</label>
-            <EditText
-              name="textbox1"
-              defaultValue="New longitude"
-              onSave={(value) => {
-                if (value !== "") {
-                  setNewGeoLat(value);
-                } else {
-                  setNewGeoLat(loggedIn.geo_lat);
-                }
-              }}
-            />
-            <EditText
-              name="textbox1"
-              defaultValue="New longitude"
-              onSave={(value) => {
-                if (value !== "") {
-                  setNewGeoLng(value);
-                } else {
-                  setNewGeoLng(loggedIn.geo_long);
-                }
-              }}
-            />
-            <label>✎ Email address</label>
-            <EditText
-              name="textbox1"
-              defaultValue={loggedIn.email}
-              onSave={(value) => {
-                if (value !== "") {
-                  setNewEmail(value);
-                } else {
-                  setNewEmail(loggedIn.email);
-                }
-                console.log(value);
-              }}
-            />
             <div className="card-body">
               <label>✎ Username</label>
               <EditText
@@ -249,6 +211,44 @@ const Profile = () => {
                     setNewUsername(value);
                   } else {
                     setNewUsername(loggedIn.username);
+                  }
+                  console.log(value);
+                }}
+              />
+              <label>Age</label>
+              <p>{loggedIn.birthdate}</p>
+              <label>Coordinates</label>
+              <EditText
+                name="textbox1"
+                defaultValue="New latitude"
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewGeoLat(value);
+                  } else {
+                    setNewGeoLat(loggedIn.geo_lat);
+                  }
+                }}
+              />
+              <EditText
+                name="textbox1"
+                defaultValue="New longitude"
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewGeoLng(value);
+                  } else {
+                    setNewGeoLng(loggedIn.geo_long);
+                  }
+                }}
+              />
+              <label>✎ Email address</label>
+              <EditText
+                name="textbox1"
+                defaultValue={loggedIn.email}
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewEmail(value);
+                  } else {
+                    setNewEmail(loggedIn.email);
                   }
                   console.log(value);
                 }}

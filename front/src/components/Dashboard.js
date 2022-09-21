@@ -10,11 +10,10 @@ import { UserContext } from "../context/UserContext";
 
 
 const Dashboard = ({ socket }) => {
-  const [loggedIn, setLoggedin] = useState("");
-  const [sender, setSender] = useState("");
-  const [senderId, setSenderId] = useState("");
+  // const [loggedIn, setLoggedin] = useState("");
+  // const [sender, setSender] = useState("");
+  // const [senderId, setSenderId] = useState("");
   const { user, setUser } = useContext(UserContext);
-
   // const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
@@ -28,9 +27,9 @@ const Dashboard = ({ socket }) => {
         {}
       );
       setUser(response.data);
-      setLoggedin(response.data.id);
-      setSender(response.data.username);
-      setSenderId(response.data.id);
+      // setLoggedin(response.data.id);
+      // setSender(response.data.username);
+      // setSenderId(response.data.id);
     };
     getLoggedIn();
 
@@ -46,8 +45,8 @@ const Dashboard = ({ socket }) => {
 
   const handleUserSelect = async (id) => {
     socket.emit("sendNotification", {
-      senderName: sender,
-      senderId: senderId,
+      senderName: user.username,
+      senderId: user.id,
       receiverName: id,
       type: "profile view",
     });
@@ -57,7 +56,7 @@ const Dashboard = ({ socket }) => {
   const handleReport = async (id) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/report/${loggedIn}/${id}`
+        `http://localhost:5000/report/${user.id}/${id}`
       );
       setMessage(response.data.msg);
     } catch (error) {

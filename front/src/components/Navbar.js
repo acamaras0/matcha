@@ -99,8 +99,6 @@ const Navbar = ({ socket }) => {
     );
   };
 
-  console.log(notifications);
-
   const handleRead = async () => {
     setNotifications([]);
     setOpen(false);

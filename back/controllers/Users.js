@@ -82,7 +82,7 @@ export const accountActivation = async (req, res) => {
 
 export const updatePassword = async (req, res) => {
   const { id } = req.params;
-  const { password, passwordConfirm } = validator.escape(req.body);
+  const { password, passwordConfirm } = req.body;
   if (password !== passwordConfirm) {
     return res.status(200).send("Passwords do not match");
   } else if (validator.isStrongPassword(password)) {
@@ -118,7 +118,7 @@ export const updateProfile = async (req, res) => {
     orientation,
     geoLat,
     geoLng,
-  } = validator.escape(req.body);
+  } = req.body;
   const tags = interests.join(", ");
 
   if (firstName) {
@@ -169,8 +169,8 @@ export const updateProfile = async (req, res) => {
 
 export const resetPass = async (req, res) => {
   const { token } = req.params;
-  const { password } = validator.escape(req.body);
-  const { confPassword } = validator.escape(req.body);
+  const { password } = req.body;
+  const { confPassword } = req.body;
   if (password !== confPassword) {
     return res.status(200).send("Passwords do not match");
   } else if (!validator.isStrongPassword(password)) {
@@ -205,7 +205,7 @@ export const resetPass = async (req, res) => {
 };
 
 export const forgotPass = async (req, res) => {
-  const { email } = validator.isEmail(req.body);
+  const { email } = req.body;
   const token = process.env.ACCESS_TOKEN_SECRET;
 
   db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
@@ -432,7 +432,7 @@ export const getLoggedIn = async (req, res) => {
 
 export const Register = async (req, res) => {
   const { username, password, confPassword, firstName, lastName, email } =
-    validator.escape(req.body);
+    req.body;
   const activ_code = process.env.ACTIVATION_CODE;
   const activation = {
     from: "matcha@gmail.com",
@@ -508,7 +508,7 @@ export const Register = async (req, res) => {
 
 export const Login = async (req, res) => {
   const { lat, lng } = req.body;
-  const { username, password } = validator.escape(req.body);
+  const { username, password } = req.body;
 
   db.query(
     "SELECT * FROM users WHERE username = ?;",
@@ -564,9 +564,7 @@ export const Login = async (req, res) => {
 };
 
 export const ProfileFill = async (req, res) => {
-  const { birthdate, gender, orientation, interests, bio } = validator.escape(
-    req.body
-  );
+  const { birthdate, gender, orientation, interests, bio } = req.body;
   const tags = interests.join(", ");
   if (!(birthdate && gender && orientation && interests && bio)) {
     return res.status(200).json({

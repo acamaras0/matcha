@@ -14,6 +14,7 @@ import img1 from "../assets/broken-heart.png";
 const ProfileRandom = ({ socket }) => {
   const { id } = useParams();
   const { selectedUser, setSelectedUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [pics, setPics] = useState([]);
   const [likes, setLikes] = useState("");
   const [loggedIn, setLoggedIn] = useState("");

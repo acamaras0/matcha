@@ -1,16 +1,20 @@
 /* eslint-disable */
-import React, { useState, useEffect } from "react";
+import React, { useContext,useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import StarRating from "../models/StarRating";
 import useGetDistance from "../utils/useGetDistance";
 import { format } from "timeago.js";
+import { UserContext } from "../context/UserContext";
+
 
 const Dashboard = ({ socket }) => {
   const [loggedIn, setLoggedin] = useState("");
   const [sender, setSender] = useState("");
   const [senderId, setSenderId] = useState("");
+  const { user, setUser } = useContext(UserContext);
+
   // const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
@@ -23,6 +27,7 @@ const Dashboard = ({ socket }) => {
         `http://localhost:5000/user/${cookie.refreshToken}`,
         {}
       );
+      setUser(response.data);
       setLoggedin(response.data.id);
       setSender(response.data.username);
       setSenderId(response.data.id);

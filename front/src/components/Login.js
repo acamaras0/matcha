@@ -6,6 +6,7 @@ import "../App.css";
 import logo from "../assets/logo.png";
 import useGeoLocation from "../utils/useGeoLocation";
 import { useCookies } from "react-cookie";
+import { UserContext } from "../context/UserContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");

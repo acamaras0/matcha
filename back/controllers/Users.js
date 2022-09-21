@@ -13,6 +13,18 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// export const getCoordinates = async (req, res) => {
+//   console.log("HHHEEEEEEEEREEEEEEEEE");
+
+//   db.query("SELECT id, geo_lat, geo_long FROM users", (err, result) => {
+//     if (err) {
+//       return console.log(err);
+//     }
+//     console.log(result);
+//     return res.status(200).json(result);
+//   });
+// };
+
 export const getNotifications = async (req, res) => {
   const userId = req.params.id;
   db.query(
@@ -70,7 +82,7 @@ export const accountActivation = async (req, res) => {
 
 export const updatePassword = async (req, res) => {
   const { id } = req.params;
-  const { password, passwordConfirm } = req.body;
+  const { password, passwordConfirm } = validator.escape(req.body);
   if (password !== passwordConfirm) {
     return res.status(200).send("Passwords do not match");
   } else if (validator.isStrongPassword(password)) {
@@ -106,7 +118,7 @@ export const updateProfile = async (req, res) => {
     orientation,
     geoLat,
     geoLng,
-  } = req.body;
+  } = validator.escape(req.body);
   const tags = interests.join(", ");
 
   if (firstName) {
@@ -118,7 +130,7 @@ export const updateProfile = async (req, res) => {
   if (username) {
     db.query("UPDATE users SET username = ? WHERE id = ?", [username, id]);
   }
-  if (email) {
+  if (email && validator.isEmail(email)) {
     db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
       if (err) console.log(err);
       if (!result) {
@@ -129,7 +141,7 @@ export const updateProfile = async (req, res) => {
         });
     });
   }
-  if (bio) {
+  if (bio && bio.length <= 500) {
     db.query("UPDATE users SET bio = ? WHERE id = ?", [bio, id]);
   }
   if (interests) {
@@ -144,10 +156,10 @@ export const updateProfile = async (req, res) => {
       id,
     ]);
   }
-  if (geoLat) {
+  if (geoLat && validator.isLatLong(geoLat)) {
     db.query("UPDATE users SET geo_lat = ? WHERE id = ?", [geoLat, id]);
   }
-  if (geoLng) {
+  if (geoLng && validator.isLatLong(geoLng)) {
     db.query("UPDATE users SET geo_long = ? WHERE id = ?", [geoLng, id]);
   }
   res.status(200).json({
@@ -157,11 +169,11 @@ export const updateProfile = async (req, res) => {
 
 export const resetPass = async (req, res) => {
   const { token } = req.params;
-  const { password } = req.body;
-  const { confPassword } = req.body;
+  const { password } = validator.escape(req.body);
+  const { confPassword } = validator.escape(req.body);
   if (password !== confPassword) {
     return res.status(200).send("Passwords do not match");
-  } else if (password.length < 8 || password.length > 20) {
+  } else if (!validator.isStrongPassword(password)) {
     return res.status(200).send("Password must be at least 8 characters");
   } else {
     db.query(
@@ -193,7 +205,7 @@ export const resetPass = async (req, res) => {
 };
 
 export const forgotPass = async (req, res) => {
-  const { email } = req.body;
+  const { email } = validator.isEmail(req.body);
   const token = process.env.ACCESS_TOKEN_SECRET;
 
   db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
@@ -420,7 +432,7 @@ export const getLoggedIn = async (req, res) => {
 
 export const Register = async (req, res) => {
   const { username, password, confPassword, firstName, lastName, email } =
-    req.body;
+    validator.escape(req.body);
   const activ_code = process.env.ACTIVATION_CODE;
   const activation = {
     from: "matcha@gmail.com",
@@ -429,13 +441,20 @@ export const Register = async (req, res) => {
     html: `<p>Click <a href="http://localhost:3000/activate/${activ_code}">here</a> to activate your account!</p>`,
   };
   const saltRounds = 10;
-  console.log("Register", validator.isStrongPassword(password));
   if (username && password && confPassword && firstName && lastName && email) {
     db.query("SELECT username, email FROM users;", (err, result) => {
       if (err) {
         res.send({ err: err });
       }
-      if (password !== confPassword) {
+      if (
+        (username > 10 && username < 2) ||
+        (firstName > 10 && firstName < 2) ||
+        (lastName > 10 && lastName < 2)
+      ) {
+        return res.json({
+          msg: "Username, First Name and Last Name must be between 2 and 10 characters",
+        });
+      } else if (password !== confPassword) {
         return res.json({
           msg: "Passwords do not match",
         });
@@ -452,7 +471,7 @@ export const Register = async (req, res) => {
         });
       } else if (
         result.length > 0 &&
-        result.some((user) => user.email === email)
+        result.some((user) => user.email === email && validator.isEmail(email))
       ) {
         return res.json({
           msg: "Email already exists",
@@ -489,7 +508,7 @@ export const Register = async (req, res) => {
 
 export const Login = async (req, res) => {
   const { lat, lng } = req.body;
-  const { username, password } = req.body;
+  const { username, password } = validator.escape(req.body);
 
   db.query(
     "SELECT * FROM users WHERE username = ?;",
@@ -545,11 +564,21 @@ export const Login = async (req, res) => {
 };
 
 export const ProfileFill = async (req, res) => {
-  const { birthdate, gender, orientation, interests, bio } = req.body;
+  const { birthdate, gender, orientation, interests, bio } = validator.escape(
+    req.body
+  );
   const tags = interests.join(", ");
   if (!(birthdate && gender && orientation && interests && bio)) {
     return res.status(200).json({
       msg: "All fields are required",
+    });
+  } else if (birthdate < 18) {
+    return res.status(200).json({
+      msg: "You must be at least 18 years old",
+    });
+  } else if (bio.length > 500) {
+    return res.status(200).json({
+      msg: "Bio must be less than 500 characters",
     });
   }
   const refreshToken = req.cookies.refreshToken;

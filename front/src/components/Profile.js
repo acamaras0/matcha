@@ -28,10 +28,11 @@ const Profile = () => {
   const [newGeoLat, setNewGeoLat] = useState("");
   const [newGeoLng, setNewGeoLng] = useState("");
   const [message, setMessage] = useState("");
-  const [blocked, setBlocked] = useState([]);
+  // const [blocked, setBlocked] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   //const distance = useGetDistance();
+  const [show, toggleShow] = useState(false);
 
   useEffect(() => {
     getLoggedIn();
@@ -115,7 +116,6 @@ const Profile = () => {
       }
     }
   };
-  console.log("gender",newGender);
 
   if (!cookie.refreshToken) {
     history.push("/");
@@ -146,7 +146,8 @@ const Profile = () => {
           </div>
           <div className="card-password">
             <div className="card-body">
-              <h3>✍ Change Password</h3> <br />
+              <h3 onClick={() => toggleShow(!show)}>✍ Change Password</h3>{" "}
+              <br />
               <label>New Password</label>
               <input
                 type="password"
@@ -253,9 +254,9 @@ const Profile = () => {
                 }}
               />
               <label>✎ Gender</label>
-              <Gender setGender ={setNewGender} />
+              <Gender setGender={setNewGender} />
               <label>✎ Sexual orientation</label>
-              <Orientation setOrientation ={setNewOrientation} />
+              <Orientation setOrientation={setNewOrientation} />
               <label>✎ Interests</label>
               <Tags setInterests={setNewInterest} />
               {/* <EditText

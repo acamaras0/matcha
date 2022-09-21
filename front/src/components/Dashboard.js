@@ -7,38 +7,37 @@ import StarRating from "../models/StarRating";
 import useGetDistance from "../utils/useGetDistance";
 import { format } from "timeago.js";
 
-const Dashboard = ({ socket, user }) => {
+const Dashboard = ({ socket }) => {
   const [loggedIn, setLoggedin] = useState("");
   const [sender, setSender] = useState("");
   const [senderId, setSenderId] = useState("");
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   const distance = useGetDistance();
 
   useEffect(() => {
+    const getLoggedIn = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/user/${cookie.refreshToken}`,
+        {}
+      );
+      setLoggedin(response.data.id);
+      setSender(response.data.username);
+      setSenderId(response.data.id);
+    };
     getLoggedIn();
-    getUsers();
-  }, []);
 
-  const getUsers = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/users/info/${cookie.refreshToken}`,
-      {}
-    );
-    setUsers(response.data);
-  };
-
-  const getLoggedIn = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/user/${cookie.refreshToken}`,
-      {}
-    );
-    setLoggedin(response.data.id);
-    setSender(response.data.username);
-    setSenderId(response.data.id);
-  };
+    // const getUsers = async () => {
+    //   const response = await axios.get(
+    //     `http://localhost:5000/users/info/${cookie.refreshToken}`,
+    //     {}
+    //   );
+    //   setUsers(response.data);
+    // };
+    // getUsers();
+  }, [cookie.refreshToken]);
 
   const handleUserSelect = async (id) => {
     socket.emit("sendNotification", {
@@ -67,7 +66,7 @@ const Dashboard = ({ socket, user }) => {
     distance.sort((a, b) => a.distance - b.distance);
   }
 
-  if (users.length === 0)
+  if (distance.length === 0)
     return (
       <div className="text-center">
         <p>Loading...</p>
@@ -115,6 +114,7 @@ const Dashboard = ({ socket, user }) => {
                           <a
                             onClick={() => handleReport(user.id)}
                             className="report"
+                            href=""
                           >
                             Report fake account
                           </a>

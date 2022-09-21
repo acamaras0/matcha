@@ -1,6 +1,20 @@
 import db from "../config/Database.js";
 import validator from "validator";
 
+export const checkIfUnread = async (req, res) => {
+  const { id } = req.params;
+  const chat_id = req.body.chat_id;
+  const sql = `SELECT * FROM messages WHERE chat_id = ? AND receiver_id = ? AND read = 0`;
+  db.query(sql, [chat_id, id], (err, result) => {
+    if (err) throw err;
+    if (result.length > 0) {
+      res.send({ status: "unread" });
+    } else {
+      res.send({ status: "read" });
+    }
+  });
+};
+
 export const getConversation = async (req, res) => {
   const userId = req.params.userId;
   db.query(

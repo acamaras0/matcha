@@ -354,7 +354,7 @@ a:active {
 }
 
 .galleryWrap .single img {
-  max-width: 100%;
+  max-width: 80%;
 }
 
 .galleryWrap .single img:hover {

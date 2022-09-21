@@ -18,20 +18,16 @@ export const upload = multer({
   limits: {
     fileSize: 4 * 1024 * 1024,
   },
+  fileFilter: (req, file, cb, res) => {
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return console.log("Only .png, .jpg and .jpeg format allowed!");
+    }
+  },
 });
-
-// export const uploadMultiple = multer({
-//   storage: storage,
-//   fileFilter: (req, file, cb) => {
-//     if (
-//       file.mimetype == "image/png" ||
-//       file.mimetype == "image/jpg" ||
-//       file.mimetype == "image/jpeg"
-//     ) {
-//       cb(null, true);
-//     } else {
-//       cb(null, false);
-//       return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
-//     }
-//   },
-// });

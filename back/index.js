@@ -10,13 +10,13 @@ dotenv.config();
 const app = express();
 const { PORT } = process.env;
 const server = http.createServer(app);
-const corsOptions ={
-   origin:"http://localhost:3000", 
-   credentials:true,
-   optionSuccessStatus:200,
-}
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

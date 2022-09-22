@@ -51,15 +51,29 @@ const Login = () => {
 
     // const gps = await axios.get('https://geolocation-db.com/json/');
     // console.log(gps.data);
-    const res = await axios.post("http://localhost:5000/login", {
-      username: username,
-      password: password,
-      lat: location.coordinates.lat,
-      lng: location.coordinates.lng,
-    });
-    setMessage(res.data.msg);
-    if (res.data.accessToken) {
-      history.push("/completeprofile");
+    if (location && location.coordinates) {
+      const res = await axios.post("http://localhost:5000/login", {
+        username: username,
+        password: password,
+        lat: location.coordinates.lat,
+        lng: location.coordinates.lng,
+      });
+      setMessage(res.data.msg);
+      if (res.data.accessToken) {
+        history.push("/completeprofile");
+      }
+    }
+    else{
+      const res = await axios.post("http://localhost:5000/login", {
+        username: username,
+        password: password,
+        lat: 60.192059,
+        lng: 24.945831,
+      });
+      setMessage(res.data.msg);
+      if (res.data.accessToken) {
+        history.push("/completeprofile");
+      }
     }
   };
 

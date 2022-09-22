@@ -5,8 +5,8 @@ export const UserContext = createContext();
 export const UserContextProvider = (props) => {
   const [user, setUser] = useState([]);
   const [selectedUser, setSelectedUser] = useState([]);
-  console.log("context selected user", selectedUser);
-  console.log("context user", user);
+  // console.log("context selected user", selectedUser);
+  // console.log("context user", user);
   const addUser = (user) => {
     setUser([...user]);
   };

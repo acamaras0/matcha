@@ -1,36 +1,31 @@
 {
-  "name": "frontend",
+  "name": "my-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.1.2",
-    "@fortawesome/free-solid-svg-icons": "^6.1.2",
+    "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.24.0",
-    "bootstrap": "^5.2.0",
-    "bulma": "^0.9.3",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.1",
     "geolib": "^3.3.3",
-    "js-cookie": "^3.0.1",
-    "jwt-decode": "^3.1.2",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-cookie": "^4.1.1",
-    "react-dom": "^17.0.2",
+    "react-dom": "^18.2.0",
     "react-edit-text": "^5.0.2",
-    "react-image-gallery": "^1.2.9",
-    "react-images-uploading": "^3.1.7",
     "react-multi-select-component": "^4.3.3",
-    "react-router-dom": "^5.3.0",
-    "react-scripts": "4.0.3",
+    "react-router-dom": "^6.4.1",
+    "react-scripts": "5.0.1",
     "react-select": "^5.4.0",
-    "socket.io-client": "^4.5.1",
-    "timeago.js": "^4.0.2",
-    "web-vitals": "^1.1.2"
+    "socket.io-client": "^4.5.2",
+    "timeago": "^1.6.7",
+    "timeago-react": "^3.0.5",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -52,8 +47,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/react-edit-text": "^5.0.1"
   }
 }

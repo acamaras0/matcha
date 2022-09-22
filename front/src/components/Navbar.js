@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
@@ -18,7 +18,7 @@ const Navbar = ({ socket }) => {
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([]);
   const [open, setOpen] = useState(false);
-  const history = useHistory();
+  const history = useNavigate();
 
   useEffect(() => {
     if (socket) {
@@ -107,23 +107,23 @@ const Navbar = ({ socket }) => {
 
   const Chat = () => {
     setMessages([]);
-    history.push(`/chat/${loggedIn.id}`);
+    history(`/chat/${loggedIn.id}`);
   };
 
   const MyProfile = () => {
-    history.push(`/profile/${loggedIn.id}`);
+    history(`/profile/${loggedIn.id}`);
   };
 
   const Logout = async () => {
     try {
       await axios.delete("http://localhost:5000/logout");
-      history.push("/");
+      history("/");
     } catch (error) {
       console.log(error);
     }
   };
   const Dashboard = () => {
-    history.push("/dashboard");
+    history("/dashboard");
   };
   return (
     <>

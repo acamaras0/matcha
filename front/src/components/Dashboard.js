@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useContext,useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import StarRating from "../models/StarRating";
 import useGetDistance from "../utils/useGetDistance";
@@ -17,7 +17,7 @@ const Dashboard = ({ socket }) => {
   // const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
-  const history = useHistory();
+  const history = useNavigate();
   const distance = useGetDistance();
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Dashboard = ({ socket }) => {
       receiverName: id,
       type: "profile view",
     });
-    history.push(`/users/${id}`);
+    history(`/users/${id}`);
   };
 
   const handleReport = async (id) => {
@@ -64,7 +64,7 @@ const Dashboard = ({ socket }) => {
     }
   };
   if (!cookie.refreshToken) {
-    history.push("/");
+    history("/");
   }
   if (distance) {
     distance.sort((a, b) => a.distance - b.distance);

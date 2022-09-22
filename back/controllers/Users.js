@@ -495,6 +495,8 @@ export const Login = async (req, res) => {
   const { lat, lng } = req.body;
   const { username, password } = req.body;
 
+
+
   db.query(
     "SELECT * FROM users WHERE username = ?;",
     username,
@@ -532,6 +534,7 @@ export const Login = async (req, res) => {
               httpOnly: false,
               maxAge: 24 * 60 * 60 * 1000,
             });
+            console.log('HERE')
             res.json({ accessToken });
             db.query(
               "UPDATE users SET geo_lat = ?, geo_long = ?, refresh_token = ?,online = 1  WHERE id = ?",

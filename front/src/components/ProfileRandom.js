@@ -1,7 +1,7 @@
 // /* eslint-disable */
 import useGetDistance from "../utils/useGetDistance";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import StarRating from "../models/StarRating";
@@ -22,7 +22,7 @@ const ProfileRandom = ({ socket }) => {
   const [message, setMessage] = useState("");
   const [sender, setSender] = useState("");
   const [senderId, setSenderId] = useState("");
-  const history = useHistory();
+  const history = useNavigate();
   const distance = useGetDistance();
   const [cookie, setCookie] = useCookies(["refreshToken"]);
 
@@ -88,7 +88,7 @@ const ProfileRandom = ({ socket }) => {
   const block = async (id) => {
     try {
       await axios.post(`http://localhost:5000/block/${loggedIn}/${id}`, {});
-      history.push("/dashboard");
+      history("/dashboard");
     } catch (error) {
       console.log(error);
     }
@@ -135,7 +135,7 @@ const ProfileRandom = ({ socket }) => {
   };
 
   if (!cookie.refreshToken) {
-    history.push("/");
+    history("/");
   }
   if (!selectedUser && !distance) {
     return <div>Loading...</div>;

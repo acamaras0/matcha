@@ -280,11 +280,11 @@ export const getUsers = async (req, res) => {
           }
           if (result.length > 0) {
             const blocked = result.map((item) => item.blocked_id);
-            // console.log(blocked);
+            console.log("", blocked);
             if (orientation === "heterosexual" && gender === "female") {
               db.query(
                 "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
-                [loggedIn, ...blocked],
+                [loggedIn, blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
                   res.json(result);
@@ -293,7 +293,7 @@ export const getUsers = async (req, res) => {
             } else if (orientation === "heterosexual" && gender === "male") {
               db.query(
                 "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'female' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
-                [loggedIn, ...blocked],
+                [loggedIn, blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
                   res.json(result);
@@ -303,7 +303,7 @@ export const getUsers = async (req, res) => {
             } else if (orientation === "homosexual" && gender === "female") {
               db.query(
                 "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'female' AND orientation = 'homosexual'",
-                [loggedIn, ...blocked],
+                [loggedIn, blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
                   res.json(result);
@@ -312,7 +312,7 @@ export const getUsers = async (req, res) => {
             } else if (orientation === "homosexual" && gender === "male") {
               db.query(
                 "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'male' AND orientation = 'homosexual'",
-                [loggedIn, ...blocked],
+                [loggedIn, blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
                   res.json(result);
@@ -321,7 +321,7 @@ export const getUsers = async (req, res) => {
             } else if (orientation === "bisexual") {
               db.query(
                 "SELECT * FROM users WHERE id NOT IN (?, ?)",
-                [loggedIn, ...blocked],
+                [loggedIn, blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
                   res.json(result);
@@ -381,21 +381,6 @@ export const getUsers = async (req, res) => {
     }
   );
 
-  // } else if (gender === "other") {
-  //   try {
-  //     const users = await Users.findAll({
-  //       where: {
-  //         id: { [Op.notIn]: [...block, id] },
-  //       },
-  //     });
-  //     // const distance = users.map((item) => {
-  //     //   return getDistanceFromLatLonInKm(item.geo_lat, item.geo_long);
-  //     // });
-  //     // console.log("Distance", distance);
-  //     res.json(users);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
 
   //   // function getDistanceFromLatLonInKm(lat2, lon2) {
   //   //   const deg2rad = (deg) => (deg * Math.PI) / 180.0;

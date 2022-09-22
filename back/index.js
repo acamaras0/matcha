@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 const { PORT } = process.env;
 const server = http.createServer(app);
-
+// app.use(cors());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

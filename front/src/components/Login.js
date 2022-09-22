@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
@@ -16,8 +16,41 @@ const Login = () => {
   const location = useGeoLocation();
   const history = useHistory();
 
+  // useEffect(() => {
+  // const getLocation = () => {
+  // if (!navigator.geolocation) {
+  //   console.log("Geolocation is not supported by your browser");
+  // } else {
+  //   console.log("Locating...");
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       // console.log(null);
+  //       console.log("Lat", position.coords.latitude);
+  //       console.log("Long", position.coords.longitude);
+  //     },
+  //     () => {
+  //       console.log("Unable to retrieve your location");
+  //     }
+  //   );
+  // }
+  //   const apiURL = "https://ipgeolocation.abstractapi.com/v1/";
+  //   const apiKey = "d9ec8ec9f0cf4cd189ce3d419d103c2c";
+  //   const getUserLocationFromAPI = async () => {
+  //     try {
+  //       const response = await axios.get(apiURL, { api_key: apiKey });
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.log("Something went wrong getting Geolocation from API!");
+  //     }
+  //   };
+  //   getUserLocationFromAPI();
+  // }, []);
+
   const Auth = async (e) => {
     e.preventDefault();
+
+    // const gps = await axios.get('https://geolocation-db.com/json/');
+    // console.log(gps.data);
     const res = await axios.post("http://localhost:5000/login", {
       username: username,
       password: password,

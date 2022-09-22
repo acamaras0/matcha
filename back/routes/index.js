@@ -56,7 +56,9 @@ router.post("/user/updatePassword/:id", updatePassword);
 router.post("/user/update/:id", updateProfile);
 router.post("/resetpassword/:token", resetPass);
 router.post("/users/forgotpassword", forgotPass);
+
 router.post("/upload", upload.single("file"), UploadPic);
+
 router.post("/like/:user1/:user2", insertLike);
 router.post("/report/:user_id/:reported_id", report);
 router.post("/block/:user_id/:blocked_id", block);

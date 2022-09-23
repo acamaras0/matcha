@@ -59,7 +59,6 @@ const ProfileRandom = ({ socket }) => {
           const response = await axios.get(
             `http://localhost:5000/liked/${id}/${user.id}`
           );
-          console.log("like", response.data.msg);
           setLiked(response.data.msg);
         } catch (error) {
           console.log(error);
@@ -117,7 +116,7 @@ const ProfileRandom = ({ socket }) => {
       type: "unlike",
     });
   };
-
+  // console.log(selectedUser)
   if (!user) {
     history.push("/");
   }
@@ -132,7 +131,8 @@ const ProfileRandom = ({ socket }) => {
           </h2>
           <p className="card-text">{selectedUser.username}</p>
           <p className="text-center">
-            About {distance && Math.round(distance[0]?.distance / 1000)} km away
+            {selectedUser.city}, {selectedUser.country}
+            {/* About {distance && Math.round(distance[0]?.distance / 1000)} km away */}
           </p>
           <StarRating rating={likes} />
           <div className="card-img">

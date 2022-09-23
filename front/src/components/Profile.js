@@ -148,24 +148,28 @@ const Profile = () => {
             <div className="card-body">
               <h3 onClick={() => toggleShow(!show)}>✍ Change Password</h3>{" "}
               <br />
-              <label>New Password</label>
-              <input
-                type="password"
-                className="form-control mt-3"
-                placeholder="Password..."
-                onChange={(e) => {
-                  setNewPassword(e.target.value);
-                }}
-              ></input>
-              <label>Confirm Password</label>
-              <input
-                type="password"
-                className="form-control mt-3"
-                placeholder="Confirm password..."
-                onChange={(e) => {
-                  setNewPasswordConfirm(e.target.value);
-                }}
-              ></input>
+              <form>
+                <label>New Password</label>
+                <input
+                  type="password"
+                  autoComplete="off"
+                  className="form-control mt-3"
+                  placeholder="Password..."
+                  onChange={(e) => {
+                    setNewPassword(e.target.value);
+                  }}
+                ></input>
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  className="form-control mt-3"
+                  placeholder="Confirm password..."
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setNewPasswordConfirm(e.target.value);
+                  }}
+                ></input>
+              </form>
             </div>{" "}
             <br />
             <button onClick={updatePassword} className="btn btn-warning">
@@ -259,18 +263,6 @@ const Profile = () => {
               <Orientation setOrientation={setNewOrientation} />
               <label>✎ Interests</label>
               <Tags setInterests={setNewInterest} />
-              {/* <EditText
-                name="textbox1"
-                defaultValue={loggedIn.interests}
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewInterest(value);
-                  } else {
-                    setNewInterest(loggedIn.interests);
-                  }
-                  console.log(value);
-                }}
-              /> */}
               <label>✎ Bio</label>
               <EditTextarea
                 name="textbox1"

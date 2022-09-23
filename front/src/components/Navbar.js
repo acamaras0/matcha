@@ -67,7 +67,6 @@ const Navbar = ({ socket }) => {
     } else if (type === "match") {
       action = "You got a match!";
     }
-
     return (
       <p className="notification" key={uuidv4()}>{`${
         sender_name ? sender_name : senderName
@@ -101,6 +100,8 @@ const Navbar = ({ socket }) => {
   const Dashboard = () => {
     history.push("/dashboard");
   };
+
+  console.log(loggedIn)
   return (
     <>
       <nav className="navbar navbar-light bg-white" role="navigation">
@@ -115,7 +116,7 @@ const Navbar = ({ socket }) => {
               <div className="navbar-item">
                 <div className="buttons">
                   <div className="icon" onClick={MyProfile}>
-                    <img src={user} className="iconImg" alt="profile" />
+                    <img src={loggedIn.profile_pic} className="icon-profile" alt="profile" />
                   </div>
                   <div className="icon" onClick={() => setOpen(!open)}>
                     <img src={notification} className="iconImg" alt="notif" />

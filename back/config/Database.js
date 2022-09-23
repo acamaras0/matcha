@@ -101,7 +101,7 @@ db.connect(function (err) {
 //   const test2 =
 // "INSERT INTO users (firstName, lastName, username, email, password, activ_status, birthdate, gender, interests, bio, geo_lat, geo_long, fame, profile_pic, online, city, country) \
 // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-// db.query(test2, ["Bella", "Jefferson", "Bella", "email@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "26", "female", "music", "Bio", "65.021545", "25.469885", "4", "http://localhost:5000/upload/3.jpg", "1", "Oulu", "Fi" ], (err, result) => {
+// db.query(test2, ["Bella", "Jefferson", "Bella", "email@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "26", "female", "music", "Bio", "65.021545", "25.469885", "4", "http://localhost:5000/upload/3.jpg", "1", "Oulu", "Fi"], (err, result) => {
 //     if (err) throw err;
 //     console.log("3 record inserted");
 // });

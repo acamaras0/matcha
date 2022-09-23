@@ -1,67 +1,61 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+// import axios from "axios";
 
-const useGeoLocation = () => {
-  const [location, setLocation] = useState({
-    loaded: false,
-    coordinates: { lat: "", lng: "" },
-  });
+// const useGeoLocation = () => {
+//   const [location, setLocation] = useState({
+//     loaded: false,
+//     coordinates: { lat: "", lng: "" },
+//   });
 
-  const onSuccess = (location) => {
-    setLocation({
-      loaded: true,
-      coordinates: {
-        lat: location.coords.latitude,
-        lng: location.coords.longitude,
-      },
-    });
-  };
 
-  const onError = (error) => {
-    setLocation({
-      loaded: true,
-      error,
-    });
-  };
 
-  useEffect(() => {
-    if (!("geolocation" in navigator)) {
-      onError({
-        code: 0,
-        message: "Geolocation is not available",
-      });
-      setLocation((state) => ({
-        ...state,
-        loaded: true,
-        error: {
-          code: 0,
-          message: "Geolocation is not supported by your browser",
-        },
-      }));
-    }
+//   const onSuccess = (location) => {
+//     setLocation({
+//       loaded: true,
+//       coordinates: {
+//         lat: location.coords.latitude,
+//         lng: location.coords.longitude,
+//       },
+//     });
+//   };
 
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  }, []);
+//   const onError = (error) => {
+//     setLocation({
+//       loaded: true,
+//       error,
+//     });
+//   };
 
-  // fetch(
-  //   "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-  //     location.coordinates.lat +
-  //     "," +
-  //     location.coordinates.lng +
-  //     "&key=AIzaSyDhF60vnq16OGzqjgpXj5WemUR1Eg4K6sU"
-  // )
-  //   .then((response) => response.json())
-  //   .then((responseJson) => {
-  //     console.log(
-  //       "ADDRESS GEOCODE is BACK!! => " + JSON.stringify(responseJson)
-  //     );
-  //   });
-  // const geocoder = new window.google.maps.Geocoder();
-  // const my_location = {
-  //   lat: location.coordinates.lat,
-  //   lng: location.coordinates.lng,
-  // };
+//   // useEffect(() => {
+//   //   const getLocation = async () => {
+//   //     const gps = await axios.get("http://localhost:5000/location");
+//   //     // console.log(gps.data);
+//   //     setGeo("here",gps.data)
+//   //   };
+//   //   getLocation();
+//   // }, []);
 
-  return location;
-};
+//   // console.log(location);
+//   useEffect(() => {
+//     if (!("geolocation" in navigator)) {
+//       onError({
+//         code: 0,
+//         message: "Geolocation is not available",
+//       });
+//       setLocation((state) => ({
+//         ...state,
+//         loaded: true,
+//         error: {
+//           code: 0,
+//           message: "Geolocation is not supported by your browser",
+//         },
+//       }));
+//     }
 
-export default useGeoLocation;
+//     navigator.geolocation.getCurrentPosition(onSuccess, onError);
+//   }, []);
+
+//   return location;
+// };
+
+// export default useGeoLocation;

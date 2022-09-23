@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import validator from "validator";
 import db from "../config/Database.js";
+import geoip from "geoip-lite";
+import { publicIpv4 } from "public-ip";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
@@ -378,26 +380,6 @@ export const getUsers = async (req, res) => {
       );
     }
   );
-
-  //   // function getDistanceFromLatLonInKm(lat2, lon2) {
-  //   //   const deg2rad = (deg) => (deg * Math.PI) / 180.0;
-
-  //   //   let geo_lat = loggedIn.dataValues.geo_lat;
-  //   //   let geo_long = loggedIn.dataValues.geo_long;
-  //   //   var R = 6371; // Radius of the earth in km
-  //   //   var dLat = deg2rad(lat2 - geo_lat); // deg2rad below
-  //   //   var dLon = deg2rad(lon2 - geo_long);
-  //   //   var a =
-  //   //     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-  //   //     Math.cos(deg2rad(geo_lat)) *
-  //   //       Math.cos(deg2rad(lat2)) *
-  //   //       Math.sin(dLon / 2) *
-  //   //       Math.sin(dLon / 2);
-  //   //   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  //   //   var d = R * c; // Distance in km
-  //   //   return d;
-  //   // }
-  // }
 };
 
 export const getLoggedIn = async (req, res) => {
@@ -489,62 +471,70 @@ export const Register = async (req, res) => {
 };
 
 export const Login = async (req, res) => {
-  const { lat, lng, city, country } = req.body;
+  const { lat1, lng1 } = req.body;
   const { username, password } = req.body;
-  // console.log('HERE', lat)
 
-  db.query(
-    "SELECT * FROM users WHERE username = ?;",
-    username,
-    (err, result) => {
-      if (err) {
-        res.send({ err: err });
-      }
-      if (result.length > 0) {
-        bcrypt.compare(password, result[0].password, (error, response) => {
-          if (response) {
-            const userId = result[0].id;
-            const name = result[0].username;
-            const email = result[0].email;
-            const activ_status = result[0].activ_status;
-            if (activ_status === 0) {
+  publicIpv4().then((ip) => {
+    // console.log("your public ip address", ip);
+    const geo = geoip.lookup(ip);
+
+    const lat = geo.ll[0];
+    const lng = geo.ll[1];
+    const city = geo.city;
+    const country = geo.country;
+
+    db.query(
+      "SELECT * FROM users WHERE username = ?;",
+      username,
+      (err, result) => {
+        if (err) {
+          res.send({ err: err });
+        }
+        if (result.length > 0) {
+          bcrypt.compare(password, result[0].password, (error, response) => {
+            if (response) {
+              const userId = result[0].id;
+              const name = result[0].username;
+              const email = result[0].email;
+              const activ_status = result[0].activ_status;
+              if (activ_status === 0) {
+                return res.json({
+                  msg: "Please activate your account",
+                });
+              }
+              const accessToken = jwt.sign(
+                { userId, name, email },
+                process.env.ACCESS_TOKEN_SECRET,
+                {
+                  expiresIn: "20s",
+                }
+              );
+              const refreshToken = jwt.sign(
+                { userId, name, email },
+                process.env.REFRESH_TOKEN_SECRET,
+                {
+                  expiresIn: "1d",
+                }
+              );
+              const cookie = res.cookie("refreshToken", refreshToken, {
+                httpOnly: false,
+                maxAge: 24 * 60 * 60 * 1000,
+              });
+              res.json({ accessToken });
+              db.query(
+                "UPDATE users SET geo_lat = ?, geo_long = ?, city = ?, country = ?, refresh_token = ?,online = 1  WHERE id = ?",
+                [lat, lng, city, country, refreshToken, userId]
+              );
+            } else {
               return res.json({
-                msg: "Please activate your account",
+                msg: "Wrong username/password combination!",
               });
             }
-            const accessToken = jwt.sign(
-              { userId, name, email },
-              process.env.ACCESS_TOKEN_SECRET,
-              {
-                expiresIn: "20s",
-              }
-            );
-            const refreshToken = jwt.sign(
-              { userId, name, email },
-              process.env.REFRESH_TOKEN_SECRET,
-              {
-                expiresIn: "1d",
-              }
-            );
-            const cookie = res.cookie("refreshToken", refreshToken, {
-              httpOnly: false,
-              maxAge: 24 * 60 * 60 * 1000,
-            });
-            // console.log('HERE', cookie)
-            res.json({ accessToken });
-            db.query(
-              "UPDATE users SET geo_lat = ?, geo_long = ?, refresh_token = ?,online = 1  WHERE id = ?",
-              [lat, lng, refreshToken, userId]
-            );
-          } else {
-            return res.json({
-              msg: "Wrong username/password combination!",
-            });
-          }
-        });
+          });
+        }
       }
-    }
-  );
+    );
+  });
 };
 
 export const ProfileFill = async (req, res) => {

@@ -24,22 +24,13 @@ function App() {
   const [user, setUser] = useState("");
   const [socket, setSocket] = useState(null);
 
-  // useEffect(() => {
-  //   const getLocation = async () => {
-  //     const gps = await axios.get("https://geolocation-db.com/json/");
-  //     console.log(gps.data);
-  //   };
-  //   getLocation();
-  // }, []);
-
-    useEffect(() => {
+  useEffect(() => {
     const getLocation = async () => {
       const gps = await axios.get("http://localhost:5000/location");
       console.log(gps.data);
     };
     getLocation();
   }, []);
-
 
   useEffect(() => {
     setSocket(io("http://localhost:5000"));

@@ -6,10 +6,9 @@ export const location = async (req, res) => {
   publicIpv4().then((ip) => {
     console.log("your public ip address", ip);
     const geo = geoip.lookup(ip);
+    // console.log(geo.ll);
 
-    console.log(geo.ll);
-    // geo.ll.map();
-    db.query("INSERT INTO users (geo_lat) VALUES (?)", [geo.ll[0]]);
-    db.query("INSERT INTO users (geo_long) VALUES (?)", [geo.ll[1]]);
+    // db.query("INSERT INTO users (geo_lat) VALUES (?)", [geo.ll[0]]);
+    // db.query("INSERT INTO users (geo_long) VALUES (?)", [geo.ll[1]]);
   });
 };

@@ -2,7 +2,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { useCookies } from "react-cookie";
 
@@ -12,7 +12,7 @@ const ResetPassword = () => {
   const { token } = useParams();
   const [message, setMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
-  const history = useNavigate();
+  const history = useHistory();
 
   const ResetPassword = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ const ResetPassword = () => {
         confPassword: confirmPassword,
         token: token,
       });
-      history("/");
+      history.push("/");
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -31,7 +31,7 @@ const ResetPassword = () => {
   };
 
   if (cookie.refreshToken) {
-    history("/dashboard");
+    history.push("/dashboard");
   }
   return (
     <div>

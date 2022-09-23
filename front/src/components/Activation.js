@@ -2,13 +2,13 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import logo from "../assets/logo.png";
 const Activation = () => {
   const hash = useParams().hash;
-  const history = useNavigate();
+  const history = useHistory();
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const [message, setMessage] = useState("");
 
@@ -18,14 +18,14 @@ const Activation = () => {
         `http://localhost:5000/activate/${hash}`
       );
       setMessage(respose.data.message);
-      history("/");
+      history.push("/");
     } catch (error) {
       console.log("Error", error);
     }
   };
 
   if (cookie.refreshToken) {
-    history("/dashboard");
+    history.push("/dashboard");
   }
   return (
     <>

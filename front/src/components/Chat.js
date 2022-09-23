@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import Conversations from "../models/Conversations";
@@ -15,7 +15,7 @@ const Chat = ({ socket }) => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
 
-  const history = useNavigate();
+  const history = useHistory();
   const id = useParams().id;
   const scrollRef = useRef();
 
@@ -101,7 +101,7 @@ const Chat = ({ socket }) => {
   }, [arrivalMessage, currentChat]);
 
   if (!cookie.refreshToken) {
-    history("/");
+    history.push("/");
   }
 
   return (

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, Navigate } from "react-router-dom";
+import { useHistory, Redirect, Navigate } from "react-router-dom";
 import Gender from "../models/Gender";
 import Tags from "../models/Tags";
 import Age from "../models/Age";
@@ -17,7 +17,7 @@ const ProfileForm = () => {
   const [interests, setInterests] = useState([]);
   const [bio, setBio] = useState("");
   const [message, setMessage] = useState("");
-  const history = useNavigate();
+  const history = useHistory();
   const [cookie, setCookie] = useCookies(["refreshToken"]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const ProfileForm = () => {
         setLoggedin(response.data);
       } catch (error) {
         if (error.response) {
-          history("/");
+          history.push("/");
         }
       }
     };
@@ -46,7 +46,7 @@ const ProfileForm = () => {
         interests: interests,
         bio: bio,
       });
-      history("/pictures");
+      history.push("/pictures");
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -55,10 +55,10 @@ const ProfileForm = () => {
   };
 
   if (!cookie.refreshToken) {
-    history("/");
+    history.push("/");
   }
   if (loggedIn && loggedIn.birthdate) {
-    return <Navigate to={"/dashboard"} />;
+    return <Redirect to={"/dashboard"} />;
   }
   return (
     <div>

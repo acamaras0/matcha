@@ -1,23 +1,19 @@
 /* eslint-disable */
-import React, { useContext,useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import StarRating from "../models/StarRating";
 import useGetDistance from "../utils/useGetDistance";
 import { format } from "timeago.js";
 import { UserContext } from "../context/UserContext";
 
-
 const Dashboard = ({ socket }) => {
-  // const [loggedIn, setLoggedin] = useState("");
-  // const [sender, setSender] = useState("");
-  // const [senderId, setSenderId] = useState("");
   const { user, setUser } = useContext(UserContext);
   // const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
-  const history = useNavigate();
+  const history = useHistory();
   const distance = useGetDistance();
 
   useEffect(() => {
@@ -27,9 +23,6 @@ const Dashboard = ({ socket }) => {
         {}
       );
       setUser(response.data);
-      // setLoggedin(response.data.id);
-      // setSender(response.data.username);
-      // setSenderId(response.data.id);
     };
     getLoggedIn();
 
@@ -50,7 +43,7 @@ const Dashboard = ({ socket }) => {
       receiverName: id,
       type: "profile view",
     });
-    history(`/users/${id}`);
+    history.push(`/users/${id}`);
   };
 
   const handleReport = async (id) => {
@@ -64,7 +57,7 @@ const Dashboard = ({ socket }) => {
     }
   };
   if (!cookie.refreshToken) {
-    history("/");
+    history.push("/");
   }
   if (distance) {
     distance.sort((a, b) => a.distance - b.distance);

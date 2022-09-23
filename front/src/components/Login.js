@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
 import useGeoLocation from "../utils/useGeoLocation";
@@ -12,39 +12,73 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const location = useGeoLocation();
-  const history = useNavigate();
+  const history = useHistory();
+
+  // useEffect(() => {
+  // const getLocation = () => {
+  // if (!navigator.geolocation) {
+  //   console.log("Geolocation is not supported by your browser");
+  // } else {
+  //   console.log("Locating...");
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       // console.log(null);
+  //       console.log("Lat", position.coords.latitude);
+  //       console.log("Long", position.coords.longitude);
+  //     },
+  //     () => {
+  //       console.log("Unable to retrieve your location");
+  //     }
+  //   );
+  // }
+  //   const apiURL = "https://ipgeolocation.abstractapi.com/v1/";
+  //   const apiKey = "d9ec8ec9f0cf4cd189ce3d419d103c2c";
+  //   const getUserLocationFromAPI = async () => {
+  //     try {
+  //       const response = await axios.get(apiURL, { api_key: apiKey });
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.log("Something went wrong getting Geolocation from API!");
+  //     }
+  //   };
+  //   getUserLocationFromAPI();
+  // }, []);
 
   const Auth = async (e) => {
     e.preventDefault();
 
-    const gps = await axios.get('https://geolocation-db.com/json/');
-    setCountry(gps.data.country_name);
-    setLatitude(gps.data.latitude);
-    setLongitude(gps.data.longitude)
-    setCity(gps.data.city)
-
+    // const gps = await axios.get('https://geolocation-db.com/json/');
+    // console.log(gps.data);
     if (location && location.coordinates) {
       const res = await axios.post("http://localhost:5000/login", {
         username: username,
         password: password,
-        lat: latitude,
-        lng: longitude,
+        lat: location.coordinates.lat,
+        lng: location.coordinates.lng,
       });
       setMessage(res.data.msg);
       if (res.data.accessToken) {
-        history("/completeprofile");
+        history.push("/completeprofile");
+      }
+    }
+    else{
+      const res = await axios.post("http://localhost:5000/login", {
+        username: username,
+        password: password,
+        lat: 60.192059,
+        lng: 24.945831,
+      });
+      setMessage(res.data.msg);
+      if (res.data.accessToken) {
+        history.push("/completeprofile");
       }
     }
   };
 
   if (cookie.refreshToken) {
-    history("/dashboard");
+    history.push("/dashboard");
   }
   return (
     <div>

@@ -1,14 +1,13 @@
 /* eslint-disable */
 import React from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import logo from "../assets/logo.png";
 import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
 import logout from "../assets/logout.png";
 import user from "../assets/user.png";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { v4 as uuidv4 } from "uuid";
 
@@ -18,7 +17,7 @@ const Navbar = ({ socket }) => {
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([]);
   const [open, setOpen] = useState(false);
-  const history = useNavigate();
+  const history = useHistory();
 
   useEffect(() => {
     if (socket) {
@@ -57,29 +56,6 @@ const Navbar = ({ socket }) => {
     getMessagesNotif();
   }, [socket, cookie.refreshToken, loggedIn.id]);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const getNotifications = async () => {
-  //       const response = await axios.get(
-  //         `http://localhost:5000/user/notifications/${loggedIn.id}`,
-  //         {}
-  //       );
-  //       setNotifications(response.data);
-  //     };
-  //     getNotifications();
-
-  //     const getMessagesNotif = async () => {
-  //       const response = await axios.get(
-  //         `http://localhost:5000/messages/${loggedIn.id}`,
-  //         {}
-  //       );
-  //       setMessages(response.data);
-  //     };
-  //     getMessagesNotif();
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, [loggedIn.id]);
-
   const displayNotifications = ({ sender_name, senderName, type }) => {
     let action;
     if (type === "like") {
@@ -107,23 +83,23 @@ const Navbar = ({ socket }) => {
 
   const Chat = () => {
     setMessages([]);
-    history(`/chat/${loggedIn.id}`);
+    history.push(`/chat/${loggedIn.id}`);
   };
 
   const MyProfile = () => {
-    history(`/profile/${loggedIn.id}`);
+    history.push(`/profile/${loggedIn.id}`);
   };
 
   const Logout = async () => {
     try {
       await axios.delete("http://localhost:5000/logout");
-      history("/");
+      history.push("/");
     } catch (error) {
       console.log(error);
     }
   };
   const Dashboard = () => {
-    history("/dashboard");
+    history.push("/dashboard");
   };
   return (
     <>

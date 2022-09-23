@@ -210,7 +210,7 @@ export const forgotPass = async (req, res) => {
 
   db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
     if (err) return console.log(err);
-    if (result) {
+    if (result.length > 1) {
       db.query(
         "UPDATE users SET reset_token = ? WHERE email = ?",
         [token, email],
@@ -233,13 +233,13 @@ export const forgotPass = async (req, res) => {
             res.status(200).json({
               msg: "Email sent",
             });
-          } else {
-            res.status(200).json({
-              msg: "Email not found",
-            });
           }
         }
       );
+    } else {
+      return res.status(200).json({
+        msg: "Email not found",
+      });
     }
   });
 };
@@ -280,7 +280,6 @@ export const getUsers = async (req, res) => {
           }
           if (result.length > 0) {
             const blocked = result.map((item) => item.blocked_id);
-            console.log("", blocked);
             if (orientation === "heterosexual" && gender === "female") {
               db.query(
                 "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
@@ -297,7 +296,6 @@ export const getUsers = async (req, res) => {
                 (err, result) => {
                   if (err) return res.json({ err: err });
                   res.json(result);
-                  // console.log(result);
                 }
               );
             } else if (orientation === "homosexual" && gender === "female") {
@@ -380,7 +378,6 @@ export const getUsers = async (req, res) => {
       );
     }
   );
-
 
   //   // function getDistanceFromLatLonInKm(lat2, lon2) {
   //   //   const deg2rad = (deg) => (deg * Math.PI) / 180.0;
@@ -492,10 +489,9 @@ export const Register = async (req, res) => {
 };
 
 export const Login = async (req, res) => {
-  const { lat, lng } = req.body;
+  const { lat, lng, city, country } = req.body;
   const { username, password } = req.body;
-
-
+  // console.log('HERE', lat)
 
   db.query(
     "SELECT * FROM users WHERE username = ?;",
@@ -530,11 +526,11 @@ export const Login = async (req, res) => {
                 expiresIn: "1d",
               }
             );
-            res.cookie("refreshToken", refreshToken, {
+            const cookie = res.cookie("refreshToken", refreshToken, {
               httpOnly: false,
               maxAge: 24 * 60 * 60 * 1000,
             });
-            console.log('HERE')
+            // console.log('HERE', cookie)
             res.json({ accessToken });
             db.query(
               "UPDATE users SET geo_lat = ?, geo_long = ?, refresh_token = ?,online = 1  WHERE id = ?",

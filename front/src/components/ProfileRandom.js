@@ -1,12 +1,10 @@
-// /* eslint-disable */
 import useGetDistance from "../utils/useGetDistance";
 import React, { useContext, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import StarRating from "../models/StarRating";
 import Gallery from "../models/Gallery";
-import { useCookies } from "react-cookie";
 import img from "../assets/yellow-heart.png";
 import img1 from "../assets/broken-heart.png";
 // import img2 from "../assets/match.png";
@@ -14,17 +12,14 @@ import img1 from "../assets/broken-heart.png";
 const ProfileRandom = ({ socket }) => {
   const { id } = useParams();
   const { selectedUser, setSelectedUser } = useContext(UserContext);
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [pics, setPics] = useState([]);
   const [likes, setLikes] = useState("");
-  const [loggedIn, setLoggedIn] = useState("");
   const [liked, setLiked] = useState(false);
   const [message, setMessage] = useState("");
-  const [sender, setSender] = useState("");
-  const [senderId, setSenderId] = useState("");
-  const history = useNavigate();
+
+  const history = useHistory();
   const distance = useGetDistance();
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,17 +41,6 @@ const ProfileRandom = ({ socket }) => {
     };
     getPicPath();
 
-    const getLoggedIn = async () => {
-      const response = await axios.get(
-        `http://localhost:5000/user/${cookie.refreshToken}`,
-        {}
-      );
-      setLoggedIn(response.data.id);
-      setSender(response.data.username);
-      setSenderId(response.data.id);
-    };
-    getLoggedIn();
-
     const count = async () => {
       try {
         const response = await axios.get(
@@ -70,10 +54,10 @@ const ProfileRandom = ({ socket }) => {
     count();
 
     const checkIfLiked = async () => {
-      if (loggedIn !== "") {
+      if (user !== "") {
         try {
           const response = await axios.get(
-            `http://localhost:5000/liked/${id}/${loggedIn}`
+            `http://localhost:5000/liked/${id}/${user.id}`
           );
           console.log("like", response.data.msg);
           setLiked(response.data.msg);
@@ -83,12 +67,12 @@ const ProfileRandom = ({ socket }) => {
       }
     };
     checkIfLiked();
-  }, [id, setSelectedUser, setLikes, cookie.refreshToken, loggedIn]);
+  }, [id, setSelectedUser, setLikes, user]);
 
   const block = async (id) => {
     try {
-      await axios.post(`http://localhost:5000/block/${loggedIn}/${id}`, {});
-      history("/dashboard");
+      await axios.post(`http://localhost:5000/block/${user.id}/${id}`, {});
+      history.push("/dashboard");
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +81,7 @@ const ProfileRandom = ({ socket }) => {
   const handleLike = async (id) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/like/${loggedIn}/${id}`,
+        `http://localhost:5000/like/${user.id}/${id}`,
         {}
       );
       setMessage(response.data.msg);
@@ -107,8 +91,8 @@ const ProfileRandom = ({ socket }) => {
       }
     }
     socket.emit("sendNotification", {
-      senderName: sender,
-      senderId: senderId,
+      senderName: user.username,
+      senderId: user.id,
       receiverName: id,
       type: "like",
     });
@@ -117,7 +101,7 @@ const ProfileRandom = ({ socket }) => {
   const handleDislike = async (id) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/like/${loggedIn}/${id}`,
+        `http://localhost:5000/like/${user.id}/${id}`,
         {}
       );
       setMessage(response.data.msg);
@@ -127,15 +111,15 @@ const ProfileRandom = ({ socket }) => {
       }
     }
     socket.emit("sendNotification", {
-      senderName: sender,
-      senderId: senderId,
+      senderName: user.username,
+      senderId: user.id,
       receiverName: id,
       type: "unlike",
     });
   };
 
-  if (!cookie.refreshToken) {
-    history("/");
+  if (!user) {
+    history.push("/");
   }
   if (!selectedUser && !distance) {
     return <div>Loading...</div>;

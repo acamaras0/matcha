@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import PicturesForm from "./PicturesForm";
@@ -30,7 +30,7 @@ const Profile = () => {
   const [message, setMessage] = useState("");
   // const [blocked, setBlocked] = useState([]);
   const [cookie, setCookie] = useCookies(["refreshToken"]);
-  const history = useNavigate();
+  const history = useHistory();
   //const distance = useGetDistance();
   const [show, toggleShow] = useState(false);
 
@@ -76,7 +76,7 @@ const Profile = () => {
         }
       );
       setMessage(response.data.msg);
-      history(`/profile/${id}`);
+      history.push(`/profile/${id}`);
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -89,7 +89,7 @@ const Profile = () => {
       const response = await axios.delete(
         `http://localhost:5000/user/picture/${pic_id}`
       );
-      history(`/profile/${id}`);
+      history.push(`/profile/${id}`);
       setMessage(response.data.msg);
     } catch (error) {
       if (error.response) {
@@ -109,7 +109,7 @@ const Profile = () => {
         }
       );
       setMessage(response.data.msg);
-      history(`/profile/${id}`);
+      history.push(`/profile/${id}`);
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -118,7 +118,7 @@ const Profile = () => {
   };
 
   if (!cookie.refreshToken) {
-    history("/");
+    history.push("/");
   }
   if (loggedIn)
     return (

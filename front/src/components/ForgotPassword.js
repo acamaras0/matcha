@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import "../App.css";
 import logo from "../assets/logo.png";
@@ -10,7 +10,7 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
-  const history = useNavigate();
+  const history = useHistory();
 
   const forgotPassword = (e) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ const ForgotPassword = () => {
       axios.post("http://localhost:5000/users/forgotpassword", {
         email: email,
       });
-      history("/");
+      history.push("/");
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -27,7 +27,7 @@ const ForgotPassword = () => {
   };
 
   if (cookie.refreshToken) {
-    history("/dashboard");
+    history.push("/dashboard");
   }
   return (
     <div>

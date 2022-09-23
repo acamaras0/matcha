@@ -24,14 +24,6 @@ function App() {
   const [user, setUser] = useState("");
   const [socket, setSocket] = useState(null);
 
-  // useEffect(() => {
-  //   const getLocation = async () => {
-  //     const gps = await axios.get("http://localhost:5000/location");
-  //     console.log("here", gps.data);
-  //   };
-  //   getLocation();
-  // }, []);
-
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
     if (cookie.refreshToken) {
@@ -57,52 +49,54 @@ function App() {
 
   return (
     <>
-      <UserContextProvider>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route path="/forgotpassword">
-              <ForgotPasswords />
-            </Route>
-            <Route path="/resetpassword/:token">
-              <ResetPassword />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/activate/:hash">
-              <Activation />
-            </Route>
-            <Route path="/completeprofile">
-              <Navbar socket={socket} />
-              <ProfileForm />
-            </Route>
-            <Route path="/pictures">
-              <Navbar socket={socket} />
-              <PicturesForm />
-            </Route>
-            <Route path="/dashboard">
-              <Navbar socket={socket} />
-              <Dashboard socket={socket} user={user} />
-            </Route>
-            <Route path="/profile/:id">
-              <Navbar socket={socket} />
-              <Profile />
-            </Route>
-            <Route path="/users/:id">
-              <Navbar socket={socket} />
-              <ProfileRandom socket={socket} />
-            </Route>
-            <Route path="/chat/:id">
-              <Navbar socket={socket} />
-              <Chat socket={socket} />
-            </Route>
-          </Switch>
-          <Footer />
-        </BrowserRouter>
-      </UserContextProvider>
+      <div className="App">
+        <UserContextProvider>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/">
+                <Login />
+              </Route>
+              <Route path="/forgotpassword">
+                <ForgotPasswords />
+              </Route>
+              <Route path="/resetpassword/:token">
+                <ResetPassword />
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+              <Route path="/activate/:hash">
+                <Activation />
+              </Route>
+              <Route path="/completeprofile">
+                <Navbar socket={socket} />
+                <ProfileForm />
+              </Route>
+              <Route path="/pictures">
+                <Navbar socket={socket} />
+                <PicturesForm />
+              </Route>
+              <Route path="/dashboard">
+                <Navbar socket={socket} />
+                <Dashboard socket={socket} user={user} />
+              </Route>
+              <Route path="/profile/:id">
+                <Navbar socket={socket} />
+                <Profile />
+              </Route>
+              <Route path="/users/:id">
+                <Navbar socket={socket} />
+                <ProfileRandom socket={socket} />
+              </Route>
+              <Route path="/chat/:id">
+                <Navbar socket={socket} />
+                <Chat socket={socket} />
+              </Route>
+            </Switch>
+            <Footer />
+          </BrowserRouter>
+        </UserContextProvider>
+      </div>
     </>
   );
 }

@@ -1,6 +1,5 @@
 import geoip from "geoip-lite";
 import { publicIpv4 } from "public-ip";
-import db from "../config/Database.js";
 
 function getDistanceFromLatLonInKm(lat, lng, lat_1, lon_1) {
   const deg2rad = (deg) => (deg * Math.PI) / 180.0;
@@ -21,48 +20,10 @@ function getDistanceFromLatLonInKm(lat, lng, lat_1, lon_1) {
   return d;
 }
 
-// function location() {
-//   publicIpv4().then((ip) => {
-//     console.log("your public ip address", ip);
-//     const geo = geoip.lookup(ip);
-
-//     const lat = geo.ll[0];
-//     const lng = geo.ll[1];
-
-//     return geo;
-    // distance = getDistanceFromLatLonInKm(lat, lng, lat_1, lon_1)
-    // console.log(distance);
-
-    // db.query("INSERT INTO users (geo_lat) VALUES (?)", [geo.ll[0]]);
-    // db.query("INSERT INTO users (geo_long) VALUES (?)", [geo.ll[1]]);
-//   });
-// }
-
-// export const location = async (req, res) => {
-//   publicIpv4().then((ip) => {
-//     console.log("your public ip address", ip);
-//     const geo = geoip.lookup(ip);
-
-//     const lat = geo.ll[0]
-//     const lng = geo.ll[1]
-//     // distance = getDistanceFromLatLonInKm(lat, lng, lat_1, lon_1)
-//     // console.log(distance);
-
-//     // db.query("INSERT INTO users (geo_lat) VALUES (?)", [geo.ll[0]]);
-//     // db.query("INSERT INTO users (geo_long) VALUES (?)", [geo.ll[1]]);
-//   });
-// };
-
-
 export const location = async (req, res) => {
   publicIpv4().then((ip) => {
     console.log("your public ip address", ip);
     const geo = geoip.lookup(ip);
-
     return res.send(geo.ll)
-    // console.log(geo.ll);
-
-    // db.query("INSERT INTO users (geo_lat) VALUES (?)", [geo.ll[0]]);
-    // db.query("INSERT INTO users (geo_long) VALUES (?)", [geo.ll[1]]);
   });
 };

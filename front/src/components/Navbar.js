@@ -6,7 +6,7 @@ import logo from "../assets/logo.png";
 import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
 import logout from "../assets/logout.png";
-import user from "../assets/user.png";
+// import user from "../assets/user.png";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { v4 as uuidv4 } from "uuid";
@@ -101,10 +101,9 @@ const Navbar = ({ socket }) => {
     history.push("/dashboard");
   };
 
-  console.log(loggedIn)
   return (
     <>
-      <nav className="navbar navbar-light bg-white" role="navigation">
+      <nav className="navbar" role="navigation">
         <div className="container">
           <div className="navbar-brand">
             <div className="Nav-logo">
@@ -116,7 +115,11 @@ const Navbar = ({ socket }) => {
               <div className="navbar-item">
                 <div className="buttons">
                   <div className="icon" onClick={MyProfile}>
-                    <img src={loggedIn.profile_pic} className="icon-profile" alt="profile" />
+                    <img
+                      src={loggedIn.profile_pic}
+                      className="icon-profile"
+                      alt="profile"
+                    />
                   </div>
                   <div className="icon" onClick={() => setOpen(!open)}>
                     <img src={notification} className="iconImg" alt="notif" />

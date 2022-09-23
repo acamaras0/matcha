@@ -15,18 +15,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// export const getCoordinates = async (req, res) => {
-//   console.log("HHHEEEEEEEEREEEEEEEEE");
-
-//   db.query("SELECT id, geo_lat, geo_long FROM users", (err, result) => {
-//     if (err) {
-//       return console.log(err);
-//     }
-//     console.log(result);
-//     return res.status(200).json(result);
-//   });
-// };
-
 export const getNotifications = async (req, res) => {
   const userId = req.params.id;
   db.query(
@@ -475,9 +463,7 @@ export const Login = async (req, res) => {
   const { username, password } = req.body;
 
   publicIpv4().then((ip) => {
-    // console.log("your public ip address", ip);
     const geo = geoip.lookup(ip);
-
     const lat = geo.ll[0];
     const lng = geo.ll[1];
     const city = geo.city;

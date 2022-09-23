@@ -12,7 +12,6 @@ import {
   forgotPass,
   resetPass,
   updateProfile,
-  // getCoordinates,
   getNotifications,
   markNotifications,
 } from "../controllers/Users.js";
@@ -44,7 +43,6 @@ router.get("/token", refreshToken);
 router.get("/user/pictures/:id", getPicsById, getPicPath);
 router.get("/users/:id", getRandomUser);
 router.get("/user/fame/:user", getFame);
-// router.get("/coordinates", getCoordinates);
 router.get("/user/blocked/:id", getBlockedUsers);
 router.get("/user/notifications/:id", getNotifications);
 router.get("/liked/:user_id/:id", checkIfLiked);

@@ -28,6 +28,7 @@ import {
   newMessages,
   getMessagesNotif,
 } from "../controllers/Chat.js";
+import {location} from "../controllers/Location.js"
 import { report, block, getBlockedUsers } from "../controllers/ReportBlock.js";
 import { insertLike, getFame, checkIfLiked} from "../controllers/Matches.js";
 import { upload } from "../middleware/Upload.js";
@@ -47,6 +48,7 @@ router.get("/user/fame/:user", getFame);
 router.get("/user/blocked/:id", getBlockedUsers);
 router.get("/user/notifications/:id", getNotifications);
 router.get("/liked/:user_id/:id", checkIfLiked);
+router.get("/location", location)
 
 router.post("/users", Register);
 router.post("/activate/:hash", accountActivation);

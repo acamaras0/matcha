@@ -32,6 +32,14 @@ function App() {
   //   getLocation();
   // }, []);
 
+    useEffect(() => {
+    const getLocation = async () => {
+      const gps = await axios.get("http://localhost:5000/location");
+      console.log(gps.data);
+    };
+    getLocation();
+  }, []);
+
 
   useEffect(() => {
     setSocket(io("http://localhost:5000"));

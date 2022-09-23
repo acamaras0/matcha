@@ -14,7 +14,6 @@ const Login = () => {
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
 
-
   const Auth = async (e) => {
     e.preventDefault();
     const res = await axios.post("http://localhost:5000/login", {
@@ -46,6 +45,7 @@ const Login = () => {
             <div className="form-group mt-3">
               <input
                 className="form-control mt-1"
+                autoComplete="off"
                 type="text"
                 placeholder="Username..."
                 onChange={(e) => {
@@ -59,6 +59,7 @@ const Login = () => {
                 className="form-control mt-1"
                 type="password"
                 placeholder="Password..."
+                autoComplete="off"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}

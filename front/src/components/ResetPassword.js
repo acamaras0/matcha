@@ -45,6 +45,7 @@ const ResetPassword = () => {
             <div className="form-group mt-3">
               <input
                 className="form-control mt-1"
+                autoComplete="off"
                 type="password"
                 placeholder="Password..."
                 onChange={(e) => {
@@ -56,6 +57,7 @@ const ResetPassword = () => {
             <div className="form-group mt-3">
               <input
                 className="form-control mt-1"
+                autoComplete="off"
                 type="password"
                 placeholder="Confirm password..."
                 onChange={(e) => {

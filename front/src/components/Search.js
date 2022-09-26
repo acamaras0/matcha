@@ -1,16 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import MultiRangeSlider from "multi-range-slider-react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { UserContext } from "../context/UserContext";
 
 const Search = () => {
   const id = useParams().id;
+  const { user } = useContext(UserContext);
+  const history = useHistory();
+
   const [minAge, set_minAge] = useState(18);
   const [maxAge, set_maxAge] = useState(99);
 
-  const [minFame, set_minFame] = useState(5);
-  const [maxFame, set_maxFame] = useState(75);
+  const [minFame, set_minFame] = useState(0);
+  const [maxFame, set_maxFame] = useState(100);
 
   const [minDist, set_minDist] = useState(5);
   const [maxDist, set_maxDist] = useState(75);
@@ -47,6 +51,10 @@ const Search = () => {
     byAge();
   }, [minAge, maxAge, id]);
 
+  console.log(user);
+
+  if (user.length < 1) history.push("/");
+  if (!byAge) return <div>Loading...</div>;
   return (
     <div className="search">
       <label>By age</label>

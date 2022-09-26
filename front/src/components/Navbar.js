@@ -54,6 +54,11 @@ const Navbar = ({ socket }) => {
       setMessages(response.data);
     };
     getMessagesNotif();
+
+    return () => {
+      setNotifications({});
+      setMessages({});
+    };
   }, [socket, cookie.refreshToken, loggedIn.id]);
 
   const displayNotifications = ({ sender_name, senderName, type }) => {

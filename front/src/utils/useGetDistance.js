@@ -26,6 +26,9 @@ const useGetDistance = () => {
       setGeo(gps.data);
     };
     getLocation();
+    return () => {
+      setGeo({});
+    };
   }, [cookie.refreshToken]);
 
   if (geo) {

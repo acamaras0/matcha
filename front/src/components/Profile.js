@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
 import { EditText, EditTextarea } from "react-edit-text";
@@ -9,6 +9,8 @@ import { useCookies } from "react-cookie";
 import Gender from "../models/Gender";
 import Orientation from "../models/Orientation";
 import Tags from "../models/Tags";
+import { UserContext } from "../context/UserContext";
+
 //import useGetDistance from "../utils/useGetDistance";
 
 const Profile = () => {
@@ -33,19 +35,23 @@ const Profile = () => {
   const history = useHistory();
   //const distance = useGetDistance();
   const [show, toggleShow] = useState(false);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    getLoggedIn();
+    // getLoggedIn();
     getPicPath();
+    return () => {
+      setPics({});
+    };
   }, []);
 
-  const getLoggedIn = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/user/${cookie.refreshToken}`,
-      {}
-    );
-    setLoggedin(response.data);
-  };
+  // const getLoggedIn = async () => {
+  //   const response = await axios.get(
+  //     `http://localhost:5000/user/${cookie.refreshToken}`,
+  //     {}
+  //   );
+  //   setLoggedin(response.data);
+  // };
 
   const getPicPath = async () => {
     const response = await axios.get(
@@ -116,11 +122,12 @@ const Profile = () => {
       }
     }
   };
+  console.log("here", user)
 
   if (!cookie.refreshToken) {
     history.push("/");
   }
-  if (loggedIn)
+  if (user)
     return (
       <div className="text-center">
         {message ? <p className="error">{message}</p> : null}
@@ -182,12 +189,12 @@ const Profile = () => {
             <label>✎ Firts name</label>
             <EditText
               name="textbox1"
-              defaultValue={loggedIn.firstname}
+              defaultValue={user.firstname}
               onSave={(value) => {
                 if (value !== "") {
                   setNewFirstName(value);
                 } else {
-                  setNewFirstName(loggedIn.firstname);
+                  setNewFirstName(user.firstname);
                 }
                 console.log(value);
               }}
@@ -195,12 +202,12 @@ const Profile = () => {
             <label>✎ Last Name</label>
             <EditText
               name="textbox1"
-              defaultValue={loggedIn.lastname}
+              defaultValue={user.lastname}
               onSave={(value) => {
                 if (value !== "") {
                   setNewLastName(value);
                 } else {
-                  setNewLastName(loggedIn.lastname);
+                  setNewLastName(user.lastname);
                 }
                 console.log(value);
               }}
@@ -209,12 +216,12 @@ const Profile = () => {
               <label>✎ Username</label>
               <EditText
                 name="textbox1"
-                defaultValue={loggedIn.username}
+                defaultValue={user.username}
                 onSave={(value) => {
                   if (value !== "") {
                     setNewUsername(value);
                   } else {
-                    setNewUsername(loggedIn.username);
+                    setNewUsername(user.username);
                   }
                   console.log(value);
                 }}
@@ -229,7 +236,7 @@ const Profile = () => {
                   if (value !== "") {
                     setNewGeoLat(value);
                   } else {
-                    setNewGeoLat(loggedIn.geo_lat);
+                    setNewGeoLat(user.geo_lat);
                   }
                 }}
               />
@@ -240,19 +247,19 @@ const Profile = () => {
                   if (value !== "") {
                     setNewGeoLng(value);
                   } else {
-                    setNewGeoLng(loggedIn.geo_long);
+                    setNewGeoLng(user.geo_long);
                   }
                 }}
               />
               <label>✎ Email address</label>
               <EditText
                 name="textbox1"
-                defaultValue={loggedIn.email}
+                defaultValue={user.email}
                 onSave={(value) => {
                   if (value !== "") {
                     setNewEmail(value);
                   } else {
-                    setNewEmail(loggedIn.email);
+                    setNewEmail(user.email);
                   }
                   console.log(value);
                 }}
@@ -266,12 +273,12 @@ const Profile = () => {
               <label>✎ Bio</label>
               <EditTextarea
                 name="textbox1"
-                defaultValue={loggedIn.bio}
+                defaultValue={user.bio}
                 onSave={(value) => {
                   if (value !== "") {
                     setNewBio(value);
                   } else {
-                    setNewBio(loggedIn.bio);
+                    setNewBio(user.bio);
                   }
                   console.log(value);
                 }}

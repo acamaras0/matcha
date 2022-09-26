@@ -55,6 +55,7 @@ const Register = () => {
             <div className="form-group mt-3">
               <label>First Name</label>
               <input
+                autoComplete="off"
                 className="form-control mt-1"
                 type="text"
                 onChange={(e) => {
@@ -65,6 +66,7 @@ const Register = () => {
             <div className="form-group mt-3">
               <label>Last Name</label>
               <input
+                autoComplete="off"
                 className="form-control mt-1"
                 type="text"
                 onChange={(e) => {
@@ -75,6 +77,7 @@ const Register = () => {
             <div className="form-group mt-3">
               <label>Username</label>
               <input
+                autoComplete="off"
                 className="form-control mt-1"
                 type="text"
                 onChange={(e) => {
@@ -84,6 +87,7 @@ const Register = () => {
               <div className="form-group mt-3"></div>
               <label>Email address</label>
               <input
+                autoComplete="off"
                 className="form-control mt-1"
                 type="email"
                 onChange={(e) => {
@@ -94,6 +98,7 @@ const Register = () => {
             <div className="form-group mt-3">
               <label>Password</label>
               <input
+                autoComplete="off"
                 className="form-control mt-1"
                 type="password"
                 onChange={(e) => {
@@ -104,6 +109,7 @@ const Register = () => {
             <div className="form-group mt-3">
               <label>Confirm password</label>
               <input
+                autoComplete="off"
                 className="form-control mt-1"
                 type="password"
                 onChange={(e) => {

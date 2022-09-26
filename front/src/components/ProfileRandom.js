@@ -66,6 +66,7 @@ const ProfileRandom = ({ socket }) => {
       }
     };
     checkIfLiked();
+
   }, [id, setSelectedUser, setLikes, user]);
 
   const block = async (id) => {
@@ -116,8 +117,8 @@ const ProfileRandom = ({ socket }) => {
       type: "unlike",
     });
   };
-  // console.log(selectedUser)
-  if (!user) {
+  
+  if (user.length < 1) {
     history.push("/");
   }
   if (!selectedUser && !distance) {

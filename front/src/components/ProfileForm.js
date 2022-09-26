@@ -34,6 +34,9 @@ const ProfileForm = () => {
       }
     };
     getLoggedIn();
+    return () => {
+      setLoggedin({});
+    };
   }, [cookie.refreshToken, history]);
 
   const profileFill = async (e) => {

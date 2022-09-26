@@ -4,6 +4,13 @@
   background-color: rgb(236 189 0 / 0%);
 }
 
+.search {
+  /* display: inline-block;
+  justify-items: center; */
+  padding-left: 20vw;
+  padding-right: 20vw;
+}
+
 .footer-content {
   font-style: italic;
   font-size: 0.8em;

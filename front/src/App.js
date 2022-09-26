@@ -14,6 +14,7 @@ import Footer from "./models/Footer";
 import ResetPassword from "./components/ResetPassword";
 import Activation from "./components/Activation";
 import Chat from "./components/Chat";
+import Search from "./components/Search"
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -91,6 +92,10 @@ function App() {
               <Route path="/chat/:id">
                 <Navbar socket={socket} />
                 <Chat socket={socket} />
+              </Route>
+              <Route path="/filter/:id">
+                <Navbar socket={socket} />
+                <Search/>
               </Route>
             </Switch>
             <Footer />

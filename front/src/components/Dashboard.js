@@ -7,6 +7,7 @@ import StarRating from "../models/StarRating";
 import useGetDistance from "../utils/useGetDistance";
 import { format } from "timeago.js";
 import { UserContext } from "../context/UserContext";
+import Search from "./Search";
 
 const Dashboard = ({ socket }) => {
   const { user, setUser } = useContext(UserContext);
@@ -15,6 +16,7 @@ const Dashboard = ({ socket }) => {
   const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
   const distance = useGetDistance();
+  // const [show, setShow] = useState(false);
 
   useEffect(() => {
     const getLoggedIn = async () => {
@@ -73,6 +75,12 @@ const Dashboard = ({ socket }) => {
     <div className="">
       <p className="error">{message}</p>
       <br />
+      {/* <div className="text-center">
+        <h3 className="toggle" onClick={() => setShow(!show)}>
+          Filter ▼
+        </h3>
+        {show ? <Search /> : null}
+      </div> */}
       <div className="dashboard">
         {distance &&
           // eslint-disable-next-line

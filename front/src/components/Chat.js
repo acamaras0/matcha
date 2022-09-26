@@ -29,6 +29,9 @@ const Chat = ({ socket }) => {
       }
     };
     getConversations();
+    return () => {
+      setConversations({});
+    };
   }, [id]);
 
   useEffect(() => {

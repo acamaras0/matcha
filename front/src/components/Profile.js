@@ -122,7 +122,6 @@ const Profile = () => {
       }
     }
   };
-  console.log("here", user)
 
   if (!cookie.refreshToken) {
     history.push("/");

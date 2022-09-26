@@ -7,6 +7,7 @@ import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
 import logout from "../assets/logout.png";
 // import user from "../assets/user.png";
+import filter from "../assets/filter.png";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { v4 as uuidv4 } from "uuid";
@@ -106,6 +107,10 @@ const Navbar = ({ socket }) => {
     history.push("/dashboard");
   };
 
+  const Filter = () => {
+    history.push(`/filter/${loggedIn.id}`);
+  };
+
   return (
     <>
       <nav className="navbar" role="navigation">
@@ -122,6 +127,13 @@ const Navbar = ({ socket }) => {
                   <div className="icon" onClick={MyProfile}>
                     <img
                       src={loggedIn.profile_pic}
+                      className="icon-profile"
+                      alt="profile"
+                    />
+                  </div>
+                  <div className="icon" onClick={Filter}>
+                    <img
+                      src={filter}
                       className="icon-profile"
                       alt="profile"
                     />

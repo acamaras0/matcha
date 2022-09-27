@@ -1,14 +1,17 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
-import axios from "axios";
 import MultiRangeSlider from "multi-range-slider-react";
 import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import useGetDistance from "../utils/useGetDistance";
+import Tags from "../models/Tags";
+import Card from "../models/Card";
 
-const Search = () => {
+const Search = ({ socket }) => {
   const id = useParams().id;
   const { user } = useContext(UserContext);
   const history = useHistory();
+  const distance = useGetDistance();
 
   const [minAge, set_minAge] = useState(18);
   const [maxAge, set_maxAge] = useState(99);
@@ -16,10 +19,9 @@ const Search = () => {
   const [minFame, set_minFame] = useState(0);
   const [maxFame, set_maxFame] = useState(100);
 
-  const [minDist, set_minDist] = useState(5);
-  const [maxDist, set_maxDist] = useState(75);
-
-  const [byAge, setByAge] = useState([]);
+  const [minDist, set_minDist] = useState(0);
+  const [maxDist, set_maxDist] = useState(800);
+  const [interests, setInterests] = useState([]);
 
   const handleAge = (e) => {
     set_minAge(e.minValue);
@@ -36,25 +38,24 @@ const Search = () => {
     set_maxDist(e.maxValue);
   };
 
-  useEffect(() => {
-    const byAge = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:5000/byAge/${id}/${minAge}/${maxAge}`
-        );
-        setByAge(res.data);
-        console.log("here", res);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    byAge();
-  }, [minAge, maxAge, id]);
+  const byDistance = distance.filter((km) => {
+    return km.distance / 1000 >= minDist && km.distance / 1000 <= maxDist;
+  });
 
-  console.log(user);
+  const byAge = distance.filter((age) => {
+    return age.birthdate >= minAge && age.birthdate <= maxAge;
+  });
+
+  const byFame = distance.filter((fame) => {
+    return fame.fame >= minFame && fame.fame <= maxFame;
+  });
+
+  const byTags = distance.filter(function (tag) {
+    return interests.includes(tag.interests);
+  });
 
   if (user.length < 1) history.push("/");
-  if (!byAge) return <div>Loading...</div>;
+  if (!byAge || !byDistance || !byFame || !byTags) return <div>Loading...</div>;
   return (
     <div className="search">
       <label>By age</label>
@@ -73,6 +74,7 @@ const Search = () => {
           handleAge(e);
         }}
       />
+      <Card array={byAge && byAge} socket={socket} />
       <label>By popularity</label>
       <MultiRangeSlider
         ruler={false}
@@ -89,6 +91,7 @@ const Search = () => {
           handleFame(e);
         }}
       />
+      <Card array={byFame && byFame} socket={socket} />
       <label>By distance</label>
       <MultiRangeSlider
         ruler={false}
@@ -105,8 +108,11 @@ const Search = () => {
           handleDistance(e);
         }}
       />
+      <Card array={byDistance && byDistance} socket={socket} />
+
       <label>By tags</label>
-      <div>{byAge && byAge.map((item) => item.username)}</div>
+      <Tags setInterests={setInterests} />
+      <Card array={byTags && byTags} />
     </div>
   );
 };

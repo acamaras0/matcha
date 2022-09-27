@@ -30,7 +30,6 @@ import {
 import { location } from "../controllers/Location.js";
 import { report, block, getBlockedUsers } from "../controllers/ReportBlock.js";
 import { insertLike, getFame, checkIfLiked } from "../controllers/Matches.js";
-import { byAge } from "../controllers/Search.js";
 import { upload } from "../middleware/Upload.js";
 import { verifyToken } from "../middleware/VerifyToken.js";
 import { refreshToken } from "../controllers/RefreshToken.js";
@@ -48,7 +47,6 @@ router.get("/user/blocked/:id", getBlockedUsers);
 router.get("/user/notifications/:id", getNotifications);
 router.get("/liked/:user_id/:id", checkIfLiked);
 router.get("/location", location);
-router.get("/byAge/:id/:minAge/:maxAge", byAge);
 
 router.post("/users", Register);
 router.post("/activate/:hash", accountActivation);

@@ -1,15 +1,14 @@
-/* eslint-disable */
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { getCookie } from "react-use-cookie";
 import "../App.css";
 import logo from "../assets/logo.png";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
   const forgotPassword = (e) => {
@@ -26,7 +25,7 @@ const ForgotPassword = () => {
     }
   };
 
-  if (cookie.refreshToken) {
+  if (xsrfToken!== "") {
     history.push("/dashboard");
   }
   return (

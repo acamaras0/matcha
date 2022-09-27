@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -9,11 +8,11 @@ import logout from "../assets/logout.png";
 // import user from "../assets/user.png";
 import filter from "../assets/filter.png";
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
+import { getCookie } from "react-use-cookie";
 import { v4 as uuidv4 } from "uuid";
 
 const Navbar = ({ socket }) => {
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const xsrfToken = getCookie("refreshToken");
   const [loggedIn, setLoggedin] = useState("");
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -29,14 +28,16 @@ const Navbar = ({ socket }) => {
         setMessages((prev) => [...prev, data]);
       });
     }
-    const getLoggedIn = async () => {
-      const response = await axios.get(
-        `http://localhost:5000/user/${cookie.refreshToken}`,
-        {}
-      );
-      setLoggedin(response.data);
-    };
-    getLoggedIn();
+    if (xsrfToken !== "") {
+      const getLoggedIn = async () => {
+        const response = await axios.get(
+          `http://localhost:5000/user/${xsrfToken}`,
+          {}
+        );
+        setLoggedin(response.data);
+      };
+      getLoggedIn();
+    }
 
     const getNotifications = async () => {
       const response = await axios.get(
@@ -60,7 +61,7 @@ const Navbar = ({ socket }) => {
       setNotifications({});
       setMessages({});
     };
-  }, [socket, cookie.refreshToken, loggedIn.id]);
+  }, [socket, xsrfToken, loggedIn.id]);
 
   const displayNotifications = ({ sender_name, senderName, type }) => {
     let action;
@@ -132,11 +133,7 @@ const Navbar = ({ socket }) => {
                     />
                   </div>
                   <div className="icon" onClick={Filter}>
-                    <img
-                      src={filter}
-                      className="icon-profile"
-                      alt="profile"
-                    />
+                    <img src={filter} className="icon-profile" alt="profile" />
                   </div>
                   <div className="icon" onClick={() => setOpen(!open)}>
                     <img src={notification} className="iconImg" alt="notif" />

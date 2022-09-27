@@ -1,10 +1,9 @@
-/* eslint-disable */
 import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
-import { useCookies } from "react-cookie";
+import { getCookie } from "react-use-cookie";
 
 const Register = () => {
   const [firstNameReg, setFirstNameReg] = useState("");
@@ -14,7 +13,7 @@ const Register = () => {
   const [passwordReg, setPasswordReg] = useState("");
   const [confirmPasswordReg, setConfirmPasswordReg] = useState("");
   const [message, setMessage] = useState("");
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
   const Register = async (e) => {
@@ -39,7 +38,7 @@ const Register = () => {
       }
     }
   };
-  if (cookie.refreshToken) {
+  if (xsrfToken !== "") {
     history.push("/dashboard");
   }
 

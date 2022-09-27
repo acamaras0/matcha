@@ -2,12 +2,12 @@ import useGetDistance from "../utils/useGetDistance";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import { getCookie } from "react-use-cookie";
 import axios from "axios";
 import StarRating from "../models/StarRating";
 import Gallery from "../models/Gallery";
 import img from "../assets/yellow-heart.png";
 import img1 from "../assets/broken-heart.png";
-// import img2 from "../assets/match.png";
 
 const ProfileRandom = ({ socket }) => {
   const { id } = useParams();
@@ -17,6 +17,7 @@ const ProfileRandom = ({ socket }) => {
   const [likes, setLikes] = useState("");
   const [liked, setLiked] = useState(false);
   const [message, setMessage] = useState("");
+  const xsrfToken = getCookie("refreshToken");
 
   const history = useHistory();
   const distance = useGetDistance();
@@ -66,7 +67,6 @@ const ProfileRandom = ({ socket }) => {
       }
     };
     checkIfLiked();
-
   }, [id, setSelectedUser, setLikes, user]);
 
   const block = async (id) => {
@@ -117,8 +117,8 @@ const ProfileRandom = ({ socket }) => {
       type: "unlike",
     });
   };
-  
-  if (user.length < 1) {
+
+  if (xsrfToken === "") {
     history.push("/");
   }
   if (!selectedUser && !distance) {
@@ -132,8 +132,10 @@ const ProfileRandom = ({ socket }) => {
           </h2>
           <p className="card-text">{selectedUser.username}</p>
           <p className="text-center">
+            About {distance && Math.round(distance[0]?.distance / 1000)} km away
+          </p>
+          <p className="text-center">
             {selectedUser.city}, {selectedUser.country}
-            {/* About {distance && Math.round(distance[0]?.distance / 1000)} km away */}
           </p>
           <StarRating rating={likes} />
           <div className="card-img">

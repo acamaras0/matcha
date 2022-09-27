@@ -5,13 +5,18 @@ import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
 import { useCookies } from "react-cookie";
+import { getCookie } from "react-use-cookie";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
+
+  console.log("token", xsrfToken);
+  console.log("cookie", cookie);
 
   const Auth = async (e) => {
     e.preventDefault();
@@ -25,7 +30,11 @@ const Login = () => {
     }
   };
 
-  if (cookie.refreshToken) {
+  // if (cookie.refreshToken) {
+  //   history.push("/dashboard");
+  // }
+
+  if (xsrfToken !== "") {
     history.push("/dashboard");
   }
   return (

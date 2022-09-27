@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-const Card = ({ array, socket ,user}) => {
+const Card = ({ array, socket, user }) => {
   const history = useHistory();
-
   const handleClick = async (id) => {
     if (socket) {
       socket.emit("sendNotification", {
@@ -34,6 +32,7 @@ const Card = ({ array, socket ,user}) => {
                 className="search-img"
                 src={array.profile_pic}
                 onClick={() => handleClick(array.id)}
+                alt= "img-card"
               ></img>
               <div className="card-body text-warning">
                 <p className="card-title">

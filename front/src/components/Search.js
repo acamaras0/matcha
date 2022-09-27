@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
-import { useState } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import MultiRangeSlider from "multi-range-slider-react";
-import { useParams, useHistory } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { Redirect } from "react-router-dom";
+import { getCookie } from "react-use-cookie";
 import useGetDistance from "../utils/useGetDistance";
 import Tags from "../models/Tags";
 import Card from "../models/Card";
+import axios from "axios";
 
 const Search = ({ socket }) => {
-  const id = useParams().id;
-  const { user } = useContext(UserContext);
-  const history = useHistory();
+  const xsrfToken = getCookie("refreshToken");
+  const [user, setUser] = useState();
   const distance = useGetDistance();
 
   const [minAge, set_minAge] = useState(18);
@@ -22,6 +22,19 @@ const Search = ({ socket }) => {
   const [minDist, set_minDist] = useState(0);
   const [maxDist, set_maxDist] = useState(800);
   const [interests, setInterests] = useState([]);
+
+  useEffect(() => {
+    if (xsrfToken !== "") {
+      const getLoggedIn = async () => {
+        const response = await axios.get(
+          `http://localhost:5000/user/${xsrfToken}`,
+          {}
+        );
+        setUser(response.data);
+      };
+      getLoggedIn();
+    }
+  }, [setUser, xsrfToken]);
 
   const handleAge = (e) => {
     set_minAge(e.minValue);
@@ -54,7 +67,9 @@ const Search = ({ socket }) => {
     return interests.includes(tag.interests);
   });
 
-  if (user.length < 1) history.push("/");
+  if (xsrfToken === "") {
+    return <Redirect to="/" />;
+  }
   if (!byAge || !byDistance || !byFame || !byTags) return <div>Loading...</div>;
   return (
     <div className="search">

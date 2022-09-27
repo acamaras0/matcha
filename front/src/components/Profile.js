@@ -1,21 +1,18 @@
-/* eslint-disable */
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import PicturesForm from "./PicturesForm";
-import { useCookies } from "react-cookie";
+import { getCookie } from "react-use-cookie";
 import Gender from "../models/Gender";
 import Orientation from "../models/Orientation";
 import Tags from "../models/Tags";
 import { UserContext } from "../context/UserContext";
 
-//import useGetDistance from "../utils/useGetDistance";
-
 const Profile = () => {
   const { id } = useParams();
-  const [loggedIn, setLoggedin] = useState("");
+  // const [loggedIn, setLoggedin] = useState("");
   const [pics, setPics] = useState([]);
   const [newFirstName, setNewFirstName] = useState("");
   const [newLastName, setNewLastName] = useState("");
@@ -30,20 +27,25 @@ const Profile = () => {
   const [newGeoLat, setNewGeoLat] = useState("");
   const [newGeoLng, setNewGeoLng] = useState("");
   const [message, setMessage] = useState("");
-  // const [blocked, setBlocked] = useState([]);
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
-  //const distance = useGetDistance();
   const [show, toggleShow] = useState(false);
   const { user } = useContext(UserContext);
 
   useEffect(() => {
     // getLoggedIn();
+    const getPicPath = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/user/pictures/${id}`,
+        {}
+      );
+      setPics(response.data);
+    };
     getPicPath();
     return () => {
       setPics({});
     };
-  }, []);
+  }, [id]);
 
   // const getLoggedIn = async () => {
   //   const response = await axios.get(
@@ -53,13 +55,7 @@ const Profile = () => {
   //   setLoggedin(response.data);
   // };
 
-  const getPicPath = async () => {
-    const response = await axios.get(
-      `http://localhost:5000/user/pictures/${id}`,
-      {}
-    );
-    setPics(response.data);
-  };
+
 
   const updateProfile = async (e) => {
     e.preventDefault();
@@ -123,7 +119,7 @@ const Profile = () => {
     }
   };
 
-  if (!cookie.refreshToken) {
+  if (!xsrfToken) {
     history.push("/");
   }
   if (user)
@@ -226,7 +222,7 @@ const Profile = () => {
                 }}
               />
               <label>Age</label>
-              <p>{loggedIn.birthdate}</p>
+              <p>{user.birthdate}</p>
               <label>Coordinates</label>
               <EditText
                 name="textbox1"

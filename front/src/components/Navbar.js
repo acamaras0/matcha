@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -9,11 +8,12 @@ import logout from "../assets/logout.png";
 // import user from "../assets/user.png";
 import filter from "../assets/filter.png";
 import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
+import { getCookie } from "react-use-cookie";
+
 import { v4 as uuidv4 } from "uuid";
 
 const Navbar = ({ socket }) => {
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const xsrfToken = getCookie("refreshToken");
   const [loggedIn, setLoggedin] = useState("");
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -31,7 +31,7 @@ const Navbar = ({ socket }) => {
     }
     const getLoggedIn = async () => {
       const response = await axios.get(
-        `http://localhost:5000/user/${cookie.refreshToken}`,
+        `http://localhost:5000/user/${xsrfToken}`,
         {}
       );
       setLoggedin(response.data);
@@ -60,7 +60,7 @@ const Navbar = ({ socket }) => {
       setNotifications({});
       setMessages({});
     };
-  }, [socket, cookie.refreshToken, loggedIn.id]);
+  }, [socket, xsrfToken, loggedIn.id]);
 
   const displayNotifications = ({ sender_name, senderName, type }) => {
     let action;

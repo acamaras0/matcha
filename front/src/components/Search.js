@@ -1,16 +1,13 @@
 import React, { useContext } from "react";
 import { useState } from "react";
 import MultiRangeSlider from "multi-range-slider-react";
-import { useParams, useHistory } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import useGetDistance from "../utils/useGetDistance";
 import Tags from "../models/Tags";
 import Card from "../models/Card";
 
 const Search = ({ socket }) => {
-  const id = useParams().id;
   const { user } = useContext(UserContext);
-  const history = useHistory();
   const distance = useGetDistance();
 
   const [minAge, set_minAge] = useState(18);
@@ -54,8 +51,9 @@ const Search = ({ socket }) => {
     return interests.includes(tag.interests);
   });
 
-  if (user.length < 1) history.push("/");
-  if (!byAge || !byDistance || !byFame || !byTags) return <div>Loading...</div>;
+  // if (user.length < 1) history.push("/");
+  if (user.length < 1 || !byAge || !byDistance || !byFame || !byTags)
+    return <div>Loading...</div>;
   return (
     <div className="search">
       <label>By age</label>

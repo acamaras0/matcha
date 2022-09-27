@@ -1,14 +1,13 @@
-/* eslint-disable */
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { getCookie } from "react-use-cookie";
 
 const PicturesForm = () => {
   const [file, setFile] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
   const saveFile = (e) => {
@@ -31,7 +30,7 @@ const PicturesForm = () => {
     setSelectedImage(null);
   };
 
-  if (!cookie.refreshToken) {
+  if (!xsrfToken) {
     history.push("/");
   }
   return (

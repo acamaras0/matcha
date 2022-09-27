@@ -1,42 +1,29 @@
-/* eslint-disable */
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { getCookie } from "react-use-cookie";
 import StarRating from "../models/StarRating";
 import useGetDistance from "../utils/useGetDistance";
 import { format } from "timeago.js";
 import { UserContext } from "../context/UserContext";
-import Search from "./Search";
 
 const Dashboard = ({ socket }) => {
   const { user, setUser } = useContext(UserContext);
-  // const [users, setUsers] = useState([]);
   const [message, setMessage] = useState([]);
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
   const distance = useGetDistance();
-  // const [show, setShow] = useState(false);
 
   useEffect(() => {
     const getLoggedIn = async () => {
       const response = await axios.get(
-        `http://localhost:5000/user/${cookie.refreshToken}`,
+        `http://localhost:5000/user/${xsrfToken}`,
         {}
       );
       setUser(response.data);
     };
     getLoggedIn();
-
-    // const getUsers = async () => {
-    //   const response = await axios.get(
-    //     `http://localhost:5000/users/info/${cookie.refreshToken}`,
-    //     {}
-    //   );
-    //   setUsers(response.data);
-    // };
-    // getUsers();
-  }, [cookie.refreshToken]);
+  }, [xsrfToken, setUser]);
 
   const handleUserSelect = async (id) => {
     socket.emit("sendNotification", {
@@ -58,7 +45,7 @@ const Dashboard = ({ socket }) => {
       if (error.response) console.log("error", error.response.data);
     }
   };
-  if (!cookie.refreshToken) {
+  if (!xsrfToken) {
     history.push("/");
   }
   if (distance) {
@@ -122,7 +109,7 @@ const Dashboard = ({ socket }) => {
                           <a
                             onClick={() => handleReport(user.id)}
                             className="report"
-                            href=""
+                            href="http://localhost:3000/dashboard"
                           >
                             Report fake account
                           </a>

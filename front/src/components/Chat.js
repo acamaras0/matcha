@@ -1,7 +1,6 @@
-/* eslint-disable */
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useCookies } from "react-cookie";
+import { getCookie } from "react-use-cookie";
 import axios from "axios";
 import Conversations from "../models/Conversations";
 import Message from "../models/Message";
@@ -13,7 +12,7 @@ const Chat = ({ socket }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const xsrfToken = getCookie("refreshToken");
 
   const history = useHistory();
   const id = useParams().id;
@@ -103,7 +102,7 @@ const Chat = ({ socket }) => {
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
-  if (!cookie.refreshToken) {
+  if (!xsrfToken) {
     history.push("/");
   }
 

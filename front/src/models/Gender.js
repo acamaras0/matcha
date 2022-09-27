@@ -4,7 +4,6 @@ import Select from "react-select";
 const options = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },
-  // { label: "Other", value: "other" },
 ];
 
 const Gender = ({ setGender }) => {

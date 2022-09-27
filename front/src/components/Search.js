@@ -74,7 +74,7 @@ const Search = ({ socket }) => {
           handleAge(e);
         }}
       />
-      <Card array={byAge && byAge} socket={socket} />
+      <Card array={byAge && byAge} socket={socket} user={user} />
       <label>By popularity</label>
       <MultiRangeSlider
         ruler={false}
@@ -91,7 +91,7 @@ const Search = ({ socket }) => {
           handleFame(e);
         }}
       />
-      <Card array={byFame && byFame} socket={socket} />
+      <Card array={byFame && byFame} socket={socket} user={user} />
       <label>By distance</label>
       <MultiRangeSlider
         ruler={false}
@@ -108,11 +108,11 @@ const Search = ({ socket }) => {
           handleDistance(e);
         }}
       />
-      <Card array={byDistance && byDistance} socket={socket} />
+      <Card array={byDistance && byDistance} socket={socket} user={user} />
 
       <label>By tags</label>
       <Tags setInterests={setInterests} />
-      <Card array={byTags && byTags} />
+      <Card array={byTags && byTags} socket={socket} user={user} />
     </div>
   );
 };

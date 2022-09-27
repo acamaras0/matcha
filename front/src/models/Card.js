@@ -3,8 +3,7 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
-const Card = ({ array, socket }) => {
-  const user = useParams().id;
+const Card = ({ array, socket ,user}) => {
   const history = useHistory();
 
   const handleClick = async (id) => {

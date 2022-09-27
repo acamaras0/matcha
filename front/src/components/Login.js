@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
 import { useCookies } from "react-cookie";
-// import { UserContext } from "../context/UserContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");

@@ -14,7 +14,7 @@ import Footer from "./models/Footer";
 import ResetPassword from "./components/ResetPassword";
 import Activation from "./components/Activation";
 import Chat from "./components/Chat";
-import Search from "./components/Search"
+import Search from "./components/Search";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -79,7 +79,7 @@ function App() {
               </Route>
               <Route path="/dashboard">
                 <Navbar socket={socket} />
-                <Dashboard socket={socket} user={user} />
+                <Dashboard socket={socket} />
               </Route>
               <Route path="/profile/:id">
                 <Navbar socket={socket} />
@@ -95,7 +95,7 @@ function App() {
               </Route>
               <Route path="/filter/:id">
                 <Navbar socket={socket} />
-                <Search/>
+                <Search socket={socket} />
               </Route>
             </Switch>
             <Footer />

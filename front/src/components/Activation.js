@@ -1,15 +1,16 @@
+/* eslint-disable */
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
-import { getCookie } from "react-use-cookie";
+import { useCookies } from "react-cookie";
 
 import logo from "../assets/logo.png";
 const Activation = () => {
   const hash = useParams().hash;
   const history = useHistory();
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const [message, setMessage] = useState("");
-  const xsrfToken = getCookie("refreshToken");
 
   const activate = async () => {
     try {
@@ -23,7 +24,7 @@ const Activation = () => {
     }
   };
 
-  if (xsrfToken) {
+  if (cookie.refreshToken) {
     history.push("/dashboard");
   }
   return (

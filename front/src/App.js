@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { UserContextProvider } from "./context/UserContext";
 import Dashboard from "./components/Dashboard";
@@ -16,28 +17,27 @@ import Chat from "./components/Chat";
 import Search from "./components/Search";
 import { useCookies } from "react-cookie";
 import { useEffect, useState } from "react";
-import { getCookie } from "react-use-cookie";
 import axios from "axios";
 import { io } from "socket.io-client";
 
 function App() {
-  const xsrfToken = getCookie("refreshToken");
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const [user, setUser] = useState("");
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
-    if (xsrfToken) {
+    if (cookie.refreshToken) {
       const getLoggedIn = async () => {
         const response = await axios.get(
-          `http://localhost:5000/user/${xsrfToken}`,
+          `http://localhost:5000/user/${cookie.refreshToken}`,
           {}
         );
         setUser(response.data);
       };
       getLoggedIn();
     }
-  }, [xsrfToken]);
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -46,7 +46,7 @@ function App() {
       //   console.log("Users", users);
       // });
     }
-  }, [user.username, socket, user]);
+  }, [user.username]);
 
   return (
     <>

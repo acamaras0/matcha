@@ -1,8 +1,7 @@
-import React, {useContext } from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { UserContext } from "../context/UserContext";
-
 
 const Card = ({ array, socket ,user}) => {
   const history = useHistory();
@@ -15,8 +14,8 @@ const Card = ({ array, socket ,user}) => {
         receiverName: id,
         type: "profile view",
       });
-      history.push(`/users/${id}`);
     }
+    history.push(`/users/${id}`);
   };
   return (
     <div className="card border-light mb-3">
@@ -32,7 +31,6 @@ const Card = ({ array, socket ,user}) => {
                 {array.username}, {array.birthdate}
               </div>
               <img
-                alt="card-img"
                 className="search-img"
                 src={array.profile_pic}
                 onClick={() => handleClick(array.id)}

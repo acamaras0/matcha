@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable */
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
@@ -10,11 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [cookie, setCookie] = useCookies(["refreshToken"]);
-  // const {cookie} = useCookies(["refreshToken"]);
-
-  
   const history = useHistory();
-  const xsrfToken = getCookie("refreshToken");
 
   const Auth = async (e) => {
     e.preventDefault();
@@ -28,7 +25,7 @@ const Login = () => {
     }
   };
 
-  if (xsrfToken) {
+  if (cookie.refreshToken) {
     history.push("/dashboard");
   }
   return (

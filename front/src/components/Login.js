@@ -1,22 +1,21 @@
-/* eslint-disable */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 import { getCookie } from "react-use-cookie";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  // const [cookie, setCookie] = useCookies(["refreshToken"]);
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
   console.log("token", xsrfToken);
-  console.log("cookie", cookie);
+  // console.log("cookie", cookie);
 
   const Auth = async (e) => {
     e.preventDefault();

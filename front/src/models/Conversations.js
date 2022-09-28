@@ -1,10 +1,9 @@
-// /* eslint-disable */
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-export default function Conversations({ conversations, currentUser, socket}) {
+export default function Conversations({ conversations, currentUser, socket }) {
   const [user, setUser] = useState("");
   const [messages, setMessage] = useState([]);
 

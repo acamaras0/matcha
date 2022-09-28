@@ -64,9 +64,23 @@ const Search = ({ socket }) => {
   });
 
   const byTags = distance.filter(function (tag) {
-    return interests.includes(tag.interests);
-  });
+    // let result = tag.interests.split(",");
 
+    // result.forEach(element => {
+    //   console.log(element)
+    //   if (element === [...interests]){
+    //     console.log("something")
+    //     return (tag.interests)
+    //   }
+
+    // });
+    // console.log("here", result);
+    // console.log("interests", interests);
+    // console.log(interests.includes(tag.interests))
+    return interests.includes(tag.interests);
+    // return interests.Search(tag.interests.split(","))
+  });
+  console.log(byTags);
   if (xsrfToken === "") {
     return <Redirect to="/" />;
   }

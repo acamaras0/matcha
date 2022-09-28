@@ -89,7 +89,6 @@ const ProfileRandom = ({ socket }) => {
   };
 
   const handleLike = async (id) => {
-    console.log(user);
     try {
       const response = await axios.post(
         `http://localhost:5000/like/${user.id}/${id}`,

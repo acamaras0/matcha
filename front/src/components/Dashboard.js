@@ -68,9 +68,8 @@ const Dashboard = ({ socket }) => {
       <br />
       <div className="dashboard">
         {distance &&
-          // eslint-disable-next-line
           distance.map((user) => {
-            if (user.profile_pic) {
+            // if (user.profile_pic) {
               return (
                 <div
                   key={user.id}
@@ -120,7 +119,7 @@ const Dashboard = ({ socket }) => {
                   </div>
                 </div>
               );
-            }
+            // }
           })}
       </div>
     </div>

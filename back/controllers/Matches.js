@@ -8,7 +8,6 @@ export const insertLike = async (req, res) => {
     "SELECT * FROM matches WHERE (liker = ? AND liked = ?) OR (liker = ? AND liked = ?)",
     [liker, liked, liked, liker],
     (err, result1) => {
-      console.log(result1);
       if (
         result1[0] &&
         result1[0].match_status == 0 &&
@@ -51,8 +50,7 @@ export const insertLike = async (req, res) => {
           "UPDATE matches SET match_status = 0 WHERE liker = ? AND liked = ? OR liker = ? AND liked = ?",
           [liked, liker, liker, liked]
         );
-        db.query("UPDATE users SET fame = ? WHERE id = ?", [
-          result[0].fame - 1,
+        db.query("UPDATE users SET fame = fame - 1 WHERE id = ?", [
           liked,
         ]);
         db.query(

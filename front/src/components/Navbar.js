@@ -19,7 +19,7 @@ const Navbar = ({ socket }) => {
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
-  console.log(messages);
+  // console.log(messages);
 
   useEffect(() => {
     if (socket) {

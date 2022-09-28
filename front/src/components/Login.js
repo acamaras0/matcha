@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
 import logo from "../assets/logo.png";
-// import { useCookies } from "react-cookie";
-import { getCookie } from "react-use-cookie";
+import { useCookies } from "react-cookie";
+// import { getCookie } from "react-use-cookie";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  // const [cookie, setCookie] = useCookies(["refreshToken"]);
-  const xsrfToken = getCookie("refreshToken");
+  const [cookie, setCookie] = useCookies(["refreshToken"]);
   const history = useHistory();
 
-  // console.log("token", xsrfToken);
-  // console.log("cookie", cookie);
+  console.log(setCookie)
 
   const Auth = async (e) => {
     e.preventDefault();
@@ -29,17 +27,17 @@ const Login = () => {
     }
   };
 
-  // if (cookie.refreshToken) {
-  //   history.push("/dashboard");
-  // }
-
-  if (xsrfToken !== "") {
+  if (cookie.refreshToken) {
     history.push("/dashboard");
   }
+
+  // if (xsrfToken !== "") {
+  //   history.push("/dashboard");
+  // }
   return (
     <div>
       <div className="logo1">
-        <img className="logo" src={logo} alt="logo" />
+        <img className="logo" src={logo} alt= "logo"/>
       </div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Auth}>

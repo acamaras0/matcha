@@ -22,7 +22,6 @@ function getDistanceFromLatLonInKm(lat, lng, lat_1, lon_1) {
 
 export const location = async (req, res) => {
   publicIpv4().then((ip) => {
-    console.log("your public ip address", ip);
     const geo = geoip.lookup(ip);
     return res.send(geo.ll)
   });

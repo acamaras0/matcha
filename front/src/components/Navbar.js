@@ -19,14 +19,16 @@ const Navbar = ({ socket }) => {
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
+  console.log(messages);
+
   useEffect(() => {
     if (socket) {
       socket.on("getNotification", (data) => {
         setNotifications((prev) => [...prev, data]);
       });
-      socket.on("getMessage", (data) => {
-        setMessages((prev) => [...prev, data]);
-      });
+    //   socket.on("getMessage", (data) => {
+    //     setMessages((prev) => [...prev, data]);
+    //   });
     }
     if (xsrfToken !== "") {
       const getLoggedIn = async () => {
@@ -87,9 +89,10 @@ const Navbar = ({ socket }) => {
     await axios.post(`http://localhost:5000/user/mark/${loggedIn.id}`);
   };
 
-  const Chat = () => {
+  const Chat = async () => {
     setMessages([]);
     history.push(`/chat/${loggedIn.id}`);
+    await axios.post(`http://localhost:5000/messages/seen/${loggedIn.id}`);
   };
 
   const MyProfile = () => {

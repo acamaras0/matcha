@@ -114,7 +114,11 @@ const Chat = ({ socket }) => {
           {conversations &&
             conversations.map((c) => (
               <div key={uuidv4()} onClick={() => setCurrentChat(c)}>
-                <Conversations conversations={c} currentUser={id} />
+                <Conversations
+                  conversations={c}
+                  currentUser={id}
+                  socket={socket}
+                />
               </div>
             ))}
         </div>

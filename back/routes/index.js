@@ -27,6 +27,7 @@ import {
   getMessages,
   newMessages,
   getMessagesNotif,
+  markSeen
 } from "../controllers/Chat.js";
 import { location } from "../controllers/Location.js";
 import { report, block, getBlockedUsers } from "../controllers/ReportBlock.js";
@@ -70,6 +71,7 @@ router.get("/newConvo/:userId", getConversation);
 router.get("/messages/:chat_id", getMessages);
 router.get("/messages/:id", getMessagesNotif);
 router.post("/messages", newMessages);
+router.post("/messages/seen/:id", markSeen);
 
 router.delete("/logout", Logout);
 router.delete("/user/picture/:id", deletePic);

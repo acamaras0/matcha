@@ -21,6 +21,7 @@ import {
   getPicsById,
   deletePic,
   getPicPath,
+  ProfilePic
 } from "../controllers/Images.js";
 import {
   getConversation,
@@ -61,6 +62,7 @@ router.post("/users/forgotpassword", forgotPass);
 router.post("/user/views/:id", addView);
 
 router.post("/upload", upload.single("file"), UploadPic);
+router.post("/upload/profilePic", upload.single("profile"), ProfilePic);
 
 router.post("/like/:user1/:user2", insertLike);
 router.post("/report/:user_id/:reported_id", report);

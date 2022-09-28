@@ -63,24 +63,22 @@ const Search = ({ socket }) => {
     return fame.fame >= minFame && fame.fame <= maxFame;
   });
 
+  // let res;
+  // distance.forEach((element) => {
+  //   res = element.interests
+  //   console.log("foreach", element.interests)
+  //   res = [res, element.interests]
+  // });
+  // console.log("res", res)
+
+
   const byTags = distance.filter(function (tag) {
-    // let result = tag.interests.split(",");
-
-    // result.forEach(element => {
-    //   console.log(element)
-    //   if (element === [...interests]){
-    //     console.log("something")
-    //     return (tag.interests)
-    //   }
-
-    // });
-    // console.log("here", result);
-    // console.log("interests", interests);
-    // console.log(interests.includes(tag.interests))
-    return interests.includes(tag.interests);
-    // return interests.Search(tag.interests.split(","))
+    let result = tag.interests.split(",");
+    return interests.every((value) => {
+      return result.includes(value);
+    });
   });
-  console.log(byTags);
+
   if (xsrfToken === "") {
     return <Redirect to="/" />;
   }

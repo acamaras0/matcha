@@ -57,8 +57,8 @@ export const UploadPic = async (req, res) => {
             }
             if (result[0].count <= 5) {
               db.query(
-                "INSERT INTO user_images (user_id, pic_name, img) VALUES (?, ?, ?)",
-                [user_id, req.file.filename, img],
+                "INSERT INTO user_images (user_id, profile, pic_name, img) VALUES (? ,?, ?, ?)",
+                [user_id, 0,req.file.filename, img],
                 (err, result) => {
                   if (err) {
                     console.log(err);
@@ -66,20 +66,52 @@ export const UploadPic = async (req, res) => {
                   res.status(200).json("Image uploaded");
                 }
               );
-              db.query(
-                "UPDATE users SET profile_pic = ? WHERE id = ?",
-                [img, user_id],
-                (err, result) => {
-                  if (err) {
-                    console.log(err);
-                  }
-                }
-              );
+              // db.query(
+              //   "UPDATE users SET profile_pic = ? WHERE id = ?",
+              //   [img, user_id],
+              //   (err, result) => {
+              //     if (err) {
+              //       console.log(err);
+              //     }
+              //   }
+              // );
             } else {
               return res.status(200).json("You can only have 5 pictures");
             }
           }
         );
+      }
+    }
+  );
+};
+
+export const ProfilePic = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  if (!req.file) {
+    return res.status(200).json("No file uploaded");
+  }
+  db.query(
+    "SELECT * FROM users WHERE refresh_token = ?",
+    refreshToken,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      if (result.length > 0) {
+        const user_id = result[0].id;
+        const img = "http://localhost:5000/upload/" + req.file.filename;
+        db.query(
+          "UPDATE users SET profile_pic = ? WHERE id = ?",
+          [img, user_id],
+          (err, result) => {
+            if (err) {
+              return console.log(err);
+            }
+            return res.status(200).json({ msg: "Picture uploaded!" });
+          }
+        );
+      } else {
+        return res.status(200).json({ msg: "something went wrong" });
       }
     }
   );

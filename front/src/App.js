@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
 import ProfileForm from "./components/ProfileForm";
-import PicturesForm from "./components/PicturesForm";
+import ProfilePic from "./components/ProfilePic";
 import ForgotPasswords from "./components/ForgotPassword";
 import Profile from "./components/Profile";
 import ProfileRandom from "./components/ProfileRandom";
@@ -74,7 +74,7 @@ function App() {
               </Route>
               <Route path="/pictures">
                 <Navbar socket={socket} />
-                <PicturesForm />
+                <ProfilePic />
               </Route>
               <Route path="/dashboard">
                 <Navbar socket={socket} />

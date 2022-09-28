@@ -19,6 +19,7 @@ const Tags = ({ setInterests }) => {
   useEffect(() => {
     setInterests(selected.map((interest) => interest.value));
   }, [selected, setInterests]);
+
   return (
     <div>
       <MultiSelect

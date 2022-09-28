@@ -149,7 +149,11 @@ const ProfileRandom = ({ socket }) => {
           </p>
           <StarRating rating={likes} />
           <div className="card-img">
-            <Gallery galleryImages={pics} />
+            {pics.length >= 0 ? (
+              <Gallery galleryImages={pics} />
+            ) : (
+              <img alt="backup" className="prof-pic" src={selectedUser.profile_pic} />
+            )}
           </div>
           <div style={{ margin: "10%" }}>
             <div className="card">

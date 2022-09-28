@@ -33,7 +33,7 @@ db.connect(function (err) {
   });
   var user_images =
     "CREATE TABLE IF NOT EXISTS user_images (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, \
-    user_id INT(11), pic_name VARCHAR(255), img VARCHAR(500))";
+    user_id INT(11), profile INT(11), pic_name VARCHAR(500),img VARCHAR(500))";
   db.query(user_images, function (err, result) {
     if (err) throw err;
     console.log("Images table created");
@@ -114,9 +114,9 @@ db.connect(function (err) {
 //     console.log("4 record inserted");
 // });
 
-// db.query("INSERT INTO user_images (user_id, img) VALUES (?, ?)", ["1","http://localhost:5000/upload/1.jpg" ])
-// db.query("INSERT INTO user_images (user_id, img) VALUES (?, ?)", ["2","http://localhost:5000/upload/2.jpg" ])
-// db.query("INSERT INTO user_images (user_id, img) VALUES (?, ?)", ["3","http://localhost:5000/upload/3.jpg" ])
-// db.query("INSERT INTO user_images (user_id, img) VALUES (?, ?)", ["4","http://localhost:5000/upload/4.jpg" ])
+// db.query("INSERT INTO user_images (user_id, profile, img) VALUES (?, ?, ?)", ["1","1","http://localhost:5000/upload/1.jpg" ])
+// db.query("INSERT INTO user_images (user_id, profile, img) VALUES (?, ?, ?)", ["2","1","http://localhost:5000/upload/2.jpg" ])
+// db.query("INSERT INTO user_images (user_id, profile, img) VALUES (?, ?, ?)", ["3","1","http://localhost:5000/upload/3.jpg" ])
+// db.query("INSERT INTO user_images (user_id, profile, img) VALUES (?, ?, ?)", ["4","1","http://localhost:5000/upload/4.jpg" ])
 
 export default db;

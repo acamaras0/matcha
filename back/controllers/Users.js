@@ -561,7 +561,7 @@ export const ProfileFill = async (req, res) => {
     refreshToken,
     (err, result) => {
       if (err) {
-        res.send({ err: err });
+        return res.send({ err: err });
       }
       if (result.length > 0) {
         const userId = result[0].id;
@@ -570,9 +570,9 @@ export const ProfileFill = async (req, res) => {
           [birthdate, gender, orientation, tags, bio, userId],
           (err, result) => {
             if (err) {
-              res.json({ err: err });
+              return console.log(err);
             }
-            res.status(200).json({
+            return res.status(200).json({
               msg: "Profile updated",
             });
           }

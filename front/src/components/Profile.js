@@ -9,6 +9,7 @@ import Gender from "../models/Gender";
 import Orientation from "../models/Orientation";
 import Overview from "../models/Overview";
 import Tags from "../models/Tags";
+import ProfilePic from "./ProfilePic";
 
 const Profile = () => {
   const { id } = useParams();
@@ -30,6 +31,8 @@ const Profile = () => {
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
   const [show, setShow] = useState(false);
+  const [show1, setShow1] = useState(false);
+  const [show2, setShow2] = useState(false);
 
   useEffect(() => {
     if (xsrfToken !== "") {
@@ -126,23 +129,41 @@ const Profile = () => {
         {message ? <p className="error">{message}</p> : null}
         <div className="update">
           <div className="card-pictures">
-            <div className="uploaded-pics">
-              {pics &&
-                pics.map((pic) => (
-                  <div className="images" key={pic.id}>
-                    <img className="img-top" src={pic.img} alt="uploaded-pic" />
-                    <div className="delete-button">
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => deletePic(pic.id)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </div>
-                ))}
-            </div>
-            <PicturesForm />
+            {pics.length > 0 ? (
+              <div className="uploaded-pics">
+                {pics
+                  ? pics.map((pic) => (
+                      <div className="images" key={pic.id}>
+                        <img
+                          className="img-top"
+                          src={pic.img}
+                          alt="uploaded-pic"
+                        />
+                        <div className="delete-button">
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => deletePic(pic.id)}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  : null}
+              </div>
+            ) : (
+              <img alt="backup" src={user.profile_pic} />
+            )}
+          </div>
+          <button className="btn btn-warning" onClick={() => setShow1(!show1)}>
+            Upload more pictures
+          </button>
+          <button className="btn btn-warning" onClick={() => setShow2(!show2)}>
+            Change profile picture
+          </button>
+          <div>
+            {show1 ? <PicturesForm /> : null}
+            {show2 ? <ProfilePic /> : null}
           </div>
           <div className="card-password">
             <div className="card-body">
@@ -284,9 +305,11 @@ const Profile = () => {
           <button className="btn btn-warning" onClick={() => setShow(!show)}>
             Profile Overview
           </button>
-          <div className="card">
-            {show ? <Overview pics={pics} user={user} /> : null}
-          </div>
+          {pics.length >= 1 ? (
+            <div className="card">
+              {show ? <Overview pics={pics} user={user} /> : null}
+            </div>
+          ) : null}
         </div>
       </div>
     );

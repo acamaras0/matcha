@@ -18,7 +18,6 @@ const ProfileRandom = ({ socket }) => {
   const [liked, setLiked] = useState(false);
   const [message, setMessage] = useState("");
   const xsrfToken = getCookie("refreshToken");
-
   const history = useHistory();
   const distance = useGetDistance();
 

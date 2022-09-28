@@ -10,11 +10,7 @@ export const getPicPath = async (req, res) => {
       if (err) {
         res.send({ err: err });
       }
-      if (result.length > 0) {
-        res.send(result);
-      } else {
-        res.status(200).json({ message: "No images found" });
-      }
+      res.send(result);
     }
   );
 };

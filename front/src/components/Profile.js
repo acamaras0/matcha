@@ -7,6 +7,7 @@ import PicturesForm from "./PicturesForm";
 import { getCookie } from "react-use-cookie";
 import Gender from "../models/Gender";
 import Orientation from "../models/Orientation";
+import Overview from "../models/Overview";
 import Tags from "../models/Tags";
 
 const Profile = () => {
@@ -28,7 +29,7 @@ const Profile = () => {
   const [message, setMessage] = useState("");
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
-  const [show, toggleShow] = useState(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (xsrfToken !== "") {
@@ -145,8 +146,7 @@ const Profile = () => {
           </div>
           <div className="card-password">
             <div className="card-body">
-              <h3 onClick={() => toggleShow(!show)}>✍ Change Password</h3>{" "}
-              <br />
+              <h3>✍ Change Password</h3> <br />
               <form>
                 <label>New Password</label>
                 <input
@@ -281,6 +281,12 @@ const Profile = () => {
             </button>
           </div>
           <p> Your profile has been viewed {user.profile_views} time(s).</p>
+          <button className="btn btn-warning" onClick={() => setShow(!show)}>
+            Profile Overview
+          </button>
+          <div className="card">
+            {show ? <Overview pics={pics} user={user} /> : null}
+          </div>
         </div>
       </div>
     );

@@ -12,7 +12,7 @@ import img1 from "../assets/broken-heart.png";
 const ProfileRandom = ({ socket }) => {
   const { id } = useParams();
   const { selectedUser, setSelectedUser } = useContext(UserContext);
-  const { user } = useContext(UserContext);
+  const [user, setUser] = useState([]);
   const [pics, setPics] = useState([]);
   const [likes, setLikes] = useState("");
   const [liked, setLiked] = useState(false);
@@ -23,6 +23,17 @@ const ProfileRandom = ({ socket }) => {
   const distance = useGetDistance();
 
   useEffect(() => {
+    if (xsrfToken !== "") {
+      const getLoggedIn = async () => {
+        const response = await axios.get(
+          `http://localhost:5000/user/${xsrfToken}`,
+          {}
+        );
+        setUser(response.data);
+      };
+      getLoggedIn();
+    }
+
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/users/${id}`);
@@ -67,7 +78,7 @@ const ProfileRandom = ({ socket }) => {
       }
     };
     checkIfLiked();
-  }, [id, setSelectedUser, setLikes, user]);
+  }, [id, setSelectedUser, setLikes, user, xsrfToken]);
 
   const block = async (id) => {
     try {
@@ -79,6 +90,7 @@ const ProfileRandom = ({ socket }) => {
   };
 
   const handleLike = async (id) => {
+    console.log(user);
     try {
       const response = await axios.post(
         `http://localhost:5000/like/${user.id}/${id}`,

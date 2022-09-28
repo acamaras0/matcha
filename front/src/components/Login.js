@@ -14,7 +14,7 @@ const Login = () => {
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
-  console.log("token", xsrfToken);
+  // console.log("token", xsrfToken);
   // console.log("cookie", cookie);
 
   const Auth = async (e) => {

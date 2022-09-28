@@ -35,6 +35,8 @@ const Dashboard = ({ socket }) => {
       type: "profile view",
     });
     history.push(`/users/${id}`);
+
+    await axios.post(`http://localhost:5000/user/views/${id}`)
   };
 
   const handleReport = async (id) => {

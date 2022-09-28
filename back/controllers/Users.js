@@ -15,6 +15,13 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export const addView = async (req, res) => {
+  const id = req.params.id;
+  db.query("UPDATE users SET profile_views = profile_views + 1 WHERE id = ?", [
+    id,
+  ]);
+};
+
 export const getNotifications = async (req, res) => {
   const userId = req.params.id;
   db.query(
@@ -74,10 +81,14 @@ export const updatePassword = async (req, res) => {
   const { id } = req.params;
   const { password, passwordConfirm } = req.body;
   if (password !== passwordConfirm) {
-    return res.status(200).send({msg:"Passwords do not match"});
+    return res.status(200).send({ msg: "Passwords do not match" });
   } else if (validator.isStrongPassword(password) === false) {
-    console.log(password)
-    return res.status(200).send({msg:"Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character"});
+    console.log(password);
+    return res
+      .status(200)
+      .send({
+        msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
+      });
   } else {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
@@ -163,9 +174,13 @@ export const resetPass = async (req, res) => {
   const { password } = req.body;
   const { confPassword } = req.body;
   if (password !== confPassword) {
-    return res.status(200).send({msg:"Passwords do not match"});
+    return res.status(200).send({ msg: "Passwords do not match" });
   } else if (!validator.isStrongPassword(password)) {
-    return res.status(200).send({msg:"Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character"});
+    return res
+      .status(200)
+      .send({
+        msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
+      });
   } else {
     db.query(
       "SELECT * FROM users WHERE reset_token = ?",

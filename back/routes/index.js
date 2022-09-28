@@ -14,6 +14,7 @@ import {
   updateProfile,
   getNotifications,
   markNotifications,
+  addView,
 } from "../controllers/Users.js";
 import {
   UploadPic,
@@ -56,6 +57,7 @@ router.post("/user/updatePassword/:id", updatePassword);
 router.post("/user/update/:id", updateProfile);
 router.post("/resetpassword/:token", resetPass);
 router.post("/users/forgotpassword", forgotPass);
+router.post("/user/views/:id", addView);
 
 router.post("/upload", upload.single("file"), UploadPic);
 

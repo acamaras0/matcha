@@ -54,7 +54,6 @@ const Profile = () => {
     };
   }, [id, xsrfToken]);
 
-
   const updateProfile = async (e) => {
     e.preventDefault();
     try {
@@ -281,6 +280,7 @@ const Profile = () => {
               Update
             </button>
           </div>
+          <p> Your profile has been viewed {user.profile_views} time(s).</p>
         </div>
       </div>
     );

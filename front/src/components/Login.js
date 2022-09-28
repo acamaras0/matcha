@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
@@ -21,6 +21,7 @@ const Login = () => {
       username: username,
       password: password,
     });
+    // setCookie("username");
     setMessage(res.data.msg);
     if (res.data.accessToken) {
       history.push("/completeprofile");
@@ -37,7 +38,7 @@ const Login = () => {
   return (
     <div>
       <div className="logo1">
-        <img className="logo" src={logo} alt= "logo"/>
+        <img className="logo" src={logo} alt="logo" />
       </div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Auth}>

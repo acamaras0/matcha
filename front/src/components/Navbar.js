@@ -5,7 +5,7 @@ import logo from "../assets/logo.png";
 import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
 import logout from "../assets/logout.png";
-// import user from "../assets/user.png";
+import user from "../assets/user.png";
 import filter from "../assets/filter.png";
 import { useEffect, useState } from "react";
 import { getCookie } from "react-use-cookie";
@@ -26,9 +26,9 @@ const Navbar = ({ socket }) => {
       socket.on("getNotification", (data) => {
         setNotifications((prev) => [...prev, data]);
       });
-    //   socket.on("getMessage", (data) => {
-    //     setMessages((prev) => [...prev, data]);
-    //   });
+      socket.on("getMessage", (data) => {
+        setMessages((prev) => [...prev, data]);
+      });
     }
     if (xsrfToken !== "") {
       const getLoggedIn = async () => {
@@ -52,9 +52,9 @@ const Navbar = ({ socket }) => {
 
     const getMessagesNotif = async () => {
       const response = await axios.get(
-        `http://localhost:5000/messages/${loggedIn.id}`,
+        `http://localhost:5000/messages/notif/${loggedIn.id}`,
         {}
-      );
+        );
       setMessages(response.data);
     };
     getMessagesNotif();
@@ -130,7 +130,8 @@ const Navbar = ({ socket }) => {
                 <div className="buttons">
                   <div className="icon" onClick={MyProfile}>
                     <img
-                      src={loggedIn.profile_pic}
+                      // src={loggedIn.profile_pic}
+                      src={user}
                       className="icon-profile"
                       alt="profile"
                     />

@@ -11,21 +11,7 @@ export const markSeen = async (req, res) => {
       return res.json(result);
     }
   );
-}
-
-// export const checkIfUnread = async (req, res) => {
-//   const { id } = req.params;
-//   const chat_id = req.body.chat_id;
-//   const sql = `SELECT * FROM messages WHERE chat_id = ? AND receiver_id = ? AND read_status = 0`;
-//   db.query(sql, [chat_id, id], (err, result) => {
-//     if (err) throw err;
-//     if (result.length > 0) {
-//       res.send({ status: "unread" });
-//     } else {
-//       res.send({ status: "read" });
-//     }
-//   });
-// };
+};
 
 export const getConversation = async (req, res) => {
   const userId = req.params.userId;
@@ -46,9 +32,6 @@ export const newMessages = async (req, res) => {
   const sender = req.body.sender;
   const receiver = req.body.receiver;
   const text = validator.escape(req.body.text);
-
-  console.log(text);
-
   db.query(
     "INSERT INTO messages (chat_id, sender, receiver, text) VALUES (?, ?, ?, ?)",
     [chat_id, sender, receiver, text],
@@ -75,13 +58,15 @@ export const getMessages = async (req, res) => {
 
 export const getMessagesNotif = async (req, res) => {
   const id = req.params.id;
-  console.log("HERE");
   db.query(
-    "SELECT * FROM messages WHERE receiver = ? AND read_status = ?",
-    [id, 0],
+    "SELECT * FROM messages WHERE receiver = ? AND read_status = 0",
+    [id],
     (err, result) => {
-      if (err) return console.log(err);
-      return res.status(200).json(result);
+      if (err) {
+        return console.log(err);
+      } else {
+        return res.status(200).json(result);
+      }
     }
   );
 };

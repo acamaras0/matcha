@@ -19,8 +19,6 @@ const Navbar = ({ socket }) => {
   const [open, setOpen] = useState(false);
   const history = useHistory();
 
-  // console.log(messages);
-
   useEffect(() => {
     if (socket) {
       socket.on("getNotification", (data) => {
@@ -54,7 +52,7 @@ const Navbar = ({ socket }) => {
       const response = await axios.get(
         `http://localhost:5000/messages/notif/${loggedIn.id}`,
         {}
-        );
+      );
       setMessages(response.data);
     };
     getMessagesNotif();

@@ -92,7 +92,7 @@ const Navbar = ({ socket }) => {
   const Chat = async () => {
     setMessages([]);
     history.push(`/chat/${loggedIn.id}`);
-    await axios.post(`http://localhost:5000/messages/seen/${loggedIn.id}`);
+    // await axios.post(`http://localhost:5000/messages/seen/${loggedIn.id}`);
   };
 
   const MyProfile = () => {

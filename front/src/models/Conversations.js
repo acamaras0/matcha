@@ -5,10 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function Conversations({ conversations, currentUser, socket }) {
   const [user, setUser] = useState("");
-  const [messages, setMessage] = useState([]);
-
-  console.log(socket);
-  console.log(messages);
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const friendId =
@@ -18,7 +15,7 @@ export default function Conversations({ conversations, currentUser, socket }) {
 
     if (socket) {
       socket.on("getMessage", (data) => {
-        setMessage((prev) => [...prev, data]);
+        setMessages((prev) => [...prev, data]);
       });
     }
     const getUser = async () => {
@@ -30,13 +27,28 @@ export default function Conversations({ conversations, currentUser, socket }) {
       }
     };
     getUser();
+
+    const getMessagesNotif = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/messages/notif/${currentUser}`,
+        {}
+      );
+      setMessages(response.data);
+    };
+    getMessagesNotif();
     return () => {
       setUser({});
+      setMessages({});
     };
   }, [conversations.user1, conversations.user2, currentUser, socket]);
 
+  const handleRead = async () => {
+    setMessages([]);
+    await axios.post(`http://localhost:5000/messages/seen/${currentUser}`);
+  };
+
   return (
-    <div className="conversations">
+    <div className="conversations" onClick={handleRead}>
       <img src={user && user.profile_pic} alt="" className="conversationImg" />
       {messages?.length > 0 && <div className="counter"></div>}
       <span key={uuidv4()} className="conversationName">

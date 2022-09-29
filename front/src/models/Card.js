@@ -25,7 +25,7 @@ const Card = ({ array, socket, user }) => {
               className="card bg-light mb-3"
               style={{ maxWidth: "10rem" }}
             >
-              <div className="card-header">
+              <div className="card-header" onClick={() => handleClick(array.id)}>
                 {array.username}, {array.birthdate}
               </div>
               <img

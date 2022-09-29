@@ -22,7 +22,25 @@ const Search = ({ socket }) => {
   const [minDist, set_minDist] = useState(0);
   const [maxDist, set_maxDist] = useState(800);
   const [interests, setInterests] = useState([]);
-
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  useEffect(() => {
+    if (interests.length) {
+      let filtered = [];
+      distance.forEach((user) => {
+        let result = user.interests.split(",");
+        for (let index = 0; index < result.length; index++) {
+          result[index] = result[index].replace(/^\s+|\s+$/gm,'');
+        }
+        const multipleExist = interests.every((value) => {
+          return result.includes(value);
+        });
+        if (multipleExist){
+          filtered.push(user)
+        } 
+      });
+      setFilteredUsers(filtered)
+    }
+  }, [interests, distance]);
   useEffect(() => {
     if (xsrfToken !== "") {
       const getLoggedIn = async () => {
@@ -63,26 +81,10 @@ const Search = ({ socket }) => {
     return fame.fame >= minFame && fame.fame <= maxFame;
   });
 
-  // let res;
-  // distance.forEach((element) => {
-  //   res = element.interests
-  //   console.log("foreach", element.interests)
-  //   res = [res, element.interests]
-  // });
-  // console.log("res", res)
-
-
-  const byTags = distance.filter(function (tag) {
-    let result = tag.interests.split(",");
-    return interests.every((value) => {
-      return result.includes(value);
-    });
-  });
-
   if (xsrfToken === "") {
     return <Redirect to="/" />;
   }
-  if (!byAge || !byDistance || !byFame || !byTags) return <div>Loading...</div>;
+  if (!byAge || !byDistance || !byFame || !filteredUsers) return <div>Loading...</div>;
   return (
     <div className="search">
       <label>By age</label>
@@ -139,7 +141,7 @@ const Search = ({ socket }) => {
 
       <label>By tags</label>
       <Tags setInterests={setInterests} />
-      <Card array={byTags && byTags} socket={socket} user={user} />
+      <Card array={filteredUsers && filteredUsers} socket={socket} user={user} />
     </div>
   );
 };

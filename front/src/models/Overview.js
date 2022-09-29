@@ -17,10 +17,10 @@ const Overview = ({ pics, user }) => {
     }
   };
   count();
-
   return (
     <div>
       <div className="text-center">
+        <img className="profile-picture" src={user.profile_pic} alt="prof" />
         <h2 className="text-center">
           {user.firstname} {user.lastname}
         </h2>

@@ -55,7 +55,7 @@ export const UploadPic = async (req, res) => {
             if (err) {
               res.send({ err: err });
             }
-            if (result[0].count <= 5) {
+            if (result[0].count < 5) {
               db.query(
                 "INSERT INTO user_images (user_id, profile, pic_name, img) VALUES (? ,?, ?, ?)",
                 [user_id, 0,req.file.filename, img],
@@ -76,7 +76,7 @@ export const UploadPic = async (req, res) => {
               //   }
               // );
             } else {
-              return res.status(200).json("You can only have 5 pictures");
+              return res.status(200).json("You can only have 5 pictures.");
             }
           }
         );

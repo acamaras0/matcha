@@ -15,6 +15,14 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// var transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: 'anamaria.finn0@gmail.com',
+//     pass: ''
+//   }
+// });
+
 export const addView = async (req, res) => {
   const id = req.params.id;
   db.query("UPDATE users SET profile_views = profile_views + 1 WHERE id = ?", [
@@ -491,6 +499,7 @@ export const Login = async (req, res) => {
       (err, result) => {
         if (err) {
           res.send({ err: err });
+          console.log("here")
         }
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
@@ -533,7 +542,10 @@ export const Login = async (req, res) => {
               });
             }
           });
-        }
+        }else
+        return res.json({
+          msg: "User does not exist.",
+        });
       }
     );
   });
@@ -565,6 +577,7 @@ export const ProfileFill = async (req, res) => {
       }
       if (result.length > 0) {
         const userId = result[0].id;
+        console.log("fill")
         db.query(
           "UPDATE users SET birthdate = ?, gender = ?, orientation = ?, interests = ?, bio = ? WHERE id = ?",
           [birthdate, gender, orientation, tags, bio, userId],

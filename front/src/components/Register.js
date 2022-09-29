@@ -52,8 +52,8 @@ const Register = () => {
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign up</h3>
             <div className="form-group mt-3">
-              <label>First Name</label>
               <input
+                placeholder="First Name"
                 autoComplete="off"
                 className="form-control mt-1"
                 type="text"
@@ -63,8 +63,8 @@ const Register = () => {
               />
             </div>
             <div className="form-group mt-3">
-              <label>Last Name</label>
               <input
+                placeholder="Last Name"
                 autoComplete="off"
                 className="form-control mt-1"
                 type="text"
@@ -74,8 +74,8 @@ const Register = () => {
               />
             </div>
             <div className="form-group mt-3">
-              <label>Username</label>
               <input
+                placeholder="Username"
                 autoComplete="off"
                 className="form-control mt-1"
                 type="text"
@@ -84,8 +84,8 @@ const Register = () => {
                 }}
               />
               <div className="form-group mt-3"></div>
-              <label>Email address</label>
               <input
+                placeholder="Email address"
                 autoComplete="off"
                 className="form-control mt-1"
                 type="email"
@@ -95,8 +95,8 @@ const Register = () => {
               />
             </div>
             <div className="form-group mt-3">
-              <label>Password</label>
               <input
+                placeholder="Password"
                 autoComplete="off"
                 className="form-control mt-1"
                 type="password"
@@ -106,8 +106,8 @@ const Register = () => {
               />
             </div>
             <div className="form-group mt-3">
-              <label>Confirm password</label>
               <input
+                placeholder="Confirm Password"
                 autoComplete="off"
                 className="form-control mt-1"
                 type="password"

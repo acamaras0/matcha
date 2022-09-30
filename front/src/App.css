@@ -11,6 +11,11 @@
   padding-right: 20vw;
 }
 
+.radio{
+  display: flex;
+  justify-content: center;
+}
+
 .search-card {
   display: inline-flex;
   flex-wrap: wrap;

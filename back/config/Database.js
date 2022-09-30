@@ -138,6 +138,14 @@ db.connect(function (err) {
 //   console.log("1 record inserted");
 // });
 
+// const test8 =
+// "INSERT INTO users (firstName, lastName, username, email, password, activ_status, birthdate, gender, interests, bio, geo_lat, geo_long, fame, profile_pic, online, city, country) \
+// VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+// db.query(test8, ["Matilda", "Lynch", "Matilda", "email7@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "29", "female", "art", "Bio", "60.192059", "24.945831", "3", "http://localhost:5000/upload/8.jpg", "1", "Helsinki", "Fi"], (err, result) => {
+//   if (err) throw err;
+//   console.log("1 record inserted");
+// });
+
 // db.query("INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)", ["1","1","http://localhost:5000/upload/1.jpg", "1.jpg" ])
 // db.query("INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)", ["2","1","http://localhost:5000/upload/2.jpg", "2.jpg" ])
 // db.query("INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)", ["3","1","http://localhost:5000/upload/3.jpg", "3.jpg" ])
@@ -145,9 +153,6 @@ db.connect(function (err) {
 // db.query("INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)", ["5","1","http://localhost:5000/upload/5.jpg", "5.jpg" ])
 // db.query("INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)", ["6","1","http://localhost:5000/upload/6.jpg", "6.jpg" ])
 // db.query("INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)", ["7","1","http://localhost:5000/upload/7.jpg", "7.jpg" ])
-
-
-
-
+// db.query("INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)", ["8","1","http://localhost:5000/upload/8.jpg", "8.jpg" ])
 
 export default db;

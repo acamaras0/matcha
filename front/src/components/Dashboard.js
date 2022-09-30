@@ -72,7 +72,7 @@ const Dashboard = ({ socket }) => {
       </div>
     );
   return (
-    <div className="">
+    <div className="dashboard-wrap">
       <p className="error">{message}</p>
       <br />
       <p className="text-center">🔺🔻</p>

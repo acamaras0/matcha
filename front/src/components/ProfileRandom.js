@@ -140,63 +140,68 @@ const ProfileRandom = ({ socket }) => {
           <h2 className="text-center">
             {selectedUser.firstname} {selectedUser.lastname}
           </h2>
-          <p className="card-text">{selectedUser.username}</p>
-          <p className="text-center">
-            About {distance && Math.round(distance[0]?.distance / 1000)} km away
-          </p>
-          <p className="text-center">
-            {selectedUser.city}, {selectedUser.country}
-          </p>
-          <StarRating rating={likes} />
+          <img
+            alt="backup"
+            className="prof-pic"
+            src={selectedUser.profile_pic}
+          />
+          <div>
+            <StarRating rating={likes} />
+          </div>
+          <div className="card">
+            <p className="text-center">
+              {selectedUser.city}, {selectedUser.country}
+            </p>
+            <div className="heart-container">
+              {liked && liked === "dislike" ? (
+                <div className="like-container">
+                  <img
+                    onClick={() => handleLike(selectedUser.id)}
+                    className="like"
+                    src={img}
+                    alt="Card cap"
+                  />
+                  <div>
+                    <p className="card-text">{message}</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="dislike-container">
+                  <img
+                    onClick={() => handleDislike(selectedUser.id)}
+                    className="dislike"
+                    src={img1}
+                    alt="Card cap"
+                  />
+                  <div>
+                    <p className="card-text">{message}</p>
+                  </div>
+                </div>
+              )}
+            </div>{" "}
+            <div className="card-body">
+              <label>Age</label>
+              <p className="card-text">{selectedUser.birthdate}</p>
+              <label>Bio</label>
+              <p className="card-text">{selectedUser.bio}</p>
+              <label>Gender</label>
+              <p className="card-text">{selectedUser.gender}</p>
+              <label>Sexual Orientation</label>
+              <p className="card-text">{selectedUser.orientation}</p>
+              <label>Interests</label>
+              <p className="card-text">{selectedUser.interests}</p>
+            </div>
+          </div>{" "}
+          <br />
           <div className="card-img">
             {pics.length >= 0 ? (
               <Gallery galleryImages={pics} />
             ) : (
-              <img alt="backup" className="prof-pic" src={selectedUser.profile_pic} />
+              // <img alt="backup" className="prof-pic" src={selectedUser.profile_pic} />
+              <p>No pics available.</p>
             )}
           </div>
-          <div style={{ margin: "10%" }}>
-            <div className="card">
-              <div className="heart-container">
-                {liked && liked === "dislike" ? (
-                  <div className="like-container">
-                    <img
-                      onClick={() => handleLike(selectedUser.id)}
-                      className="like"
-                      src={img}
-                      alt="Card cap"
-                    />
-                    <div>
-                      <p className="card-text">{message}</p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="dislike-container">
-                    <img
-                      onClick={() => handleDislike(selectedUser.id)}
-                      className="dislike"
-                      src={img1}
-                      alt="Card cap"
-                    />
-                    <div>
-                      <p className="card-text">{message}</p>
-                    </div>
-                  </div>
-                )}
-              </div>{" "}
-              <div className="card-body">
-                <label>Age</label>
-                <p className="card-text">{selectedUser.birthdate}</p>
-                <label>Bio</label>
-                <p className="card-text">{selectedUser.bio}</p>
-                <label>Gender</label>
-                <p className="card-text">{selectedUser.gender}</p>
-                <label>Sexual Orientation</label>
-                <p className="card-text">{selectedUser.orientation}</p>
-                <label>Interests</label>
-                <p className="card-text">{selectedUser.interests}</p>
-              </div>
-            </div>{" "}
+          <div>
             <br />
             <button
               onClick={() => block(selectedUser.id)}

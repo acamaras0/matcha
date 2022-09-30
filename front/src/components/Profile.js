@@ -152,7 +152,7 @@ const Profile = () => {
                   : null}
               </div>
             ) : (
-              <img alt="backup" src={user.profile_pic} />
+              <img alt="backup" className="profile-picture" src={user.profile_pic} />
             )}
           </div>
           <button className="btn btn-warning" onClick={() => setShow1(!show1)}>

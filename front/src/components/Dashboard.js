@@ -52,9 +52,26 @@ const Dashboard = ({ socket }) => {
   if (xsrfToken === "") {
     return <Redirect to="/" />;
   }
-  if (distance) {
-    distance.sort((a, b) => a.distance - b.distance);
-  }
+
+  const handleLocation = (e) => {
+    console.log(e.target.value);
+    if (distance) {
+      distance.sort((a, b) => a.distance - b.distance);
+    }
+  };
+  const handleAge = () => {
+    if (distance) {
+      distance.sort((a, b) => a.birthdate - b.birthdate);
+    }
+  };
+
+  const handleFame = () => {
+    if (distance) {
+      distance.sort((a, b) => b.fame - a.fame);
+    }
+  };
+
+  console.log(distance)
 
   if (distance.length === 0)
     return (
@@ -66,56 +83,58 @@ const Dashboard = ({ socket }) => {
     <div className="">
       <p className="error">{message}</p>
       <br />
-        <p className="text-center">🔺 🔻 </p>
+      <p className="text-center">🔺🔻</p>
       <div className="radio">
-        <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio1"
-            value="option1"
-          />
-          <label className="form-check-label" htmlFor="inlineRadio1">
-            Location
-          </label>
-        </div>
-        <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio2"
-            value="option2"
-          />
-          <label className="form-check-label" htmlFor="inlineRadio2">
-            Popularity
-          </label>
-        </div>
-        <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio3"
-            value="option3"
-          />
-          <label className="form-check-label" htmlFor="inlineRadio3">
-            Age{" "}
-          </label>
-        </div>
-        <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="inlineRadioOptions"
-            id="inlineRadio4"
-            value="option4"
-          />
-          <label className="form-check-label" htmlFor="inlineRadio4">
-            Common tags{" "}
-          </label>
-        </div>
+        <form onChange={handleLocation}>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio1"
+              value="option1"
+            />
+            <label className="form-check-label" htmlFor="inlineRadio1">
+              Location
+            </label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio2"
+              value="option2"
+            />
+            <label className="form-check-label" htmlFor="inlineRadio2">
+              Popularity
+            </label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio3"
+              value="option3"
+            />
+            <label className="form-check-label" htmlFor="inlineRadio3">
+              Age{" "}
+            </label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="inlineRadioOptions"
+              id="inlineRadio4"
+              value="option4"
+            />
+            <label className="form-check-label" htmlFor="inlineRadio4">
+              Common tags{" "}
+            </label>
+          </div>
+        </form>
       </div>
       <div className="dashboard">
         {distance &&

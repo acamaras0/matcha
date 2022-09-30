@@ -25,14 +25,17 @@ const Card = ({ array, socket, user }) => {
               className="card bg-light mb-3"
               style={{ maxWidth: "10rem" }}
             >
-              <div className="card-header" onClick={() => handleClick(array.id)}>
+              <div
+                className="card-header"
+                onClick={() => handleClick(array.id)}
+              >
                 {array.username}, {array.birthdate}
               </div>
               <img
                 className="search-img"
                 src={array.profile_pic}
                 onClick={() => handleClick(array.id)}
-                alt= "img-card"
+                alt="img-card"
               ></img>
               <div className="card-body text-warning">
                 <p className="card-title">

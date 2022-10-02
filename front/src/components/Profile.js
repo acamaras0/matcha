@@ -27,6 +27,8 @@ const Profile = () => {
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
   const [newGeoLat, setNewGeoLat] = useState("");
   const [newGeoLng, setNewGeoLng] = useState("");
+  const [newCity, setNewCity] = useState("");
+  const [newCountry, setNewCountry] = useState("");
   const [message, setMessage] = useState("");
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
@@ -76,6 +78,8 @@ const Profile = () => {
           passwordConfirm: newPasswordConfirm.value,
           geoLat: newGeoLat.value,
           geoLng: newGeoLng.value,
+          city: newCity.value,
+          country: newCountry.value,
         }
       );
       setMessage(response.data.msg);
@@ -112,7 +116,8 @@ const Profile = () => {
         }
       );
       setMessage(response.data.msg);
-      history.push(`/profile/${id}`);
+      // window.location.replace(`/dashboard`);
+      history.push(`/dashboard`);
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -209,7 +214,6 @@ const Profile = () => {
                 } else {
                   setNewFirstName(user.firstname);
                 }
-                console.log(value);
               }}
             />
             <label>✎ Last Name</label>
@@ -222,7 +226,6 @@ const Profile = () => {
                 } else {
                   setNewLastName(user.lastname);
                 }
-                console.log(value);
               }}
             />
             <div className="card-body">
@@ -236,7 +239,6 @@ const Profile = () => {
                   } else {
                     setNewUsername(user.username);
                   }
-                  console.log(value);
                 }}
               />
               <label>Age</label>
@@ -264,6 +266,30 @@ const Profile = () => {
                   }
                 }}
               />
+              <label>✎ City</label>
+              <EditText
+                name="textbox1"
+                defaultValue={user.city}
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewCity(value);
+                  } else {
+                    setNewCity(user.city);
+                  }
+                }}
+              />
+              <label>✎ Country</label>
+              <EditText
+                name="textbox1"
+                defaultValue={user.country}
+                onSave={(value) => {
+                  if (value !== "") {
+                    setNewCountry(value);
+                  } else {
+                    setNewCountry(user.country);
+                  }
+                }}
+              />
               <label>✎ Email address</label>
               <EditText
                 name="textbox1"
@@ -274,7 +300,6 @@ const Profile = () => {
                   } else {
                     setNewEmail(user.email);
                   }
-                  console.log(value);
                 }}
               />
               <label>✎ Gender</label>
@@ -293,7 +318,6 @@ const Profile = () => {
                   } else {
                     setNewBio(user.bio);
                   }
-                  console.log(value);
                 }}
               />
             </div>

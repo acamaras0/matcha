@@ -92,11 +92,9 @@ export const updatePassword = async (req, res) => {
     return res.status(200).send({ msg: "Passwords do not match" });
   } else if (validator.isStrongPassword(password) === false) {
     console.log(password);
-    return res
-      .status(200)
-      .send({
-        msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
-      });
+    return res.status(200).send({
+      msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
+    });
   } else {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
@@ -128,6 +126,8 @@ export const updateProfile = async (req, res) => {
     orientation,
     geoLat,
     geoLng,
+    city,
+    country,
   } = req.body;
   const tags = interests.join(", ");
 
@@ -175,6 +175,13 @@ export const updateProfile = async (req, res) => {
   if (geoLng && validator.isLatLong(geoLng)) {
     db.query("UPDATE users SET geo_long = ? WHERE id = ?", [geoLng, id]);
   }
+  if (city) {
+    db.query("UPDATE users SET city = ? WHERE id = ?", [city, id]);
+  }
+  if (country) {
+    db.query("UPDATE users SET country = ? WHERE id = ?", [country, id]);
+  }
+  res.status(200).json({ msg: "Profile updated" });
 };
 
 export const resetPass = async (req, res) => {
@@ -184,11 +191,9 @@ export const resetPass = async (req, res) => {
   if (password !== confPassword) {
     return res.status(200).send({ msg: "Passwords do not match" });
   } else if (!validator.isStrongPassword(password)) {
-    return res
-      .status(200)
-      .send({
-        msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
-      });
+    return res.status(200).send({
+      msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
+    });
   } else {
     db.query(
       "SELECT * FROM users WHERE reset_token = ?",
@@ -499,7 +504,7 @@ export const Login = async (req, res) => {
       (err, result) => {
         if (err) {
           res.send({ err: err });
-          console.log("here")
+          console.log("here");
         }
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {
@@ -542,10 +547,10 @@ export const Login = async (req, res) => {
               });
             }
           });
-        }else
-        return res.json({
-          msg: "User does not exist.",
-        });
+        } else
+          return res.json({
+            msg: "User does not exist.",
+          });
       }
     );
   });
@@ -577,7 +582,7 @@ export const ProfileFill = async (req, res) => {
       }
       if (result.length > 0) {
         const userId = result[0].id;
-        console.log("fill")
+        console.log("fill");
         db.query(
           "UPDATE users SET birthdate = ?, gender = ?, orientation = ?, interests = ?, bio = ? WHERE id = ?",
           [birthdate, gender, orientation, tags, bio, userId],

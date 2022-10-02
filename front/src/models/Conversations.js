@@ -47,11 +47,20 @@ export default function Conversations({ conversations, currentUser, socket }) {
     await axios.post(`http://localhost:5000/messages/seen/${currentUser}`);
   };
 
+  const goToProfile = () => {
+    window.location.replace(`/users/${user.id}`);
+  };
+
   return (
-    <div className="conversations" onClick={handleRead}>
-      <img src={user && user.profile_pic} alt="" className="conversationImg" />
+    <div className="conversations">
+      <img
+        src={user && user.profile_pic}
+        alt=""
+        className="conversationImg"
+        onClick={goToProfile}
+      />
       {messages?.length > 0 && <div className="counter"></div>}
-      <span key={uuidv4()} className="conversationName">
+      <span key={uuidv4()} className="conversationName" onClick={handleRead}>
         {user && user.username}
       </span>
     </div>

@@ -1,5 +1,4 @@
 import db from "../config/Database.js";
-import validator from "validator";
 
 export const markSeen = async (req, res) => {
   const userId = req.params.id;

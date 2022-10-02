@@ -54,7 +54,7 @@ const Overview = ({ pics, user }) => {
               <label>Interests</label>
               <p className="card-text">{user.interests}</p>
             </div>
-          </div>{" "}
+          </div>
         </div>
       </div>
     </div>

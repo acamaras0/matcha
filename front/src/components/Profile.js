@@ -329,7 +329,7 @@ const Profile = () => {
           <button className="btn btn-warning" onClick={() => setShow(!show)}>
             Profile Overview
           </button>
-          {pics.length >= 1 ? (
+          {pics ? (
             <div className="card">
               {show ? <Overview pics={pics} user={user} /> : null}
             </div>

@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { useEffect, useState } from "react";
 import { getDistance } from "geolib";
 import { useCookies } from "react-cookie";
@@ -7,7 +6,7 @@ import axios from "axios";
 const useGetDistance = () => {
   const [matchLocation, setMatchLocation] = useState([]);
   const [geo, setGeo] = useState("");
-  const [cookie, setCookie] = useCookies(["refreshToken"]);
+  const [cookie] = useCookies(["refreshToken"]);
 
   useEffect(() => {
     const getCoordinates = async () => {

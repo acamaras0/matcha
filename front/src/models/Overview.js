@@ -30,7 +30,15 @@ const Overview = ({ pics, user }) => {
         </p>
         <StarRating rating={likes} />
         <div className="card-img">
-          {pics ? <Gallery galleryImages={pics} /> : null}
+          {pics.length > 0 ? (
+            <Gallery galleryImages={pics} />
+          ) : (
+            <img
+              className="profile-picture"
+              src={user.profile_pic}
+              alt="prof"
+            />
+          )}
         </div>
         <div style={{ margin: "10%" }}>
           <div className="card">

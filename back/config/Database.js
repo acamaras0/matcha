@@ -98,7 +98,7 @@ db.connect(function (err) {
 //   const test2 =
 // "INSERT INTO users (firstName, lastName, username, email, password, activ_status, birthdate, gender, interests, bio, geo_lat, geo_long, fame, profile_pic, online, city, country) \
 // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-// db.query(test2, ["Peter", "Son", "Peter", "email1@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "20", "male", "music", "Bio", "61.504967", "23.743065", "2", "http://localhost:5000/upload/2.jpg", "0", "Tampere", "Fi"], (err, result) => {
+// db.query(test2, ["Peter", "Son", "Peter", "email1@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "20", "male", "movies", "Bio", "61.504967", "23.743065", "2", "http://localhost:5000/upload/2.jpg", "0", "Tampere", "Fi"], (err, result) => {
 //     if (err) throw err;
 //     console.log("2 records inserted");
 // });
@@ -106,7 +106,7 @@ db.connect(function (err) {
 //   const test3 =
 // "INSERT INTO users (firstName, lastName, username, email, password, activ_status, birthdate, gender, interests, bio, geo_lat, geo_long, fame, profile_pic, online, city, country) \
 // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-// db.query(test3, ["Bella", "Jefferson", "Bella", "email2@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "26", "female", "music", "Bio", "65.021545", "25.469885", "4", "http://localhost:5000/upload/3.jpg", "1", "Oulu", "Fi"], (err, result) => {
+// db.query(test3, ["Bella", "Jefferson", "Bella", "email2@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "26", "female", "music, movies", "Bio", "65.021545", "25.469885", "4", "http://localhost:5000/upload/3.jpg", "1", "Oulu", "Fi"], (err, result) => {
 //     if (err) throw err;
 //     console.log("3 record inserted");
 // });
@@ -114,7 +114,7 @@ db.connect(function (err) {
 //   const test4 =
 // "INSERT INTO users (firstName, lastName, username, email, password, activ_status, birthdate, gender, interests, bio, geo_lat, geo_long, fame, profile_pic, online, city, country) \
 // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-// db.query(test4, ["Laura", "Palmer", "Laura", "email3@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "22", "female", "music", "Bio", "60.454510", "22.264824", "5", "http://localhost:5000/upload/4.jpg", "1", "Turku", "Fi"], (err, result) => {
+// db.query(test4, ["Laura", "Palmer", "Laura", "email3@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "22", "female", "travel, art", "Bio", "60.454510", "22.264824", "5", "http://localhost:5000/upload/4.jpg", "1", "Turku", "Fi"], (err, result) => {
 //     if (err) throw err;
 //     console.log("4 record inserted");
 // });
@@ -122,7 +122,7 @@ db.connect(function (err) {
 //   const test5 =
 // "INSERT INTO users (firstName, lastName, username, email, password, activ_status, birthdate, gender, interests, bio, geo_lat, geo_long, fame, profile_pic, online, city, country) \
 // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-// db.query(test5, ["Anamaria", "Camarasan", "Anamaria", "email4@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "27", "female", "music", "Bio", "60.454510", "22.264824", "5", "http://localhost:5000/upload/5.jpg", "1", "Turku", "Fi"], (err, result) => {
+// db.query(test5, ["Anamaria", "Camarasan", "Anamaria", "email4@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "27", "female", "music, art, books", "Bio", "60.454510", "22.264824", "5", "http://localhost:5000/upload/5.jpg", "1", "Turku", "Fi"], (err, result) => {
 //     if (err) throw err;
 //     console.log("4 record inserted");
 // });
@@ -130,7 +130,7 @@ db.connect(function (err) {
 //   const test6 =
 // "INSERT INTO users (firstName, lastName, username, email, password, activ_status, birthdate, gender, interests, bio, geo_lat, geo_long, fame, profile_pic, online, city, country) \
 // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-// db.query(test6, ["Lola", "Jeff", "Lola", "email5@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "25", "female", "music", "Bio", "65.021545", "25.469885", "4", "http://localhost:5000/upload/6.jpg", "1", "Oulu", "Fi"], (err, result) => {
+// db.query(test6, ["Lola", "Jeff", "Lola", "email5@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "25", "female", "photography", "Bio", "65.021545", "25.469885", "4", "http://localhost:5000/upload/6.jpg", "1", "Oulu", "Fi"], (err, result) => {
 //     if (err) throw err;
 //     console.log("3 record inserted");
 // });
@@ -138,7 +138,7 @@ db.connect(function (err) {
 // const test7 =
 // "INSERT INTO users (firstName, lastName, username, email, password, activ_status, birthdate, gender, interests, bio, geo_lat, geo_long, fame, profile_pic, online, city, country) \
 // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-// db.query(test7, ["Juha", "Star", "Juha", "email6@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "29", "male", "music", "Bio", "60.192059", "24.945831", "3", "http://localhost:5000/upload/7.jpg", "1", "Helsinki", "Fi"], (err, result) => {
+// db.query(test7, ["Juha", "Star", "Juha", "email6@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "29", "male", "music, books", "Bio", "60.192059", "24.945831", "3", "http://localhost:5000/upload/7.jpg", "1", "Helsinki", "Fi"], (err, result) => {
 //   if (err) throw err;
 //   console.log("1 record inserted");
 // });
@@ -146,7 +146,7 @@ db.connect(function (err) {
 // const test8 =
 // "INSERT INTO users (firstName, lastName, username, email, password, activ_status, birthdate, gender, interests, bio, geo_lat, geo_long, fame, profile_pic, online, city, country) \
 // VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-// db.query(test8, ["Matilda", "Lynch", "Matilda", "email7@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "29", "female", "art", "Bio", "60.192059", "24.945831", "3", "http://localhost:5000/upload/8.jpg", "1", "Helsinki", "Fi"], (err, result) => {
+// db.query(test8, ["Matilda", "Lynch", "Matilda", "email7@email.com" ,"$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm", "1", "29", "female", "art, gaming", "Bio", "60.192059", "24.945831", "3", "http://localhost:5000/upload/8.jpg", "1", "Helsinki", "Fi"], (err, result) => {
 //   if (err) throw err;
 //   console.log("1 record inserted");
 // });

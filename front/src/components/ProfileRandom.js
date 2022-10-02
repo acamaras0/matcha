@@ -152,6 +152,14 @@ const ProfileRandom = ({ socket }) => {
             <p className="text-center">
               {selectedUser.city}, {selectedUser.country}
             </p>
+            <div className="card-img">
+              {pics.length >= 0 ? (
+                <Gallery galleryImages={pics} />
+              ) : (
+                <p>No pics available.</p>
+              )}
+            </div>{" "}
+            <br />
             <div className="heart-container">
               {liked && liked === "dislike" ? (
                 <div className="like-container">
@@ -193,14 +201,6 @@ const ProfileRandom = ({ socket }) => {
             </div>
           </div>{" "}
           <br />
-          <div className="card-img">
-            {pics.length >= 0 ? (
-              <Gallery galleryImages={pics} />
-            ) : (
-              // <img alt="backup" className="prof-pic" src={selectedUser.profile_pic} />
-              <p>No pics available.</p>
-            )}
-          </div>
           <div>
             <br />
             <button

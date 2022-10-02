@@ -160,4 +160,6 @@ db.connect(function (err) {
 // db.query("INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)", ["7","1","http://localhost:5000/upload/7.jpg", "7.jpg" ])
 // db.query("INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)", ["8","1","http://localhost:5000/upload/8.jpg", "8.jpg" ])
 
+
+
 export default db;

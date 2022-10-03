@@ -89,7 +89,7 @@ const Search = ({ socket }) => {
   // if (!byAge || !byDistance || !byFame || !filteredUsers)
   //   return <div>Loading...</div>;
   return (
-    <div className="search">
+    <div className="filter">
       <div>
         <label>By age</label>
         <MultiRangeSlider

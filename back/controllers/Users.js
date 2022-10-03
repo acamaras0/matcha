@@ -5,6 +5,7 @@ import validator from "validator";
 import db from "../config/Database.js";
 import geoip from "geoip-lite";
 import { publicIpv4 } from "public-ip";
+import makeid from "../utils/functions.js";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
@@ -128,9 +129,9 @@ export const updateProfile = async (req, res) => {
     geoLng,
     city,
     country,
+    birthdate,
   } = req.body;
   const tags = interests.join(", ");
-
   if (firstName) {
     db.query("UPDATE users SET firstname = ? WHERE id = ?", [firstName, id]);
   }
@@ -157,7 +158,7 @@ export const updateProfile = async (req, res) => {
   if (bio && bio.length <= 500) {
     db.query("UPDATE users SET bio = ? WHERE id = ?", [bio, id]);
   }
-  if (interests) {
+  if (interests.length > 0) {
     db.query("UPDATE users SET interests = ? WHERE id = ?", [tags, id]);
   }
   if (gender) {
@@ -180,6 +181,9 @@ export const updateProfile = async (req, res) => {
   }
   if (country) {
     db.query("UPDATE users SET country = ? WHERE id = ?", [country, id]);
+  }
+  if (birthdate) {
+    db.query("UPDATE users SET birthdate = ? WHERE id = ?", [birthdate, id]);
   }
   res.status(200).json({ msg: "Profile updated" });
 };
@@ -414,7 +418,7 @@ export const getLoggedIn = async (req, res) => {
 export const Register = async (req, res) => {
   const { username, password, confPassword, firstName, lastName, email } =
     req.body;
-  const activ_code = process.env.ACTIVATION_CODE;
+  const activ_code = makeid(20);
   const activation = {
     from: "matcha@gmail.com",
     to: email,
@@ -488,7 +492,6 @@ export const Register = async (req, res) => {
 };
 
 export const Login = async (req, res) => {
-  const { lat1, lng1 } = req.body;
   const { username, password } = req.body;
 
   publicIpv4().then((ip) => {

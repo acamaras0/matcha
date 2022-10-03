@@ -59,6 +59,7 @@ const Dashboard = ({ socket }) => {
     location: { method: (a, b) => a.distance - b.distance },
     fame: { method: (a, b) => b.fame - a.fame },
     age: { method: (a, b) => a.birthdate - b.birthdate },
+    tags:{method:(a, b) => a.interests - b.interests}
   };
 
   if (distance) {
@@ -87,17 +88,18 @@ const Dashboard = ({ socket }) => {
           <option value="location">Distance</option>
           <option value="age">Age</option>
           <option value="fame">Popularity</option>
+          <option value="tags">Common tags</option>
         </select>
       </div>
       <div className="dashboard">
         {distance &&
           distance.map((user) => {
-            // if (user.profile_pic) {
+            if (user.profile_pic.length > 0 ) {
             return (
               <div
                 key={user.id}
                 className="card mb-4"
-                style={{ width: "20rem" }}
+                style={{ width: "15rem" }}
               >
                 <div className="row no-gutters">
                   <div>
@@ -142,7 +144,10 @@ const Dashboard = ({ socket }) => {
                 </div>
               </div>
             );
-            // }
+            }
+            else {
+              return(<p> Upload your picture to get started!</p>)
+            }
           })}
       </div>
     </div>

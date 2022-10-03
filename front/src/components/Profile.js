@@ -10,6 +10,7 @@ import Orientation from "../models/Orientation";
 import Overview from "../models/Overview";
 import Tags from "../models/Tags";
 import ProfilePic from "./ProfilePic";
+import Age from "../models/Age";
 
 const Profile = () => {
   const { id } = useParams();
@@ -29,6 +30,7 @@ const Profile = () => {
   const [newGeoLng, setNewGeoLng] = useState("");
   const [newCity, setNewCity] = useState("");
   const [newCountry, setNewCountry] = useState("");
+  const [newAge, setNewAge] = useState("");
   const [message, setMessage] = useState("");
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
@@ -80,6 +82,7 @@ const Profile = () => {
           geoLng: newGeoLng.value,
           city: newCity.value,
           country: newCountry.value,
+          birthdate: newAge,
         }
       );
       setMessage(response.data.msg);
@@ -116,7 +119,7 @@ const Profile = () => {
         }
       );
       setMessage(response.data.msg);
-      // window.location.replace(`/dashboard`);
+      window.location.replace(`/dashboard`);
       history.push(`/dashboard`);
     } catch (error) {
       if (error.response) {
@@ -157,7 +160,11 @@ const Profile = () => {
                   : null}
               </div>
             ) : (
-              <img alt="backup" className="profile-picture" src={user.profile_pic} />
+              <img
+                alt="backup"
+                className="profile-picture"
+                src={user.profile_pic}
+              />
             )}
           </div>
           <button className="btn btn-warning" onClick={() => setShow1(!show1)}>
@@ -241,8 +248,10 @@ const Profile = () => {
                   }
                 }}
               />
-              <label>Age</label>
-              <p>{user.birthdate}</p>
+              <label>✎ Age</label>
+              <p className="age">{user.birthdate}</p>
+              <Age setAge={setNewAge} />
+              <br />
               <label>Coordinates</label>
               <EditText
                 name="textbox1"

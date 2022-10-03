@@ -11,7 +11,12 @@ import { useEffect, useState } from "react";
 import { getCookie } from "react-use-cookie";
 import { v4 as uuidv4 } from "uuid";
 
-const fetchNotifications = (userId, xsrfToken, setNotifications, setMessages) => {
+const fetchNotifications = (
+  userId,
+  xsrfToken,
+  setNotifications,
+  setMessages
+) => {
   if (xsrfToken !== "") {
     const getNotifications = async () => {
       const response = await axios.get(
@@ -33,7 +38,7 @@ const fetchNotifications = (userId, xsrfToken, setNotifications, setMessages) =>
     };
     getMessagesNotif();
   }
-}
+};
 
 const Navbar = ({ socket }) => {
   const xsrfToken = getCookie("refreshToken");
@@ -94,12 +99,20 @@ const Navbar = ({ socket }) => {
   }, [socket, xsrfToken, loggedIn.id]);
 
   useEffect(() => {
-    if (xsrfToken !== "" && loggedIn.id){
-      const interval = setInterval(() => fetchNotifications(loggedIn.id, xsrfToken, setNotifications, setMessages), 2000);
-      return () => clearInterval(interval)
+    if (xsrfToken !== "" && loggedIn.id) {
+      const interval = setInterval(
+        () =>
+          fetchNotifications(
+            loggedIn.id,
+            xsrfToken,
+            setNotifications,
+            setMessages
+          ),
+        2000
+      );
+      return () => clearInterval(interval);
     }
-
-  }, [loggedIn, xsrfToken])
+  }, [loggedIn, xsrfToken]);
   const displayNotifications = ({ sender_name, senderName, type }) => {
     let action;
     if (type === "like") {
@@ -127,7 +140,6 @@ const Navbar = ({ socket }) => {
   const Chat = async () => {
     setMessages([]);
     history.push(`/chat/${loggedIn.id}`);
-    // await axios.post(`http://localhost:5000/messages/seen/${loggedIn.id}`);
   };
 
   const MyProfile = () => {

@@ -1,4 +1,8 @@
 import React from "react";
+// import Container from 'react-bootstrap/Container';
+// import Nav from 'react-bootstrap/Nav';
+// import Navbar from 'react-bootstrap/Navbar';
+// import NavDropdown from 'react-bootstrap/NavDropdown';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import logo from "../assets/logo.png";
@@ -45,7 +49,7 @@ const fetchNotifications = (
   };
 };
 
-const Navbar = ({ socket }) => {
+const NavBar = ({ socket }) => {
   const xsrfToken = getCookie("refreshToken");
   const [loggedIn, setLoggedin] = useState("");
   const [notifications, setNotifications] = useState([]);
@@ -145,69 +149,132 @@ const Navbar = ({ socket }) => {
 
   return (
     <>
+     {/* <Navbar expand="lg">
+      <Container>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+          <img onClick={Dashboard} src={logo} className="logo" alt="" />
+          <div className="buttons">
+                    <div className="icon" onClick={MyProfile}>
+                      <img
+                        // src={loggedIn.profile_pic}
+                        src={user}
+                        className="icon-profile"
+                        alt="profile"
+                      />
+                    </div>
+                    <div className="icon" onClick={Filter}>
+                      <img
+                        src={filter}
+                        className="icon-profile"
+                        alt="profile"
+                      />
+                    </div>
+                    <div className="icon" onClick={() => setOpen(!open)}>
+                      <img src={notification} className="iconImg" alt="notif" />
+                      {notifications?.length > 0 && (
+                        <div className="counter"></div>
+                      )}
+                    </div>
+                    <div className="icon">
+                      <img
+                        onClick={Chat}
+                        src={chat}
+                        alt="chat"
+                        className="iconImg"
+                      />
+                      {messages?.length > 0 && <div className="counter"></div>}
+                    </div>
+                    <div className="icon">
+                      <img
+                        onClick={Logout}
+                        src={logout}
+                        alt="logout"
+                        className="iconImg"
+                      />
+                    </div>
+                  </div>
+             
+            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            <div className="icon" onClick={() => setOpen(!open)}>
+                      <img src={notification} className="iconImg" alt="notif" />
+                      {notifications?.length > 0 && (
+                        <div className="counter"></div>
+                      )}
+                    </div>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar> */}
       <nav className="navbar" role="navigation">
-        <div className="container">
-          <div className="navbar-brand">
-            <div className="Nav-logo">
-              <img onClick={Dashboard} src={logo} className="logo" alt="" />
+          <div className="container">
+            <div className="navbar-brand">
+              <div className="Nav-logo">
+                <img onClick={Dashboard} src={logo} className="logo" alt="" />
+              </div>
             </div>
-          </div>
-          <div id="navbarBasicExample" className="navbar-menu">
-            <div className="navbar-end">
-              <div className="navbar-item">
-                <div className="buttons">
-                  <div className="icon" onClick={MyProfile}>
-                    <img
-                      // src={loggedIn.profile_pic}
-                      src={user}
-                      className="icon-profile"
-                      alt="profile"
-                    />
-                  </div>
-                  <div className="icon" onClick={Filter}>
-                    <img src={filter} className="icon-profile" alt="profile" />
-                  </div>
-                  <div className="icon" onClick={() => setOpen(!open)}>
-                    <img src={notification} className="iconImg" alt="notif" />
-                    {notifications?.length > 0 && (
-                      <div className="counter"></div>
-                    )}
-                  </div>
-                  <div className="icon">
-                    <img
-                      onClick={Chat}
-                      src={chat}
-                      alt="chat"
-                      className="iconImg"
-                    />
-                    {messages?.length > 0 && <div className="counter"></div>}
-                  </div>
-                  <div className="icon">
-                    <img
-                      onClick={Logout}
-                      src={logout}
-                      alt="logout"
-                      className="iconImg"
-                    />
+            <div id="navbarBasicExample" className="navbar-menu">
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="buttons">
+                    <div className="icon" onClick={MyProfile}>
+                      <img
+                        // src={loggedIn.profile_pic}
+                        src={user}
+                        className="icon-profile"
+                        alt="profile"
+                      />
+                    </div>
+                    <div className="icon" onClick={Filter}>
+                      <img
+                        src={filter}
+                        className="icon-profile"
+                        alt="profile"
+                      />
+                    </div>
+                    <div className="icon" onClick={() => setOpen(!open)}>
+                      <img src={notification} className="iconImg" alt="notif" />
+                      {notifications?.length > 0 && (
+                        <div className="counter"></div>
+                      )}
+                    </div>
+                    <div className="icon">
+                      <img
+                        onClick={Chat}
+                        src={chat}
+                        alt="chat"
+                        className="iconImg"
+                      />
+                      {messages?.length > 0 && <div className="counter"></div>}
+                    </div>
+                    <div className="icon">
+                      <img
+                        onClick={Logout}
+                        src={logout}
+                        alt="logout"
+                        className="iconImg"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          {open && (
+            <div className="notifications">
+              {notifications.length > 0
+                ? notifications.map((n) => displayNotifications(n))
+                : null}
+              <button className="btn btn-warning" onClick={handleRead}>
+                Mark as read
+              </button>
+            </div>
+          )}
       </nav>
-      {open && (
-        <div className="notifications">
-          {notifications.length > 0
-            ? notifications.map((n) => displayNotifications(n))
-            : null}
-          <button className="btn btn-warning" onClick={handleRead}>
-            Mark as read
-          </button>
-        </div>
-      )}
     </>
   );
 };
 
-export default Navbar;
+export default NavBar;

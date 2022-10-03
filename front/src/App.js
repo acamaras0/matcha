@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { UserContextProvider } from "./context/UserContext";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
-import Navbar from "./components/Navbar";
+import NavBar from "./components/Navbar";
 import Register from "./components/Register";
 import ProfileForm from "./components/ProfileForm";
 import ProfilePic from "./components/ProfilePic";
@@ -66,31 +66,31 @@ function App() {
                 <Activation />
               </Route>
               <Route path="/completeprofile">
-                <Navbar socket={socket} />
+                <NavBar socket={socket} />
                 <ProfileForm />
               </Route>
               <Route path="/pictures">
-                <Navbar socket={socket} />
+                <NavBar socket={socket} />
                 <ProfilePic />
               </Route>
               <Route path="/dashboard">
-                <Navbar socket={socket} />
+                <NavBar socket={socket} />
                 <Dashboard socket={socket} />
               </Route>
               <Route path="/profile/:id">
-                <Navbar socket={socket} />
+                <NavBar socket={socket} />
                 <Profile />
               </Route>
               <Route path="/users/:id">
-                <Navbar socket={socket} />
+                <NavBar socket={socket} />
                 <ProfileRandom socket={socket} />
               </Route>
               <Route path="/chat/:id">
-                <Navbar socket={socket} />
+                <NavBar socket={socket} />
                 <Chat socket={socket} />
               </Route>
               <Route path="/filter/:id">
-                <Navbar socket={socket} />
+                <NavBar socket={socket} />
                 <Search socket={socket} />
               </Route>
             </Switch>

@@ -155,7 +155,7 @@ const Dashboard = ({ socket }) => {
                         <h6 className="card-title">
                           {user.city}, {user.country}{" "}
                         </h6>
-                        <StarRating rating={user.fame / 2} /> <br />
+                        <StarRating rating={user.fame} /> <br />
                         <p className="card-text">
                           About {Math.round(user.distance / 1000)} km away
                         </p>

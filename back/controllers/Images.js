@@ -33,7 +33,7 @@ export const getPicsById = async (req, res) => {
   );
 };
 
-export const UploadPic = async (req, res) => {
+export const uploadPic = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
   if (!req.file) {
     return res.status(200).json("No file uploaded");
@@ -58,7 +58,7 @@ export const UploadPic = async (req, res) => {
             if (result[0].count < 5) {
               db.query(
                 "INSERT INTO user_images (user_id, profile, pic_name, img) VALUES (? ,?, ?, ?)",
-                [user_id, 0,req.file.filename, img],
+                [user_id, 0, req.file.filename, img],
                 (err, result) => {
                   if (err) {
                     console.log(err);

@@ -141,8 +141,8 @@ const ProfileRandom = ({ socket }) => {
             {selectedUser.firstname} {selectedUser.lastname}
           </h2>
           <p className="text-center">
-              {selectedUser.city}, {selectedUser.country}
-            </p>
+            {selectedUser.city}, {selectedUser.country}
+          </p>
           <img
             alt="backup"
             className="prof-pic"

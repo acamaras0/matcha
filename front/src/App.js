@@ -41,16 +41,12 @@ function App() {
   useEffect(() => {
     if (user) {
       socket.emit("addOnlineUser", user);
-      // socket.on("getUsers", (users) => {
-      //   console.log("Users", users);
-      // });
     }
   }, [socket, user]);
 
   return (
     <>
       <div className="App">
-        
         <UserContextProvider>
           <BrowserRouter>
             <Switch>

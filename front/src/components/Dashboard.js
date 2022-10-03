@@ -54,6 +54,22 @@ const Dashboard = ({ socket }) => {
     return <Redirect to="/" />;
   }
 
+
+  // let filtered = [];
+
+  // distance.forEach((u) => {
+  //   let result = u.interests.split(",");
+  //   for (let index = 0; index < result.length; index++) {
+  //     result[index] = result[index].replace(/^\s+|\s+$/gm, "");
+  //   }
+  //   const multipleExist = user.interests.every((value) => {
+  //     return result.includes(value);
+  //   });
+  //   if (multipleExist) {
+  //     filtered.push(u);
+  //   }
+  // });
+
   const sortMethods = {
     none: { method: (a, b) => null },
     location: { method: (a, b) => a.distance - b.distance },

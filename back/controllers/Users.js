@@ -31,30 +31,6 @@ export const addView = async (req, res) => {
   ]);
 };
 
-export const getNotifications = async (req, res) => {
-  const userId = req.params.id;
-  db.query(
-    "SELECT * FROM notifications WHERE reciever_id = ? AND mark = 0",
-    [userId],
-    (err, result) => {
-      if (err) console.log(err);
-      return res.json(result);
-    }
-  );
-};
-
-export const markNotifications = async (req, res) => {
-  const userId = req.params.id;
-  db.query(
-    "UPDATE notifications SET mark = 1 WHERE reciever_id = ?",
-    [userId],
-    (err, result) => {
-      if (err) console.log(err);
-      return res.json(result);
-    }
-  );
-};
-
 export const accountActivation = async (req, res) => {
   const hash = req.params.hash;
   db.query(
@@ -559,7 +535,7 @@ export const Login = async (req, res) => {
   });
 };
 
-export const ProfileFill = async (req, res) => {
+export const profileFill = async (req, res) => {
   const { birthdate, gender, orientation, interests, bio } = req.body;
   const tags = interests.join(", ");
   if (!(birthdate && gender && orientation && interests && bio)) {

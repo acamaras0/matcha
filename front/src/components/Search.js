@@ -86,8 +86,8 @@ const Search = ({ socket }) => {
   if (xsrfToken === "") {
     return <Redirect to="/" />;
   }
-  // if (!byAge || !byDistance || !byFame || !filteredUsers)
-  //   return <div>Loading...</div>;
+  if (!byAge || !byDistance || !byFame || !filteredUsers || !distance)
+    return <div>Loading...</div>;
   return (
     <div className="filter">
       <div>

@@ -5,19 +5,17 @@ import {
   accountActivation,
   getUsers,
   getLoggedIn,
-  ProfileFill,
+  profileFill,
   Logout,
   updatePassword,
   getRandomUser,
   forgotPass,
   resetPass,
   updateProfile,
-  getNotifications,
-  markNotifications,
   addView,
 } from "../controllers/Users.js";
 import {
-  UploadPic,
+  uploadPic,
   getPicsById,
   deletePic,
   getPicPath,
@@ -30,6 +28,8 @@ import {
   getMessagesNotif,
   markSeen
 } from "../controllers/Chat.js";
+import {  getNotifications,
+  markNotifications} from "../controllers/Notifications.js"
 import { location } from "../controllers/Location.js";
 import { report, block, getBlockedUsers } from "../controllers/ReportBlock.js";
 import { insertLike, getFame, checkIfLiked } from "../controllers/Matches.js";
@@ -54,14 +54,14 @@ router.get("/location", location);
 router.post("/users", Register);
 router.post("/activate/:hash", accountActivation);
 router.post("/login", Login);
-router.post("/fill", ProfileFill);
+router.post("/fill", profileFill);
 router.post("/user/updatePassword/:id", updatePassword);
 router.post("/user/update/:id", updateProfile);
 router.post("/resetpassword/:token", resetPass);
 router.post("/users/forgotpassword", forgotPass);
 router.post("/user/views/:id", addView);
 
-router.post("/upload", upload.single("file"), UploadPic);
+router.post("/upload", upload.single("file"), uploadPic);
 router.post("/upload/profilePic", upload.single("profile"), ProfilePic);
 
 router.post("/like/:user1/:user2", insertLike);

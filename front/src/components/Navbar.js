@@ -5,7 +5,7 @@ import logo from "../assets/logo.png";
 import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
 import logout from "../assets/logout.png";
-// import user from "../assets/user.png";
+import user from "../assets/user.png";
 import filter from "../assets/filter.png";
 import { useEffect, useState } from "react";
 import { getCookie } from "react-use-cookie";
@@ -38,6 +38,11 @@ const fetchNotifications = (
     };
     getMessagesNotif();
   }
+
+  return () => {
+    setNotifications({});
+    setMessages({});
+  };
 };
 
 const Navbar = ({ socket }) => {
@@ -67,30 +72,6 @@ const Navbar = ({ socket }) => {
       };
       getLoggedIn();
     }
-
-    // const interval = setInterval(() => fetchNotifications(loggedIn.id, xsrfToken, setNotifications, setMessages), 2000);
-    // return () => clearInterval(interval)
-    // if (xsrfToken !== "") {
-    //   const getNotifications = async () => {
-    //     const response = await axios.get(
-    //       `http://localhost:5000/user/notifications/${loggedIn.id}`,
-    //       {}
-    //     );
-    //     setNotifications(response.data);
-    //   };
-    //   getNotifications();
-    // }
-
-    // if (xsrfToken !== "") {
-    //   const getMessagesNotif = async () => {
-    //     const response = await axios.get(
-    //       `http://localhost:5000/messages/notif/${loggedIn.id}`,
-    //       {}
-    //     );
-    //     setMessages(response.data);
-    //   };
-    //   getMessagesNotif();
-    // }
 
     return () => {
       setNotifications({});
@@ -177,8 +158,8 @@ const Navbar = ({ socket }) => {
                 <div className="buttons">
                   <div className="icon" onClick={MyProfile}>
                     <img
-                      src={loggedIn.profile_pic}
-                      // src={user}
+                      // src={loggedIn.profile_pic}
+                      src={user}
                       className="icon-profile"
                       alt="profile"
                     />
@@ -217,7 +198,9 @@ const Navbar = ({ socket }) => {
       </nav>
       {open && (
         <div className="notifications">
-          {notifications?.map((n) => displayNotifications(n))}
+          {notifications.length > 0
+            ? notifications.map((n) => displayNotifications(n))
+            : null}
           <button className="btn btn-warning" onClick={handleRead}>
             Mark as read
           </button>

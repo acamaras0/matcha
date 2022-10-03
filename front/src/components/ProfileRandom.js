@@ -140,6 +140,9 @@ const ProfileRandom = ({ socket }) => {
           <h2 className="text-center">
             {selectedUser.firstname} {selectedUser.lastname}
           </h2>
+          <p className="text-center">
+              {selectedUser.city}, {selectedUser.country}
+            </p>
           <img
             alt="backup"
             className="prof-pic"
@@ -149,9 +152,6 @@ const ProfileRandom = ({ socket }) => {
             <StarRating rating={likes} />
           </div>
           <div className="card">
-            <p className="text-center">
-              {selectedUser.city}, {selectedUser.country}
-            </p>
             <div className="card-img">
               {pics.length >= 0 ? (
                 <Gallery galleryImages={pics} />

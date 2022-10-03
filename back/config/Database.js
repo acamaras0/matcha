@@ -1,15 +1,15 @@
 import mysql from "mysql";
 
 const db = mysql.createConnection({
-  // user: "root",
-  // host: "127.0.0.1",
-  // password: "",
-  // database: "matcha_db",
-
   user: "root",
-  host: "localhost",
-  password: "123456",
+  host: "127.0.0.1",
+  password: "",
   database: "matcha_db",
+
+  // user: "root",
+  // host: "localhost",
+  // password: "123456",
+  // database: "matcha_db",
 });
 
 db.connect(function (err) {

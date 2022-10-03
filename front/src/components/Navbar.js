@@ -11,6 +11,30 @@ import { useEffect, useState } from "react";
 import { getCookie } from "react-use-cookie";
 import { v4 as uuidv4 } from "uuid";
 
+const fetchNotifications = (userId, xsrfToken, setNotifications, setMessages) => {
+  if (xsrfToken !== "") {
+    const getNotifications = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/user/notifications/${userId}`,
+        {}
+      );
+      setNotifications(response.data);
+    };
+    getNotifications();
+  }
+
+  if (xsrfToken !== "") {
+    const getMessagesNotif = async () => {
+      const response = await axios.get(
+        `http://localhost:5000/messages/notif/${userId}`,
+        {}
+      );
+      setMessages(response.data);
+    };
+    getMessagesNotif();
+  }
+}
+
 const Navbar = ({ socket }) => {
   const xsrfToken = getCookie("refreshToken");
   const [loggedIn, setLoggedin] = useState("");
@@ -39,27 +63,29 @@ const Navbar = ({ socket }) => {
       getLoggedIn();
     }
 
-    if (xsrfToken !== "") {
-      const getNotifications = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/user/notifications/${loggedIn.id}`,
-          {}
-        );
-        setNotifications(response.data);
-      };
-      getNotifications();
-    }
+    // const interval = setInterval(() => fetchNotifications(loggedIn.id, xsrfToken, setNotifications, setMessages), 2000);
+    // return () => clearInterval(interval)
+    // if (xsrfToken !== "") {
+    //   const getNotifications = async () => {
+    //     const response = await axios.get(
+    //       `http://localhost:5000/user/notifications/${loggedIn.id}`,
+    //       {}
+    //     );
+    //     setNotifications(response.data);
+    //   };
+    //   getNotifications();
+    // }
 
-    if (xsrfToken !== "") {
-      const getMessagesNotif = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/messages/notif/${loggedIn.id}`,
-          {}
-        );
-        setMessages(response.data);
-      };
-      getMessagesNotif();
-    }
+    // if (xsrfToken !== "") {
+    //   const getMessagesNotif = async () => {
+    //     const response = await axios.get(
+    //       `http://localhost:5000/messages/notif/${loggedIn.id}`,
+    //       {}
+    //     );
+    //     setMessages(response.data);
+    //   };
+    //   getMessagesNotif();
+    // }
 
     return () => {
       setNotifications({});
@@ -67,6 +93,13 @@ const Navbar = ({ socket }) => {
     };
   }, [socket, xsrfToken, loggedIn.id]);
 
+  useEffect(() => {
+    if (xsrfToken !== "" && loggedIn.id){
+      const interval = setInterval(() => fetchNotifications(loggedIn.id, xsrfToken, setNotifications, setMessages), 2000);
+      return () => clearInterval(interval)
+    }
+
+  }, [loggedIn, xsrfToken])
   const displayNotifications = ({ sender_name, senderName, type }) => {
     let action;
     if (type === "like") {

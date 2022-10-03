@@ -3,8 +3,18 @@
   margin-right: 10vw;
   background-color: rgb(236 189 0 / 0%);
 }
-._4GdcU._i5--j, p.age{
+._4GdcU._i5--j,
+p.age {
   color: rgb(236, 189, 0);
+}
+.recommended {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.recommended-btn {
+  display: flex;
+  justify-content: center;
 }
 
 .filter {

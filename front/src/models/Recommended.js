@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import StarRating from "./StarRating";
 
 const Recommended = ({ filtered, socket, user }) => {
-    const history = useHistory();
+  const history = useHistory();
   const handleUserSelect = async (id) => {
     if (socket) {
       socket.emit("sendNotification", {
@@ -53,6 +53,7 @@ const Recommended = ({ filtered, socket, user }) => {
                       <p className="card-text">
                         About {Math.round(user.distance / 1000)} km away
                       </p>
+                      <p className="interests">{user.interests}</p>
                     </div>
                   </div>
                 </div>

@@ -16,6 +16,11 @@ p.age {
   display: flex;
   justify-content: center;
 }
+.interests{
+  font-size: 8px;
+  font-style: italic;
+  color: rgb(213, 170, 0);
+}
 
 .filter {
   padding-left: 20vw;

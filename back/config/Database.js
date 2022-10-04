@@ -29,6 +29,13 @@ db.connect(function (err) {
     if (err) throw err;
     console.log("User table created");
   });
+  var tags =
+    "CREATE TABLE IF NOT EXISTS tags (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, \
+            user_id INT(11), interest VARCHAR(500))";
+  db.query(tags, function (err, result) {
+    if (err) throw err;
+    console.log("Tags table created");
+  });
   var block =
     "CREATE TABLE IF NOT EXISTS block (id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, \
     user_id INT(11), blocked_id INT(11))";

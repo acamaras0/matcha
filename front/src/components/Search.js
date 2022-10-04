@@ -10,6 +10,8 @@ import axios from "axios";
 
 const Search = ({ socket }) => {
   const xsrfToken = getCookie("refreshToken");
+  const [sortState, setSortState] = useState("none");
+
   const [user, setUser] = useState();
   const distance = useGetDistance();
 
@@ -83,6 +85,17 @@ const Search = ({ socket }) => {
     return fame.fame >= minFame && fame.fame <= maxFame;
   });
 
+  const sortMethods = {
+    none: { method: (a, b) => null },
+    location: { method: (a, b) => a.distance - b.distance },
+    fame: { method: (a, b) => b.fame - a.fame },
+    age: { method: (a, b) => a.birthdate - b.birthdate },
+  };
+
+  if (distance) {
+    distance.sort(sortMethods[sortState].method);
+  }
+
   if (xsrfToken === "") {
     return <Redirect to="/" />;
   }
@@ -90,6 +103,20 @@ const Search = ({ socket }) => {
     return <div>Loading...</div>;
   return (
     <div className="filter">
+      <p className="text-center">🔺🔻</p>
+      <div className="sorting">
+        <select
+          defaultValue={"DEFAULT"}
+          onChange={(e) => setSortState(e.target.value)}
+        >
+          <option value="DEFAULT" disabled>
+            Show by
+          </option>
+          <option value="location">Distance</option>
+          <option value="age">Age</option>
+          <option value="fame">Popularity</option>
+        </select>
+      </div>
       <div>
         <label>By age</label>
         <MultiRangeSlider

@@ -16,7 +16,7 @@ p.age {
   display: flex;
   justify-content: center;
 }
-.interests{
+.interests {
   font-size: 10px;
   font-style: italic;
   color: rgb(236, 189, 0);
@@ -254,8 +254,8 @@ p.offline {
 }
 .notifications {
   position: absolute;
-  top: 83px;
-  right: 8vw;
+  top: 8vh;
+  right: 2vw;
   background-color: white;
   display: inline-grid;
   border: solid 3px rgb(236, 189, 0);
@@ -276,19 +276,11 @@ p.offline {
   margin: 5px;
 }
 
-/* .nButton {
-  width: 80%;
-  padding: 5px;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-} */
-
 .Auth-form-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80vw;
+  /* width: 80vw; */
   height: 90vh;
   padding-top: 20px;
   padding-bottom: 20px;

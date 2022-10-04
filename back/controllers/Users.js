@@ -561,7 +561,6 @@ export const profileFill = async (req, res) => {
       }
       if (result.length > 0) {
         const userId = result[0].id;
-        console.log("fill");
         db.query(
           "UPDATE users SET birthdate = ?, gender = ?, orientation = ?, interests = ?, bio = ? WHERE id = ?",
           [birthdate, gender, orientation, tags, bio, userId],
@@ -574,6 +573,14 @@ export const profileFill = async (req, res) => {
             });
           }
         );
+        var array = tags.split(",");
+        array.forEach((element) => {
+          console.log(element);
+          db.query("INSERT INTO tags (user_id, interest) VALUES (?, ?)", [
+            userId,
+            element,
+          ]);
+        });
       }
     }
   );

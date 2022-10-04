@@ -1,9 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { format } from "timeago.js";
 import StarRating from "./StarRating";
 
 const Recommended = ({ filtered, socket, user }) => {
   const history = useHistory();
+
   const handleUserSelect = async (id) => {
     if (socket) {
       socket.emit("sendNotification", {
@@ -15,7 +17,6 @@ const Recommended = ({ filtered, socket, user }) => {
     }
     history.push(`/users/${id}`);
   };
-
 
   // console.log(user.interests);
 
@@ -42,7 +43,7 @@ const Recommended = ({ filtered, socket, user }) => {
   // console.log(countTags(filtered));
 
   return (
-    <div className="recommended">
+    <div className="dashboard">
       {filtered &&
         filtered.map((user) => {
           if (user.profile_pic.length > 0) {
@@ -50,7 +51,7 @@ const Recommended = ({ filtered, socket, user }) => {
               <div
                 key={user.id}
                 className="card mb-4"
-                style={{ width: "12rem" }}
+                style={{ width: "20rem" }}
               >
                 <div className="row no-gutters">
                   <div>
@@ -79,6 +80,11 @@ const Recommended = ({ filtered, socket, user }) => {
                         About {Math.round(user.distance / 1000)} km away
                       </p>
                       <p className="interests">{user.interests}</p>
+                      <div>
+                        <p className="report">
+                          Last seen {format(user.updated_at)}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -17,6 +17,7 @@ const ProfileRandom = ({ socket }) => {
   const [likes, setLikes] = useState("");
   const [liked, setLiked] = useState(false);
   const [message, setMessage] = useState("");
+  const [report, setReport] = useState("");
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
   const distance = useGetDistance();
@@ -128,6 +129,17 @@ const ProfileRandom = ({ socket }) => {
     });
   };
 
+  const handleReport = async (id) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/report/${user.id}/${id}`
+      );
+      setReport(response.data.msg);
+    } catch (error) {
+      if (error.response) console.log("error", error.response.data);
+    }
+  };
+
   if (xsrfToken === "") {
     history.push("/");
   }
@@ -199,9 +211,15 @@ const ProfileRandom = ({ socket }) => {
               <label>Interests</label>
               <p className="card-text">{selectedUser.interests}</p>
             </div>
-          </div>{" "}
-          <br />
+          </div>
           <div>
+            <button
+              onClick={() => handleReport(user.id)}
+              className="btn btn-warning"
+            >
+              Report fake account
+            </button>
+            <p className="message">{report}</p>
             <br />
             <button
               onClick={() => block(selectedUser.id)}

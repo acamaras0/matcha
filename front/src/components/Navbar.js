@@ -149,71 +149,11 @@ const NavBar = ({ socket }) => {
 
   return (
     <>
-     {/* <Navbar expand="lg">
-      <Container>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-          <img onClick={Dashboard} src={logo} className="logo" alt="" />
-          <div className="buttons">
-                    <div className="icon" onClick={MyProfile}>
-                      <img
-                        // src={loggedIn.profile_pic}
-                        src={user}
-                        className="icon-profile"
-                        alt="profile"
-                      />
-                    </div>
-                    <div className="icon" onClick={Filter}>
-                      <img
-                        src={filter}
-                        className="icon-profile"
-                        alt="profile"
-                      />
-                    </div>
-                    <div className="icon" onClick={() => setOpen(!open)}>
-                      <img src={notification} className="iconImg" alt="notif" />
-                      {notifications?.length > 0 && (
-                        <div className="counter"></div>
-                      )}
-                    </div>
-                    <div className="icon">
-                      <img
-                        onClick={Chat}
-                        src={chat}
-                        alt="chat"
-                        className="iconImg"
-                      />
-                      {messages?.length > 0 && <div className="counter"></div>}
-                    </div>
-                    <div className="icon">
-                      <img
-                        onClick={Logout}
-                        src={logout}
-                        alt="logout"
-                        className="iconImg"
-                      />
-                    </div>
-                  </div>
-             
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-            <div className="icon" onClick={() => setOpen(!open)}>
-                      <img src={notification} className="iconImg" alt="notif" />
-                      {notifications?.length > 0 && (
-                        <div className="counter"></div>
-                      )}
-                    </div>
-            </NavDropdown>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar> */}
       <nav className="navbar" role="navigation">
-          <div className="container">
-            <div className="navbar-brand">
               <div className="Nav-logo">
                 <img onClick={Dashboard} src={logo} className="logo" alt="" />
               </div>
+            <div className="navbar-brand">
             </div>
             <div id="navbarBasicExample" className="navbar-menu">
               <div className="navbar-end">
@@ -261,7 +201,6 @@ const NavBar = ({ socket }) => {
                 </div>
               </div>
             </div>
-          </div>
           {open && (
             <div className="notifications">
               {notifications.length > 0

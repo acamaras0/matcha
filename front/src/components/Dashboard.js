@@ -79,14 +79,21 @@ const Dashboard = ({ socket }) => {
             ""
           );
         }
+        const allCommon = loggedInterests.every((value) => {
+          return result.includes(value);
+        });
+
         const multipleExist = loggedInterests.some((value) => {
           return result.includes(value);
         });
-        if (multipleExist) {
+
+        if (allCommon || multipleExist) {
           filtered.push(u);
         }
       }
-      filtered.sort((a, b) => (a.interests.length > b.interests.length ? -1 : 1))
+      filtered.sort((a, b) =>
+        a.interests > b.interests ? -1 : 1
+      );
       return filtered;
     });
   }

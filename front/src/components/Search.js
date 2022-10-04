@@ -24,26 +24,26 @@ const Search = ({ socket }) => {
   const [minDist, set_minDist] = useState(0);
   const [maxDist, set_maxDist] = useState(800);
   const [interests, setInterests] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [usersFiltered, setUsersFiltered] = useState([]);
 
-  useEffect(() => {
-    if (interests.length) {
-      let filtered = [];
-      distance.forEach((user) => {
-        let result = user.interests.split(",");
-        for (let index = 0; index < result.length; index++) {
-          result[index] = result[index].replace(/^\s+|\s+$/gm, "");
-        }
-        const multipleExist = interests.every((value) => {
-          return result.includes(value);
-        });
-        if (multipleExist) {
-          filtered.push(user);
-        }
-      });
-      setFilteredUsers(filtered);
-    }
-  }, [interests, distance]);
+  // useEffect(() => {
+  //   if (interests.length) {
+  //     let filtered = [];
+  //     distance.forEach((user) => {
+  //       let result = user.interests.split(",");
+  //       for (let index = 0; index < result.length; index++) {
+  //         result[index] = result[index].replace(/^\s+|\s+$/gm, "");
+  //       }
+  //       const multipleExist = interests.every((value) => {
+  //         return result.includes(value);
+  //       });
+  //       if (multipleExist) {
+  //         filtered.push(user);
+  //       }
+  //     });
+  //     setFilteredUsers(filtered);
+  //   }
+  // }, [interests, distance]);
 
   useEffect(() => {
     if (xsrfToken !== "") {
@@ -73,17 +73,38 @@ const Search = ({ socket }) => {
     set_maxDist(e.maxValue);
   };
 
-  const byDistance = distance.filter((km) => {
-    return km.distance / 1000 >= minDist && km.distance / 1000 <= maxDist;
-  });
+  const search = () => {
+    let filtered = distance;
+    filtered = filtered.filter((km) => {
+      return km.distance / 1000 >= minDist && km.distance / 1000 <= maxDist;
+    });
 
-  const byAge = distance.filter((age) => {
-    return age.birthdate >= minAge && age.birthdate <= maxAge;
-  });
+    filtered = filtered.filter((age) => {
+      return age.birthdate >= minAge && age.birthdate <= maxAge;
+    });
 
-  const byFame = distance.filter((fame) => {
-    return fame.fame >= minFame && fame.fame <= maxFame;
-  });
+    filtered = filtered.filter((fame) => {
+      return fame.fame >= minFame && fame.fame <= maxFame;
+    });
+
+    let final = [];
+    if (interests.length) {
+      filtered.forEach((user) => {
+        let result = user.interests.split(",");
+        for (let index = 0; index < result.length; index++) {
+          result[index] = result[index].replace(/^\s+|\s+$/gm, "");
+        }
+        const multipleExist = interests.every((value) => {
+          return result.includes(value);
+        });
+        if (multipleExist) {
+          final.push(user);
+        }
+      });
+    }
+
+    setUsersFiltered(final);
+  };
 
   const sortMethods = {
     none: { method: (a, b) => null },
@@ -99,8 +120,7 @@ const Search = ({ socket }) => {
   if (xsrfToken === "") {
     return <Redirect to="/" />;
   }
-  if (!byAge || !byDistance || !byFame || !filteredUsers || !distance)
-    return <div>Loading...</div>;
+  if (!distance || !usersFiltered) return <div>Loading...</div>;
   return (
     <div className="filter">
       <p className="text-center">🔺🔻</p>
@@ -127,12 +147,13 @@ const Search = ({ socket }) => {
           barRightColor="yellow"
           min={18}
           max={99}
+          minValue={minAge}
+          maxValue={maxAge}
           step={1}
           onInput={(e) => {
             handleAge(e);
           }}
         />
-        <Card array={byAge} socket={socket} user={user} />
       </div>
       <div>
         <label>By popularity</label>
@@ -144,14 +165,14 @@ const Search = ({ socket }) => {
           barRightColor="yellow"
           min={0}
           max={100}
+          minValue={minFame}
+          maxValue={maxFame}
           step={1}
           onInput={(e) => {
             handleFame(e);
           }}
         />
-        <Card array={byFame} socket={socket} user={user} />
       </div>
-
       <div>
         <label>By distance</label>
         <MultiRangeSlider
@@ -162,17 +183,23 @@ const Search = ({ socket }) => {
           barRightColor="yellow"
           min={0}
           max={800}
+          minValue={minDist}
+          maxValue={maxDist}
           step={1}
           onInput={(e) => {
             handleDistance(e);
           }}
         />
-        <Card array={byDistance} socket={socket} user={user} />
       </div>
       <div>
         <label>By tags</label>
         <Tags setInterests={setInterests} />
-        <Card array={filteredUsers} socket={socket} user={user} />
+        <div className="recommended-btn">
+          <button className="btn btn-warning" onClick={search}>
+            Search!
+          </button>
+        </div>
+        <Card array={usersFiltered} socket={socket} user={user} />
       </div>
     </div>
   );

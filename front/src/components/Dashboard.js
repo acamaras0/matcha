@@ -86,6 +86,7 @@ const Dashboard = ({ socket }) => {
           filtered.push(u);
         }
       }
+      filtered.sort((a, b) => (a.interests.length > b.interests.length ? -1 : 1))
       return filtered;
     });
   }

@@ -107,26 +107,36 @@ export const updateProfile = async (req, res) => {
     country,
     birthdate,
   } = req.body;
+
   const tags = interests.join(", ");
-  if (firstName) {
+  if (
+    firstName &&
+    validator.isAlphanumeric(firstName) &&
+    firstName.length < 20 &&
+    firstName.length > 2
+  ) {
     db.query("UPDATE users SET firstname = ? WHERE id = ?", [firstName, id]);
   }
-  if (lastName) {
+  if (
+    lastName &&
+    validator.isAlphanumeric(lastName) &&
+    lastName.length < 20 &&
+    lastName.length > 2
+  ) {
     db.query("UPDATE users SET lastname = ? WHERE id = ?", [lastName, id]);
   }
   if (
     username &&
     validator.isAlphanumeric(username) &&
-    username < 10 &&
-    username > 2
+    username.length < 10 &&
+    username.length > 2
   ) {
     db.query("UPDATE users SET username = ? WHERE id = ?", [username, id]);
   }
-  if (email) {
+  if (email && validator.isEmail(email) && email.length < 30) {
     db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
       if (err) console.log(err);
-      console.log(result);
-      if (result) {
+      if (result.length > 0) {
         return res.status(200).json({ msg: "Email already exists" });
       } else db.query("UPDATE users SET email = ? WHERE id = ?", [email, id]);
     });
@@ -146,16 +156,16 @@ export const updateProfile = async (req, res) => {
       id,
     ]);
   }
-  if (geoLat && validator.isLatLong(geoLat)) {
+  if (geoLat && validator.isLatLong(geoLat, geoLng)) {
     db.query("UPDATE users SET geo_lat = ? WHERE id = ?", [geoLat, id]);
   }
-  if (geoLng && validator.isLatLong(geoLng)) {
+  if (geoLng && validator.isLatLong(geoLat, geoLng)) {
     db.query("UPDATE users SET geo_long = ? WHERE id = ?", [geoLng, id]);
   }
-  if (city) {
+  if (city && city.length > 0 && city.length < 20) {
     db.query("UPDATE users SET city = ? WHERE id = ?", [city, id]);
   }
-  if (country) {
+  if (country && country.length > 0 && country.length < 20) {
     db.query("UPDATE users SET country = ? WHERE id = ?", [country, id]);
   }
   if (birthdate) {

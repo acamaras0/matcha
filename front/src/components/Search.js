@@ -25,25 +25,7 @@ const Search = ({ socket }) => {
   const [maxDist, set_maxDist] = useState(800);
   const [interests, setInterests] = useState([]);
   const [usersFiltered, setUsersFiltered] = useState([]);
-
-  // useEffect(() => {
-  //   if (interests.length) {
-  //     let filtered = [];
-  //     distance.forEach((user) => {
-  //       let result = user.interests.split(",");
-  //       for (let index = 0; index < result.length; index++) {
-  //         result[index] = result[index].replace(/^\s+|\s+$/gm, "");
-  //       }
-  //       const multipleExist = interests.every((value) => {
-  //         return result.includes(value);
-  //       });
-  //       if (multipleExist) {
-  //         filtered.push(user);
-  //       }
-  //     });
-  //     setFilteredUsers(filtered);
-  //   }
-  // }, [interests, distance]);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (xsrfToken !== "") {
@@ -69,6 +51,7 @@ const Search = ({ socket }) => {
   };
 
   const handleDistance = (e) => {
+    // setShow(false);
     set_minDist(e.minValue);
     set_maxDist(e.maxValue);
   };
@@ -102,7 +85,7 @@ const Search = ({ socket }) => {
         }
       });
     }
-
+    setShow(true);
     setUsersFiltered(final);
   };
 
@@ -114,7 +97,7 @@ const Search = ({ socket }) => {
   };
 
   if (distance) {
-    distance.sort(sortMethods[sortState].method);
+    usersFiltered.sort(sortMethods[sortState].method);
   }
 
   if (xsrfToken === "") {
@@ -139,57 +122,63 @@ const Search = ({ socket }) => {
       </div>
       <div>
         <label>By age</label>
-        <MultiRangeSlider
-          ruler={false}
-          style={{ border: "none", boxShadow: "none", padding: "15px 10px" }}
-          barLeftColor="yellow"
-          barInnerColor="red"
-          barRightColor="yellow"
-          min={18}
-          max={99}
-          minValue={minAge}
-          maxValue={maxAge}
-          step={1}
-          onInput={(e) => {
-            handleAge(e);
-          }}
-        />
+        <div onClick={() => setShow(false)}>
+          <MultiRangeSlider
+            ruler={false}
+            style={{ border: "none", boxShadow: "none", padding: "15px 10px" }}
+            barLeftColor="yellow"
+            barInnerColor="red"
+            barRightColor="yellow"
+            min={18}
+            max={99}
+            minValue={18}
+            maxValue={99}
+            step={1}
+            onInput={(e) => {
+              handleAge(e);
+            }}
+          />
+        </div>
       </div>
       <div>
         <label>By popularity</label>
-        <MultiRangeSlider
-          ruler={false}
-          style={{ border: "none", boxShadow: "none", padding: "15px 10px" }}
-          barLeftColor="yellow"
-          barInnerColor="red"
-          barRightColor="yellow"
-          min={0}
-          max={100}
-          minValue={minFame}
-          maxValue={maxFame}
-          step={1}
-          onInput={(e) => {
-            handleFame(e);
-          }}
-        />
+        <div onClick={() => setShow(false)}>
+          <MultiRangeSlider
+            ruler={false}
+            style={{ border: "none", boxShadow: "none", padding: "15px 10px" }}
+            barLeftColor="yellow"
+            barInnerColor="red"
+            barRightColor="yellow"
+            min={0}
+            max={100}
+            minValue={0}
+            maxValue={100}
+            step={1}
+            onInput={(e) => {
+              handleFame(e);
+            }}
+          />
+        </div>
       </div>
       <div>
-        <label>By distance</label>
-        <MultiRangeSlider
-          ruler={false}
-          style={{ border: "none", boxShadow: "none", padding: "15px 10px" }}
-          barLeftColor="yellow"
-          barInnerColor="red"
-          barRightColor="yellow"
-          min={0}
-          max={800}
-          minValue={minDist}
-          maxValue={maxDist}
-          step={1}
-          onInput={(e) => {
-            handleDistance(e);
-          }}
-        />
+        <div onClick={() => setShow(false)}>
+          <label>By distance</label>
+          <MultiRangeSlider
+            ruler={false}
+            style={{ border: "none", boxShadow: "none", padding: "15px 10px" }}
+            barLeftColor="yellow"
+            barInnerColor="red"
+            barRightColor="yellow"
+            min={0}
+            max={800}
+            minValue={0}
+            maxValue={800}
+            step={1}
+            onInput={(e) => {
+              handleDistance(e);
+            }}
+          />
+        </div>
       </div>
       <div>
         <label>By tags</label>
@@ -199,7 +188,9 @@ const Search = ({ socket }) => {
             Search!
           </button>
         </div>
-        <Card array={usersFiltered} socket={socket} user={user} />
+        {show ? (
+          <Card array={usersFiltered} socket={socket} user={user} />
+        ) : null}
       </div>
     </div>
   );

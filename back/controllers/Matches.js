@@ -47,16 +47,15 @@ export const insertLike = async (req, res) => {
         result1[0].match_status == 1
       ) {
         db.query(
-          "UPDATE matches SET match_status = 0 WHERE liker = ? AND liked = ? OR liker = ? AND liked = ?",
+          "DELETE FROM matches WHERE liker = ? AND liked = ? OR liker = ? AND liked = ?",
           [liked, liker, liker, liked]
         );
-        db.query("UPDATE users SET fame = fame - 1 WHERE id = ?", [
-          liked,
-        ]);
+        db.query("UPDATE users SET fame = fame - 1 WHERE id = ?", [liked]);
         db.query(
           "DELETE FROM chat WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?)",
           [liker, liked, liked, liker]
         );
+
         return res.status(200).send({ msg: "Unmatched" });
       }
     }

@@ -103,21 +103,18 @@ const ProfileRandom = ({ socket }) => {
         console.log("error", error.response.data);
       }
     }
-    if (liked === "like") {
       socket.emit("sendNotification", {
         senderName: user.username,
         senderId: user.id,
         receiverName: id,
         type: "like",
       });
-    } else if (liked === "match") {
-      socket.emit("sendNotification", {
-        senderName: user.username,
-        senderId: user.id,
-        receiverName: id,
-        type: "match",
-      });
-    }
+      // socket.emit("sendNotification", {
+      //   senderName: user.username,
+      //   senderId: user.id,
+      //   receiverName: id,
+      //   type: "match",
+      // });
   };
 
   const handleDislike = async (id) => {
@@ -132,16 +129,14 @@ const ProfileRandom = ({ socket }) => {
         console.log("error", error.response.data);
       }
     }
-    console.log(liked);
-    if (message === "dislike") {
       socket.emit("sendNotification", {
         senderName: user.username,
         senderId: user.id,
         receiverName: id,
         type: "unlike",
       });
-    }
   };
+  console.log(liked);
 
   const handleReport = async (id) => {
     try {

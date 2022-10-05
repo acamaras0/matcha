@@ -13,10 +13,24 @@ const Chat = ({ socket }) => {
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const xsrfToken = getCookie("refreshToken");
+  const [user, setUser] = useState();
 
   const history = useHistory();
   const id = useParams().id;
   const scrollRef = useRef();
+
+  useEffect(() => {
+    if (xsrfToken !== "") {
+      const getLoggedIn = async () => {
+        const response = await axios.get(
+          `http://localhost:5000/user/${xsrfToken}`,
+          {}
+        );
+        setUser(response.data);
+      };
+      getLoggedIn();
+    }
+  }, [xsrfToken]);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -69,9 +83,9 @@ const Chat = ({ socket }) => {
       receiverId: receiverId,
       text: newMessage,
     });
-    console.log(currentChat);
+
     socket.emit("sendNotification", {
-      senderName: "Someone",
+      senderName: user.username,
       senderId: id,
       receiverName: receiverId,
       type: "message",
@@ -121,10 +135,7 @@ const Chat = ({ socket }) => {
           {conversations &&
             conversations.map((c) => (
               <div key={uuidv4()} onClick={() => setCurrentChat(c)}>
-                <Conversations
-                  conversations={c}
-                  currentUser={id}
-                />
+                <Conversations conversations={c} currentUser={id} />
               </div>
             ))}
         </div>

@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
-export default function Conversations({ conversations, currentUser, socket }) {
+export default function Conversations({ conversations, currentUser }) {
   const [user, setUser] = useState("");
-  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     const friendId =
@@ -13,11 +12,6 @@ export default function Conversations({ conversations, currentUser, socket }) {
         ? conversations.user2
         : conversations.user1;
 
-    if (socket) {
-      socket.on("getMessage", (data) => {
-        setMessages((prev) => [...prev, data]);
-      });
-    }
     const getUser = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/users/${friendId}`);
@@ -28,22 +22,12 @@ export default function Conversations({ conversations, currentUser, socket }) {
     };
     getUser();
 
-    const getMessagesNotif = async () => {
-      const response = await axios.get(
-        `http://localhost:5000/messages/notif/${currentUser}`,
-        {}
-      );
-      setMessages(response.data);
-    };
-    getMessagesNotif();
     return () => {
       setUser({});
-      setMessages({});
     };
-  }, [conversations.user1, conversations.user2, currentUser, socket]);
+  }, [conversations.user1, conversations.user2, currentUser]);
 
   const handleRead = async () => {
-    setMessages([]);
     await axios.post(`http://localhost:5000/messages/seen/${currentUser}`);
   };
 
@@ -59,7 +43,6 @@ export default function Conversations({ conversations, currentUser, socket }) {
         className="conversationImg"
         onClick={goToProfile}
       />
-      {messages?.length > 0 && <div className="counter"></div>}
       <span key={uuidv4()} className="conversationName" onClick={handleRead}>
         {user && user.username}
       </span>

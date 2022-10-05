@@ -30,7 +30,11 @@ const Overview = ({ pics, user }) => {
         </p>
         <StarRating rating={likes} />
         <div className="card-img">
-          {pics.length > 0 ? <Gallery galleryImages={pics} /> : <p className="no-pics">No pictures available.</p>}
+          {pics.length > 0 ? (
+            <Gallery galleryImages={pics} />
+          ) : (
+            <p className="no-pics">No pictures available.</p>
+          )}
         </div>
         <div style={{ margin: "10%" }}>
           <div className="card">

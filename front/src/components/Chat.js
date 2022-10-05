@@ -69,6 +69,13 @@ const Chat = ({ socket }) => {
       receiverId: receiverId,
       text: newMessage,
     });
+    console.log(currentChat);
+    socket.emit("sendNotification", {
+      senderName: "Someone",
+      senderId: id,
+      receiverName: receiverId,
+      type: "message",
+    });
 
     setMessages([...messages, message]);
     setNewMessage("");
@@ -117,7 +124,6 @@ const Chat = ({ socket }) => {
                 <Conversations
                   conversations={c}
                   currentUser={id}
-                  socket={socket}
                 />
               </div>
             ))}

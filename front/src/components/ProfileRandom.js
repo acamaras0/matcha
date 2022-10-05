@@ -33,7 +33,9 @@ const ProfileRandom = ({ socket }) => {
       };
       getLoggedIn();
     }
+  }, [xsrfToken]);
 
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/users/${id}`);
@@ -78,7 +80,7 @@ const ProfileRandom = ({ socket }) => {
       }
     };
     checkIfLiked();
-  }, [id, setSelectedUser, setLikes, user, xsrfToken]);
+  }, [id, setSelectedUser, setLikes, user]);
 
   const block = async (id) => {
     try {
@@ -101,12 +103,21 @@ const ProfileRandom = ({ socket }) => {
         console.log("error", error.response.data);
       }
     }
-    socket.emit("sendNotification", {
-      senderName: user.username,
-      senderId: user.id,
-      receiverName: id,
-      type: "like",
-    });
+    if (liked === "like") {
+      socket.emit("sendNotification", {
+        senderName: user.username,
+        senderId: user.id,
+        receiverName: id,
+        type: "like",
+      });
+    } else if (liked === "match") {
+      socket.emit("sendNotification", {
+        senderName: user.username,
+        senderId: user.id,
+        receiverName: id,
+        type: "match",
+      });
+    }
   };
 
   const handleDislike = async (id) => {
@@ -121,12 +132,15 @@ const ProfileRandom = ({ socket }) => {
         console.log("error", error.response.data);
       }
     }
-    socket.emit("sendNotification", {
-      senderName: user.username,
-      senderId: user.id,
-      receiverName: id,
-      type: "unlike",
-    });
+    console.log(liked);
+    if (message === "dislike") {
+      socket.emit("sendNotification", {
+        senderName: user.username,
+        senderId: user.id,
+        receiverName: id,
+        type: "unlike",
+      });
+    }
   };
 
   const handleReport = async (id) => {

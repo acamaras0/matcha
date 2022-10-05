@@ -338,11 +338,13 @@ const Profile = () => {
           <button className="btn btn-warning" onClick={() => setShow(!show)}>
             Profile Overview
           </button>
-          {pics ? (
-            <div className="card">
-              {show ? <Overview pics={pics} user={user} /> : null}
-            </div>
-          ) : null}
+          <div className="view">
+            {pics ? (
+              <div className="card" style={{ width: "50rem" }}>
+                {show ? <Overview pics={pics} user={user} /> : null}
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     );

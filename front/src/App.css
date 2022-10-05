@@ -6,6 +6,11 @@
 p.age {
   color: rgb(236, 189, 0);
 }
+.no-pics{
+  padding-top: 5vh;
+  color: #999;
+  font-style: italic;
+}
 .recommended {
   display: inline-flex;
   flex-wrap: wrap;
@@ -115,6 +120,11 @@ h3 {
   color: rgb(236, 189, 0);
 }
 
+.view{
+  display: flex;
+  justify-content: center;
+}
+
 .card-password {
   padding-left: 30vw;
   padding-right: 30vw;
@@ -131,8 +141,9 @@ img.card-img-top {
 .images {
   display: flex;
   align-content: flex-end;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
+  margin: 2%;
 }
 .activ {
   padding: 10vw;
@@ -151,11 +162,6 @@ img.card-img-top {
   width: 100%;
   z-index: 1;
 }
-/* .Nav-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-} */
 .Nav-links a {
   color: rgb(236, 189, 0);
   font-size: 15px;
@@ -164,9 +170,13 @@ img.card-img-top {
 }
 .Nav-logo {
   margin-top: 10px;
-  margin-left: 20px;
+  margin-left: 40px;
   margin-bottom: 15px;
   cursor: pointer;
+}
+nav.navbar{
+  display: flex;
+  justify-content: space-around;
 }
 
 .dashboard {
@@ -253,20 +263,18 @@ p.offline {
   flex-direction: row;
 }
 .notifications {
-  position: absolute;
-  top: 8vh;
-  right: 2vw;
   background-color: white;
-  display: inline-grid;
+  display: flex;
   border: solid 3px rgb(236, 189, 0);
   border-radius: 8px;
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
   z-index: 99999;
   align-items: center;
   justify-items: center;
+  flex-direction: column-reverse;
 }
 .notification {
-  padding: 5px;
+  padding: 3px;
 }
 .buttons {
   display: flex;

@@ -18,30 +18,6 @@ const Recommended = ({ filtered, socket, user }) => {
     history.push(`/users/${id}`);
   };
 
-  // console.log(user.interests);
-
-  // const wordCountMapReducer = function (wordCountMap, word) {
-  //   if (wordCountMap.has(word)) {
-  //     wordCountMap.set(word, wordCountMap.get(word) + 1);
-  //   } else {
-  //     wordCountMap.set(word, 1);
-  //   }
-  //   return wordCountMap;
-  // };
-
-  // const countTags = (filtered) =>
-  //   [
-  //     ...filtered
-  //       .flatMap((item) => item.interests.split(", "))
-  //       .reduce(wordCountMapReducer, new Map())
-  //       .entries(),
-  //   ]
-  //     .sort((a, b) => b[1] - a[1])
-  //     .map(([word, count]) => `${word} (${count})`)
-  //     .join(", ");
-
-  // console.log(countTags(filtered));
-
   return (
     <div className="dashboard">
       {filtered &&

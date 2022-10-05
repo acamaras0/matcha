@@ -79,7 +79,8 @@ const Dashboard = ({ socket }) => {
     );
   return (
     <div className="dashboard-wrap">
-      <h3 className="text-center">▼ Recommended for you ▼</h3>
+      <br />
+      <h3 className="text-center">▼ Suggestions ▼</h3>
       <br />
       <p className="text-center">🔺🔻</p>
       <div className="sorting">

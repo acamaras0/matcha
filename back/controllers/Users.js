@@ -131,7 +131,20 @@ export const updateProfile = async (req, res) => {
     username.length < 10 &&
     username.length > 2
   ) {
-    db.query("UPDATE users SET username = ? WHERE id = ?", [username, id]);
+    db.query(
+      "SELECT * FROM users WHERE username = ?",
+      [username],
+      (err, result) => {
+        if (err) console.log(err);
+        if (result.length > 0) {
+          return res.status(200).json({ msg: "Username already exists" });
+        } else
+          db.query("UPDATE users SET username = ? WHERE id = ?", [
+            username,
+            id,
+          ]);
+      }
+    );
   }
   if (email && validator.isEmail(email) && email.length < 30) {
     db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
@@ -156,10 +169,10 @@ export const updateProfile = async (req, res) => {
       id,
     ]);
   }
-  if (geoLat && validator.isLatLong(geoLat, geoLng)) {
+  if (geoLat && geoLat >= -90 && geoLat <= 90) {
     db.query("UPDATE users SET geo_lat = ? WHERE id = ?", [geoLat, id]);
   }
-  if (geoLng && validator.isLatLong(geoLat, geoLng)) {
+  if (geoLng && geoLng >= -180 && geoLng <= 180) {
     db.query("UPDATE users SET geo_long = ? WHERE id = ?", [geoLng, id]);
   }
   if (city && city.length > 0 && city.length < 20) {
@@ -171,7 +184,7 @@ export const updateProfile = async (req, res) => {
   if (birthdate) {
     db.query("UPDATE users SET birthdate = ? WHERE id = ?", [birthdate, id]);
   }
-  res.status(200).json({ msg: "Profile updated" });
+  // res.status(200).json({ msg: "Profile updated" });
 };
 
 export const resetPass = async (req, res) => {

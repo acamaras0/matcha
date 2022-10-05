@@ -168,7 +168,7 @@ const ProfileRandom = ({ socket }) => {
               {pics.length >= 0 ? (
                 <Gallery galleryImages={pics} />
               ) : (
-                <p>No pics available.</p>
+                <p className="no-pics">No pics available.</p>
               )}
             </div>{" "}
             <br />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Select from "react-select";
 
 const options = [
@@ -7,14 +7,11 @@ const options = [
 ];
 
 const Gender = ({ setGender }) => {
-  const [selected, setSelected] = useState([]);
-  console.log(selected);
   return (
     <div>
       <Select
         options={options}
         onChange={(choice) => {
-          setSelected(choice.value);
           setGender(choice.value);
         }}
         labelledBy="Select"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Select from "react-select";
 
 const options = [
@@ -7,16 +7,12 @@ const options = [
   { label: "Bisexual", value: "bisexual" },
 ];
 
-const Orientation = ({setOrientation}) => {
-  const [selected, setSelected] = useState([]);
-  console.log(selected);
-
+const Orientation = ({ setOrientation }) => {
   return (
     <div>
       <Select
         options={options}
         onChange={(choice) => {
-          setSelected(choice.value);
           setOrientation(choice.value);
         }}
         labelledBy="Select"

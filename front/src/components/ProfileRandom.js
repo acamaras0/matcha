@@ -105,6 +105,7 @@ const ProfileRandom = ({ socket }) => {
         `http://localhost:5000/like/${user.id}/${id}`,
         {}
       );
+      setMessage(response.data.msg);
       if (message === "Liked!") {
         socket.emit("sendNotification", {
           senderName: user.username,
@@ -120,7 +121,6 @@ const ProfileRandom = ({ socket }) => {
           type: "match",
         });
       }
-      setMessage(response.data.msg);
     } catch (error) {
       if (error.response) {
         console.log("error", error.response.data);

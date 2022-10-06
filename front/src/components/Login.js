@@ -33,12 +33,12 @@ const Login = () => {
   }
   return (
     <div>
-      <div className="logo1">
-        <img className="logo" src={logo} alt="logo" />
-      </div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Auth}>
           <div className="Auth-form-content">
+            <div className="logo1">
+              <img className="logo" src={logo} alt="logo" />
+            </div>
             <h3 className="Auth-form-title">Sign in</h3>
             <p className="forgot-password text-right mt-2">
               Are you new around here?

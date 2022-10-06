@@ -15,9 +15,6 @@ const Register = () => {
   const [message, setMessage] = useState("");
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
-  // setTimeout(() => {
-  //   setMessage("");
-  // }, 8000);
 
   const Register = async (e) => {
     e.preventDefault();
@@ -31,6 +28,9 @@ const Register = () => {
         confPassword: confirmPasswordReg,
       });
       setMessage(res.data.msg);
+      setTimeout(() => {
+        setMessage("");
+      }, 4000);
       if (res.data.message === "success") {
         history.push("/");
       }
@@ -47,12 +47,12 @@ const Register = () => {
 
   return (
     <div>
-      <div className="logo1">
-        <img className="logo" src={logo} alt="logo" />
-      </div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Register}>
           <div className="Auth-form-content">
+            <div className="logo1">
+              <img className="logo" src={logo} alt="logo" />
+            </div>
             <h3 className="Auth-form-title">Sign up</h3>
             <p className="info">
               *First name, last name and username have to be in between 2 - 10

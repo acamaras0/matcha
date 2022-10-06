@@ -201,11 +201,11 @@ img.card-img.img-fluid {
 }
 
 .logo {
-  margin-bottom: 8px;
-  width: 25vh;
+  margin-bottom: 5vh;
+  width: 8vh;
 }
 .logo1 {
-  padding-top: 30px;
+  padding-top: 10px;
   display: flex;
   justify-content: center;
   margin-bottom: 8px;
@@ -297,9 +297,8 @@ p.offline {
   align-items: center;
   /* width: 80vw; */
   height: 90vh;
-  padding-top: 20px;
-  padding-bottom: 20px;
   text-align: center;
+  padding:10px
 }
 
 .Auth-form {
@@ -380,7 +379,7 @@ a:active {
 
 .footer {
   padding: 1%;
-  margin-top: 10vw;
+  margin-top: 15vh;
   font-size: 10px;
 }
 
@@ -397,7 +396,7 @@ a:active {
 
 .card {
   margin: 2vw;
-  /* box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px; */
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
 }
 
 .card-text {

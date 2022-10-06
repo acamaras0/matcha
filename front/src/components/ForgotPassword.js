@@ -29,16 +29,16 @@ const ForgotPassword = () => {
     }
   };
 
-  if (xsrfToken!== "") {
+  if (xsrfToken !== "") {
     history.push("/dashboard");
   }
   return (
     <div>
-      <div className="logo1">
-        <img className="logo" src={logo} alt="logo" />
-      </div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={forgotPassword}>
+          <div className="logo1">
+            <img className="logo" src={logo} alt="logo" />
+          </div>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Password recovery</h3>
             <br />

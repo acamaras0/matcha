@@ -1,12 +1,15 @@
 import db from "../config/Database.js";
 import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+dotenv.config();
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
+const PASSWORD_EMAIL = process.env.PASSWORD_EMAIL;
+
+var transporter = nodemailer.createTransport({
+  service: "gmail",
   auth: {
-    user: "add349a94e8fe5",
-    pass: "161004143cb79c",
+    user: "matcha.hive1@gmail.com",
+    pass: PASSWORD_EMAIL,
   },
 });
 
@@ -26,8 +29,8 @@ export const report = async (req, res) => {
         reported,
       ]);
       const mailOptions = {
-        from: "matcha@gmail.com",
-        to: "sixty-ninety@proton.me",
+        from: "matcha.hive1@gmail.com",
+        to: "matcha.hive1@gmail.com",
         subject: "Report",
         text: "User " + id + " reported user " + reported,
       };

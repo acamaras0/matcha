@@ -84,7 +84,8 @@ export const checkIfLiked = async (req, res) => {
       if (err) console.log(err);
       if (result.length > 0) {
         if (result[0].match_status == 1) {
-          return res.status(200).send({ msg: "match" });
+          res.status(200).send({ msg: "match" });
+          return 0
         } else {
           return res.status(200).send({ msg: "like" });
         }
@@ -102,3 +103,4 @@ export const getFame = async (req, res) => {
     if (result) res.json(result[0]);
   });
 };
+

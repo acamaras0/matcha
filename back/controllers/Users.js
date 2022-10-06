@@ -6,23 +6,18 @@ import db from "../config/Database.js";
 import geoip from "geoip-lite";
 import { publicIpv4 } from "public-ip";
 import makeid from "../utils/functions.js";
+import dotenv from "dotenv";
+dotenv.config();
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.mailtrap.io",
-  port: 2525,
+const PASSWORD_EMAIL = process.env.PASSWORD_EMAIL;
+
+var transporter = nodemailer.createTransport({
+  service: "gmail",
   auth: {
-    user: "add349a94e8fe5",
-    pass: "161004143cb79c",
+    user: "matcha.hive1@gmail.com",
+    pass: PASSWORD_EMAIL,
   },
 });
-
-// var transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     user: 'anamaria.finn0@gmail.com',
-//     pass: ''
-//   }
-// });
 
 export const addView = async (req, res) => {
   const id = req.params.id;
@@ -205,7 +200,7 @@ export const resetPass = async (req, res) => {
         if (err) {
           res.send({ err: err });
         }
-        if (result && result[0].reset_token === token) {
+        if (result.length > 0 && result[0].reset_token === token) {
           const saltRounds = 10;
           bcrypt.hash(password, saltRounds, function (err, hash) {
             db.query(
@@ -219,7 +214,7 @@ export const resetPass = async (req, res) => {
             );
           });
         } else {
-          return res.status(200).send("Invalid token");
+          return res.status(200).send({ msg: "Invalid token" });
         }
       }
     );
@@ -232,7 +227,7 @@ export const forgotPass = async (req, res) => {
 
   db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
     if (err) return console.log(err);
-    if (result.length > 1) {
+    if (result.length > 0) {
       db.query(
         "UPDATE users SET reset_token = ? WHERE email = ?",
         [token, email],
@@ -240,7 +235,7 @@ export const forgotPass = async (req, res) => {
           if (err) return console.log(err);
           if (result) {
             const mailOptions = {
-              from: "Matcha",
+              from: "matcha.hive1@gmail.com",
               to: email,
               subject: "Reset your password",
               html: `<p>Click <a href="http://localhost:3000/resetPassword/${token}">here</a> to reset your password</p>`,
@@ -419,7 +414,7 @@ export const Register = async (req, res) => {
     req.body;
   const activ_code = makeid(20);
   const activation = {
-    from: "matcha@gmail.com",
+    from: "matcha.hive1@gmail.com",
     to: email,
     subject: "Account activation",
     html: `<p>Click <a href="http://localhost:3000/activate/${activ_code}">here</a> to activate your account!</p>`,
@@ -591,9 +586,9 @@ export const profileFill = async (req, res) => {
             if (err) {
               return console.log(err);
             }
-            return res.status(200).json({
-              msg: "Profile updated",
-            });
+            return res.status(200).send(
+              "Profile updated",
+            );
           }
         );
         var array = tags.split(",");

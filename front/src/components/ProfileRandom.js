@@ -103,12 +103,14 @@ const ProfileRandom = ({ socket }) => {
         console.log("error", error.response.data);
       }
     }
+    
       socket.emit("sendNotification", {
         senderName: user.username,
         senderId: user.id,
         receiverName: id,
         type: "like",
       });
+
       // socket.emit("sendNotification", {
       //   senderName: user.username,
       //   senderId: user.id,
@@ -136,7 +138,6 @@ const ProfileRandom = ({ socket }) => {
         type: "unlike",
       });
   };
-  console.log(liked);
 
   const handleReport = async (id) => {
     try {

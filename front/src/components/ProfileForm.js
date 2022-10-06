@@ -43,13 +43,16 @@ const ProfileForm = () => {
   const profileFill = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/fill`, {
+      const res = await axios.post(`http://localhost:5000/fill`, {
         birthdate: age,
         gender: gender,
         orientation: orientation,
         interests: interests,
         bio: bio,
       });
+      if (res.data.msg) {
+        return setMessage(res.data.msg);
+      }
       history.push("/pictures");
     } catch (error) {
       if (error.response) {
@@ -101,7 +104,7 @@ const ProfileForm = () => {
                 <button className="btn btn-outline-warning">Submit</button>
               </div>
             </div>
-            <p className="message">{message}</p>
+            <p className="error">{message}</p>
           </div>
         </form>
       </div>

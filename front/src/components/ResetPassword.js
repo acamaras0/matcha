@@ -16,13 +16,19 @@ const ResetPassword = () => {
   const ResetPassword = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/resetpassword/${token}`, {
-        password: password,
-        confPassword: confirmPassword,
-        token: token,
-      });
+      const res = await axios.post(
+        `http://localhost:5000/resetpassword/${token}`,
+        {
+          password: password,
+          confPassword: confirmPassword,
+          token: token,
+        }
+      );
+      if (res.data.msg) {
+        return setMessage(res.data.msg);
+      }
       history.push("/");
-    } catch (error) {
+      } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
       }

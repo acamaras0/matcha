@@ -15,6 +15,9 @@ const Register = () => {
   const [message, setMessage] = useState("");
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
+  // setTimeout(() => {
+  //   setMessage("");
+  // }, 8000);
 
   const Register = async (e) => {
     e.preventDefault();
@@ -51,6 +54,10 @@ const Register = () => {
         <form className="Auth-form" onSubmit={Register}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign up</h3>
+            <p className="info">
+              *First name, last name and username have to be in between 2 - 10
+              characters long
+            </p>
             <div className="form-group mt-3">
               <input
                 placeholder="First Name"
@@ -115,14 +122,19 @@ const Register = () => {
                   setConfirmPasswordReg(e.target.value);
                 }}
               />
+              <p className="info">
+                *Password has to be at least 8 characters and contain at least
+                one uppercase, one lowercase, one number and one special
+                character
+              </p>
             </div>
             <br />
             <div className="d-grid gap-2 mt-3">
-              <button className="btn btn-outline-warning"> Register </button>
+              <button className="btn btn-warning"> Register </button>
             </div>
             <br />
             <p className="error">{message}</p>
-            <p className="forgot-password text-right mt-2">
+            <p className="text-right mt-2">
               Already have an account?
             </p>
             <a href="http://localhost:3000/">Login</a>

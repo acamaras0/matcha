@@ -1,7 +1,7 @@
 import db from "../config/Database.js";
 
 export const insertLike = async (req, res) => {
-  const liker = req.params.user1; //logged in user
+  const liker = req.params.user1;
   const liked = req.params.user2;
 
   db.query(
@@ -67,19 +67,15 @@ export const getMatches = async (req, res) => {
 export const checkIfLiked = async (req, res) => {
   const liked = req.params.user_id;
   const liker = req.params.id;
-  console.log(liker, liked);
   if (liker && liked) {
     db.query(
       "SELECT * FROM matches WHERE liker = ? AND liked = ?",
       [liker, liked],
       (err, result) => {
         if (err) console.log(err);
-        console.log(result);
         if (result.length > 0) {
-          console.log("like");
           return res.status(200).send({ msg: "like" });
         } else {
-          console.log("not liked");
           return res.status(200).send({ msg: "not liked" });
         }
       }

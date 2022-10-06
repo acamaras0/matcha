@@ -38,6 +38,10 @@ const Profile = () => {
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
 
+  setTimeout(() => {
+    setMessage("");
+  }, 2000);
+
   useEffect(() => {
     if (xsrfToken !== "") {
       const getLoggedIn = async () => {

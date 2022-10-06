@@ -19,6 +19,10 @@ const ProfileForm = () => {
   const history = useHistory();
   const xsrfToken = getCookie("refreshToken");
 
+  setTimeout(() => {
+    setMessage("");
+  }, 2000);
+
   useEffect(() => {
     if (xsrfToken !== "") {
       const getLoggedIn = async () => {

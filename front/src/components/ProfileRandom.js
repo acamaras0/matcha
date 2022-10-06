@@ -21,11 +21,11 @@ const ProfileRandom = ({ socket }) => {
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
   const distance = useGetDistance();
-  console.log(liked);
 
   setTimeout(() => {
     setMessage("");
-  }, 3000);
+    setReport("");
+  }, 2000);
 
   useEffect(() => {
     if (xsrfToken !== "") {

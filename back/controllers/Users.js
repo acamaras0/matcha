@@ -417,10 +417,17 @@ export const Register = async (req, res) => {
     from: "matcha.hive1@gmail.com",
     to: email,
     subject: "Account activation",
-    html: `<p>Click <a href="http://localhost:3000/activate/${activ_code}">here</a> to activate your account!</p>`,
+    html: `<h1>Welcome to MATCHA!</h1> <br/><p>Click <a href="http://localhost:3000/activate/${activ_code}">here</a> to activate your account!</p>`,
   };
   const saltRounds = 10;
-  if (username && password && confPassword && firstName && lastName && email) {
+  if (
+    username.length !== 0 &&
+    password.length !== 0 &&
+    confPassword.length !== 0 &&
+    firstName.length !== 0 &&
+    lastName.length !== 0 &&
+    email.length !== 0
+  ) {
     db.query("SELECT username, email FROM users;", (err, result) => {
       if (err) {
         res.send({ err: err });
@@ -481,7 +488,7 @@ export const Register = async (req, res) => {
       }
     });
   } else {
-    return res.send({ error: "Please fill in all fields" });
+    return res.send({ msg: "Please fill in all fields" });
   }
 };
 
@@ -586,19 +593,9 @@ export const profileFill = async (req, res) => {
             if (err) {
               return console.log(err);
             }
-            return res.status(200).send(
-              "Profile updated",
-            );
+            return res.status(200).send("Profile updated");
           }
         );
-        var array = tags.split(",");
-        array.forEach((element) => {
-          console.log(element);
-          db.query("INSERT INTO tags (user_id, interest) VALUES (?, ?)", [
-            userId,
-            element,
-          ]);
-        });
       }
     }
   );

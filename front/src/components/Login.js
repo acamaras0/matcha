@@ -12,6 +12,10 @@ const Login = () => {
   const [cookie] = useCookies(["refreshToken"]);
   const history = useHistory();
 
+  setTimeout(() => {
+    setMessage("");
+  }, 2000);
+
   const Auth = async (e) => {
     e.preventDefault();
     const res = await axios.post("http://localhost:5000/login", {
@@ -68,7 +72,7 @@ const Login = () => {
           </div>
           <br />
           <p className="error">{message}</p>
-          <p className="forgot-password text-right mt-2">
+          <p className="text-right mt-2">
             Forgot
             <a href="http://localhost:3000/forgotpassword"> password?</a>
           </p>

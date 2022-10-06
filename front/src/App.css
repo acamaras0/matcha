@@ -6,7 +6,14 @@
 p.age {
   color: rgb(236, 189, 0);
 }
-.no-pics{
+
+.info {
+  padding: auto;
+  font-size: 10px;
+  color: gray;
+  font-style: italic;
+}
+.no-pics {
   padding-top: 5vh;
   color: #999;
   font-style: italic;
@@ -120,7 +127,7 @@ h3 {
   color: rgb(236, 189, 0);
 }
 
-.view{
+.view {
   display: flex;
   justify-content: center;
 }
@@ -174,7 +181,7 @@ img.card-img-top {
   margin-bottom: 15px;
   cursor: pointer;
 }
-nav.navbar{
+nav.navbar {
   display: flex;
   justify-content: space-around;
 }

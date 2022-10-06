@@ -23,8 +23,10 @@ const Search = ({ socket }) => {
 
   const [minDist, set_minDist] = useState(0);
   const [maxDist, set_maxDist] = useState(800);
+
   const [interests, setInterests] = useState([]);
   const [usersFiltered, setUsersFiltered] = useState([]);
+
   const [show, setShow] = useState(false);
 
   useEffect(() => {

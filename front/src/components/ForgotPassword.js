@@ -11,6 +11,10 @@ const ForgotPassword = () => {
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
+  setTimeout(() => {
+    setMessage("");
+  }, 2000);
+
   const forgotPassword = (e) => {
     e.preventDefault();
     try {

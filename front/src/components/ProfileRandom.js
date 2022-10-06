@@ -25,7 +25,7 @@ const ProfileRandom = ({ socket }) => {
 
   setTimeout(() => {
     setMessage("");
-  }, 1000);
+  }, 3000);
 
   useEffect(() => {
     if (xsrfToken !== "") {
@@ -99,35 +99,37 @@ const ProfileRandom = ({ socket }) => {
   };
 
   const handleLike = async (id) => {
-    setLiked("like")
+    setLiked("like");
     try {
       const response = await axios.post(
         `http://localhost:5000/like/${user.id}/${id}`,
         {}
       );
+      if (message === "Liked!") {
+        socket.emit("sendNotification", {
+          senderName: user.username,
+          senderId: user.id,
+          receiverName: id,
+          type: "like",
+        });
+      } else {
+        socket.emit("sendNotification", {
+          senderName: user.username,
+          senderId: user.id,
+          receiverName: id,
+          type: "match",
+        });
+      }
       setMessage(response.data.msg);
     } catch (error) {
       if (error.response) {
         console.log("error", error.response.data);
       }
     }
-    socket.emit("sendNotification", {
-      senderName: user.username,
-      senderId: user.id,
-      receiverName: id,
-      type: "like",
-    });
-
-    // socket.emit("sendNotification", {
-    //   senderName: user.username,
-    //   senderId: user.id,
-    //   receiverName: id,
-    //   type: "match",
-    // });
   };
 
   const handleDislike = async (id) => {
-    setLiked("not liked")
+    setLiked("not liked");
     try {
       const response = await axios.post(
         `http://localhost:5000/like/${user.id}/${id}`,

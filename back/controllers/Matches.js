@@ -5,58 +5,48 @@ export const insertLike = async (req, res) => {
   const liked = req.params.user2;
 
   db.query(
-    "SELECT * FROM matches WHERE (liker = ? AND liked = ?) OR (liker = ? AND liked = ?)",
-    [liker, liked, liked, liker],
-    (err, result1) => {
-      if (
-        result1[0] &&
-        result1[0].match_status == 0 &&
-        result1[0].liked == liker
-      ) {
-        db.query(
-          "UPDATE matches SET match_status = 1 WHERE liker = ? AND liked = ?",
-          [liked, liker]
-        );
-        db.query("UPDATE users SET fame = fame + 1 WHERE id = ?", [liked]);
-        db.query("INSERT INTO chat(user1, user2) VALUES (?, ?)", [
+    "SELECT * FROM matches WHERE liker = ? AND liked = ?",
+    [liker, liked],
+    (err, like) => {
+      if (err) {
+        return console.log(err);
+      }
+      if (like.length <= 0) {
+        db.query("INSERT INTO matches (liker, liked) VALUES (?, ?)", [
           liker,
           liked,
         ]);
-        return res.json({ msg: "You got a match!" });
-      } else if (result1.length < 1) {
         db.query(
-          "INSERT INTO matches (liker, liked, match_status) VALUES (?, ?, ?)",
-          [liker, liked, 0]
+          "SELECT * FROM matches WHERE liker = ? AND liked = ?",
+          [liked, liker],
+          (err, match) => {
+            if (err) {
+              return console.log(err);
+            }
+            if (match.length > 0) {
+              db.query("UPDATE users SET fame = fame + 1 WHERE id = ?", [
+                liked,
+              ]);
+              db.query("INSERT INTO chat(user1, user2) VALUES (?, ?)", [
+                liker,
+                liked,
+              ]);
+              return res.json({ msg: "You got a match!" });
+            } else return res.status(200).send({ msg: "Liked!" });
+          }
         );
-        db.query("UPDATE users SET fame = fame + 1 WHERE id = ?", [liked]);
-        return res.status(200).send({ msg: "Liked" });
-      } else if (
-        result1[0] &&
-        result1[0].liker == liker &&
-        result1[0].match_status == 0
-      ) {
+      }
+      if (like.length > 0) {
+        db.query(
+          "DELETE FROM chat WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?)",
+          [liker, liked, liked, liker]
+        );
         db.query("DELETE FROM matches WHERE liker = ? AND liked = ?", [
           liker,
           liked,
         ]);
         db.query("UPDATE users SET fame = fame - 1 WHERE id = ?", [liked]);
         return res.status(200).send({ msg: "Unliked" });
-      } else if (
-        result1[0] &&
-        (result1[0].liker == liked || result1[0].liked == liked) &&
-        result1[0].match_status == 1
-      ) {
-        db.query(
-          "DELETE FROM matches WHERE liker = ? AND liked = ? OR liker = ? AND liked = ?",
-          [liked, liker, liker, liked]
-        );
-        db.query("UPDATE users SET fame = fame - 1 WHERE id = ?", [liked]);
-        db.query(
-          "DELETE FROM chat WHERE (user1 = ? AND user2 = ?) OR (user1 = ? AND user2 = ?)",
-          [liker, liked, liked, liker]
-        );
-
-        return res.status(200).send({ msg: "Unmatched" });
       }
     }
   );
@@ -75,25 +65,26 @@ export const getMatches = async (req, res) => {
 };
 
 export const checkIfLiked = async (req, res) => {
-  const liker = req.params.user_id;
-  const liked = req.params.id;
-  db.query(
-    "SELECT * FROM matches WHERE (liker = ? AND liked = ?) OR (liker = ? AND liked = ?)",
-    [liker, liked, liked, liker],
-    (err, result) => {
-      if (err) console.log(err);
-      if (result.length > 0) {
-        if (result[0].match_status == 1) {
-          res.status(200).send({ msg: "match" });
-          return 0
-        } else {
+  const liked = req.params.user_id;
+  const liker = req.params.id;
+  console.log(liker, liked);
+  if (liker && liked) {
+    db.query(
+      "SELECT * FROM matches WHERE liker = ? AND liked = ?",
+      [liker, liked],
+      (err, result) => {
+        if (err) console.log(err);
+        console.log(result);
+        if (result.length > 0) {
+          console.log("like");
           return res.status(200).send({ msg: "like" });
+        } else {
+          console.log("not liked");
+          return res.status(200).send({ msg: "not liked" });
         }
-      } else {
-        return res.status(200).send({ msg: "dislike" });
       }
-    }
-  );
+    );
+  }
 };
 
 export const getFame = async (req, res) => {
@@ -103,4 +94,3 @@ export const getFame = async (req, res) => {
     if (result) res.json(result[0]);
   });
 };
-

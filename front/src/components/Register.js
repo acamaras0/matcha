@@ -68,8 +68,6 @@ const Register = () => {
                   setFirstNameReg(e.target.value);
                 }}
               />
-            </div>
-            <div className="form-group mt-3">
               <input
                 placeholder="Last Name"
                 autoComplete="off"
@@ -111,8 +109,6 @@ const Register = () => {
                   setPasswordReg(e.target.value);
                 }}
               />
-            </div>
-            <div className="form-group mt-3">
               <input
                 placeholder="Confirm Password"
                 autoComplete="off"
@@ -122,21 +118,18 @@ const Register = () => {
                   setConfirmPasswordReg(e.target.value);
                 }}
               />
-              <p className="info">
-                *Password has to be at least 8 characters and contain at least
-                one uppercase, one lowercase, one number and one special
-                character
-              </p>
             </div>
+            <p className="info">
+              *Password has to be at least 8 characters and contain at least one
+              uppercase, one lowercase, one number and one special character
+            </p>
             <br />
             <div className="d-grid gap-2 mt-3">
               <button className="btn btn-warning"> Register </button>
             </div>
             <br />
             <p className="error">{message}</p>
-            <p className="text-right mt-2">
-              Already have an account?
-            </p>
+            <p className="text-right mt-2">Already have an account?</p>
             <a href="http://localhost:3000/">Login</a>
           </div>
         </form>

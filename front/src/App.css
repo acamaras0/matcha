@@ -201,11 +201,10 @@ img.card-img.img-fluid {
 }
 
 .logo {
-  margin-bottom: 5vh;
-  width: 19vh;
+  margin-bottom: 3vh;
+  width: 12vh;
 }
 .logo1 {
-  padding-top: 10px;
   display: flex;
   justify-content: center;
   margin-bottom: 8px;
@@ -295,16 +294,15 @@ p.offline {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 80vw; */
   height: 90vh;
   text-align: center;
-  padding:10px
+  padding:10px;
+  margin-top: 110px;
 }
 
 .Auth-form {
   width: 420px;
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
-  padding-top: 40px;
   padding-bottom: 20px;
   border-radius: 8px;
   background-color: white;
@@ -321,6 +319,20 @@ p.offline {
   font-size: 24px;
   color: rgb(236, 189, 0);
   font-weight: 800;
+}
+
+.Complete-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding:10px;
+}
+
+.Complete-form-content {
+  padding-left: 12%;
+  padding-right: 12%;
+  padding-top: 50px;
 }
 
 .profile-pic {

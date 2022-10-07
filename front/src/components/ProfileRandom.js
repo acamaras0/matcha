@@ -22,10 +22,11 @@ const ProfileRandom = ({ socket }) => {
   const history = useHistory();
   const distance = useGetDistance();
 
-  setTimeout(() => {
-    setMessage("");
-    setReport("");
-  }, 2000);
+  if (message) {
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  }
 
   useEffect(() => {
     if (xsrfToken !== "") {

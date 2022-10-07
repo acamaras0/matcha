@@ -16,6 +16,12 @@ const Register = () => {
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
+  if (message) {
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  }
+
   const Register = async (e) => {
     e.preventDefault();
     try {

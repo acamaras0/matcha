@@ -7,8 +7,15 @@ import { getCookie } from "react-use-cookie";
 const ProfilePic = () => {
   const [file, setFile] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [message, setMessage] = useState("");
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
+
+  if (message) {
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  }
 
   const saveFile = (e) => {
     setFile(e.target.files[0]);
@@ -20,7 +27,9 @@ const ProfilePic = () => {
     formData.append("profile", file);
     try {
       await axios.post("http://localhost:5000/upload/profilePic", formData);
-      history.push("/dashboard");
+      if (file) {
+        history.push("/dashboard");
+      } else setMessage("Please choose a picture!");
     } catch (err) {
       console.log(err);
     }
@@ -36,6 +45,7 @@ const ProfilePic = () => {
   return (
     <div className="form-group text-center">
       <h3>✍ Upload Profile Picture</h3>
+      <p className="error">{message}</p>
       <br />
       {selectedImage && (
         <div>

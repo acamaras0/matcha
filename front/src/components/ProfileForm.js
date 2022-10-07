@@ -19,9 +19,11 @@ const ProfileForm = () => {
   const history = useHistory();
   const xsrfToken = getCookie("refreshToken");
 
-  setTimeout(() => {
-    setMessage("");
-  }, 2000);
+  if (message) {
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  }
 
   useEffect(() => {
     if (xsrfToken !== "") {
@@ -73,9 +75,9 @@ const ProfileForm = () => {
   }
   return (
     <div>
-      <div className="Auth-form-container">
+      <div className="Complete-form-container">
         <form className="Auth-form" onSubmit={profileFill}>
-          <div className="Auth-form-content">
+          <div className="Complete-form-content">
             <h3 className="Auth-form-title">Complete profile</h3>
             <div className="form-group mt-3">
               <div className="form-group mt-3">

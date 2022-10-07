@@ -12,9 +12,11 @@ const Login = () => {
   const [cookie] = useCookies(["refreshToken"]);
   const history = useHistory();
 
-  setTimeout(() => {
-    setMessage("");
-  }, 2000);
+  if (message) {
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  }
 
   const Auth = async (e) => {
     e.preventDefault();

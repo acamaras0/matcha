@@ -13,9 +13,11 @@ const ResetPassword = () => {
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
-  setTimeout(() => {
-    setMessage("");
-  }, 2000);
+  if (message) {
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  }
 
   const ResetPassword = async (e) => {
     e.preventDefault();

@@ -12,10 +12,10 @@ const UploadPic = () => {
   }
   return (
     <div className="text-center">
-      <label>Having a profile picture is mandatory! 🥺</label>
       <div className="upload-pic">
         <ProfilePic />
       </div>
+      <label>*Having a profile picture is mandatory! 🥺</label>
     </div>
   );
 };

@@ -31,16 +31,18 @@ const Profile = () => {
   const [newCity, setNewCity] = useState("");
   const [newCountry, setNewCountry] = useState("");
   const [newAge, setNewAge] = useState("");
-  const [message, setMessage] = useState("");
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
+  const [message, setMessage] = useState("");
+  const [message1, setMessage1] = useState("");
 
   if (message) {
     setTimeout(() => {
       setMessage("");
+      setMessage1("");
     }, 2000);
   }
 
@@ -105,8 +107,8 @@ const Profile = () => {
       const response = await axios.delete(
         `http://localhost:5000/user/picture/${pic_id}`
       );
+      setMessage1(response.data.msg);
       history.push(`/profile/${id}`);
-      setMessage(response.data.msg);
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -140,9 +142,9 @@ const Profile = () => {
   if (user)
     return (
       <div className="text-center">
-        {message ? <p className="error">{message}</p> : null}
         <div className="update">
           <div className="card-pictures">
+            {message1 ? <p className="error">{message1}</p> : null}
             {pics.length > 0 ? (
               <div className="uploaded-pics">
                 {pics
@@ -339,6 +341,7 @@ const Profile = () => {
             <button className="btn btn-warning" onClick={updateProfile}>
               Update
             </button>
+            {message ? <p className="error">{message}</p> : null}
           </div>
           <p> Your profile has been viewed {user.profile_views} time(s).</p>
           <button className="btn btn-warning" onClick={() => setShow(!show)}>

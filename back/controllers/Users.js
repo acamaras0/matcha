@@ -106,7 +106,7 @@ export const updateProfile = async (req, res) => {
   const tags = interests.join(", ");
   if (
     firstName &&
-    validator.isAlphanumeric(firstName) &&
+    validator.isAlpha(firstName) &&
     firstName.length < 20 &&
     firstName.length > 2
   ) {
@@ -114,7 +114,7 @@ export const updateProfile = async (req, res) => {
   }
   if (
     lastName &&
-    validator.isAlphanumeric(lastName) &&
+    validator.isAlpha(lastName) &&
     lastName.length < 20 &&
     lastName.length > 2
   ) {
@@ -122,7 +122,7 @@ export const updateProfile = async (req, res) => {
   }
   if (
     username &&
-    validator.isAlphanumeric(username) &&
+    validator.isAlpha(username) &&
     username.length < 10 &&
     username.length > 2
   ) {
@@ -149,7 +149,7 @@ export const updateProfile = async (req, res) => {
       } else db.query("UPDATE users SET email = ? WHERE id = ?", [email, id]);
     });
   }
-  if (bio && bio.length <= 500) {
+  if (bio && bio.length <= 499) {
     db.query("UPDATE users SET bio = ? WHERE id = ?", [bio, id]);
   }
   if (interests.length > 0) {
@@ -179,7 +179,7 @@ export const updateProfile = async (req, res) => {
   if (birthdate) {
     db.query("UPDATE users SET birthdate = ? WHERE id = ?", [birthdate, id]);
   }
-  // res.status(200).json({ msg: "Profile updated" });
+  res.status(200).json({ msg: "Profile updated" });
 };
 
 export const resetPass = async (req, res) => {
@@ -433,12 +433,15 @@ export const Register = async (req, res) => {
         res.send({ err: err });
       }
       if (
+        !validator.isAlpha(firstName) ||
+        !validator.isAlpha(lastName) ||
+        !validator.isAlpha(username) ||
         (username > 10 && username < 2) ||
         (firstName > 10 && firstName < 2) ||
         (lastName > 10 && lastName < 2)
       ) {
         return res.json({
-          msg: "Username, First Name and Last Name must be between 2 and 10 characters",
+          msg: "Username, First Name and Last Name must be between 2 and 10 alphabetical characters.",
         });
       } else if (password !== confPassword) {
         return res.json({

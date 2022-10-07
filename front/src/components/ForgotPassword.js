@@ -48,6 +48,7 @@ const ForgotPassword = () => {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
+                req="true"
               />
             </div>
             <br />

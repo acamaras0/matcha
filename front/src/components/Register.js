@@ -56,10 +56,6 @@ const Register = () => {
         <form className="Auth-form" onSubmit={Register}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign up</h3>
-            <p className="info">
-              *First name, last name and username have to be in between 2 - 10
-              characters long
-            </p>
             <div className="form-group mt-3">
               <input
                 placeholder="First Name"
@@ -80,6 +76,10 @@ const Register = () => {
                 }}
               />
             </div>
+            <p className="info">
+              *First name, last name and username have to be in between 2 - 10
+              characters long
+            </p>
             <div className="form-group mt-3">
               <input
                 placeholder="Username"
@@ -90,7 +90,6 @@ const Register = () => {
                   setUsernameReg(e.target.value);
                 }}
               />
-              <div className="form-group mt-3"></div>
               <input
                 placeholder="Email address"
                 autoComplete="off"
@@ -101,6 +100,10 @@ const Register = () => {
                 }}
               />
             </div>
+            <p className="info">
+              *Password has to be at least 8 characters and contain at least one
+              uppercase, one lowercase, one number and one special character
+            </p>
             <div className="form-group mt-3">
               <input
                 placeholder="Password"
@@ -121,10 +124,6 @@ const Register = () => {
                 }}
               />
             </div>
-            <p className="info">
-              *Password has to be at least 8 characters and contain at least one
-              uppercase, one lowercase, one number and one special character
-            </p>
             <br />
             <div className="d-grid gap-2 mt-3">
               <button className="btn btn-warning"> Register </button>

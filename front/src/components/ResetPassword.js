@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import logo from "../assets/logo.png";
 import { getCookie } from "react-use-cookie";
 
 const ResetPassword = () => {
@@ -46,9 +45,6 @@ const ResetPassword = () => {
   }
   return (
     <div>
-      <div className="logo1">
-        <img className="logo" src={logo} alt="logo" />
-      </div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={ResetPassword}>
           <div className="Auth-form-content">

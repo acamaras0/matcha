@@ -3,9 +3,9 @@ import { UserContextProvider } from "./context/UserContext";
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import NavBar from "./components/Navbar";
+import NavBarOffline from "./components/NavBarOffline";
 import Register from "./components/Register";
 import ProfileForm from "./components/ProfileForm";
-import ProfilePic from "./components/ProfilePic";
 import ForgotPasswords from "./components/ForgotPassword";
 import Profile from "./components/Profile";
 import ProfileRandom from "./components/ProfileRandom";
@@ -14,6 +14,7 @@ import ResetPassword from "./components/ResetPassword";
 import Activation from "./components/Activation";
 import Chat from "./components/Chat";
 import Search from "./components/Search";
+import UploadPic from "./components/UploadPic";
 import { getCookie } from "react-use-cookie";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -51,18 +52,23 @@ function App() {
           <BrowserRouter>
             <Switch>
               <Route exact path="/">
+                <NavBarOffline />
                 <Login />
               </Route>
               <Route path="/forgotpassword">
+                <NavBarOffline />
                 <ForgotPasswords />
               </Route>
               <Route path="/resetpassword/:token">
+                <NavBarOffline />
                 <ResetPassword />
               </Route>
               <Route path="/register">
+                <NavBarOffline />
                 <Register />
               </Route>
               <Route path="/activate/:hash">
+                <NavBarOffline />
                 <Activation />
               </Route>
               <Route path="/completeprofile">
@@ -71,7 +77,7 @@ function App() {
               </Route>
               <Route path="/pictures">
                 <NavBar socket={socket} />
-                <ProfilePic />
+                <UploadPic />
               </Route>
               <Route path="/dashboard">
                 <NavBar socket={socket} />

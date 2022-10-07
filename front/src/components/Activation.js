@@ -4,7 +4,6 @@ import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 
-import logo from "../assets/logo.png";
 const Activation = () => {
   const hash = useParams().hash;
   const history = useHistory();
@@ -33,9 +32,6 @@ const Activation = () => {
   }
   return (
     <>
-      <div className="text-center">
-        <img className="logo" src={logo} alt="logo" />
-      </div>
       <div className="activ">
         <div className=" text-center">
           <div>

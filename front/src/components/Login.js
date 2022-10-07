@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
-import logo from "../assets/logo.png";
 import { useCookies } from "react-cookie";
 
 const Login = () => {
@@ -38,9 +37,6 @@ const Login = () => {
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Auth}>
           <div className="Auth-form-content">
-            <div className="logo1">
-              <img className="logo" src={logo} alt="logo" />
-            </div>
             <h3 className="Auth-form-title">Sign in</h3>
             <p className="forgot-password text-right mt-2">
               Are you new around here?

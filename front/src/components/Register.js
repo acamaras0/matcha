@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import "../App.css";
-import logo from "../assets/logo.png";
 import { getCookie } from "react-use-cookie";
 
 const Register = () => {
@@ -56,9 +55,6 @@ const Register = () => {
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Register}>
           <div className="Auth-form-content">
-            <div className="logo1">
-              <img className="logo" src={logo} alt="logo" />
-            </div>
             <h3 className="Auth-form-title">Sign up</h3>
             <p className="info">
               *First name, last name and username have to be in between 2 - 10

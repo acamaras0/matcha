@@ -3,7 +3,6 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 import "../App.css";
-import logo from "../assets/logo.png";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -38,9 +37,6 @@ const ForgotPassword = () => {
     <div>
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={forgotPassword}>
-          <div className="logo1">
-            <img className="logo" src={logo} alt="logo" />
-          </div>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Password recovery</h3>
             <br />

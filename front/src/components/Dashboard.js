@@ -5,6 +5,7 @@ import useGetDistance from "../utils/useGetDistance";
 import { UserContext } from "../context/UserContext";
 import { getCookie } from "react-use-cookie";
 import Recommended from "../models/Recommended";
+import img from "../assets/suggestions.png";
 
 const Dashboard = ({ socket }) => {
   const { user, setUser } = useContext(UserContext);
@@ -80,9 +81,10 @@ const Dashboard = ({ socket }) => {
   return (
     <div className="dashboard-wrap">
       <br />
-      <h3 className="text-center">▼ Suggestions ▼</h3>
+      <div className="suggestions-logo">
+        <img className="suggestions-img" src={img} alt="suggestions" />
+      </div>
       <br />
-      <p className="text-center">🔺🔻</p>
       <div className="sorting">
         <select
           defaultValue={"DEFAULT"}
@@ -97,7 +99,13 @@ const Dashboard = ({ socket }) => {
         </select>
       </div>
       <div className="recommended-btn"></div>
-      <Recommended filtered={filtered} socket={socket} user={user} />
+      {user.profile_pic ? (
+        <Recommended filtered={filtered} socket={socket} user={user} />
+      ) : (
+        <p className="text-center no-pic">
+          Upload a profile picture and let's get started!
+        </p>
+      )}
     </div>
   );
 };

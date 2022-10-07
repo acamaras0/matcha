@@ -121,9 +121,11 @@ const NavBar = ({ socket }) => {
   };
 
   const Chat = async () => {
-    setMessages([]);
-    await axios.post(`http://localhost:5000/messages/seen/${loggedIn.id}`);
-    history.push(`/chat/${loggedIn.id}`);
+    if (loggedIn.profile_pic) {
+      setMessages([]);
+      await axios.post(`http://localhost:5000/messages/seen/${loggedIn.id}`);
+      history.push(`/chat/${loggedIn.id}`);
+    }
   };
 
   const MyProfile = () => {
@@ -139,11 +141,15 @@ const NavBar = ({ socket }) => {
     }
   };
   const Dashboard = () => {
-    history.push("/dashboard");
+    if (loggedIn.profile_pic) {
+      history.push("/dashboard");
+    }
   };
 
   const Filter = () => {
-    history.push(`/filter/${loggedIn.id}`);
+    if (loggedIn.profile_pic) {
+      history.push(`/filter/${loggedIn.id}`);
+    }
   };
 
   return (

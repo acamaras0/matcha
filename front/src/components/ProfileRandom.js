@@ -184,53 +184,55 @@ const ProfileRandom = ({ socket }) => {
           <div>
             <StarRating rating={likes} />
           </div>
-          <div className="card">
-            <div className="card-img">
-              {pics.length >= 0 ? (
-                <Gallery galleryImages={pics} />
-              ) : (
-                <p className="no-pics">No pics available.</p>
-              )}
-            </div>{" "}
-            <br />
-            <div className="heart-container">
-              {liked && liked === "not liked" ? (
-                <div className="like-container">
-                  <img
-                    onClick={() => handleLike(selectedUser.id)}
-                    className="like"
-                    src={img}
-                    alt="Card cap"
-                  />
-                  <div>
-                    <p className="card-text">{message}</p>
+          <div className="random-card">
+            <div className="card" style={{ width: "60rem" }}>
+              <div className="card-img">
+                {pics.length >= 0 ? (
+                  <Gallery galleryImages={pics} />
+                ) : (
+                  <p className="no-pics">No pics available.</p>
+                )}
+              </div>{" "}
+              <br />
+              <div className="heart-container">
+                {liked && liked === "not liked" ? (
+                  <div className="like-container">
+                    <img
+                      onClick={() => handleLike(selectedUser.id)}
+                      className="like"
+                      src={img}
+                      alt="Card cap"
+                    />
+                    <div>
+                      <p className="card-text">{message}</p>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div className="dislike-container">
-                  <img
-                    onClick={() => handleDislike(selectedUser.id)}
-                    className="dislike"
-                    src={img1}
-                    alt="Card cap"
-                  />
-                  <div>
-                    <p className="card-text">{message}</p>
+                ) : (
+                  <div className="dislike-container">
+                    <img
+                      onClick={() => handleDislike(selectedUser.id)}
+                      className="dislike"
+                      src={img1}
+                      alt="Card cap"
+                    />
+                    <div>
+                      <p className="card-text">{message}</p>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>{" "}
-            <div className="card-body">
-              <label>Age</label>
-              <p className="card-text">{selectedUser.birthdate}</p>
-              <label>Bio</label>
-              <p className="card-text">{selectedUser.bio}</p>
-              <label>Gender</label>
-              <p className="card-text">{selectedUser.gender}</p>
-              <label>Sexual Orientation</label>
-              <p className="card-text">{selectedUser.orientation}</p>
-              <label>Interests</label>
-              <p className="card-text">{selectedUser.interests}</p>
+                )}
+              </div>{" "}
+              <div className="card-body">
+                <label>Age</label>
+                <p className="card-text">{selectedUser.birthdate}</p>
+                <label>Bio</label>
+                <p className="card-text">{selectedUser.bio}</p>
+                <label>Gender</label>
+                <p className="card-text">{selectedUser.gender}</p>
+                <label>Sexual Orientation</label>
+                <p className="card-text">{selectedUser.orientation}</p>
+                <label>Interests</label>
+                <p className="card-text">{selectedUser.interests}</p>
+              </div>
             </div>
           </div>
           <div>

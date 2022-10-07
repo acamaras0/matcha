@@ -403,7 +403,7 @@ a:active {
 
 .footer {
   padding: 1%;
-  margin-top: 10vh;
+  margin-top: 2vh;
   font-size: 10px;
 }
 
@@ -618,6 +618,7 @@ a:active {
   display: flex;
   flex-direction: column;
   position: relative;
+  width: 95%;
 }
 
 p.chatMenuInput {

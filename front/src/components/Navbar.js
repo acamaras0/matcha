@@ -94,6 +94,7 @@ const NavBar = ({ socket }) => {
       return () => clearInterval(interval);
     }
   }, [loggedIn, xsrfToken]);
+
   const displayNotifications = ({ sender_name, senderName, type }) => {
     let action;
     if (type === "like") {
@@ -129,7 +130,9 @@ const NavBar = ({ socket }) => {
   };
 
   const MyProfile = () => {
-    history.push(`/profile/${loggedIn.id}`);
+    if (loggedIn.profile_pic) {
+      history.push(`/profile/${loggedIn.id}`);
+    }
   };
 
   const Logout = async () => {

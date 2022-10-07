@@ -59,7 +59,10 @@ const Chat = ({ socket }) => {
           console.log(err);
         }
       };
-      getMessages();
+      if (currentChat) {
+        const interval = setInterval(() => getMessages(), 4000);
+        return () => clearInterval(interval);
+      }
     }
   }, [currentChat]);
 

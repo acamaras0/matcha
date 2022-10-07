@@ -22,6 +22,12 @@ const ProfileRandom = ({ socket }) => {
   const history = useHistory();
   const distance = useGetDistance();
 
+  if (message) {
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  }
+
   useEffect(() => {
     if (xsrfToken !== "") {
       const getLoggedIn = async () => {

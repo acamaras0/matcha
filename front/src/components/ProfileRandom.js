@@ -22,12 +22,6 @@ const ProfileRandom = ({ socket }) => {
   const history = useHistory();
   const distance = useGetDistance();
 
-  if (message) {
-    setTimeout(() => {
-      setMessage("");
-    }, 2000);
-  }
-
   useEffect(() => {
     if (xsrfToken !== "") {
       const getLoggedIn = async () => {
@@ -107,7 +101,7 @@ const ProfileRandom = ({ socket }) => {
         {}
       );
       setMessage(response.data.msg);
-      if (message === "Liked!") {
+      if (response.data.msg === "Liked!") {
         socket.emit("sendNotification", {
           senderName: user.username,
           senderId: user.id,

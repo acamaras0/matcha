@@ -56,10 +56,10 @@ const NavBar = ({ socket }) => {
   useEffect(() => {
     if (socket) {
       socket.on("getNotification", (data) => {
-        setNotifications((prev) => [...prev, data]);
+        setNotifications(data);
       });
       socket.on("getMessage", (data) => {
-        setMessages((prev) => [...prev, data]);
+        setMessages(data);
       });
     }
     if (xsrfToken !== "") {

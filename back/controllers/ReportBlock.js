@@ -84,20 +84,3 @@ export const getBlockedUsers = async (req, res) => {
     });
   });
 };
-
-// export const unblock = async (req, res) => {
-//   const id = req.params.user_id;
-//   const blocked = req.params.blocked_id;
-//   const check = await Block.findOne({
-//     where: { user_id: id, blocked_id: blocked },
-//   });
-//   if (check) {
-//     await Block.destroy({
-//       where: {
-//         user_id: id,
-//         blocked_id: blocked,
-//       },
-//     });
-//     res.status(200).send({ msg: "Unblocked!" });
-//   }
-// };

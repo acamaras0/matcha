@@ -36,16 +36,14 @@ import { location } from "../controllers/Location.js";
 import { report, block, getBlockedUsers } from "../controllers/ReportBlock.js";
 import { insertLike, getFame, checkIfLiked } from "../controllers/Matches.js";
 import { upload } from "../middleware/Upload.js";
-// import { verifyToken } from "../middleware/VerifyToken.js";
-// import { refreshToken } from "../controllers/RefreshToken.js";
-// import createFake from "../config/CreateFake.js";
 
+// THIS WILL CREATE RANDOM USERS FOR TESTING PURPOSE 
+
+// import createFake from "../config/CreateFake.js";
 // createFake()
 
 const router = express.Router();
 
-// router.get("/users/verify", verifyToken);
-// router.get("/token", refreshToken);
 router.get("/users/info/:token", getUsers);
 router.get("/user/:token", getLoggedIn);
 router.get("/user/pictures/:id", getPicsById, getPicPath);

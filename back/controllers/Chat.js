@@ -32,16 +32,18 @@ export const newMessages = async (req, res) => {
   const receiver = req.body.receiver;
   const text = req.body.text;
 
-  db.query(
-    "INSERT INTO messages (chat_id, sender, receiver, text) VALUES (?, ?, ?, ?)",
-    [chat_id, sender, receiver, text],
-    (err, result) => {
-      if (err) {
-        return console.log(err);
+  if (!text.match(/^\s+$|^$/gi) && text !== "") {
+    db.query(
+      "INSERT INTO messages (chat_id, sender, receiver, text) VALUES (?, ?, ?, ?)",
+      [chat_id, sender, receiver, text],
+      (err, result) => {
+        if (err) {
+          return console.log(err);
+        }
+        return res.status(200).json(result);
       }
-      return res.status(200).json(result);
-    }
-  );
+    );
+  }
 };
 
 export const getMessages = async (req, res) => {

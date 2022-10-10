@@ -33,8 +33,17 @@ export const socketServer = (server) => {
       "sendNotification",
       ({ senderName, senderId, receiverName, type }) => {
         db.query(
-          "INSERT INTO notifications (sender_id, sender_name ,reciever_id, type) VALUES (?,?,?,?)",
-          [senderId, senderName, receiverName, type]
+          "SELECT * FROM block WHERE blocked_id = ? AND user_id = ?",
+          [senderId, receiverName],
+          (err, result) => {
+            if (err) console.log(err);
+            if (result.length <= 0) {
+              db.query(
+                "INSERT INTO notifications (sender_id, sender_name ,reciever_id, type) VALUES (?,?,?,?)",
+                [senderId, senderName, receiverName, type]
+              );
+            }
+          }
         );
         const reciever = getOnlineUser(receiverName);
         if (reciever) {

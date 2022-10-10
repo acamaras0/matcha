@@ -128,7 +128,7 @@ export const deletePic = async (req, res) => {
             if (err) {
               res.status(200).json({ err: err });
             }
-            if (result[0].count > 0) {
+            if (result[0].count > 1) {
               db.query(
                 "SELECT * FROM user_images WHERE id = ?",
                 [pic_id],
@@ -140,7 +140,7 @@ export const deletePic = async (req, res) => {
                     let path = String(`./uploads/${result[0].pic_name}`);
                     fs.unlink(path, (err) => {
                       if (err) throw err;
-                      res.status(200).json({ msg: "Picture deleted" });
+                      res.status(200).json({ msg: "Picture deleted." });
                     });
                     db.query(
                       "DELETE FROM user_images WHERE id = ?",
@@ -157,7 +157,7 @@ export const deletePic = async (req, res) => {
             } else if (result[0].count == 1) {
               return res
                 .status(200)
-                .json({ msg: "Last picture cannot be deleted" });
+                .json({ msg: "Last picture cannot be deleted." });
             }
           }
         );

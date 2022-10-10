@@ -2,6 +2,7 @@ import db from "../config/Database.js";
 
 export const getNotifications = async (req, res) => {
   const userId = req.params.id;
+  
   db.query(
     "SELECT * FROM notifications WHERE reciever_id = ? AND mark = 0",
     [userId],

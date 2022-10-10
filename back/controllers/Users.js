@@ -61,10 +61,10 @@ export const updatePassword = async (req, res) => {
   const { id } = req.params;
   const { password, passwordConfirm } = req.body;
   if (password !== passwordConfirm) {
-    return res.status(200).send({ msg: "Passwords do not match" });
+    return res.status(200).json({ msg: "Passwords do not match" });
   } else if (validator.isStrongPassword(password) === false) {
     console.log(password);
-    return res.status(200).send({
+    return res.status(200).json({
       msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
     });
   } else {
@@ -103,6 +103,8 @@ export const updateProfile = async (req, res) => {
     birthdate,
   } = req.body;
 
+  let counter = 0;
+
   const tags = interests.join(", ");
   if (
     firstName &&
@@ -111,6 +113,7 @@ export const updateProfile = async (req, res) => {
     firstName.length > 2
   ) {
     db.query("UPDATE users SET firstname = ? WHERE id = ?", [firstName, id]);
+    counter++;
   }
   if (
     lastName &&
@@ -119,6 +122,7 @@ export const updateProfile = async (req, res) => {
     lastName.length > 2
   ) {
     db.query("UPDATE users SET lastname = ? WHERE id = ?", [lastName, id]);
+    counter++;
   }
   if (
     username &&
@@ -140,6 +144,7 @@ export const updateProfile = async (req, res) => {
           ]);
       }
     );
+    counter++;
   }
   if (email && validator.isEmail(email) && email.length < 30) {
     db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
@@ -148,38 +153,52 @@ export const updateProfile = async (req, res) => {
         return res.status(200).json({ msg: "Email already exists" });
       } else db.query("UPDATE users SET email = ? WHERE id = ?", [email, id]);
     });
+    counter++;
   }
   if (bio && bio.length <= 499) {
     db.query("UPDATE users SET bio = ? WHERE id = ?", [bio, id]);
+    counter++;
   }
   if (interests.length > 0) {
     db.query("UPDATE users SET interests = ? WHERE id = ?", [tags, id]);
+    counter++;
   }
   if (gender) {
     db.query("UPDATE users SET gender = ? WHERE id = ?", [gender, id]);
+    counter++;
   }
   if (orientation) {
     db.query("UPDATE users SET orientation = ? WHERE id = ?", [
       orientation,
       id,
     ]);
+    counter++;
   }
   if (geoLat && geoLat >= -90 && geoLat <= 90) {
     db.query("UPDATE users SET geo_lat = ? WHERE id = ?", [geoLat, id]);
+    counter++;
   }
   if (geoLng && geoLng >= -180 && geoLng <= 180) {
     db.query("UPDATE users SET geo_long = ? WHERE id = ?", [geoLng, id]);
+    counter++;
   }
   if (city && city.length > 0 && city.length < 20) {
     db.query("UPDATE users SET city = ? WHERE id = ?", [city, id]);
+    counter++;
   }
   if (country && country.length > 0 && country.length < 20) {
     db.query("UPDATE users SET country = ? WHERE id = ?", [country, id]);
+    counter++;
   }
   if (birthdate) {
     db.query("UPDATE users SET birthdate = ? WHERE id = ?", [birthdate, id]);
+    counter++;
   }
-  res.status(200).json({ msg: "Profile updated" });
+  if (counter > 0) {
+    res.status(200).json({ msg: "Profile updated." });
+  } else {
+    res.status(200).json({ msg: "Something went wrong." });
+  }
 };
 
 export const resetPass = async (req, res) => {

@@ -293,7 +293,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "30",
         "male",
-        "photography",
+        "photography, art",
         "Bio",
         "62.893335",
         "27.679338",
@@ -324,7 +324,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "24",
         "female",
-        "photography",
+        "photography, music",
         "Bio",
         "62.60118",
         "29.76316",
@@ -355,7 +355,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "28",
         "male",
-        "photography",
+        "books, photography",
         "Bio",
         "65.73641",
         "24.56371",
@@ -386,7 +386,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "31",
         "female",
-        "photography",
+        "sports, music, photography",
         "Bio",
         "62.893335",
         "24.655899",
@@ -417,7 +417,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "30",
         "female",
-        "photography",
+        "books, movies, music",
         "Bio",
         "60.466087",
         "22.025087",
@@ -448,7 +448,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "30",
         "female",
-        "photography",
+        "art, gaming, sports",
         "Bio",
         "65.021545",
         "25.469885",
@@ -479,7 +479,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "35",
         "male",
-        "photography",
+        "music, movies, books",
         "Bio",
         "62.893335",
         "27.679338",
@@ -510,7 +510,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "30",
         "female",
-        "photography",
+        "photography, art, movies",
         "Bio",
         "59.832394",
         "22.970695",
@@ -541,7 +541,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "28",
         "male",
-        "photography",
+        "photography, art, sports",
         "Bio",
         "62.893335",
         "27.679338",
@@ -565,13 +565,13 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.query(
       test19,
       [
-        "Lucas",
-        "Mann",
-        "Lucas",
+        "Luke",
+        "Manner",
+        "Luke",
         "email9@email.com",
         "$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm",
         "1",
-        "30",
+        "31",
         "male",
         "photography",
         "Bio",
@@ -582,7 +582,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "Hanko",
         "Fi",
-        "homosexual",
+        "heterosexual",
       ],
       (err, result) => {
         if (err) throw err;
@@ -596,15 +596,15 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.query(
       test20,
       [
-        "Lucas",
-        "Mann",
-        "Lucas",
+        "Leo",
+        "Kann",
+        "LLeo",
         "email9@email.com",
         "$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm",
         "1",
-        "30",
+        "32",
         "male",
-        "photography",
+        "books",
         "Bio",
         "60.192059",
         "24.945831",
@@ -613,7 +613,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "Helsinki",
         "Fi",
-        "homosexual",
+        "bisexual",
       ],
       (err, result) => {
         if (err) throw err;
@@ -627,15 +627,15 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.query(
       test21,
       [
-        "Lucas",
-        "Mann",
-        "Lucas",
+        "Till",
+        "Lund",
+        "Till",
         "email9@email.com",
         "$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm",
         "1",
-        "30",
+        "27",
         "male",
-        "photography",
+        "music",
         "Bio",
         "62.893335",
         "27.679338",
@@ -644,7 +644,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "Kuopio",
         "Fi",
-        "homosexual",
+        "bisexual",
       ],
       (err, result) => {
         if (err) throw err;
@@ -658,15 +658,15 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.query(
       test22,
       [
-        "Lucas",
-        "Mann",
-        "Lucas",
+        "Travis",
+        "Lex",
+        "Travis",
         "email9@email.com",
         "$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm",
         "1",
-        "30",
+        "26",
         "male",
-        "photography",
+        "sports",
         "Bio",
         "60.454510",
         "22.264824",
@@ -689,15 +689,15 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.query(
       test23,
       [
-        "Lucas",
-        "Mann",
-        "Lucas",
+        "Iina",
+        "Vaan",
+        "Iina",
         "email9@email.com",
         "$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm",
         "1",
-        "30",
-        "male",
-        "photography",
+        "29",
+        "female",
+        "photography, art",
         "Bio",
         "60.205490",
         "24.655899",
@@ -706,7 +706,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "Espoo",
         "Fi",
-        "homosexual",
+        "bisexual",
       ],
       (err, result) => {
         if (err) throw err;
@@ -720,14 +720,14 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.query(
       test24,
       [
-        "Lucas",
-        "Mann",
-        "Lucas",
+        "Ofilia",
+        "Trace",
+        "Offilia",
         "email9@email.com",
         "$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm",
         "1",
-        "30",
-        "male",
+        "41",
+        "female",
         "photography",
         "Bio",
         "64.222176",
@@ -751,15 +751,15 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     db.query(
       test25,
       [
-        "Lucas",
-        "Mann",
-        "Lucas",
+        "Jane",
+        "Doe",
+        "Jane",
         "email9@email.com",
         "$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm",
         "1",
-        "30",
-        "male",
-        "photography",
+        "19",
+        "female",
+        "sports, movies",
         "Bio",
         "62.791668",
         "22.841667",
@@ -768,7 +768,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         "1",
         "Seinäjoki",
         "Fi",
-        "homosexual",
+        "heterosexual",
       ],
       (err, result) => {
         if (err) throw err;
@@ -821,63 +821,63 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["111", "1", "http://localhost:5000/upload/10.jpg", "11.jpg"]
+      ["111", "1", "http://localhost:5000/upload/11.jpg", "11.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["12", "1", "http://localhost:5000/upload/10.jpg", "12.jpg"]
+      ["12", "1", "http://localhost:5000/upload/12.jpg", "12.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["13", "1", "http://localhost:5000/upload/10.jpg", "13.jpg"]
+      ["13", "1", "http://localhost:5000/upload/13.jpg", "13.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["14", "1", "http://localhost:5000/upload/10.jpg", "14.jpg"]
+      ["14", "1", "http://localhost:5000/upload/14.jpg", "14.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["15", "1", "http://localhost:5000/upload/10.jpg", "15.jpg"]
+      ["15", "1", "http://localhost:5000/upload/15.jpg", "15.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["16", "1", "http://localhost:5000/upload/10.jpg", "16.jpg"]
+      ["16", "1", "http://localhost:5000/upload/16.jpg", "16.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["17", "1", "http://localhost:5000/upload/10.jpg", "17.jpg"]
+      ["17", "1", "http://localhost:5000/upload/17.jpg", "17.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["18", "1", "http://localhost:5000/upload/10.jpg", "18.jpg"]
+      ["18", "1", "http://localhost:5000/upload/18.jpg", "18.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["19", "1", "http://localhost:5000/upload/10.jpg", "19.jpg"]
+      ["19", "1", "http://localhost:5000/upload/19.jpg", "19.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["20", "1", "http://localhost:5000/upload/10.jpg", "20.jpg"]
+      ["20", "1", "http://localhost:5000/upload/20.jpg", "20.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["21", "1", "http://localhost:5000/upload/10.jpg", "21.jpg"]
+      ["21", "1", "http://localhost:5000/upload/21.jpg", "21.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["22", "1", "http://localhost:5000/upload/10.jpg", "22.jpg"]
+      ["22", "1", "http://localhost:5000/upload/22.jpg", "22.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["23", "1", "http://localhost:5000/upload/10.jpg", "23.jpg"]
+      ["23", "1", "http://localhost:5000/upload/23.jpg", "23.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["24", "1", "http://localhost:5000/upload/10.jpg", "24.jpg"]
+      ["24", "1", "http://localhost:5000/upload/24.jpg", "24.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["25", "1", "http://localhost:5000/upload/10.jpg", "25.jpg"]
+      ["25", "1", "http://localhost:5000/upload/25.jpg", "25.jpg"]
     );
 
     console.log("Pictures inserted.");

@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { format } from "timeago.js";
+import axios from "axios";
 import StarRating from "./StarRating";
 
 const Recommended = ({ filtered, socket, user }) => {
@@ -16,6 +17,7 @@ const Recommended = ({ filtered, socket, user }) => {
       });
     }
     history.push(`/users/${id}`);
+    await axios.post(`http://localhost:5000/user/views/${id}`);
   };
 
   return (

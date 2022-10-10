@@ -31,8 +31,9 @@ export default function Conversations({ conversations, currentUser }) {
     await axios.post(`http://localhost:5000/messages/seen/${currentUser}`);
   };
 
-  const goToProfile = () => {
+  const goToProfile = async () => {
     window.location.replace(`/users/${user.id}`);
+    await axios.post(`http://localhost:5000/user/views/${user.id}`);
   };
 
   return (

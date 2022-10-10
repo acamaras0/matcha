@@ -38,6 +38,7 @@ const Profile = () => {
   const [show2, setShow2] = useState(false);
   const [message, setMessage] = useState("");
   const [message1, setMessage1] = useState("");
+  const [message2, setMessage2] = useState("");
 
   if (message) {
     setTimeout(() => {
@@ -126,9 +127,7 @@ const Profile = () => {
           passwordConfirm: newPasswordConfirm,
         }
       );
-      setMessage(response.data.msg);
-      window.location.replace(`/dashboard`);
-      history.push(`/dashboard`);
+      setMessage2(response.data.msg);
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -142,6 +141,20 @@ const Profile = () => {
   if (user)
     return (
       <div className="text-center">
+        <button
+          className="btn btn-warning-outline"
+          onClick={() => setShow(!show)}
+        >
+          Click here to get a profile overview.
+          <p>▼</p>
+        </button>
+        <div className="view">
+          {pics ? (
+            <div className="card" style={{ width: "50rem" }}>
+              {show ? <Overview pics={pics} user={user} /> : null}
+            </div>
+          ) : null}
+        </div>
         <div className="update">
           <div className="card-pictures">
             {message1 ? <p className="error">{message1}</p> : null}
@@ -215,6 +228,7 @@ const Profile = () => {
             <button onClick={updatePassword} className="btn btn-warning">
               Submit
             </button>
+            <p className="error">{message2}</p>
           </div>
           <div className="card-profile">
             <h3>✍ Update profile</h3>
@@ -344,16 +358,6 @@ const Profile = () => {
             {message ? <p className="error">{message}</p> : null}
           </div>
           <p> Your profile has been viewed {user.profile_views} time(s).</p>
-          <button className="btn btn-warning" onClick={() => setShow(!show)}>
-            Profile Overview
-          </button>
-          <div className="view">
-            {pics ? (
-              <div className="card" style={{ width: "50rem" }}>
-                {show ? <Overview pics={pics} user={user} /> : null}
-              </div>
-            ) : null}
-          </div>
         </div>
       </div>
     );

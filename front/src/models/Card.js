@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 const Card = ({ array, socket, user }) => {
   const history = useHistory();
@@ -14,6 +15,7 @@ const Card = ({ array, socket, user }) => {
       });
     }
     history.push(`/users/${id}`);
+    await axios.post(`http://localhost:5000/user/views/${id}`);
   };
   return (
     <div className="card border-light mb-3">

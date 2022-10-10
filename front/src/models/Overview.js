@@ -49,6 +49,10 @@ const Overview = ({ pics, user }) => {
               <p className="card-text">{user.orientation}</p>
               <label>Interests</label>
               <p className="card-text">{user.interests}</p>
+              <label>
+                {user.username}'s profile has been viewed {user.profile_views}{" "}
+                time(s).
+              </label>
             </div>
           </div>
         </div>

@@ -232,6 +232,10 @@ const ProfileRandom = ({ socket }) => {
                 <p className="card-text">{selectedUser.orientation}</p>
                 <label>Interests</label>
                 <p className="card-text">{selectedUser.interests}</p>
+                <label>
+                  {selectedUser.username}'s profile has been viewed{" "}
+                  {selectedUser.profile_views} time(s).
+                </label>
               </div>
             </div>
           </div>

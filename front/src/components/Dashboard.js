@@ -1,14 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import useGetDistance from "../utils/useGetDistance";
-import { UserContext } from "../context/UserContext";
 import { getCookie } from "react-use-cookie";
 import Recommended from "../models/Recommended";
 import img from "../assets/suggestions.png";
 
 const Dashboard = ({ socket }) => {
-  const { user, setUser } = useContext(UserContext);
+  const [user, setUser] = useState([]);
   const [sortState, setSortState] = useState("none");
   const distance = useGetDistance();
   const xsrfToken = getCookie("refreshToken");
@@ -71,8 +70,15 @@ const Dashboard = ({ socket }) => {
     });
     filtered.sort(sortMethods[sortState].method);
   }
+  if (!distance || !filtered) {
+    return (
+      <div className="text-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
-  if (distance.length === 0)
+  if (distance.length === 0 || filtered.length === 0)
     return (
       <div className="text-center">
         <p>Loading...</p>

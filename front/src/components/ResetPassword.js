@@ -15,7 +15,7 @@ const ResetPassword = () => {
   if (message) {
     setTimeout(() => {
       setMessage("");
-    }, 2000);
+    }, 5000);
   }
 
   const ResetPassword = async (e) => {
@@ -33,7 +33,7 @@ const ResetPassword = () => {
         return setMessage(res.data.msg);
       }
       history.push("/");
-      } catch (error) {
+    } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
       }

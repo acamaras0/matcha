@@ -104,12 +104,14 @@ const NavBar = ({ socket }) => {
     } else if (type === "profile view") {
       action = "viewed your profile";
     } else if (type === "match") {
-      action = "liked you back!";
+      action = "liked you back! It's a match!";
+    } else if (type === "matchy") {
+      action = "matched with you! Text them now!";
     } else if (type === "message") {
       action = "sent you a new message!";
     }
     return (
-      <p className="notification" key={uuidv4()}>{`${
+      <p className="notif-line" key={uuidv4()}>{`${
         sender_name ? sender_name : senderName
       } ${action}`}</p>
     );
@@ -130,9 +132,7 @@ const NavBar = ({ socket }) => {
   };
 
   const MyProfile = () => {
-    if (loggedIn.profile_pic) {
-      history.push(`/profile/${loggedIn.id}`);
-    }
+    history.push(`/profile/${loggedIn.id}`);
   };
 
   const Logout = async () => {
@@ -167,12 +167,7 @@ const NavBar = ({ socket }) => {
             <div className="navbar-item">
               <div className="buttons">
                 <div className="icon" onClick={MyProfile}>
-                  <img
-                    // src={loggedIn.profile_pic}
-                    src={user}
-                    className="icon-profile"
-                    alt="profile"
-                  />
+                  <img src={user} className="icon-profile" alt="profile" />
                 </div>
                 <div className="icon" onClick={Filter}>
                   <img src={filter} className="icon-profile" alt="profile" />
@@ -180,6 +175,16 @@ const NavBar = ({ socket }) => {
                 <div className="icon" onClick={() => setOpen(!open)}>
                   <img src={notification} className="iconImg" alt="notif" />
                   {notifications?.length > 0 && <div className="counter"></div>}
+                  {open && (
+                    <div className="notifications position-absolute">
+                      {notifications.length > 0
+                        ? notifications.map((n) => displayNotifications(n))
+                        : null}
+                      <button className="btn btn-warning" onClick={handleRead}>
+                        Mark as read
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div className="icon">
                   <img
@@ -202,16 +207,6 @@ const NavBar = ({ socket }) => {
             </div>
           </div>
         </div>
-        {open && (
-          <div className="notifications">
-            {notifications.length > 0
-              ? notifications.map((n) => displayNotifications(n))
-              : null}
-            <button className="btn btn-warning" onClick={handleRead}>
-              Mark as read
-            </button>
-          </div>
-        )}
       </nav>
     </>
   );

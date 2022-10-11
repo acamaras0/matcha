@@ -15,12 +15,6 @@ const Register = () => {
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
-  if (message) {
-    setTimeout(() => {
-      setMessage("");
-    }, 2000);
-  }
-
   const Register = async (e) => {
     e.preventDefault();
     try {
@@ -124,14 +118,11 @@ const Register = () => {
                 }}
               />
             </div>
-            <br />
             <div className="d-grid gap-2 mt-3">
               <button className="btn btn-warning"> Register </button>
             </div>
             <br />
             <p className="error">{message}</p>
-            <p className="text-right mt-2">Already have an account?</p>
-            <a href="http://localhost:3000/">Login</a>
           </div>
         </form>
       </div>

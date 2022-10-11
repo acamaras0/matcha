@@ -53,7 +53,6 @@ const Search = ({ socket }) => {
   };
 
   const handleDistance = (e) => {
-    // setShow(false);
     set_minDist(e.minValue);
     set_maxDist(e.maxValue);
   };

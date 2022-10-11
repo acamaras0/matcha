@@ -63,7 +63,6 @@ export const updatePassword = async (req, res) => {
   if (password !== passwordConfirm) {
     return res.status(200).json({ msg: "Passwords do not match" });
   } else if (validator.isStrongPassword(password) === false) {
-    console.log(password);
     return res.status(200).json({
       msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
     });
@@ -336,7 +335,7 @@ export const getUsers = async (req, res) => {
               );
             } else if (orientation === "homosexual" && gender === "female") {
               db.query(
-                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'female' AND orientation = 'homosexual'",
+                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'female' AND (orientation = 'homosexual' OR orientation = 'bisexual')",
                 [loggedIn, blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
@@ -345,7 +344,7 @@ export const getUsers = async (req, res) => {
               );
             } else if (orientation === "homosexual" && gender === "male") {
               db.query(
-                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'male' AND orientation = 'homosexual'",
+                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'male' AND (orientation = 'homosexual' OR orientation = 'bisexual')",
                 [loggedIn, blocked],
                 (err, result) => {
                   if (err) return res.json({ err: err });
@@ -383,7 +382,7 @@ export const getUsers = async (req, res) => {
               );
             } else if (orientation === "homosexual" && gender === "female") {
               db.query(
-                "SELECT * FROM users WHERE id != ? AND gender = 'female' AND orientation = 'homosexual'",
+                "SELECT * FROM users WHERE id != ? AND gender = 'female' AND (orientation = 'homosexual' OR orientation = 'bisexual')",
                 [loggedIn],
                 (err, result) => {
                   if (err) return res.json({ err: err });
@@ -392,7 +391,7 @@ export const getUsers = async (req, res) => {
               );
             } else if (orientation === "homosexual" && gender === "male") {
               db.query(
-                "SELECT * FROM users WHERE id != ? AND gender = 'male' AND orientation = 'homosexual'",
+                "SELECT * FROM users WHERE id != ? AND gender = 'male' AND (orientation = 'homosexual' OR orientation = 'bisexual')",
                 [loggedIn],
                 (err, result) => {
                   if (err) return res.json({ err: err });

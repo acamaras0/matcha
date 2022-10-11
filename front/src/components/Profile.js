@@ -95,7 +95,6 @@ const Profile = () => {
         }
       );
       setMessage(response.data.msg);
-      history.push(`/profile/${id}`);
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
@@ -109,7 +108,6 @@ const Profile = () => {
         `http://localhost:5000/user/picture/${pic_id}`
       );
       setMessage1(response.data.msg);
-      history.push(`/profile/${id}`);
     } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);

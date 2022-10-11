@@ -598,7 +598,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
       [
         "Leo",
         "Kann",
-        "LLeo",
+        "Leo",
         "email9@email.com",
         "$2b$10$K2V/gUHEzGkyidtb4KTBD.fXqZn39gWYaOm1ofVwq8GYunC21dDEm",
         "1",
@@ -821,7 +821,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",
-      ["111", "1", "http://localhost:5000/upload/11.jpg", "11.jpg"]
+      ["11", "1", "http://localhost:5000/upload/11.jpg", "11.jpg"]
     );
     db.query(
       "INSERT INTO user_images (user_id, profile, img, pic_name) VALUES (?, ?, ?, ?)",

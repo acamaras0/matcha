@@ -32,7 +32,12 @@ export const insertLike = async (req, res) => {
                 liked,
               ]);
               return res.json({ msg: "You got a match!" });
-            } else return res.status(200).send({ msg: "Liked!" });
+            } else {
+              db.query("UPDATE users SET fame = fame + 1 WHERE id = ?", [
+                liked,
+              ]);
+              return res.status(200).send({ msg: "Liked!" });
+            }
           }
         );
       }

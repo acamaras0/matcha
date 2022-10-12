@@ -228,6 +228,7 @@ export const resetPass = async (req, res) => {
                 if (err) {
                   res.send({ err: err });
                 }
+                res.send({ msg: "Success!" });
               }
             );
           });
@@ -471,7 +472,10 @@ export const Register = async (req, res) => {
         });
       } else if (
         result.length > 0 &&
-        result.some((user) => user.username === username)
+        (result.some((user) => user.username === username) ||
+          result.some(
+            (user) => user.username.toLowerCase() === username.toLowerCase()
+          ))
       ) {
         return res.json({
           msg: "Username already exists",
@@ -528,8 +532,7 @@ export const Login = async (req, res) => {
       username,
       (err, result) => {
         if (err) {
-          res.send({ err: err });
-          console.log("here");
+          console.log(err);
         }
         if (result.length > 0) {
           bcrypt.compare(password, result[0].password, (error, response) => {

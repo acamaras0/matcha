@@ -165,7 +165,7 @@ const ProfileRandom = ({ socket }) => {
     if (user && user.id && id) {
       try {
         const response = await axios.post(
-          `http://localhost:5000/report/${user.id}/${id}`
+          `http://localhost:5000/report/${user.id}/${id}` 
         );
         setReport(response.data.msg);
       } catch (error) {

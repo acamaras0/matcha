@@ -11,12 +11,6 @@ const ProfilePic = () => {
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
 
-  if (message) {
-    setTimeout(() => {
-      setMessage("");
-    }, 2000);
-  }
-
   const saveFile = (e) => {
     setFile(e.target.files[0]);
     setSelectedImage(e.target.files[0]);

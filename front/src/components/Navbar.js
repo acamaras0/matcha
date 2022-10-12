@@ -120,11 +120,13 @@ const NavBar = ({ socket }) => {
   const handleRead = async () => {
     setNotifications([]);
     setOpen(false);
-    await axios.post(`http://localhost:5000/user/mark/${loggedIn.id}`);
+    if (loggedIn && loggedIn.length !== 0) {
+      await axios.post(`http://localhost:5000/user/mark/${loggedIn.id}`);
+    }
   };
 
   const Chat = async () => {
-    if (loggedIn.profile_pic) {
+    if (loggedIn && loggedIn.profile_pic) {
       setMessages([]);
       await axios.post(`http://localhost:5000/messages/seen/${loggedIn.id}`);
       history.push(`/chat/${loggedIn.id}`);

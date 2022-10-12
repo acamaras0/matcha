@@ -11,12 +11,6 @@ const Login = () => {
   const [cookie] = useCookies(["refreshToken"]);
   const history = useHistory();
 
-  if (message) {
-    setTimeout(() => {
-      setMessage("");
-    }, 2000);
-  }
-
   const Auth = async (e) => {
     e.preventDefault();
     const res = await axios.post("http://localhost:5000/login", {

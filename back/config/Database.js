@@ -26,7 +26,7 @@ db.connect(function (err) {
     firstname VARCHAR(255), lastname VARCHAR(255), username VARCHAR(255), \
     email VARCHAR(255), password VARCHAR(255), activ_status INT(11) DEFAULT 0,\
     birthdate INT(11), gender VARCHAR(255) ,orientation VARCHAR(255) DEFAULT 'bisexual',\
-    interests VARCHAR(500), bio VARCHAR(500), geo_lat DOUBLE, geo_long DOUBLE,\
+    interests VARCHAR(500) DEFAULT 'not activated', bio VARCHAR(500), geo_lat DOUBLE DEFAULT '0.0', geo_long DOUBLE DEFAULT '0.0',\
     city VARCHAR(500), country VARCHAR(500),\
     profile_views INT(11) DEFAULT 0, profile_pic VARCHAR(500),\
     fame INT(11) DEFAULT 0, online INT(11) DEFAULT 0, refresh_token VARCHAR(500), reset_token VARCHAR(500),activ_token VARCHAR(500),\

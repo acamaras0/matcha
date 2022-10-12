@@ -32,7 +32,13 @@ export const newMessages = async (req, res) => {
   const receiver = req.body.receiver;
   const text = req.body.text;
 
-  if (!text.match(/^\s+$|^$/gi) && text !== "") {
+  if (
+    !text.match(
+      /\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gi
+    ) &&
+    !text.match(/^\s+$|^$/gi) &&
+    text !== ""
+  ) {
     db.query(
       "INSERT INTO messages (chat_id, sender, receiver, text) VALUES (?, ?, ?, ?)",
       [chat_id, sender, receiver, text],

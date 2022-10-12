@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 import axios from "axios";
 import Conversations from "../models/Conversations";
@@ -14,8 +14,6 @@ const Chat = ({ socket }) => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const xsrfToken = getCookie("refreshToken");
   const [user, setUser] = useState();
-
-  const history = useHistory();
   const id = useParams().id;
   const scrollRef = useRef();
 
@@ -127,7 +125,7 @@ const Chat = ({ socket }) => {
   }, [arrivalMessage, currentChat]);
 
   if (xsrfToken === "") {
-    history.push("/");
+    return <Redirect to="/" />;
   }
 
   return (

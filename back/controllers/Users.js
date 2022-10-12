@@ -101,9 +101,7 @@ export const updateProfile = async (req, res) => {
     country,
     birthdate,
   } = req.body;
-
   let counter = 0;
-
   const tags = interests.join(", ");
   if (
     firstName &&
@@ -135,7 +133,7 @@ export const updateProfile = async (req, res) => {
       (err, result) => {
         if (err) console.log(err);
         if (result.length > 0) {
-          return res.status(200).json({ msg: "Username already exists" });
+          return console.log("email already exists ! ");
         } else
           db.query("UPDATE users SET username = ? WHERE id = ?", [
             username,
@@ -149,12 +147,18 @@ export const updateProfile = async (req, res) => {
     db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
       if (err) console.log(err);
       if (result.length > 0) {
-        return res.status(200).json({ msg: "Email already exists" });
+        return console.log("email already exists ! ");
       } else db.query("UPDATE users SET email = ? WHERE id = ?", [email, id]);
     });
     counter++;
   }
-  if (bio && bio.length <= 499) {
+  if (
+    bio &&
+    bio.length <= 499 &&
+    !bio.match(
+      /\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gi
+    )
+  ) {
     db.query("UPDATE users SET bio = ? WHERE id = ?", [bio, id]);
     counter++;
   }
@@ -181,11 +185,25 @@ export const updateProfile = async (req, res) => {
     db.query("UPDATE users SET geo_long = ? WHERE id = ?", [geoLng, id]);
     counter++;
   }
-  if (city && city.length > 0 && city.length < 20) {
+  if (
+    city &&
+    city.length > 0 &&
+    city.length < 20 &&
+    !city.match(
+      /\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gi
+    )
+  ) {
     db.query("UPDATE users SET city = ? WHERE id = ?", [city, id]);
     counter++;
   }
-  if (country && country.length > 0 && country.length < 20) {
+  if (
+    country &&
+    country.length > 0 &&
+    country.length < 20 &&
+    !country.match(
+      /\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gi
+    )
+  ) {
     db.query("UPDATE users SET country = ? WHERE id = ?", [country, id]);
     counter++;
   }
@@ -595,7 +613,12 @@ export const profileFill = async (req, res) => {
     return res.status(200).json({
       msg: "You must be at least 18 years old",
     });
-  } else if (bio.length > 500) {
+  } else if (
+    bio.length > 500 &&
+    !bio.match(
+      /\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gi
+    )
+  ) {
     return res.status(200).json({
       msg: "Bio must be less than 500 characters",
     });

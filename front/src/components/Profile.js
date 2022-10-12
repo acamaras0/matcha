@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams, Redirect } from "react-router-dom";
 import { EditText, EditTextarea } from "react-edit-text";
 import "react-edit-text/dist/index.css";
 import PicturesForm from "./PicturesForm";
@@ -32,7 +32,6 @@ const Profile = () => {
   const [newCountry, setNewCountry] = useState("");
   const [newAge, setNewAge] = useState("");
   const xsrfToken = getCookie("refreshToken");
-  const history = useHistory();
   const [show, setShow] = useState(false);
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -134,7 +133,8 @@ const Profile = () => {
   };
 
   if (xsrfToken === "") {
-    history.push("/");
+    //history.push("/");
+    return <Redirect to="/" />;
   }
   if (user)
     return (

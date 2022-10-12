@@ -1,4 +1,4 @@
-import db from "../config/Database.js";
+import db from "./Database.js";
 
 let round = 0;
 

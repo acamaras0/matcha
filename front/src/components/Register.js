@@ -27,12 +27,9 @@ const Register = () => {
         confPassword: confirmPasswordReg,
       });
       setMessage(res.data.msg);
-      setTimeout(() => {
-        setMessage("");
-      }, 4000);
-      // if (res.data.message === "success") {
-      //   history.push("/");
-      // }
+       if (res.data.message === "success") {
+         history.push("/");
+       }
     } catch (error) {
       if (error.response) {
         console.log("error", error.response.data);

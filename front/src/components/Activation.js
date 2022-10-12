@@ -9,11 +9,6 @@ const Activation = () => {
   const history = useHistory();
   const xsrfToken = getCookie("refreshToken");
   const [message, setMessage] = useState("");
-  if (message) {
-    setTimeout(() => {
-      setMessage("");
-    }, 2000);
-  }
 
   const activate = async () => {
     try {

@@ -1,6 +1,6 @@
 import useGetDistance from "../utils/useGetDistance";
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, Redirect, useHistory } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 import axios from "axios";
 import StarRating from "../models/StarRating";
@@ -20,12 +20,6 @@ const ProfileRandom = ({ socket }) => {
   const xsrfToken = getCookie("refreshToken");
   const history = useHistory();
   const distance = useGetDistance();
-
-  if (message) {
-    setTimeout(() => {
-      setMessage("");
-    }, 2000);
-  }
 
   useEffect(() => {
     if (xsrfToken !== "") {
@@ -175,7 +169,7 @@ const ProfileRandom = ({ socket }) => {
   };
 
   if (xsrfToken === "") {
-    history.push("/");
+    return <Redirect to="/" />;
   }
   if (selectedUser.length === 0 || !distance) {
     return (

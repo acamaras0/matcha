@@ -33,19 +33,27 @@ _IP Geolocation_
 
 
 Matcha handles:
-- User creation and authentication using token
+- User creation
 
 ![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/1.png)
+
+- Authentication using token
+
 ![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/2.png)
 
-- Pictures upload and default profile picture
+- Pictures upload and profile picture upload
 - Complete user profile page with gender, bio, location, interests details...
 - User profile edition (password, details, preferences)
 - Profiles discovery based on matching algorithm
 
 ![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/3.png)
 
+
 - Popularity score calculated for each user based on interactions with other profiles
+
+![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/3.png)
+
+
 - Profiles search with filters (interests, age, popularity and location ranges...) with immediate update
 
 ![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/5.png)

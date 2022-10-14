@@ -46,7 +46,7 @@ Matcha handles:
 - User profile edition (password, details, preferences)
 - Profiles discovery based on matching algorithm
 
-![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/3.png)
+![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/6.png)
 
 
 - Popularity score calculated for each user based on interactions with other profiles

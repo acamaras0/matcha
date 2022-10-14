@@ -34,14 +34,28 @@ _IP Geolocation_
 
 Matcha handles:
 - User creation and authentication using token
+
+![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/1.png)
+![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/2.png)
+
 - Pictures upload and default profile picture
 - Complete user profile page with gender, bio, location, interests details...
 - User profile edition (password, details, preferences)
-- Profiles discovery based on matching algorithm and user preferences
+- Profiles discovery based on matching algorithm
+
+![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/3.png)
+
 - Popularity score calculated for each user based on interactions with other profiles
-- Profiles search with filters (gender, interests, age and location ranges...) with immediate update
+- Profiles search with filters (interests, age, popularity and location ranges...) with immediate update
+
+![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/5.png)
+
+
 - Real-time notifications for likes, profile views and matches
 - Real-time chat if two profiles match
+
+![This is an image](https://github.com/acamaras0/matcha/blob/main/screenshots/4.png)
+
 - User ability to block or report another profile
 - Email notifications for authentication and password reset (with auth key)
 - Change and reset of email/forgot password with ID validation
@@ -72,5 +86,3 @@ Go in the back-end directory and do: `nodemon index.js`.
 Go in the front-end directory and do: `npm start`.
 
 Open the browser and go to `http://localhost:3000/`.
-
-

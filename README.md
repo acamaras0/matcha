@@ -22,14 +22,14 @@ _"This project introduces you to a more advanced tool for creating your web appl
 
 ### Stack
 
-_Node JS (Express)_
-_React JS_
-_Materialize CSS and Bootstrap_
-_Maria DB_
-_JSON web tokens_
-_Axios for API requests_
-_Websockets (socket.io) for real-time notifications/messages_
-_IP Geolocation_
+- _Node JS (Express)_
+- _React JS_
+- _Materialize CSS and Bootstrap_
+- _Maria DB_
+- _JSON web tokens_
+- _Axios for API requests_
+- _Websockets (socket.io) for real-time notifications/messages_
+- _IP Geolocation_
 
 
 Matcha handles:

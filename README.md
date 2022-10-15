@@ -79,7 +79,7 @@ Matcha handles:
 
 To run the project, you will need to install Maria DB/ MySql and set the password and username of you DB in the Database.js file. 
 
-- Node JS server -> `Port 8080`
+- Node JS server -> `Port 5000`
 - React app -> `Port 3000`
 - MySQL Database -> `Port 3306`
 

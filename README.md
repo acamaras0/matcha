@@ -77,7 +77,7 @@ Matcha handles:
 
 ### Install packages/dependencies
 
-To run the project, you will need to install Maria DB/ MySql and set the password and username of you DB in the .env file. 
+To run the project, you will need to install Maria DB/ MySql and set the password and username of you DB in the Database.js file. 
 
 - Node JS server -> `Port 8080`
 - React app -> `Port 3000`

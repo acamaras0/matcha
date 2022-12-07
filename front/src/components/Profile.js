@@ -11,355 +11,287 @@ import Overview from "../models/Overview";
 import Tags from "../models/Tags";
 import ProfilePic from "./ProfilePic";
 import Age from "../models/Age";
+import EditPictures from "../models/EditPictures";
+import ChangePassword from "../models/ChangePassword";
 
 const Profile = () => {
-  const { id } = useParams();
-  const [user, setUser] = useState("");
-  const [pics, setPics] = useState([]);
-  const [newFirstName, setNewFirstName] = useState("");
-  const [newLastName, setNewLastName] = useState("");
-  const [newUsername, setNewUsername] = useState("");
-  const [newBio, setNewBio] = useState("");
-  const [newInterest, setNewInterest] = useState([]);
-  const [newGender, setNewGender] = useState("");
-  const [newOrientation, setNewOrientation] = useState("");
-  const [newEmail, setNewEmail] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
-  const [newGeoLat, setNewGeoLat] = useState("");
-  const [newGeoLng, setNewGeoLng] = useState("");
-  const [newCity, setNewCity] = useState("");
-  const [newCountry, setNewCountry] = useState("");
-  const [newAge, setNewAge] = useState("");
-  const xsrfToken = getCookie("refreshToken");
-  const [show, setShow] = useState(false);
-  const [show1, setShow1] = useState(false);
-  const [show2, setShow2] = useState(false);
-  const [message, setMessage] = useState("");
-  const [message1, setMessage1] = useState("");
-  const [message2, setMessage2] = useState("");
+	const { id } = useParams();
+	const [user, setUser] = useState("");
+	const [pics, setPics] = useState([]);
+	const [newFirstName, setNewFirstName] = useState("");
+	const [newLastName, setNewLastName] = useState("");
+	const [newUsername, setNewUsername] = useState("");
+	const [newBio, setNewBio] = useState("");
+	const [newInterest, setNewInterest] = useState([]);
+	const [newGender, setNewGender] = useState("");
+	const [newOrientation, setNewOrientation] = useState("");
+	const [newEmail, setNewEmail] = useState("");
+	const [newGeoLat, setNewGeoLat] = useState("");
+	const [newGeoLng, setNewGeoLng] = useState("");
+	const [newCity, setNewCity] = useState("");
+	const [newCountry, setNewCountry] = useState("");
+	const [newAge, setNewAge] = useState("");
+	const xsrfToken = getCookie("refreshToken");
+	const [show, setShow] = useState(false);
+	const [show1, setShow1] = useState(false);
+	const [show2, setShow2] = useState(false);
+	const [show3, setShow3] = useState(false);
+	const [message, setMessage] = useState("");
+	const [message2, setMessage2] = useState("");
 
-  if (message) {
-    setTimeout(() => {
-      setMessage("");
-      setMessage1("");
-    }, 2000);
-  }
+	if (message) {
+		setTimeout(() => {
+			setMessage("");
+			setMessage2("");
+		}, 2000);
+	}
 
-  useEffect(() => {
-    if (xsrfToken !== "") {
-      const getLoggedIn = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/user/${xsrfToken}`,
-          {}
-        );
-        setUser(response.data);
-      };
-      getLoggedIn();
-    }
-    const getPicPath = async () => {
-      const response = await axios.get(
-        `http://localhost:5000/user/pictures/${id}`,
-        {}
-      );
-      setPics(response.data);
-    };
-    getPicPath();
-    return () => {
-      setPics({});
-    };
-  }, [id, xsrfToken]);
+	useEffect(() => {
+		if (xsrfToken !== "") {
+			const getLoggedIn = async () => {
+				const response = await axios.get(
+					`http://localhost:5000/user/${xsrfToken}`,
+					{}
+				);
+				setUser(response.data);
+			};
+			getLoggedIn();
+		}
+		const getPicPath = async () => {
+			const response = await axios.get(
+				`http://localhost:5000/user/pictures/${id}`,
+				{}
+			);
+			setPics(response.data);
+		};
+		getPicPath();
+		return () => {
+			setPics({});
+		};
+	}, [id, xsrfToken]);
 
-  const updateProfile = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        `http://localhost:5000/user/update/${id}`,
-        {
-          firstName: newFirstName.value,
-          lastName: newLastName.value,
-          username: newUsername.value,
-          email: newEmail.value,
-          bio: newBio.value,
-          interests: newInterest,
-          gender: newGender,
-          orientation: newOrientation,
-          password: newPassword.value,
-          passwordConfirm: newPasswordConfirm.value,
-          geoLat: newGeoLat.value,
-          geoLng: newGeoLng.value,
-          city: newCity.value,
-          country: newCountry.value,
-          birthdate: newAge,
-        }
-      );
-      setMessage(response.data.msg);
-    } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data.msg);
-      }
-    }
-  };
-
-  const deletePic = async (pic_id) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:5000/user/picture/${pic_id}`
-      );
-      setMessage1(response.data.msg);
-    } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data.msg);
-      }
-    }
-  };
-
-  const updatePassword = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        `http://localhost:5000/user/updatePassword/${id}`,
-        {
-          password: newPassword,
-          passwordConfirm: newPasswordConfirm,
-        }
-      );
-      setMessage2(response.data.msg);
-    } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data.msg);
-      }
-    }
-  };
-
-  if (xsrfToken === "") {
-    //history.push("/");
-    return <Redirect to="/" />;
-  }
-  if (user)
-    return (
-      <div className="text-center">
-        <button
-          className="btn btn-warning-outline"
-          onClick={() => setShow(!show)}
-        >
-          Click here to get a profile overview.
-          <p>▼</p>
-        </button>
-        <div className="view">
-          {pics ? (
-            <div className="card" style={{ width: "50rem" }}>
-              {show ? <Overview pics={pics} user={user} /> : null}
-            </div>
-          ) : null}
-        </div>
-        <div className="update">
-          <div className="card-pictures">
-            {message1 ? <p className="error">{message1}</p> : null}
-            {pics.length > 0 ? (
-              <div className="uploaded-pics">
-                {pics
-                  ? pics.map((pic) => (
-                      <div className="images" key={pic.id}>
-                        <img
-                          className="img-top"
-                          src={pic.img}
-                          alt="uploaded-pic"
-                        />
-                        <div className="delete-button">
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => deletePic(pic.id)}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    ))
-                  : null}
-              </div>
-            ) : (
-              <img
-                alt="backup"
-                className="profile-picture"
-                src={user.profile_pic}
-              />
-            )}
-          </div>
-          <button className="btn btn-warning" onClick={() => setShow1(!show1)}>
-            Upload more pictures
-          </button>
-          <button className="btn btn-warning" onClick={() => setShow2(!show2)}>
-            Change profile picture
-          </button>
-          <div>
-            {show1 ? <PicturesForm /> : null}
-            {show2 ? <ProfilePic /> : null}
-          </div>
-          <div className="card-password">
-            <div className="card-body">
-              <h3>✍ Change Password</h3> <br />
-              <form>
-                <label>New Password</label>
-                <input
-                  type="password"
-                  autoComplete="off"
-                  className="form-control mt-3"
-                  placeholder="Password..."
-                  onChange={(e) => {
-                    setNewPassword(e.target.value);
-                  }}
-                ></input>
-                <label>Confirm Password</label>
-                <input
-                  type="password"
-                  className="form-control mt-3"
-                  placeholder="Confirm password..."
-                  autoComplete="off"
-                  onChange={(e) => {
-                    setNewPasswordConfirm(e.target.value);
-                  }}
-                ></input>
-              </form>
-            </div>{" "}
-            <br />
-            <button onClick={updatePassword} className="btn btn-warning">
-              Submit
-            </button>
-            <p className="error">{message2}</p>
-          </div>
-          <div className="card-profile">
-            <h3>✍ Update profile</h3>
-            <br />
-            <label>✎ Firts name</label>
-            <EditText
-              name="textbox1"
-              defaultValue={user.firstname}
-              onSave={(value) => {
-                if (value !== "") {
-                  setNewFirstName(value);
-                } else {
-                  setNewFirstName(user.firstname);
-                }
-              }}
-            />
-            <label>✎ Last Name</label>
-            <EditText
-              name="textbox1"
-              defaultValue={user.lastname}
-              onSave={(value) => {
-                if (value !== "") {
-                  setNewLastName(value);
-                } else {
-                  setNewLastName(user.lastname);
-                }
-              }}
-            />
-            <div className="card-body">
-              <label>✎ Username</label>
-              <EditText
-                name="textbox1"
-                defaultValue={user.username}
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewUsername(value);
-                  } else {
-                    setNewUsername(user.username);
-                  }
-                }}
-              />
-              <label>✎ Age</label>
-              <p className="age">{user.birthdate}</p>
-              <Age setAge={setNewAge} />
-              <br />
-              <label>Coordinates</label>
-              <EditText
-                name="textbox1"
-                defaultValue="New latitude"
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewGeoLat(value);
-                  } else {
-                    setNewGeoLat(user.geo_lat);
-                  }
-                }}
-              />
-              <EditText
-                name="textbox1"
-                defaultValue="New longitude"
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewGeoLng(value);
-                  } else {
-                    setNewGeoLng(user.geo_long);
-                  }
-                }}
-              />
-              <label>✎ City</label>
-              <EditText
-                name="textbox1"
-                defaultValue={user.city}
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewCity(value);
-                  } else {
-                    setNewCity(user.city);
-                  }
-                }}
-              />
-              <label>✎ Country</label>
-              <EditText
-                name="textbox1"
-                defaultValue={user.country}
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewCountry(value);
-                  } else {
-                    setNewCountry(user.country);
-                  }
-                }}
-              />
-              <label>✎ Email address</label>
-              <EditText
-                name="textbox1"
-                defaultValue={user.email}
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewEmail(value);
-                  } else {
-                    setNewEmail(user.email);
-                  }
-                }}
-              />
-              <label>✎ Gender</label>
-              <Gender setGender={setNewGender} />
-              <label>✎ Sexual orientation</label>
-              <Orientation setOrientation={setNewOrientation} />
-              <label>✎ Interests</label>
-              <Tags setInterests={setNewInterest} />
-              <label>✎ Bio</label>
-              <EditTextarea
-                name="textbox1"
-                defaultValue={user.bio}
-                onSave={(value) => {
-                  if (value !== "") {
-                    setNewBio(value);
-                  } else {
-                    setNewBio(user.bio);
-                  }
-                }}
-              />
-            </div>
-            <button className="btn btn-warning" onClick={updateProfile}>
-              Update
-            </button>
-            {message ? <p className="error">{message}</p> : null}
-          </div>
-          <p> Your profile has been viewed {user.profile_views} time(s).</p>
-        </div>
-      </div>
-    );
-  return <div>Loading...</div>;
+	const updateProfile = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await axios.post(
+				`http://localhost:5000/user/update/${id}`,
+				{
+					firstName: newFirstName.value,
+					lastName: newLastName.value,
+					username: newUsername.value,
+					email: newEmail.value,
+					bio: newBio.value,
+					interests: newInterest,
+					gender: newGender,
+					orientation: newOrientation,
+					// password: newPassword.value,
+					// passwordConfirm: newPasswordConfirm.value,
+					geoLat: newGeoLat.value,
+					geoLng: newGeoLng.value,
+					city: newCity.value,
+					country: newCountry.value,
+					birthdate: newAge,
+				}
+			);
+			setMessage(response.data.msg);
+		} catch (error) {
+			if (error.response) {
+				setMessage(error.response.data.msg);
+			}
+		}
+	};
+	if (xsrfToken === "") {
+		return <Redirect to="/" />;
+	}
+	if (user)
+		return (
+			<div className="text-center">
+				<div className="view">
+					{pics ? (
+						<div className="card" style={{ width: "50rem" }}>
+							<Overview pics={pics} user={user} />
+						</div>
+					) : null}
+				</div>
+				<div className="update">
+					<button
+						className="btn btn-warning"
+						onClick={() => setShow3(!show3)}
+					>
+						Edit Photos
+					</button>
+					{show3 ? <EditPictures pics={pics} user={user} /> : null}
+					<button
+						className="btn btn-warning"
+						onClick={() => setShow1(!show1)}
+					>
+						Upload more pictures
+					</button>
+					<button
+						className="btn btn-warning"
+						onClick={() => setShow2(!show2)}
+					>
+						Change profile picture
+					</button>
+					<div>
+						{show1 ? <PicturesForm /> : null}
+						{show2 ? <ProfilePic /> : null}
+					</div>
+					<div className="card-password">
+						<button
+							className="btn btn-warning"
+							onClick={() => setShow(!show)}
+						>
+							Change Password
+						</button>
+						{show ? (
+							<ChangePassword
+								id={id}
+								setMessage={setMessage}
+								setMessage2={setMessage2}
+							/>
+						) : null}
+					</div>
+					<p className="error">{message2}</p>
+					<div className="card-profile">
+						<h3>✍ Update profile</h3>
+						<br />
+						<label>✎ Firts name</label>
+						<EditText
+							name="textbox1"
+							defaultValue={user.firstname}
+							onSave={(value) => {
+								if (value !== "") {
+									setNewFirstName(value);
+								} else {
+									setNewFirstName(user.firstname);
+								}
+							}}
+						/>
+						<label>✎ Last Name</label>
+						<EditText
+							name="textbox1"
+							defaultValue={user.lastname}
+							onSave={(value) => {
+								if (value !== "") {
+									setNewLastName(value);
+								} else {
+									setNewLastName(user.lastname);
+								}
+							}}
+						/>
+						<div className="card-body">
+							<label>✎ Username</label>
+							<EditText
+								name="textbox1"
+								defaultValue={user.username}
+								onSave={(value) => {
+									if (value !== "") {
+										setNewUsername(value);
+									} else {
+										setNewUsername(user.username);
+									}
+								}}
+							/>
+							<label>✎ Age</label>
+							<p className="age">{user.birthdate}</p>
+							<Age setAge={setNewAge} />
+							<br />
+							<label>Coordinates</label>
+							<EditText
+								name="textbox1"
+								defaultValue="New latitude"
+								onSave={(value) => {
+									if (value !== "") {
+										setNewGeoLat(value);
+									} else {
+										setNewGeoLat(user.geo_lat);
+									}
+								}}
+							/>
+							<EditText
+								name="textbox1"
+								defaultValue="New longitude"
+								onSave={(value) => {
+									if (value !== "") {
+										setNewGeoLng(value);
+									} else {
+										setNewGeoLng(user.geo_long);
+									}
+								}}
+							/>
+							<label>✎ City</label>
+							<EditText
+								name="textbox1"
+								defaultValue={user.city}
+								onSave={(value) => {
+									if (value !== "") {
+										setNewCity(value);
+									} else {
+										setNewCity(user.city);
+									}
+								}}
+							/>
+							<label>✎ Country</label>
+							<EditText
+								name="textbox1"
+								defaultValue={user.country}
+								onSave={(value) => {
+									if (value !== "") {
+										setNewCountry(value);
+									} else {
+										setNewCountry(user.country);
+									}
+								}}
+							/>
+							<label>✎ Email address</label>
+							<EditText
+								name="textbox1"
+								defaultValue={user.email}
+								onSave={(value) => {
+									if (value !== "") {
+										setNewEmail(value);
+									} else {
+										setNewEmail(user.email);
+									}
+								}}
+							/>
+							<label>✎ Gender</label>
+							<Gender setGender={setNewGender} />
+							<label>✎ Sexual orientation</label>
+							<Orientation setOrientation={setNewOrientation} />
+							<label>✎ Interests</label>
+							<Tags setInterests={setNewInterest} />
+							<label>✎ Bio</label>
+							<EditTextarea
+								name="textbox1"
+								defaultValue={user.bio}
+								onSave={(value) => {
+									if (value !== "") {
+										setNewBio(value);
+									} else {
+										setNewBio(user.bio);
+									}
+								}}
+							/>
+						</div>
+						{message ? <p className="error">{message}</p> : null}
+						<button
+							className="btn btn-warning"
+							onClick={updateProfile}
+						>
+							Update
+						</button>
+					</div>
+					<p>
+						{" "}
+						Your profile has been viewed {user.profile_views}{" "}
+						time(s).
+					</p>
+				</div>
+			</div>
+		);
+	return <div>Loading...</div>;
 };
 
 export default Profile;

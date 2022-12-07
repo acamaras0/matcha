@@ -1,36 +1,36 @@
 import express from "express";
 import {
-  Register,
-  Login,
-  accountActivation,
-  getUsers,
-  getLoggedIn,
-  profileFill,
-  Logout,
-  updatePassword,
-  getRandomUser,
-  forgotPass,
-  resetPass,
-  updateProfile,
-  addView,
+	Register,
+	Login,
+	accountActivation,
+	getUsers,
+	getLoggedIn,
+	profileFill,
+	Logout,
+	updatePassword,
+	getRandomUser,
+	forgotPass,
+	resetPass,
+	updateProfile,
+	addView,
 } from "../controllers/Users.js";
 import {
-  uploadPic,
-  getPicsById,
-  deletePic,
-  getPicPath,
-  ProfilePic,
+	uploadPic,
+	getPicsById,
+	deletePic,
+	getPicPath,
+	ProfilePic,
 } from "../controllers/Images.js";
 import {
-  getConversation,
-  getMessages,
-  newMessages,
-  getMessagesNotif,
-  markSeen,
+	getConversation,
+	getMessages,
+	newMessages,
+	getMessagesNotif,
+	markSeen,
 } from "../controllers/Chat.js";
 import {
-  getNotifications,
-  markNotifications,
+	getNotifications,
+	markNotifications,
 } from "../controllers/Notifications.js";
 import { location } from "../controllers/Location.js";
 import { report, block, getBlockedUsers } from "../controllers/ReportBlock.js";

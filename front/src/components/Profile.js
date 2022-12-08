@@ -63,31 +63,31 @@ const Profile = () => {
 				<div className="update">
 					<div className="btn-group btn-group-toggle">
 						<button
-							className="btn btn-warning"
+							className="btn btn-outline-warning"
 							onClick={() => setShow3(!show3)}
 						>
 							Edit Photos
 						</button>
 						<button
-							className="btn btn-warning"
+							className="btn btn-outline-warning"
 							onClick={() => setShow1(!show1)}
 						>
 							Upload pictures
 						</button>
 						<button
-							className="btn btn-warning"
+							className="btn btn-outline-warning"
 							onClick={() => setShow2(!show2)}
 						>
 							Change profile picture
 						</button>
 						<button
-							className="btn btn-warning"
+							className="btn btn-outline-warning"
 							onClick={() => setShow(!show)}
 						>
 							Change Password
 						</button>
 						<button
-							className="btn btn-warning"
+							className="btn btn-outline-warning"
 							onClick={() => setShowUpdate(!showUpdate)}
 						>
 							Update profile

@@ -264,7 +264,8 @@ img.card-img.img-fluid {
 }
 p.online {
 	margin-top: 5px;
-	margin-left: 8px;
+	margin-left: 5px;
+	margin-right: 5px;
 	width: 5px;
 	height: 5px;
 	background-color: rgb(33, 215, 1);
@@ -273,7 +274,8 @@ p.online {
 }
 p.offline {
 	margin-top: 5px;
-	margin-left: 8px;
+	margin-left: 5px;
+	margin-right: 5px;
 	width: 5px;
 	height: 5px;
 	background-color: rgb(244, 0, 0);

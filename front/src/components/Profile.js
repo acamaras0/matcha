@@ -97,31 +97,31 @@ const Profile = () => {
 				<div className="update">
 					<div className="btn-group btn-group-toggle">
 						<button
-							className="btn btn-outline-warning"
+							className="btn btn-outline-dark"
 							onClick={() => handleShow(1)}
 						>
 							Change Password
 						</button>
 						<button
-							className="btn btn-outline-warning"
+							className="btn btn-outline-dark"
 							onClick={() => handleShow(2)}
 						>
 							Change Profile Picture
 						</button>
 						<button
-							className="btn btn-outline-warning"
+							className="btn btn-outline-dark"
 							onClick={() => handleShow(3)}
 						>
 							Upload Pictures
 						</button>
 						<button
-							className="btn btn-outline-warning"
+							className="btn btn-outline-dark"
 							onClick={() => handleShow(4)}
 						>
 							Edit Pictures
 						</button>
 						<button
-							className="btn btn-outline-warning"
+							className="btn btn-outline-dark"
 							onClick={() => handleShow(5)}
 						>
 							Update Profile

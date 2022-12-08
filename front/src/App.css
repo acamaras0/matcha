@@ -2,6 +2,13 @@
 	width: 100%;
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 		sans-serif;
+	/* background-image: radial-gradient(73% 147%, #eadfdf 59%, #ece2df 100%),
+		radial-gradient(
+			91% 146%,
+			rgba(255, 255, 255, 0.5) 47%,
+			rgba(0, 0, 0, 0.5) 100%
+		); */
+	background-blend-mode: screen;
 }
 ._4GdcU._i5--j,
 p.age,
@@ -53,9 +60,14 @@ p.age,
 	color: rgb(236, 189, 0);
 }
 
+.filter-header {
+	padding-top: 8vh;
+}
+
 .filter {
 	padding-left: 20vw;
 	padding-right: 20vw;
+	padding-top: 10vh;
 }
 
 .sorting {
@@ -201,9 +213,9 @@ img.card-img-top {
 	cursor: pointer;
 }
 nav.navbar {
-  display: flex;
-  background: rgba(255, 242, 194, 0.18);
-  align-items: flex-end;
+	display: flex;
+	background: rgba(255, 242, 194, 0.18);
+	align-items: flex-end;
 }
 
 .dashboard {
@@ -410,9 +422,10 @@ a:active {
 
 .footer {
 	padding: 1%;
-	padding-top: 10px;
+	/* padding-top: 10px; */
 	font-size: 10px;
 	color: #999;
+	padding-top: 20vh;
 }
 
 .img-top {

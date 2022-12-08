@@ -49,8 +49,8 @@ const UpdateProfile = ({ user, id, setMessage, message }) => {
 		}
 	};
 	return (
-		<div className="card-profile">
-			<h3>✍ Update profile</h3>
+		<div>
+			<h3>✍ Update Profile</h3>
 			<br />
 			<label>✎ Firts name</label>
 			<EditText

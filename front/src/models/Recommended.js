@@ -31,7 +31,7 @@ const Recommended = ({ filtered, socket, user }) => {
                 <div
                   key={user.id}
                   className="card mb-4"
-                  style={{ width: "30rem" }}
+                  style={{ width: "40rem" }}
                 >
                   <div className="row no-gutters">
                     <div>

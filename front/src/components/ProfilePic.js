@@ -38,7 +38,7 @@ const ProfilePic = () => {
   }
   return (
     <div className="form-group text-center">
-      <h3>✍ Upload Profile Picture</h3>
+      <h3>✍ Change Profile Picture</h3>
       <p className="error">{message}</p>
       <br />
       {selectedImage && (

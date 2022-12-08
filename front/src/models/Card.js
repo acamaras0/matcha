@@ -25,13 +25,17 @@ const Card = ({ array, socket, user }) => {
             <div
               key={uuidv4()}
               className="card bg-light mb-3"
-              style={{ maxWidth: "10rem" }}
+              style={{ maxWidth: "20rem" }}
             >
               <div
                 className="card-header"
                 onClick={() => handleClick(array.id)}
               >
-                {array.username}, {array.birthdate}
+                {array.username}, {array.birthdate}, {array.online === 1 ? (
+                            <p className="online"></p>
+                          ) : (
+                            <p className="offline"></p>
+                          )}
               </div>
               <img
                 className="search-img"

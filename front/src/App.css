@@ -202,7 +202,7 @@ img.card-img-top {
 }
 nav.navbar {
   display: flex;
-  background: rgba(255, 242, 194, 0.354);
+  background: rgba(255, 242, 194, 0.18);
   align-items: flex-end;
 }
 
@@ -361,12 +361,7 @@ p.offline {
 	border: #fffefe 1px solid;
 	border-radius: 100%;
 }
-.card-profile {
-	/* padding-left: 30vw;
-  padding-right: 30vw; */
-	padding-top: 5vh;
-	padding-bottom: 5vh;
-}
+
 label {
 	font-size: 14px;
 	font-weight: 600;

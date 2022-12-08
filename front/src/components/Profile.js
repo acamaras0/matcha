@@ -16,9 +16,9 @@ const Profile = () => {
 	const [pics, setPics] = useState([]);
 	const xsrfToken = getCookie("refreshToken");
 	const [show, setShow] = useState(false);
-	const [show1, setShow1] = useState(false);
-	const [show2, setShow2] = useState(false);
-	const [show3, setShow3] = useState(false);
+	const [showUpload, setShowUpload] = useState(false);
+	const [changeProfilePicture, setChangeProfilePicture] = useState(false);
+	const [editPhotos, showEditPhotos] = useState(false);
 	const [showUpdate, setShowUpdate] = useState(false);
 	const [message, setMessage] = useState("");
 	const [message2, setMessage2] = useState("");
@@ -54,6 +54,40 @@ const Profile = () => {
 		};
 	}, [id, xsrfToken]);
 
+	const handleShow = (number) => {
+		if (number === 1) {
+			setShow(!show);
+			setChangeProfilePicture(false);
+			setShowUpload(false);
+			showEditPhotos(false);
+			setShowUpdate(false);
+		} else if (number === 2) {
+			setShow(false);
+			setChangeProfilePicture(!changeProfilePicture);
+			setShowUpload(false);
+			showEditPhotos(false);
+			setShowUpdate(false);
+		} else if (number === 3) {
+			setShow(false);
+			setChangeProfilePicture(false);
+			setShowUpload(!showUpload);
+			showEditPhotos(false);
+			setShowUpdate(false);
+		} else if (number === 4) {
+			setShow(false);
+			setChangeProfilePicture(false);
+			setShowUpload(false);
+			showEditPhotos(!editPhotos);
+			setShowUpdate(false);
+		} else if (number === 5) {
+			setShow(false);
+			setChangeProfilePicture(false);
+			setShowUpload(false);
+			showEditPhotos(false);
+			setShowUpdate(!showUpdate);
+		}
+	};
+
 	if (xsrfToken === "") {
 		return <Redirect to="/" />;
 	}
@@ -64,39 +98,39 @@ const Profile = () => {
 					<div className="btn-group btn-group-toggle">
 						<button
 							className="btn btn-outline-warning"
-							onClick={() => setShow3(!show3)}
-						>
-							Edit Photos
-						</button>
-						<button
-							className="btn btn-outline-warning"
-							onClick={() => setShow1(!show1)}
-						>
-							Upload pictures
-						</button>
-						<button
-							className="btn btn-outline-warning"
-							onClick={() => setShow2(!show2)}
-						>
-							Change profile picture
-						</button>
-						<button
-							className="btn btn-outline-warning"
-							onClick={() => setShow(!show)}
+							onClick={() => handleShow(1)}
 						>
 							Change Password
 						</button>
 						<button
 							className="btn btn-outline-warning"
-							onClick={() => setShowUpdate(!showUpdate)}
+							onClick={() => handleShow(2)}
 						>
-							Update profile
+							Change Profile Picture
+						</button>
+						<button
+							className="btn btn-outline-warning"
+							onClick={() => handleShow(3)}
+						>
+							Upload Pictures
+						</button>
+						<button
+							className="btn btn-outline-warning"
+							onClick={() => handleShow(4)}
+						>
+							Edit Pictures
+						</button>
+						<button
+							className="btn btn-outline-warning"
+							onClick={() => handleShow(5)}
+						>
+							Update Profile
 						</button>
 					</div>
 					<div>
-						{show1 ? <PicturesForm /> : null}
-						{show2 ? <ProfilePic /> : null}
-						{show3 ? (
+						{showUpload ? <PicturesForm /> : null}
+						{changeProfilePicture ? <ProfilePic /> : null}
+						{editPhotos ? (
 							<EditPictures pics={pics} user={user} />
 						) : null}
 					</div>

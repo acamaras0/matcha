@@ -178,7 +178,7 @@ const NavBar = ({ socket }) => {
                   <img src={notification} className="iconImg" alt="notif" />
                   {notifications?.length > 0 && <div className="counter"></div>}
                   {open && (
-                    <div className="notifications position-absolute">
+                    <div className="notifications position-absolute display-grid">
                       {notifications.length > 0
                         ? notifications.map((n) => displayNotifications(n))
                         : null}

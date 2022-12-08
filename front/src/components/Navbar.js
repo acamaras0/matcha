@@ -158,7 +158,7 @@ const NavBar = ({ socket }) => {
   };
 
   return (
-    <>
+    <div>
       <nav className="navbar" role="navigation">
         <div className="Nav-logo">
           <img onClick={Dashboard} src={logo} className="logo" alt="" />
@@ -210,7 +210,7 @@ const NavBar = ({ socket }) => {
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 };
 

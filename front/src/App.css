@@ -45,7 +45,7 @@ p.age,
 	justify-content: center;
 }
 .suggestions-img {
-	width: 200px;
+	width: 150px;
 }
 .interests {
 	font-size: 10px;
@@ -197,14 +197,13 @@ img.card-img-top {
 	margin-right: 10px;
 }
 .Nav-logo {
-	margin-top: 10px;
 	margin-left: 40px;
-	margin-bottom: 15px;
 	cursor: pointer;
 }
 nav.navbar {
-	display: flex;
-	/* justify-content: space-around; */
+  display: flex;
+  background: rgba(255, 242, 194, 0.354);
+  align-items: flex-end;
 }
 
 .dashboard {
@@ -222,8 +221,7 @@ img.card-img.img-fluid {
 }
 
 .logo {
-	margin-bottom: 3vh;
-	width: 12vh;
+	width: 8vh;
 }
 .logo1 {
 	display: flex;

@@ -1,9 +1,14 @@
 import mysql from "mysql";
 
 const db = mysql.createConnection({
+  // user: "root",
+  // host: "127.0.0.1",
+  // password: "",
+
   user: "root",
-  host: "127.0.0.1",
-  password: "",
+  host: "localhost",
+  password: "123456",
+
 });
 
 db.connect(function (err) {

@@ -19,7 +19,7 @@ const NavBarOffline = () => {
         <div className="Nav-logo">
           <img src={logo} className="logo" alt="" />
         </div>
-        <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-menu">
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">

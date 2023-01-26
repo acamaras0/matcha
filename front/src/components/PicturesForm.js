@@ -35,7 +35,7 @@ const PicturesForm = () => {
 	}
 	return (
 		<div className="form-group text-center">
-			<h3>✍ Upload Pictures</h3>
+			<h3 className="mt-4">✍ Upload Pictures</h3>
 			<br />
 			{selectedImage && (
 				<div>

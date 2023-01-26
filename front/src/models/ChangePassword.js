@@ -25,7 +25,7 @@ const ChangePassword = ({ id, setMessage, setMessage2 }) => {
 	return (
 		<>
 			<form>
-				<h3>✍ Change password</h3>
+				<h3 className="mt-3">✍ Change password</h3>
 				<label>New Password</label>
 				<input
 					type="password"

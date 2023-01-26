@@ -50,7 +50,7 @@ const UpdateProfile = ({ user, id, setMessage, message }) => {
 	};
 	return (
 		<div>
-			<h3>✍ Update Profile</h3>
+			<h3 className="mt-4">✍ Update Profile</h3>
 			<br />
 			<label>✎ Firts name</label>
 			<EditText

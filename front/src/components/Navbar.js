@@ -1,15 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getCookie } from "react-use-cookie";
+import { v4 as uuidv4 } from "uuid";
 import logo from "../assets/logo.png";
 import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
 import logout from "../assets/logout.png";
 import user from "../assets/user.png";
 import filter from "../assets/filter.png";
-import { useEffect, useState } from "react";
-import { getCookie } from "react-use-cookie";
-import { v4 as uuidv4 } from "uuid";
 
 const fetchNotifications = (
   userId,
@@ -161,10 +161,10 @@ const NavBar = ({ socket }) => {
     <div>
       <nav className="navbar" role="navigation">
         <div className="Nav-logo">
-          <img onClick={Dashboard} src={logo} className="logo" alt="" />
+          <img onClick={Dashboard} src={logo} className="logo" alt="logo" />
         </div>
         <div className="navbar-brand"></div>
-        <div id="navbarBasicExample" className="navbar-menu">
+        <div className="navbar-menu">
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">

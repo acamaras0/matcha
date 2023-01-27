@@ -159,7 +159,7 @@ const NavBar = ({ socket }) => {
 
   return (
     <div>
-      <nav className="navbar" role="navigation">
+      <nav className="navbar bg-light" role="navigation">
         <div className="Nav-logo">
           <img onClick={Dashboard} src={logo} className="logo" alt="logo" />
         </div>
@@ -182,7 +182,7 @@ const NavBar = ({ socket }) => {
                       {notifications.length > 0
                         ? notifications.map((n) => displayNotifications(n))
                         : null}
-                      <button className="btn btn-warning" onClick={handleRead}>
+                      <button className="btn btn-dark" onClick={handleRead}>
                         Mark as read
                       </button>
                     </div>

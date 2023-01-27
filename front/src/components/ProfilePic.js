@@ -56,7 +56,7 @@ const ProfilePic = () => {
       )}
       <br />
       <input className="" type="file" name="file" onChange={saveFile} />
-      <button className="btn btn-warning" onClick={uploadFile}>
+      <button className="btn btn-dark" onClick={uploadFile}>
         Upload
       </button>
     </div>

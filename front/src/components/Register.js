@@ -116,7 +116,7 @@ const Register = () => {
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-              <button className="btn btn-warning"> Register </button>
+              <button className="btn btn-dark"> Register </button>
             </div>
             <br />
             <p className="error">{message}</p>

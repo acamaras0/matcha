@@ -101,7 +101,7 @@ const ProfileForm = () => {
                 />
               </div>
               <div className="d-grid gap-2 mt-3">
-                <button className="btn btn-outline-warning">Submit</button>
+                <button className="btn btn-outline-dark">Submit</button>
               </div>
             </div>
             <p className="error">{message}</p>

@@ -159,7 +159,7 @@ const ProfileRandom = ({ socket }) => {
     if (user && user.id && id) {
       try {
         const response = await axios.post(
-          `http://localhost:5000/report/${user.id}/${id}` 
+          `http://localhost:5000/report/${user.id}/${id}`
         );
         setReport(response.data.msg);
       } catch (error) {
@@ -180,7 +180,7 @@ const ProfileRandom = ({ socket }) => {
   } else {
     return (
       <div>
-        <div className="text-center">
+        <div className="text-center mt-5">
           <h2 className="text-center">
             {selectedUser.firstname} {selectedUser.lastname}
           </h2>
@@ -255,7 +255,7 @@ const ProfileRandom = ({ socket }) => {
           <div>
             <button
               onClick={() => handleReport(selectedUser.id)}
-              className="btn btn-warning"
+              className="btn btn-dark"
             >
               Report fake account
             </button>

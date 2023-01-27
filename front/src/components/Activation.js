@@ -33,7 +33,7 @@ const Activation = () => {
             <h3>Welcome to Matcha!</h3>
             <p>Click the following button for one last check!</p>
           </div>
-          <button onClick={activate} className="btn btn-warning">
+          <button onClick={activate} className="btn btn-dark">
             Activate
           </button>
           <p className="error">{message}</p>

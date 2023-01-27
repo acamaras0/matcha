@@ -15,7 +15,7 @@ const NavBarOffline = () => {
 
   return (
     <>
-      <nav className="navbar" role="navigation">
+      <nav className="navbar bg-light" role="navigation">
         <div className="Nav-logo">
           <img src={logo} className="logo" alt="" />
         </div>
@@ -24,10 +24,10 @@ const NavBarOffline = () => {
             <div className="navbar-item">
               <div className="buttons">
                 <div className="icon">
-                  <button onClick={Login} className="btn btn-warning">
+                  <button onClick={Login} className="btn btn-dark">
                     Sign in
                   </button>
-                  <button onClick={Register} className="btn btn-warning">
+                  <button onClick={Register} className="btn btn-dark">
                     Sign up
                   </button>
                 </div>

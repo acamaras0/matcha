@@ -28,7 +28,7 @@ const useGetDistance = () => {
     return () => {
       setGeo({});
     };
-  }, [cookie.refreshToken]);
+  }, [cookie.refreshToken, setGeo]);
 
   if (geo) {
     if (geo[0] && geo[1]) {

@@ -87,7 +87,7 @@ const Profile = () => {
   }
   if (user)
     return (
-      <div className="text-center">
+      <div className="mt-5 text-center">
         <div className="update">
           <div className="btn-group btn-group-toggle">
             <button

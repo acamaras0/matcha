@@ -252,7 +252,7 @@ const ProfileRandom = ({ socket }) => {
               </div>
             </div>
           </div>
-          <div>
+          <div className="mb-5">
             <button
               onClick={() => handleReport(selectedUser.id)}
               className="btn btn-dark"

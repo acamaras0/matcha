@@ -4,6 +4,7 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CookiesProvider } from "react-cookie";
 import axios from "axios";
+import "./index.css";
 axios.defaults.withCredentials = true;
 
 ReactDOM.render(

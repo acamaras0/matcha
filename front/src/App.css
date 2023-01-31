@@ -52,10 +52,6 @@ p.age,
   color: rgb(236, 189, 0);
 }
 
-.filter-header {
-  padding-top: 8vh;
-}
-
 .filter {
   padding-left: 20vw;
   padding-right: 20vw;
@@ -152,6 +148,7 @@ h3 {
 .view {
   display: flex;
   justify-content: center;
+  padding-bottom: 3%;
 }
 
 .overview {
@@ -201,6 +198,7 @@ nav.navbar {
   justify-content: space-evenly;
   flex-direction: row;
   flex-wrap: wrap;
+  padding: 3%;
 }
 
 img.card-img.img-fluid {

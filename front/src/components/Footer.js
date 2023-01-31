@@ -2,9 +2,9 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="mt-5 footer text-center">
+    <footer className="mt-5 text-center fixed-bottom">
       <p className="footer-content">acamaras | Hive 2022</p>
-    </div>
+    </footer>
   );
 };
 

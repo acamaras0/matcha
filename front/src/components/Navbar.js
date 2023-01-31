@@ -4,41 +4,13 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCookie } from "react-use-cookie";
 import { v4 as uuidv4 } from "uuid";
+import fetchNotifications from "../utils/fetchNotifications";
 import logo from "../assets/logo.png";
 import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
 import logout from "../assets/logout.png";
 import user from "../assets/user.png";
 import filter from "../assets/filter.png";
-
-const fetchNotifications = (userId, cookie, setNotifications, setMessages) => {
-  if (cookie !== "") {
-    const getNotifications = async () => {
-      const response = await axios.get(
-        `http://localhost:5000/user/notifications/${userId}`,
-        {}
-      );
-      setNotifications(response.data);
-    };
-    getNotifications();
-  }
-
-  if (cookie !== "") {
-    const getMessagesNotif = async () => {
-      const response = await axios.get(
-        `http://localhost:5000/messages/notif/${userId}`,
-        {}
-      );
-      setMessages(response.data);
-    };
-    getMessagesNotif();
-  }
-
-  return () => {
-    setNotifications({});
-    setMessages({});
-  };
-};
 
 const NavBar = ({ socket }) => {
   const cookie = getCookie("refreshToken");
@@ -156,11 +128,15 @@ const NavBar = ({ socket }) => {
     history.push("/register");
   };
 
+  const Login = () => {
+    history.push("/");
+  };
+
   return (
     <>
       {cookie ? (
         <div>
-          <nav className="navbar bg-light" role="navigation">
+          <nav className="navbar" role="navigation">
             <div className="Nav-logo">
               <img onClick={Dashboard} src={logo} className="logo" alt="logo" />
             </div>
@@ -220,7 +196,7 @@ const NavBar = ({ socket }) => {
         </div>
       ) : (
         <>
-          <nav className="navbar bg-light" role="navigation">
+          <nav className="navbar" role="navigation">
             <div className="Nav-logo">
               <img src={logo} className="logo" alt="" />
             </div>
@@ -229,10 +205,7 @@ const NavBar = ({ socket }) => {
                 <div className="navbar-item">
                   <div className="buttons">
                     <div className="icon">
-                      <button
-                        onClick={() => window.location.reload()}
-                        className="btn btn-dark"
-                      >
+                      <button onClick={Login} className="btn btn-dark">
                         Sign in
                       </button>
                       <button onClick={Register} className="btn btn-dark">

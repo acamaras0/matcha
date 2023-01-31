@@ -1,42 +1,41 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
 import NavBar from "./components/Navbar";
-import NavBarOffline from "./components/NavBarOffline";
-import Register from "./components/Register";
-import ProfileForm from "./components/ProfileForm";
-import ForgotPasswords from "./components/ForgotPassword";
-import Profile from "./components/Profile";
-import ProfileRandom from "./components/ProfileRandom";
+import Register from "./pages/Register";
+import CompleteProfile from "./pages/CompleteProfile";
+import ForgotPasswords from "./pages/ForgotPassword";
+import Profile from "./pages/Profile";
+import ProfileRandom from "./pages/ProfileRandom";
 import Footer from "./components/Footer";
-import ResetPassword from "./components/ResetPassword";
-import Activation from "./components/Activation";
-import Chat from "./components/Chat";
-import Search from "./components/Search";
-import UploadPic from "./components/UploadPic";
+import ResetPassword from "./pages/ResetPassword";
+import Activation from "./pages/Activation";
+import Chat from "./pages/Chat";
+import Search from "./pages/Search";
+import UploadPic from "./pages/SetInitialProfilePicture";
 import { getCookie } from "react-use-cookie";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 
 function App() {
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const [user, setUser] = useState("");
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
-    if (xsrfToken !== "") {
+    if (cookie !== "") {
       const getLoggedIn = async () => {
         const response = await axios.get(
-          `http://localhost:5000/user/${xsrfToken}`,
+          `http://localhost:5000/user/${cookie}`,
           {}
         );
         setUser(response.data);
       };
       getLoggedIn();
     }
-  }, [xsrfToken]);
+  }, [cookie]);
 
   useEffect(() => {
     if (user) {
@@ -48,53 +47,42 @@ function App() {
     <>
       <div className="App">
         <BrowserRouter>
+          <NavBar socket={socket} />
           <Switch>
             <Route exact path="/">
-              <NavBarOffline />
               <Login />
             </Route>
             <Route path="/forgotpassword">
-              <NavBarOffline />
               <ForgotPasswords />
             </Route>
             <Route path="/resetpassword/:token">
-              <NavBarOffline />
               <ResetPassword />
             </Route>
             <Route path="/register">
-              <NavBarOffline />
               <Register />
             </Route>
             <Route path="/activate/:hash">
-              <NavBarOffline />
               <Activation />
             </Route>
             <Route path="/completeprofile">
-              <NavBar socket={socket} />
-              <ProfileForm />
+              <CompleteProfile />
             </Route>
             <Route path="/pictures">
-              <NavBar socket={socket} />
               <UploadPic />
             </Route>
             <Route path="/dashboard">
-              <NavBar socket={socket} />
               <Dashboard socket={socket} />
             </Route>
             <Route path="/profile/:id">
-              <NavBar socket={socket} />
               <Profile />
             </Route>
             <Route path="/users/:id">
-              <NavBar socket={socket} />
               <ProfileRandom socket={socket} />
             </Route>
             <Route path="/chat/:id">
-              <NavBar socket={socket} />
               <Chat socket={socket} />
             </Route>
             <Route path="/filter/:id">
-              <NavBar socket={socket} />
               <Search socket={socket} />
             </Route>
           </Switch>

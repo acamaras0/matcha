@@ -3,29 +3,29 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import useGetDistance from "../utils/useGetDistance";
 import { getCookie } from "react-use-cookie";
-import Recommended from "../models/Recommended";
+import Recommended from "../components/RecommendedMatches";
 import img from "../assets/suggestions.png";
 
 const Dashboard = ({ socket }) => {
   const [user, setUser] = useState([]);
   const [sortState, setSortState] = useState("none");
   const distance = useGetDistance();
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   let filtered = [];
   useEffect(() => {
-    if (xsrfToken !== "") {
+    if (cookie !== "") {
       const getLoggedIn = async () => {
         const response = await axios.get(
-          `http://localhost:5000/user/${xsrfToken}`,
+          `http://localhost:5000/user/${cookie}`,
           {}
         );
         setUser(response.data);
       };
       getLoggedIn();
     }
-  }, [setUser, xsrfToken]);
+  }, [setUser, cookie]);
 
-  if (xsrfToken === "") {
+  if (cookie === "") {
     return <Redirect to="/" />;
   }
 

@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, Redirect } from "react-router-dom";
-import "react-edit-text/dist/index.css";
-import PicturesForm from "./PicturesForm";
 import { getCookie } from "react-use-cookie";
-import Overview from "../models/Overview";
-import ProfilePic from "./ProfilePic";
-import EditPictures from "../models/EditPictures";
-import ChangePassword from "../models/ChangePassword";
-import UpdateProfile from "../models/UpdateProfile";
+import "react-edit-text/dist/index.css";
+import PicturesForm from "../components/PicturesForm";
+import ProfilePic from "../components/UploadProfilePic";
+import Overview from "../components/Overview";
+import EditPictures from "../components/DeletePictures";
+import ChangePassword from "../components/ChangePassword";
+import UpdateProfile from "../components/UpdateProfileInfo";
 
 const Profile = () => {
   const { id } = useParams();
   const [user, setUser] = useState("");
   const [pics, setPics] = useState([]);
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const [show, setShow] = useState(false);
   const [showUpload, setShowUpload] = useState(false);
   const [changeProfilePicture, setChangeProfilePicture] = useState(false);
@@ -31,10 +31,10 @@ const Profile = () => {
   }
 
   useEffect(() => {
-    if (xsrfToken !== "") {
+    if (cookie !== "") {
       const getLoggedIn = async () => {
         const response = await axios.get(
-          `http://localhost:5000/user/${xsrfToken}`,
+          `http://localhost:5000/user/${cookie}`,
           {}
         );
         setUser(response.data);
@@ -52,7 +52,7 @@ const Profile = () => {
     return () => {
       setPics({});
     };
-  }, [id, xsrfToken]);
+  }, [id, cookie]);
 
   const handleShow = (number) => {
     if (number === 1) {
@@ -82,7 +82,7 @@ const Profile = () => {
     }
   };
 
-  if (xsrfToken === "") {
+  if (cookie === "") {
     return <Redirect to="/" />;
   }
   if (user)

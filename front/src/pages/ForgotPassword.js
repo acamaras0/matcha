@@ -7,7 +7,7 @@ import "../App.css";
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const history = useHistory();
 
   const forgotPassword = (e) => {
@@ -24,7 +24,7 @@ const ForgotPassword = () => {
     }
   };
 
-  if (xsrfToken !== "") {
+  if (cookie !== "") {
     history.push("/dashboard");
   }
   return (

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { EditText, EditTextarea } from "react-edit-text";
-import Age from "./Age";
-import Gender from "./Gender";
-import Tags from "./Tags";
-import Orientation from "./Orientation";
+import Age from "../utils/SetAge";
+import Gender from "../utils/SetGender";
+import Tags from "../utils/SetTags";
+import Orientation from "../utils/SetOrientation";
 
 const UpdateProfile = ({ user, id, setMessage, message }) => {
   const [newFirstName, setNewFirstName] = useState("");

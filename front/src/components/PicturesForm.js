@@ -7,7 +7,7 @@ import { getCookie } from "react-use-cookie";
 const PicturesForm = () => {
   const [file, setFile] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const history = useHistory();
 
   const saveFile = (e) => {
@@ -30,7 +30,7 @@ const PicturesForm = () => {
     setSelectedImage(null);
   };
 
-  if (xsrfToken === "") {
+  if (cookie === "") {
     history.push("/");
   }
   return (

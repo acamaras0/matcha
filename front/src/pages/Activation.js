@@ -7,7 +7,7 @@ import { getCookie } from "react-use-cookie";
 const Activation = () => {
   const hash = useParams().hash;
   const history = useHistory();
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const [message, setMessage] = useState("");
 
   const activate = async () => {
@@ -22,7 +22,7 @@ const Activation = () => {
     }
   };
 
-  if (xsrfToken !== "") {
+  if (cookie !== "") {
     history.push("/dashboard");
   }
   return (

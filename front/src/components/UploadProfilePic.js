@@ -8,7 +8,7 @@ const ProfilePic = () => {
   const [file, setFile] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
   const [message, setMessage] = useState("");
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const history = useHistory();
 
   const saveFile = (e) => {
@@ -33,7 +33,7 @@ const ProfilePic = () => {
     setSelectedImage(null);
   };
 
-  if (xsrfToken === "") {
+  if (cookie === "") {
     history.push("/");
   }
   return (

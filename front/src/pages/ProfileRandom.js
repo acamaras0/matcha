@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, Redirect, useHistory } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 import axios from "axios";
-import StarRating from "../models/StarRating";
-import Gallery from "../models/Gallery";
+import StarRating from "../components/StarRating";
+import Gallery from "../components/Gallery";
 import img from "../assets/yellow-heart.png";
 import img1 from "../assets/broken-heart.png";
 
@@ -17,22 +17,22 @@ const ProfileRandom = ({ socket }) => {
   const [liked, setLiked] = useState("");
   const [message, setMessage] = useState("");
   const [report, setReport] = useState("");
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const history = useHistory();
   const distance = useGetDistance();
 
   useEffect(() => {
-    if (xsrfToken !== "") {
+    if (cookie !== "") {
       const getLoggedIn = async () => {
         const response = await axios.get(
-          `http://localhost:5000/user/${xsrfToken}`,
+          `http://localhost:5000/user/${cookie}`,
           {}
         );
         setUser(response.data);
       };
       getLoggedIn();
     }
-  }, [xsrfToken]);
+  }, [cookie]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -168,7 +168,7 @@ const ProfileRandom = ({ socket }) => {
     }
   };
 
-  if (xsrfToken === "") {
+  if (cookie === "") {
     return <Redirect to="/" />;
   }
   if (selectedUser.length === 0 || !distance) {

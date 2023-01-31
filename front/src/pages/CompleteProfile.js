@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useHistory, Redirect } from "react-router-dom";
-import Gender from "../models/Gender";
-import Tags from "../models/Tags";
-import Age from "../models/Age";
-import Orientation from "../models/Orientation";
+import Gender from "../utils/SetGender";
+import Tags from "../utils/SetTags";
+import Age from "../utils/SetAge";
+import Orientation from "../utils/SetOrientation";
 import { getCookie } from "react-use-cookie";
 import "../App.css";
 
-const ProfileForm = () => {
+const CompleteProfile = () => {
   const [loggedIn, setLoggedin] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
@@ -17,14 +17,14 @@ const ProfileForm = () => {
   const [bio, setBio] = useState("");
   const [message, setMessage] = useState("");
   const history = useHistory();
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
 
   useEffect(() => {
-    if (xsrfToken !== "") {
+    if (cookie !== "") {
       const getLoggedIn = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/user/${xsrfToken}`
+            `http://localhost:5000/user/${cookie}`
           );
           setLoggedin(response.data);
         } catch (error) {
@@ -38,7 +38,7 @@ const ProfileForm = () => {
     return () => {
       setLoggedin({});
     };
-  }, [history, xsrfToken]);
+  }, [history, cookie]);
 
   const profileFill = async (e) => {
     e.preventDefault();
@@ -61,7 +61,7 @@ const ProfileForm = () => {
     }
   };
 
-  if (xsrfToken === "") {
+  if (cookie === "") {
     history.push("/");
   }
   if (loggedIn && loggedIn.birthdate) {
@@ -112,4 +112,4 @@ const ProfileForm = () => {
   );
 };
 
-export default ProfileForm;
+export default CompleteProfile;

@@ -9,7 +9,7 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { token } = useParams();
   const [message, setMessage] = useState("");
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const history = useHistory();
 
   const ResetPassword = async (e) => {
@@ -34,7 +34,7 @@ const ResetPassword = () => {
     }
   };
 
-  if (xsrfToken !== "") {
+  if (cookie !== "") {
     history.push("/dashboard");
   }
   return (

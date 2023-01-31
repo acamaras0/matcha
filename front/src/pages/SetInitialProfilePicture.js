@@ -1,13 +1,13 @@
 import React from "react";
 import { getCookie } from "react-use-cookie";
 import { useHistory } from "react-router-dom";
-import ProfilePic from "./ProfilePic";
+import ProfilePic from "../components/UploadProfilePic";
 
-const UploadPic = () => {
-  const xsrfToken = getCookie("refreshToken");
+const SetInitialProfilePicture = () => {
+  const cookie = getCookie("refreshToken");
   const history = useHistory();
 
-  if (xsrfToken === "") {
+  if (cookie === "") {
     history.push("/");
   }
   return (
@@ -19,4 +19,4 @@ const UploadPic = () => {
     </div>
   );
 };
-export default UploadPic;
+export default SetInitialProfilePicture;

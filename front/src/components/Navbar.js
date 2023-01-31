@@ -11,13 +11,8 @@ import logout from "../assets/logout.png";
 import user from "../assets/user.png";
 import filter from "../assets/filter.png";
 
-const fetchNotifications = (
-  userId,
-  xsrfToken,
-  setNotifications,
-  setMessages
-) => {
-  if (xsrfToken !== "") {
+const fetchNotifications = (userId, cookie, setNotifications, setMessages) => {
+  if (cookie !== "") {
     const getNotifications = async () => {
       const response = await axios.get(
         `http://localhost:5000/user/notifications/${userId}`,
@@ -28,7 +23,7 @@ const fetchNotifications = (
     getNotifications();
   }
 
-  if (xsrfToken !== "") {
+  if (cookie !== "") {
     const getMessagesNotif = async () => {
       const response = await axios.get(
         `http://localhost:5000/messages/notif/${userId}`,
@@ -46,7 +41,7 @@ const fetchNotifications = (
 };
 
 const NavBar = ({ socket }) => {
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const [loggedIn, setLoggedin] = useState("");
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -62,10 +57,10 @@ const NavBar = ({ socket }) => {
         setMessages(data);
       });
     }
-    if (xsrfToken !== "") {
+    if (cookie !== "") {
       const getLoggedIn = async () => {
         const response = await axios.get(
-          `http://localhost:5000/user/${xsrfToken}`,
+          `http://localhost:5000/user/${cookie}`,
           {}
         );
         setLoggedin(response.data);
@@ -77,15 +72,15 @@ const NavBar = ({ socket }) => {
       setNotifications({});
       setMessages({});
     };
-  }, [socket, xsrfToken, loggedIn.id]);
+  }, [socket, cookie, loggedIn.id]);
 
   useEffect(() => {
-    if (xsrfToken !== "" && loggedIn.id) {
+    if (cookie !== "" && loggedIn.id) {
       const interval = setInterval(
         () =>
           fetchNotifications(
             loggedIn.id,
-            xsrfToken,
+            cookie,
             setNotifications,
             setMessages
           ),
@@ -93,7 +88,7 @@ const NavBar = ({ socket }) => {
       );
       return () => clearInterval(interval);
     }
-  }, [loggedIn, xsrfToken]);
+  }, [loggedIn, cookie]);
 
   const displayNotifications = ({ sender_name, senderName, type }) => {
     let action;
@@ -157,60 +152,101 @@ const NavBar = ({ socket }) => {
     }
   };
 
+  const Register = () => {
+    history.push("/register");
+  };
+
   return (
-    <div>
-      <nav className="navbar bg-light" role="navigation">
-        <div className="Nav-logo">
-          <img onClick={Dashboard} src={logo} className="logo" alt="logo" />
-        </div>
-        <div className="navbar-brand"></div>
-        <div className="navbar-menu">
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <div className="buttons">
-                <div className="icon" onClick={MyProfile}>
-                  <img src={user} className="icon-profile" alt="profile" />
-                </div>
-                <div className="icon" onClick={Filter}>
-                  <img src={filter} className="icon-profile" alt="profile" />
-                </div>
-                <div className="icon" onClick={() => setOpen(!open)}>
-                  <img src={notification} className="iconImg" alt="notif" />
-                  {notifications?.length > 0 && <div className="counter"></div>}
-                  {open && (
-                    <div className="notifications position-absolute display-grid">
-                      {notifications.length > 0
-                        ? notifications.map((n) => displayNotifications(n))
-                        : null}
-                      <button className="btn btn-dark" onClick={handleRead}>
-                        Mark as read
-                      </button>
+    <>
+      {cookie ? (
+        <div>
+          <nav className="navbar bg-light" role="navigation">
+            <div className="Nav-logo">
+              <img onClick={Dashboard} src={logo} className="logo" alt="logo" />
+            </div>
+            <div className="navbar-brand"></div>
+            <div className="navbar-menu">
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="buttons">
+                    <div className="icon" onClick={MyProfile}>
+                      <img src={user} className="icon-profile" alt="profile" />
                     </div>
-                  )}
-                </div>
-                <div className="icon">
-                  <img
-                    onClick={Chat}
-                    src={chat}
-                    alt="chat"
-                    className="iconImg"
-                  />
-                  {messages?.length > 0 && <div className="counter"></div>}
-                </div>
-                <div className="icon">
-                  <img
-                    onClick={Logout}
-                    src={logout}
-                    alt="logout"
-                    className="iconImg"
-                  />
+                    <div className="icon" onClick={Filter}>
+                      <img
+                        src={filter}
+                        className="icon-profile"
+                        alt="profile"
+                      />
+                    </div>
+                    <div className="icon" onClick={() => setOpen(!open)}>
+                      <img src={notification} className="iconImg" alt="notif" />
+                      {notifications?.length > 0 && (
+                        <div className="counter"></div>
+                      )}
+                      {open && (
+                        <div className="notifications position-absolute display-grid">
+                          {notifications.length > 0
+                            ? notifications.map((n) => displayNotifications(n))
+                            : null}
+                          <button className="btn btn-dark" onClick={handleRead}>
+                            Mark as read
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                    <div className="icon">
+                      <img
+                        onClick={Chat}
+                        src={chat}
+                        alt="chat"
+                        className="iconImg"
+                      />
+                      {messages?.length > 0 && <div className="counter"></div>}
+                    </div>
+                    <div className="icon">
+                      <img
+                        onClick={Logout}
+                        src={logout}
+                        alt="logout"
+                        className="iconImg"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </nav>
         </div>
-      </nav>
-    </div>
+      ) : (
+        <>
+          <nav className="navbar bg-light" role="navigation">
+            <div className="Nav-logo">
+              <img src={logo} className="logo" alt="" />
+            </div>
+            <div className="navbar-menu">
+              <div className="navbar-end">
+                <div className="navbar-item">
+                  <div className="buttons">
+                    <div className="icon">
+                      <button
+                        onClick={() => window.location.reload()}
+                        className="btn btn-dark"
+                      >
+                        Sign in
+                      </button>
+                      <button onClick={Register} className="btn btn-dark">
+                        Sign up
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </>
+      )}
+    </>
   );
 };
 

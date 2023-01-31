@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 import axios from "axios";
-import Conversations from "../models/Conversations";
-import Message from "../models/Message";
+import Conversations from "../components/Conversations";
+import Message from "../components/Message";
 import { v4 as uuidv4 } from "uuid";
 
 const Chat = ({ socket }) => {
@@ -12,23 +12,23 @@ const Chat = ({ socket }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const [user, setUser] = useState();
   const id = useParams().id;
   const scrollRef = useRef();
 
   useEffect(() => {
-    if (xsrfToken !== "") {
+    if (cookie !== "") {
       const getLoggedIn = async () => {
         const response = await axios.get(
-          `http://localhost:5000/user/${xsrfToken}`,
+          `http://localhost:5000/user/${cookie}`,
           {}
         );
         setUser(response.data);
       };
       getLoggedIn();
     }
-  }, [xsrfToken]);
+  }, [cookie]);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -124,7 +124,7 @@ const Chat = ({ socket }) => {
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
-  if (xsrfToken === "") {
+  if (cookie === "") {
     return <Redirect to="/" />;
   }
 

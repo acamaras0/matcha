@@ -4,12 +4,12 @@ import MultiRangeSlider from "multi-range-slider-react";
 import { Redirect } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 import useGetDistance from "../utils/useGetDistance";
-import Tags from "../models/Tags";
-import Card from "../models/Card";
+import Tags from "../utils/SetTags";
+import Card from "../components/RenderCard";
 import axios from "axios";
 
 const Search = ({ socket }) => {
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const [sortState, setSortState] = useState("none");
 
   const [user, setUser] = useState();
@@ -30,17 +30,17 @@ const Search = ({ socket }) => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (xsrfToken !== "") {
+    if (cookie !== "") {
       const getLoggedIn = async () => {
         const response = await axios.get(
-          `http://localhost:5000/user/${xsrfToken}`,
+          `http://localhost:5000/user/${cookie}`,
           {}
         );
         setUser(response.data);
       };
       getLoggedIn();
     }
-  }, [setUser, xsrfToken]);
+  }, [setUser, cookie]);
 
   const handleAge = (e) => {
     set_minAge(e.minValue);
@@ -101,7 +101,7 @@ const Search = ({ socket }) => {
     usersFiltered.sort(sortMethods[sortState].method);
   }
 
-  if (xsrfToken === "") {
+  if (cookie === "") {
     return <Redirect to="/" />;
   }
   if (!distance || !usersFiltered) return <div>Loading...</div>;

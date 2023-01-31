@@ -12,7 +12,7 @@ const Register = () => {
   const [passwordReg, setPasswordReg] = useState("");
   const [confirmPasswordReg, setConfirmPasswordReg] = useState("");
   const [message, setMessage] = useState("");
-  const xsrfToken = getCookie("refreshToken");
+  const cookie = getCookie("refreshToken");
   const history = useHistory();
 
   const Register = async (e) => {
@@ -37,7 +37,7 @@ const Register = () => {
       }
     }
   };
-  if (xsrfToken !== "") {
+  if (cookie !== "") {
     history.push("/dashboard");
   }
 

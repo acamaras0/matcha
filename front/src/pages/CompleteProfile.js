@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { fill } from "../service/auth";
+import { fill, getLoggedIn } from "../service/auth";
 import { useHistory, Redirect } from "react-router-dom";
 import Gender from "../utils/SetGender";
 import Tags from "../utils/SetTags";
@@ -22,58 +21,25 @@ const CompleteProfile = () => {
 
   useEffect(() => {
     if (cookie !== "") {
-      const getLoggedIn = async () => {
-        try {
-          const response = await axios.get(
-            `http://localhost:5000/user/${cookie}`
-          );
-          setLoggedin(response.data);
-        } catch (error) {
-          if (error.response) {
-            history.push("/");
-          }
-        }
+      const getUser = async () => {
+        const response = await getLoggedIn(cookie);
+        setLoggedin(response);
       };
-      getLoggedIn();
+      getUser();
     }
-    return () => {
-      setLoggedin({});
-    };
   }, [history, cookie]);
-
-  // const profileFill = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const res = await axios.post(`http://localhost:5000/fill`, {
-  //       birthdate: age,
-  //       gender: gender,
-  //       orientation: orientation,
-  //       interests: interests,
-  //       bio: bio,
-  //     });
-  //     if (res.data.msg) {
-  //       return setMessage(res.data.msg);
-  //     }
-  //     history.push("/pictures");
-  //   } catch (error) {
-  //     if (error.response) {
-  //       setMessage(error.response.data.msg);
-  //     }
-  //   }
-  // };
 
   const profileFill = async (e) => {
     e.preventDefault();
     try {
-      const res = fill(age, orientation, interests, bio);
-      if (res.data.msg) {
+      const res = fill(age,gender,orientation, interests, bio);
+      if (res.msg) {
         return setMessage(res.msg);
       }
+      console.log(res);
       history.push("/pictures");
     } catch (error) {
-      if (error.response) {
         setMessage(error.response.msg);
-      }
     }
   };
 

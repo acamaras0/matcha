@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import axios from "axios";
+import { activateAccount } from "../service/auth";
 import { useParams, useHistory } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 
@@ -11,15 +11,9 @@ const Activation = () => {
   const [message, setMessage] = useState("");
 
   const activate = async () => {
-    try {
-      const respose = await axios.post(
-        `http://localhost:5000/activate/${hash}`
-      );
-      setMessage(respose.data.message);
-      history.push("/");
-    } catch (error) {
-      console.log("Error", error);
-    }
+    const response = await activateAccount(hash);
+    setMessage(response.message);
+    history.push("/");
   };
 
   if (cookie !== "") {

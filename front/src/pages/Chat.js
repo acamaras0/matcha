@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Redirect, useParams } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
-import axios from "axios";
+import { getLoggedIn } from "../service/auth";
+import { getConversations, getMessages, newMessages } from "../service/chat";
 import Conversations from "../components/Conversations";
 import Message from "../components/Message";
 import { v4 as uuidv4 } from "uuid";
@@ -19,27 +20,24 @@ const Chat = ({ socket }) => {
 
   useEffect(() => {
     if (cookie !== "") {
-      const getLoggedIn = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/user/${cookie}`,
-          {}
-        );
-        setUser(response.data);
+      const getUser = async () => {
+        const response = await getLoggedIn(cookie);
+        setUser(response);
       };
-      getLoggedIn();
+      getUser();
     }
   }, [cookie]);
 
   useEffect(() => {
-    const getConversations = async () => {
+    const getConvos = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/newConvo/${id}`);
-        setConversations(res.data);
+        const res = await getConversations(id);
+        setConversations(res);
       } catch (err) {
         console.log(err);
       }
     };
-    getConversations();
+    getConvos();
     return () => {
       setConversations({});
     };
@@ -47,18 +45,16 @@ const Chat = ({ socket }) => {
 
   useEffect(() => {
     if (currentChat) {
-      const getMessages = async () => {
+      const getMsg = async () => {
         try {
-          const res = await axios.get(
-            `http://localhost:5000/messages/${currentChat.id}`
-          );
-          setMessages(res.data);
+          const res = await getMessages(currentChat.id);
+          setMessages(res);
         } catch (err) {
           console.log(err);
         }
       };
       if (currentChat) {
-        const interval = setInterval(() => getMessages(), 4000);
+        const interval = setInterval(() => getMsg(), 4000);
         return () => clearInterval(interval);
       }
     }
@@ -95,7 +91,7 @@ const Chat = ({ socket }) => {
     setMessages([...messages, message]);
     setNewMessage("");
     try {
-      await axios.post("http://localhost:5000/messages", message);
+      await newMessages(message);
     } catch (err) {
       console.log(err);
     }

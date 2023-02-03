@@ -1,23 +1,21 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { updatePassword } from "../service/update";
 
 const ChangePassword = ({ id, setMessage, setMessage2 }) => {
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
-  const updatePassword = async (e) => {
+  const updatePass = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `http://localhost:5000/user/updatePassword/${id}`,
-        {
-          password: newPassword,
-          passwordConfirm: newPasswordConfirm,
-        }
+      const response = await updatePassword(
+        id,
+        newPassword,
+        newPasswordConfirm
       );
-      setMessage2(response.data.msg);
+      setMessage2(response.msg);
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data.msg);
+        setMessage(error.response.msg);
       }
     }
   };
@@ -47,7 +45,7 @@ const ChangePassword = ({ id, setMessage, setMessage2 }) => {
           }}
         ></input>
       </form>
-      <button onClick={updatePassword} className="btn btn-dark">
+      <button onClick={updatePass} className="btn btn-dark">
         Submit
       </button>
     </>

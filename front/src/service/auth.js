@@ -29,6 +29,11 @@ export const register = async (
   return response.data;
 };
 
+export const logout = async () => {
+  const response = await axios.delete(API_URL + "logout");
+  return response.data;
+};
+
 export const fill = async (birthdate, gender, orientation, interests, bio) => {
   const response = await axios.post(API_URL + "fill", {
     birthdate,
@@ -39,3 +44,13 @@ export const fill = async (birthdate, gender, orientation, interests, bio) => {
   });
   return response.data;
 };
+
+export const getLoggedIn = async (cookie) => {
+  const response = await axios.get(API_URL + `user/${cookie}`);
+  return response.data;
+};
+
+export const activateAccount = async (hash) => {
+  const response = await axios.post(API_URL + `activate/${hash}`);
+  return response.data;
+}

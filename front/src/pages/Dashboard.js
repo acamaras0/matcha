@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Redirect } from "react-router-dom";
-import useGetDistance from "../utils/useGetDistance";
 import { getCookie } from "react-use-cookie";
+import { getLoggedIn } from "../service/auth";
+import useGetDistance from "../utils/useGetDistance";
 import Recommended from "../components/RecommendedMatches";
 import img from "../assets/suggestions.png";
 
@@ -14,14 +14,11 @@ const Dashboard = ({ socket }) => {
   let filtered = [];
   useEffect(() => {
     if (cookie !== "") {
-      const getLoggedIn = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/user/${cookie}`,
-          {}
-        );
-        setUser(response.data);
+      const getUser = async () => {
+        const response = await getLoggedIn(cookie);
+        setUser(response);
       };
-      getLoggedIn();
+      getUser();
     }
   }, [setUser, cookie]);
 

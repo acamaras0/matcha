@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { forgottenPassword } from "../service/user";
 import { useHistory } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 import "../App.css";
@@ -12,14 +12,13 @@ const ForgotPassword = () => {
 
   const forgotPassword = (e) => {
     e.preventDefault();
-    try {
-      axios.post("http://localhost:5000/users/forgotpassword", {
-        email: email,
-      });
+    try{
+      forgottenPassword(email);
       history.push("/");
-    } catch (error) {
-      if (error.response) {
-        setMessage(error.response.data.msg);
+    }
+    catch(error){
+      if(error.response){
+        setMessage(error.response.msg);
       }
     }
   };

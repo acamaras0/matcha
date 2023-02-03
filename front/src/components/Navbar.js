@@ -1,20 +1,20 @@
 import React from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCookie } from "react-use-cookie";
 import { v4 as uuidv4 } from "uuid";
+import { logout } from "../service/auth";
+import { markAsRead, markAsSeen } from "../service/notifications";
 import fetchNotifications from "../utils/fetchNotifications";
 import logo from "../assets/logo.png";
 import chat from "../assets/chat.png";
 import notification from "../assets/notification.png";
-import logout from "../assets/logout.png";
-import user from "../assets/user.png";
+import logOut from "../assets/logout.png";
+import userLogo from "../assets/user.png";
 import filter from "../assets/filter.png";
 
-const NavBar = ({ socket }) => {
+const NavBar = ({ socket, user }) => {
   const cookie = getCookie("refreshToken");
-  const [loggedIn, setLoggedin] = useState("");
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([]);
   const [open, setOpen] = useState(false);
@@ -29,38 +29,22 @@ const NavBar = ({ socket }) => {
         setMessages(data);
       });
     }
-    if (cookie !== "") {
-      const getLoggedIn = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/user/${cookie}`,
-          {}
-        );
-        setLoggedin(response.data);
-      };
-      getLoggedIn();
-    }
-
     return () => {
       setNotifications({});
       setMessages({});
     };
-  }, [socket, cookie, loggedIn.id]);
+  }, [socket, cookie, user.id]);
 
   useEffect(() => {
-    if (cookie !== "" && loggedIn.id) {
+    if (cookie !== "" && user.id) {
       const interval = setInterval(
         () =>
-          fetchNotifications(
-            loggedIn.id,
-            cookie,
-            setNotifications,
-            setMessages
-          ),
+          fetchNotifications(user.id, cookie, setNotifications, setMessages),
         2000
       );
       return () => clearInterval(interval);
     }
-  }, [loggedIn, cookie]);
+  }, [user, cookie]);
 
   const displayNotifications = ({ sender_name, senderName, type }) => {
     let action;
@@ -87,40 +71,40 @@ const NavBar = ({ socket }) => {
   const handleRead = async () => {
     setNotifications([]);
     setOpen(false);
-    if (loggedIn && loggedIn.length !== 0) {
-      await axios.post(`http://localhost:5000/user/mark/${loggedIn.id}`);
+    if (user && user.length !== 0) {
+      await markAsRead(user.id, cookie);
     }
   };
 
   const Chat = async () => {
-    if (loggedIn && loggedIn.profile_pic) {
+    if (user && user.profile_pic) {
       setMessages([]);
-      await axios.post(`http://localhost:5000/messages/seen/${loggedIn.id}`);
-      history.push(`/chat/${loggedIn.id}`);
+      await markAsSeen(user.id, cookie);
+      history.push(`/chat/${user.id}`);
     }
   };
 
   const MyProfile = () => {
-    history.push(`/profile/${loggedIn.id}`);
+    history.push(`/profile/${user.id}`);
   };
 
   const Logout = async () => {
     try {
-      await axios.delete("http://localhost:5000/logout");
+      await logout();
       history.push("/");
     } catch (error) {
       console.log(error);
     }
   };
   const Dashboard = () => {
-    if (loggedIn.profile_pic) {
+    if (user.profile_pic) {
       history.push("/dashboard");
     }
   };
 
   const Filter = () => {
-    if (loggedIn.profile_pic) {
-      history.push(`/filter/${loggedIn.id}`);
+    if (user.profile_pic) {
+      history.push(`/filter/${user.id}`);
     }
   };
 
@@ -134,7 +118,7 @@ const NavBar = ({ socket }) => {
 
   return (
     <>
-      {cookie ? (
+      {user? (
         <div>
           <nav className="navbar" role="navigation">
             <div className="Nav-logo">
@@ -146,7 +130,11 @@ const NavBar = ({ socket }) => {
                 <div className="navbar-item">
                   <div className="buttons">
                     <div className="icon" onClick={MyProfile}>
-                      <img src={user} className="icon-profile" alt="profile" />
+                      <img
+                        src={userLogo}
+                        className="icon-profile"
+                        alt="profile"
+                      />
                     </div>
                     <div className="icon" onClick={Filter}>
                       <img
@@ -183,7 +171,7 @@ const NavBar = ({ socket }) => {
                     <div className="icon">
                       <img
                         onClick={Logout}
-                        src={logout}
+                        src={logOut}
                         alt="logout"
                         className="iconImg"
                       />

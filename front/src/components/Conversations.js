@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getMatch, markAsSeen } from "../service/chat";
+import { countUpViews } from "../service/user";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Conversations({ conversations, currentUser }) {
@@ -14,8 +15,8 @@ export default function Conversations({ conversations, currentUser }) {
 
     const getUser = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/users/${friendId}`);
-        setUser(res.data);
+        const res = await getMatch(friendId);
+        setUser(res);
       } catch (err) {
         console.log(err);
       }
@@ -28,12 +29,12 @@ export default function Conversations({ conversations, currentUser }) {
   }, [conversations.user1, conversations.user2, currentUser]);
 
   const handleRead = async () => {
-    await axios.post(`http://localhost:5000/messages/seen/${currentUser}`);
+    await markAsSeen(currentUser);
   };
 
   const goToProfile = async () => {
     window.location.replace(`/users/${user.id}`);
-    await axios.post(`http://localhost:5000/user/views/${user.id}`);
+    await countUpViews(user.id);
   };
 
   return (

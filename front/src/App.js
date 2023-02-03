@@ -15,7 +15,7 @@ import Search from "./pages/Search";
 import UploadPic from "./pages/SetInitialProfilePicture";
 import { getCookie } from "react-use-cookie";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { getLoggedIn } from "./service/auth";
 import { io } from "socket.io-client";
 
 function App() {
@@ -26,16 +26,15 @@ function App() {
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
     if (cookie !== "") {
-      const getLoggedIn = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/user/${cookie}`,
-          {}
-        );
-        setUser(response.data);
-      };
-      getLoggedIn();
+      if (cookie !== "") {
+        const getUser = async () => {
+          const response = await getLoggedIn(cookie);
+          setUser(response);
+        };
+        getUser();
+      }
     }
-  }, [cookie]);
+  }, [cookie, setUser]);
 
   useEffect(() => {
     if (user) {
@@ -47,7 +46,7 @@ function App() {
     <>
       <div className="App">
         <BrowserRouter>
-          <NavBar socket={socket} />
+          <NavBar socket={socket} user={user} />
           <Switch>
             <Route exact path="/">
               <Login />
@@ -65,7 +64,7 @@ function App() {
               <Activation />
             </Route>
             <Route path="/completeprofile">
-              <CompleteProfile />
+              <CompleteProfile user={user} />
             </Route>
             <Route path="/pictures">
               <UploadPic />

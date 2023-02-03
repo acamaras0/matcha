@@ -1,5 +1,8 @@
 # matcha
 
+## ❗️Currently working on refactoring this project.
+
+
 **Matcha**, the second to last project of Hive Helsinki's Web Branch, is a fullstack dating website I created using React for the front-end part and NodeJs with Express for the back-end. At the beginning of this project I was not familiar with either of these technologies so I took it as a challange to learn while doing. After a bit over 2 months of work, I got all the mandatory requirements done and I've got a good handle of React and NodeJs. Reflecting back on the time spent building this project, I realise how many things I would do differently and what are the areas I have improved over the time. It has been not easy, but I am proud of the outcome.
 
 ### Project description

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { register } from "../service/auth";
 import { useHistory } from "react-router-dom";
-import "../App.css";
 import { getCookie } from "react-use-cookie";
+import "../App.css";
 
 const Register = () => {
   const [firstNameReg, setFirstNameReg] = useState("");
@@ -18,25 +18,25 @@ const Register = () => {
   const Register = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/users", {
-        firstName: firstNameReg,
-        lastName: lastNameReg,
-        username: usernameReg,
-        email: emailReg,
-        password: passwordReg,
-        confPassword: confirmPasswordReg,
-      });
-      setMessage(res.data.msg);
-      if (res.data.message === "success") {
+      const res = await register(
+        firstNameReg,
+        lastNameReg,
+        usernameReg,
+        emailReg,
+        passwordReg,
+        confirmPasswordReg
+      );
+      setMessage(res.msg);
+      if (res.message === "success") {
         history.push("/");
       }
     } catch (error) {
       if (error.response) {
-        console.log("error", error.response.data);
         setMessage(error.response.data.msg);
       }
     }
   };
+
   if (cookie !== "") {
     history.push("/dashboard");
   }

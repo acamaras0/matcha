@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { login } from "../service/auth";
 import { useHistory } from "react-router-dom";
-import "../App.css";
 import { useCookies } from "react-cookie";
+import "../App.css";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -13,13 +13,17 @@ const Login = () => {
 
   const Auth = async (e) => {
     e.preventDefault();
-    const res = await axios.post("http://localhost:5000/login", {
-      username: username,
-      password: password,
-    });
-    setMessage(res.data.msg);
-    if (res.data.accessToken) {
-      history.push("/completeprofile");
+    try{
+      const res = await login(username, password);
+      setMessage(res.msg);
+      if (res.accessToken) {
+        history.push("/completeprofile");
+      }
+    }
+    catch(error){
+      if (error.response) {
+        setMessage(error.response.data.msg);
+      }
     }
   };
 

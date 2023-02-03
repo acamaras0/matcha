@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { fill } from "../service/auth";
 import { useHistory, Redirect } from "react-router-dom";
 import Gender from "../utils/SetGender";
 import Tags from "../utils/SetTags";
@@ -40,23 +41,38 @@ const CompleteProfile = () => {
     };
   }, [history, cookie]);
 
+  // const profileFill = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await axios.post(`http://localhost:5000/fill`, {
+  //       birthdate: age,
+  //       gender: gender,
+  //       orientation: orientation,
+  //       interests: interests,
+  //       bio: bio,
+  //     });
+  //     if (res.data.msg) {
+  //       return setMessage(res.data.msg);
+  //     }
+  //     history.push("/pictures");
+  //   } catch (error) {
+  //     if (error.response) {
+  //       setMessage(error.response.data.msg);
+  //     }
+  //   }
+  // };
+
   const profileFill = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:5000/fill`, {
-        birthdate: age,
-        gender: gender,
-        orientation: orientation,
-        interests: interests,
-        bio: bio,
-      });
+      const res = fill(age, orientation, interests, bio);
       if (res.data.msg) {
-        return setMessage(res.data.msg);
+        return setMessage(res.msg);
       }
       history.push("/pictures");
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data.msg);
+        setMessage(error.response.msg);
       }
     }
   };

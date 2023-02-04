@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import { passwordReset } from "../service/user";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
@@ -15,21 +15,15 @@ const ResetPassword = () => {
   const ResetPassword = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        `http://localhost:5000/resetpassword/${token}`,
-        {
-          password: password,
-          confPassword: confirmPassword,
-          token: token,
-        }
-      );
-      if (res.data.msg) {
-        return setMessage(res.data.msg);
+      const res = await passwordReset(token, password, confirmPassword);
+      if (res) {
+        console.log(res)
+        return setMessage(res.msg);
       }
       history.push("/");
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data.msg);
+        setMessage(error.response.msg);
       }
     }
   };

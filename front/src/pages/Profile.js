@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { getLoggedIn } from "../service/auth";
+import { getPicture } from "../service/user";
 import { useParams, Redirect } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
 import "react-edit-text/dist/index.css";
@@ -32,21 +33,15 @@ const Profile = () => {
 
   useEffect(() => {
     if (cookie !== "") {
-      const getLoggedIn = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/user/${cookie}`,
-          {}
-        );
-        setUser(response.data);
+      const getUser = async () => {
+        const response = await getLoggedIn(cookie);
+        setUser(response);
       };
-      getLoggedIn();
+      getUser();
     }
     const getPicPath = async () => {
-      const response = await axios.get(
-        `http://localhost:5000/user/pictures/${id}`,
-        {}
-      );
-      setPics(response.data);
+      const response = await getPicture(id);
+      setPics(response);
     };
     getPicPath();
     return () => {

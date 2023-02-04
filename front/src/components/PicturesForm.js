@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import { uploadPicture } from "../service/user";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { getCookie } from "react-use-cookie";
@@ -19,7 +19,7 @@ const PicturesForm = () => {
     const formData = new FormData();
     formData.append("file", file);
     try {
-      await axios.post("http://localhost:5000/upload", formData);
+      await uploadPicture(formData);
       history.push("/dashboard");
     } catch (err) {
       console.log(err);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { updateUserInfo } from "../service/update";
 import { EditText, EditTextarea } from "react-edit-text";
 import Age from "../utils/SetAge";
 import Gender from "../utils/SetGender";
@@ -23,28 +23,26 @@ const UpdateProfile = ({ user, id, setMessage, message }) => {
   const updateProfile = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `http://localhost:5000/user/update/${id}`,
-        {
-          firstName: newFirstName.value,
-          lastName: newLastName.value,
-          username: newUsername.value,
-          email: newEmail.value,
-          bio: newBio.value,
-          interests: newInterest,
-          gender: newGender,
-          orientation: newOrientation,
-          geoLat: newGeoLat.value,
-          geoLng: newGeoLng.value,
-          city: newCity.value,
-          country: newCountry.value,
-          birthdate: newAge,
-        }
+      const response = await updateUserInfo(
+        id,
+        newFirstName.value,
+        newLastName.value,
+        newUsername.value,
+        newEmail.value,
+        newBio.value,
+        newInterest,
+        newGender,
+        newOrientation.value,
+        newGeoLat.value,
+        newGeoLng.value,
+        newCity.value,
+        newCountry.value,
+        newAge
       );
-      setMessage(response.data.msg);
+      setMessage(response.msg);
     } catch (error) {
       if (error.response) {
-        setMessage(error.response.data.msg);
+        setMessage(error.response.msg);
       }
     }
   };

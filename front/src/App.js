@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import CompleteProfile from "./pages/CompleteProfile";
 import ForgotPasswords from "./pages/ForgotPassword";
 import Profile from "./pages/Profile";
-import ProfileRandom from "./pages/ProfileRandom";
+import ProfileMatch from "./pages/ProfileMatch";
 import Footer from "./components/Footer";
 import ResetPassword from "./pages/ResetPassword";
 import Activation from "./pages/Activation";
@@ -76,7 +76,7 @@ function App() {
               <Profile />
             </Route>
             <Route path="/users/:id">
-              <ProfileRandom socket={socket} />
+              <ProfileMatch socket={socket} />
             </Route>
             <Route path="/chat/:id">
               <Chat socket={socket} />

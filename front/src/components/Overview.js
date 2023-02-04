@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import StarRating from "./StarRating";
 import Gallery from "./Gallery";
-import axios from "axios";
+import { countTotalViews } from "../service/user";
 
 const Overview = ({ pics, user }) => {
 	const [likes, setLikes] = useState("");
 
 	const count = async () => {
 		try {
-			const response = await axios.get(
-				`http://localhost:5000/user/fame/${user.id}`
-			);
-			setLikes(response.data.fame);
+			const response = await countTotalViews(user.id)
+			setLikes(response.fame);
 		} catch (error) {
 			console.log(error);
 		}

@@ -6,7 +6,7 @@ import { getCookie } from "react-use-cookie";
 import useGetDistance from "../utils/useGetDistance";
 import Tags from "../utils/SetTags";
 import Card from "../components/RenderCard";
-import axios from "axios";
+import { getLoggedIn } from "../service/auth";
 
 const Search = ({ socket }) => {
   const cookie = getCookie("refreshToken");
@@ -31,14 +31,11 @@ const Search = ({ socket }) => {
 
   useEffect(() => {
     if (cookie !== "") {
-      const getLoggedIn = async () => {
-        const response = await axios.get(
-          `http://localhost:5000/user/${cookie}`,
-          {}
-        );
-        setUser(response.data);
+      const getUser = async () => {
+        const response = await getLoggedIn(cookie);
+        setUser(response);
       };
-      getLoggedIn();
+      getUser();
     }
   }, [setUser, cookie]);
 

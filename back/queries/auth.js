@@ -181,6 +181,17 @@ export const getUserByRefreshToken = (refreshToken, callback) => {
   );
 };
 
+export const getUserById = async (id) => {
+  return new Promise((resolve, reject) => {
+    db.query("SELECT * FROM users WHERE id = ?", [id], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result[0]);
+    });
+  });
+};
+
 export const updateProfile = (
   birthdate,
   gender,

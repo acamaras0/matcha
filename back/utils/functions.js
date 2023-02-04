@@ -55,3 +55,15 @@ export const sendEmail = (code, email, token, id, reported) => {
     }
   });
 };
+
+export const validatePassword = (password, passwordConfirm) => {
+  if (password !== passwordConfirm) {
+    return false;
+  }
+
+  if (!validator.isStrongPassword(password)) {
+    return false;
+  }
+
+  return true;
+};

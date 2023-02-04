@@ -1,4 +1,4 @@
-import db from "../config/Database.js";
+import db from "../config/db_init.js";
 
 export const getNotifications = async (req, res) => {
   const userId = req.params.id;

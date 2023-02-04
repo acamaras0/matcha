@@ -1,5 +1,5 @@
 import { Server } from "socket.io";
-import db from "./config/Database.js";
+import db from "./config/db_init.js";
 
 export const socketServer = (server) => {
   const io = new Server(server, {

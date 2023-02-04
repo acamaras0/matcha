@@ -1,6 +1,4 @@
-import geoip from "geoip-lite";
-import { publicIpv4 } from "public-ip";
-import db from "../config/Database.js";
+import db from "../config/db_init.js";
 
 export const location = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;

@@ -1,4 +1,4 @@
-import db from "../config/Database.js";
+import db from "../config/db_init.js";
 
 export const insertLike = async (req, res) => {
   const liker = req.params.user1;
@@ -94,4 +94,11 @@ export const getFame = async (req, res) => {
     if (err) console.log(err);
     if (result) res.json(result[0]);
   });
+};
+
+export const addView = async (req, res) => {
+  const id = req.params.id;
+  db.query("UPDATE users SET profile_views = profile_views + 1 WHERE id = ?", [
+    id,
+  ]);
 };

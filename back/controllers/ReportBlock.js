@@ -1,4 +1,4 @@
-import db from "../config/Database.js";
+import db from "../config/db_init.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config();

@@ -1,4 +1,4 @@
-import db from "../config/Database.js";
+import db from "../config/db_init.js";
 import fs from "fs";
 
 export const getPicPath = async (req, res) => {

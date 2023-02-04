@@ -18,7 +18,7 @@ export const passwordReset = async (token, password, confPassword) => {
 };
 
 export const countUpViews = async (id) => {
-  const response = await axios.get(`${API_URL}user/views/${id}`);
+  const response = await axios.post(`${API_URL}user/views/${id}`);
   return response.data;
 };
 

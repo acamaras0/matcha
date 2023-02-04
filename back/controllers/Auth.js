@@ -3,19 +3,14 @@ import bcrypt from "bcrypt";
 import geoip from "geoip-lite";
 import { publicIpv4 } from "public-ip";
 import makeid from "../utils/functions.js";
+import validator from "validator";
+import { sendEmail } from "../utils/functions.js";
 import db from "../config/db_init.js";
-
 
 export const Register = async (req, res) => {
   const { username, password, confPassword, firstName, lastName, email } =
     req.body;
   const activ_code = makeid(20);
-  const activation = {
-    from: "matcha.hive1@gmail.com",
-    to: email,
-    subject: "Account activation",
-    html: `<h1>Welcome to MATCHA!</h1> <br/><p>Click <a href="http://localhost:3000/activate/${activ_code}">here</a> to activate your account!</p>`,
-  };
   const saltRounds = 10;
   if (
     username.length !== 0 &&
@@ -77,11 +72,7 @@ export const Register = async (req, res) => {
               if (err) {
                 res.send({ err: err });
               }
-              transporter.sendMail(activation, function (error, info) {
-                if (error) {
-                  console.log({ err: error });
-                }
-              });
+              sendEmail("activation", email, activ_code);
               return res.json({
                 msg: "User created! Activate your account!",
               });

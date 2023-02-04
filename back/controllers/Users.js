@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import validator from "validator";
+import { sendEmail } from "../utils/functions.js";
 import db from "../config/db_init.js";
-import { transporter } from "../utils/functions.js";
 
 export const accountActivation = async (req, res) => {
   const hash = req.params.hash;
@@ -248,19 +248,7 @@ export const forgotPass = async (req, res) => {
         (err, result) => {
           if (err) return console.log(err);
           if (result) {
-            const mailOptions = {
-              from: "matcha.hive1@gmail.com",
-              to: email,
-              subject: "Reset your password",
-              html: `<p>Click <a href="http://localhost:3000/resetPassword/${token}">here</a> to reset your password</p>`,
-            };
-            transporter.sendMail(mailOptions, (err, info) => {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log("Email sent: " + info.response);
-              }
-            });
+            sendEmail("reset", email, token)
             res.status(200).json({
               msg: "Email sent",
             });

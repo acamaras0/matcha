@@ -1,17 +1,5 @@
 import db from "../config/db_init.js";
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config();
-
-const PASSWORD_EMAIL = process.env.PASSWORD_EMAIL;
-
-var transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "matcha.hive1@gmail.com",
-    pass: PASSWORD_EMAIL,
-  },
-});
+import { sendEmail } from "../utils/functions.js";
 
 export const report = async (req, res) => {
   const id = req.params.user_id;
@@ -28,17 +16,7 @@ export const report = async (req, res) => {
         id,
         reported,
       ]);
-      const mailOptions = {
-        from: "matcha.hive1@gmail.com",
-        to: "matcha.hive1@gmail.com",
-        subject: "Report",
-        text: "User " + id + " reported user " + reported,
-      };
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          return console.log(error);
-        }
-      });
+     sendEmail("report", reported, id);
       return res.status(200).send({ msg: "User reported!" });
     }
   );

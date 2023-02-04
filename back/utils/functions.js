@@ -3,14 +3,6 @@ import dotenv from "dotenv";
 dotenv.config();
 const PASSWORD_EMAIL = process.env.PASSWORD_EMAIL;
 
-export const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "matcha.hive1@gmail.com",
-    pass: PASSWORD_EMAIL,
-  },
-});
-
 export default function makeid(length) {
   var result = "";
   var characters =
@@ -21,3 +13,45 @@ export default function makeid(length) {
   }
   return result;
 }
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "matcha.hive1@gmail.com",
+    pass: PASSWORD_EMAIL,
+  },
+});
+
+export const sendEmail = (code, email, token, id, reported) => {
+  let subject = "";
+  let html = "";
+  let to = "";
+  let text = "";
+  if (code === "reset") {
+    subject = "Reset your password";
+    to = email;
+    html = `<p>Click <a href="http://localhost:3000/resetPassword/${token}">here</a> to reset your password</p>`;
+  } else if (code === "activation") {
+    subject = "Account activation";
+    to = email;
+    html = `<h1>Welcome to MATCHA!</h1> <br/><p>Click <a href="http://localhost:3000/activate/${token}">here</a> to activate your account!</p>`;
+  } else if (code === "report") {
+    subject = "Report";
+    to = "matcha.hive1@gmail.com";
+    subject = "Report";
+    text = "User " + id + " reported user " + reported;
+  }
+  const mailOptions = {
+    from: "matcha.hive1@gmail.com",
+    to: email,
+    subject: subject,
+    html: html,
+  };
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Email sent: " + info.response);
+    }
+  });
+};

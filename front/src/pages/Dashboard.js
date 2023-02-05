@@ -4,7 +4,6 @@ import { getCookie } from "react-use-cookie";
 import { getLoggedIn } from "../service/auth";
 import useGetDistance from "../utils/useGetDistance";
 import Recommended from "../components/RecommendedMatches";
-import img from "../assets/suggestions.png";
 
 const Dashboard = ({ socket }) => {
   const [user, setUser] = useState([]);
@@ -84,19 +83,13 @@ const Dashboard = ({ socket }) => {
   return (
     <div className="dashboard-wrap">
       <br />
-      <div className="suggestions-logo">
-        <img className="suggestions-img" src={img} alt="suggestions" />
-      </div>
-      <br />
-      <div className="sorting">
+      <h3 className="text-center">Sort the recommended people by:</h3>
+      <div className="sorting mt-4">
         <select
           defaultValue={"DEFAULT"}
           onChange={(e) => setSortState(e.target.value)}
         >
-          <option value="DEFAULT" disabled>
-            Show by
-          </option>
-          <option value="location">Distance</option>
+          <option value="DEFAULT">Distance</option>
           <option value="age">Age</option>
           <option value="fame">Popularity</option>
         </select>

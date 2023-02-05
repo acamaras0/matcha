@@ -1,5 +1,5 @@
 .App {
-  max-width: 100%;
+  width: 100%;
   /* font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif; */
   /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
 }
@@ -43,7 +43,6 @@ p.age,
   justify-content: center;
 }
 .recommended-btn,
-.suggestions-logo,
 .random-card {
   display: flex;
   justify-content: center;
@@ -60,7 +59,6 @@ p.age,
 .filter {
   padding-left: 20vw;
   padding-right: 20vw;
-  padding-top: 10vh;
 }
 
 .sorting {
@@ -188,14 +186,15 @@ img.card-img-top {
 }
 
 .Nav-logo {
-  margin-left: 40px;
-  margin-bottom: 12px;
+  margin-left: 29px;
+  margin-bottom: 9px;
   cursor: pointer;
 }
 
 nav.navbar {
   display: flex;
-  align-items: flex-end;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
 nav.nav-bar {
@@ -219,24 +218,27 @@ img.card-img.img-fluid {
 }
 
 .logo {
-  width: 10vh;
+  margin-right: 44px;
+  margin-bottom: 22px;
+  width: 13vh;
 }
 
 .logo1 {
   display: flex;
   justify-content: center;
-  margin-bottom: 8px;
+  width: 14vh;
+  margin-top: 7px;
 }
 
 .iconImg {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   margin-right: 10px;
 }
 .icon-profile {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   cursor: pointer;
   margin-right: 10px;
   border-radius: 100%;
@@ -244,6 +246,7 @@ img.card-img.img-fluid {
 }
 .icon {
   display: flex;
+  margin-right: 5px;
 }
 
 .counter {

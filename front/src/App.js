@@ -45,48 +45,50 @@ function App() {
   return (
     <>
       <div className="App">
-        <BrowserRouter>
-          <NavBar socket={socket} user={user} />
-          <Switch>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route path="/forgotpassword">
-              <ForgotPasswords />
-            </Route>
-            <Route path="/resetpassword/:token">
-              <ResetPassword />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/activate/:hash">
-              <Activation />
-            </Route>
-            <Route path="/completeprofile">
-              <CompleteProfile user={user} />
-            </Route>
-            <Route path="/pictures">
-              <UploadPic />
-            </Route>
-            <Route path="/dashboard">
-              <Dashboard socket={socket} />
-            </Route>
-            <Route path="/profile/:id">
-              <Profile />
-            </Route>
-            <Route path="/users/:id">
-              <ProfileMatch socket={socket} />
-            </Route>
-            <Route path="/chat/:id">
-              <Chat socket={socket} />
-            </Route>
-            <Route path="/filter/:id">
-              <Search socket={socket} />
-            </Route>
-          </Switch>
-          <Footer />
-        </BrowserRouter>
+        <div className="App-content">
+          <BrowserRouter>
+            <NavBar socket={socket} user={user} />
+            <Switch>
+              <Route exact path="/">
+                <Login />
+              </Route>
+              <Route path="/forgotpassword">
+                <ForgotPasswords />
+              </Route>
+              <Route path="/resetpassword/:token">
+                <ResetPassword />
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+              <Route path="/activate/:hash">
+                <Activation />
+              </Route>
+              <Route path="/completeprofile">
+                <CompleteProfile user={user} />
+              </Route>
+              <Route path="/pictures">
+                <UploadPic />
+              </Route>
+              <Route path="/dashboard">
+                <Dashboard socket={socket} />
+              </Route>
+              <Route path="/profile/:id">
+                <Profile />
+              </Route>
+              <Route path="/users/:id">
+                <ProfileMatch socket={socket} />
+              </Route>
+              <Route path="/chat/:id">
+                <Chat socket={socket} />
+              </Route>
+              <Route path="/filter/:id">
+                <Search socket={socket} />
+              </Route>
+            </Switch>
+            <Footer />
+          </BrowserRouter>
+        </div>
       </div>
     </>
   );

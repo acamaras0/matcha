@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCookie } from "react-use-cookie";
 import { v4 as uuidv4 } from "uuid";
@@ -117,59 +117,44 @@ const NavBar = ({ socket, user }) => {
             <div className="Nav-logo">
               <img onClick={Dashboard} src={logo} className="logo" alt="logo" />
             </div>
-            <div className="navbar-brand"></div>
-            <div className="navbar-menu">
-              <div className="navbar-end">
-                <div className="navbar-item">
-                  <div className="buttons">
-                    <div className="icon" onClick={MyProfile}>
-                      <img
-                        src={userLogo}
-                        className="icon-profile"
-                        alt="profile"
-                      />
+            <div className="navbar-item">
+              <div className="buttons">
+                <div className="icon" onClick={MyProfile}>
+                  <img src={userLogo} className="icon-profile" alt="profile" />
+                </div>
+                <div className="icon" onClick={Filter}>
+                  <img src={filter} className="icon-profile" alt="profile" />
+                </div>
+                <div className="icon" onClick={() => setOpen(!open)}>
+                  <img src={notification} className="iconImg" alt="notif" />
+                  {notifications?.length > 0 && <div className="counter"></div>}
+                  {open && (
+                    <div className="notifications position-absolute display-grid">
+                      {notifications.length > 0
+                        ? notifications.map((n) => displayNotifications(n))
+                        : null}
+                      <button className="btn btn-dark" onClick={handleRead}>
+                        Mark as read
+                      </button>
                     </div>
-                    <div className="icon" onClick={Filter}>
-                      <img
-                        src={filter}
-                        className="icon-profile"
-                        alt="profile"
-                      />
-                    </div>
-                    <div className="icon" onClick={() => setOpen(!open)}>
-                      <img src={notification} className="iconImg" alt="notif" />
-                      {notifications?.length > 0 && (
-                        <div className="counter"></div>
-                      )}
-                      {open && (
-                        <div className="notifications position-absolute display-grid">
-                          {notifications.length > 0
-                            ? notifications.map((n) => displayNotifications(n))
-                            : null}
-                          <button className="btn btn-dark" onClick={handleRead}>
-                            Mark as read
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                    <div className="icon">
-                      <img
-                        onClick={Chat}
-                        src={chat}
-                        alt="chat"
-                        className="iconImg"
-                      />
-                      {messages?.length > 0 && <div className="counter"></div>}
-                    </div>
-                    <div className="icon">
-                      <img
-                        onClick={Logout}
-                        src={logOut}
-                        alt="logout"
-                        className="iconImg"
-                      />
-                    </div>
-                  </div>
+                  )}
+                </div>
+                <div className="icon">
+                  <img
+                    onClick={Chat}
+                    src={chat}
+                    alt="chat"
+                    className="iconImg"
+                  />
+                  {messages?.length > 0 && <div className="counter"></div>}
+                </div>
+                <div className="icon">
+                  <img
+                    onClick={Logout}
+                    src={logOut}
+                    alt="logout"
+                    className="iconImg"
+                  />
                 </div>
               </div>
             </div>
@@ -181,7 +166,7 @@ const NavBar = ({ socket, user }) => {
             className="nav-bar navbar-light bg-transparent"
             role="navigation"
           >
-            <img src={logo} className="logo" alt="" />
+            <img src={logo} className="logo1" alt="logo" />
           </nav>
         </>
       )}

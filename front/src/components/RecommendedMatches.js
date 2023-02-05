@@ -52,16 +52,16 @@ const Recommended = ({ filtered, socket, user }) => {
                             <p className="offline"></p>
                           )}
                         </h5>
-                        <h6 className="card-title">
+                        <p className="card-title">
                           {user.city}, {user.country}{" "}
-                        </h6>
+                        </p>
                         <StarRating rating={user.fame} /> <br />
-                        <p className="card-text">
+                        <p className="text-dark">
                           About {Math.round(user.distance / 1000)} km away
                         </p>
                         <p className="interests">{user.interests}</p>
                         <div>
-                          <p className="report">
+                          <p style={{ color: "grey", fontSize: "10px" }}>
                             Last seen {format(user.updated_at)}
                           </p>
                         </div>

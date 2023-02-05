@@ -18,6 +18,10 @@ p.age,
   font-style: italic;
 }
 
+.bg-transparent {
+  background-color: transparent !important;
+}
+
 .search-img {
   cursor: pointer;
 }
@@ -194,6 +198,11 @@ nav.navbar {
   align-items: flex-end;
 }
 
+nav.nav-bar {
+  display: flex;
+  justify-content: center;
+}
+
 .dashboard {
   display: flex;
   justify-content: space-evenly;
@@ -367,16 +376,11 @@ p {
   color: black;
 }
 
-p.message {
-  text-align: center;
-  font-size: 14px;
-  color: forestgreen;
-}
-
+p.message,
 p.error {
   text-align: center;
   font-size: 14px;
-  color: red;
+  color: rgb(236, 189, 0);
 }
 
 a:link {
@@ -686,4 +690,11 @@ p.chatMenuInput {
   color: #ccc;
   font-size: larger;
   padding: 10vw;
+}
+
+@media screen and (max-width: 768px) {
+  .Auth-form {
+    border: none;
+    box-shadow: none;
+  }
 }

@@ -31,7 +31,8 @@ const ForgotPassword = () => {
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={forgotPassword}>
           <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Password recovery</h3>
+            <h3 className="Auth-form-title mt-5">Password recovery</h3>
+            <p>Don't worry, we got you!</p>
             <br />
             <div className="form-group mt-3">
               <input

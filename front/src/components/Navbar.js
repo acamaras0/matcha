@@ -12,6 +12,7 @@ import notification from "../assets/notification.png";
 import logOut from "../assets/logout.png";
 import userLogo from "../assets/user.png";
 import filter from "../assets/filter.png";
+import "../App.css";
 
 const NavBar = ({ socket, user }) => {
   const cookie = getCookie("refreshToken");
@@ -108,19 +109,11 @@ const NavBar = ({ socket, user }) => {
     }
   };
 
-  const Register = () => {
-    history.push("/register");
-  };
-
-  const Login = () => {
-    history.push("/");
-  };
-
   return (
     <>
-      {user? (
+      {user ? (
         <div>
-          <nav className="navbar" role="navigation">
+          <nav className="navbar navbar-light bg-transparent" role="navigation">
             <div className="Nav-logo">
               <img onClick={Dashboard} src={logo} className="logo" alt="logo" />
             </div>
@@ -184,26 +177,11 @@ const NavBar = ({ socket, user }) => {
         </div>
       ) : (
         <>
-          <nav className="navbar" role="navigation">
-            <div className="Nav-logo">
-              <img src={logo} className="logo" alt="" />
-            </div>
-            <div className="navbar-menu">
-              <div className="navbar-end">
-                <div className="navbar-item">
-                  <div className="buttons">
-                    <div className="icon">
-                      <button onClick={Login} className="btn btn-dark">
-                        Sign in
-                      </button>
-                      <button onClick={Register} className="btn btn-dark">
-                        Sign up
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <nav
+            className="nav-bar navbar-light bg-transparent"
+            role="navigation"
+          >
+            <img src={logo} className="logo" alt="" />
           </nav>
         </>
       )}

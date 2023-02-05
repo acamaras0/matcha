@@ -36,7 +36,7 @@ const ResetPassword = () => {
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={ResetPassword}>
           <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Reset Password</h3>
+            <h3 className="Auth-form-title mt-4">Reset Password</h3>
             <div className="form-group mt-3">
               <input
                 className="form-control mt-1"

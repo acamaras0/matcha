@@ -13,14 +13,13 @@ const Login = () => {
 
   const Auth = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const res = await login(username, password);
       setMessage(res.msg);
       if (res.accessToken) {
         history.push("/completeprofile");
       }
-    }
-    catch(error){
+    } catch (error) {
       if (error.response) {
         setMessage(error.response.data.msg);
       }
@@ -35,10 +34,8 @@ const Login = () => {
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Auth}>
           <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Sign in</h3>
-            <p className="forgot-password text-right mt-2">
-              Are you new around here?
-            </p>
+            <h3 className="Auth-form-title mt-5">Sign in</h3>
+            <p>Are you new around here?</p>
             <a href="http://localhost:3000/register">Create an account!</a>
             <div className="form-group mt-3">
               <input

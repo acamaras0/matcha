@@ -46,7 +46,11 @@ const Register = () => {
       <div className="Auth-form-container">
         <form className="Auth-form" onSubmit={Register}>
           <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Sign up</h3>
+            <h3 className="Auth-form-title mt-4">Sign up</h3>
+            <p className="forgot-password text-right mt-2">
+              Do you already have an account?
+            </p>
+            <a href="http://localhost:3000/">Log in!</a>
             <div className="form-group mt-3">
               <input
                 placeholder="First Name"

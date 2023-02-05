@@ -192,6 +192,21 @@ export const getUserById = async (id) => {
   });
 };
 
+export const getBlockedUser = async (id) => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT * FROM blocked_users WHERE user_id = ?",
+      [id],
+      (err, result) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(result);
+      }
+    );
+  });
+};
+
 export const updateProfile = (
   birthdate,
   gender,

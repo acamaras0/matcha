@@ -5,7 +5,14 @@ import {
   activateUser,
   updatePasswordInDB,
   resetPasswordInDb,
+  getUserByRefreshToken,
+  getUserByResetToken,
+  queryDb,
+  getBlockedUsers,
+  getRecommendedUsersQuery,
+  getUserByToken,
 } from "../queries/user.js";
+import { getUserById } from "../queries/auth.js";
 import db from "../config/db_init.js";
 
 export const accountActivation = async (req, res) => {
@@ -52,202 +59,94 @@ export const resetPass = async (req, res) => {
       msg: "Password has to be at least 8 characters \n and contain at least one uppercase, \n one lowercase, one number and \n one special character",
     });
   } else {
-    db.query(
-      "SELECT * FROM users WHERE reset_token = ?",
-      [token],
-      (err, result) => {
-        if (err) {
-          return res.send({ err: err });
-        }
-        if (result.length > 0 && result[0].reset_token === token) {
-          resetPasswordInDb(password, token, (err, result) => {
-            if (err) {
-              return res.send({ err: err });
-            }
-            return res.send({ msg: "Success!" });
-          });
-        } else {
-          return res.status(200).send({ msg: "Invalid token" });
-        }
+    getUserByResetToken(token, (err, result) => {
+      if (err) return res.json(err);
+      console.log(result);
+      if (result) {
+        resetPasswordInDb(password, token, (err, result) => {
+          if (err) {
+            return res.send({ err: err });
+          }
+          return res.send({ msg: "Success!" });
+        });
+      } else {
+        return res.status(200).send({ msg: "Invalid token" });
       }
-    );
+    });
   }
 };
 
 export const getLoggedIn = async (req, res) => {
   const token = req.params.token;
-  db.query(
-    "SELECT * FROM users WHERE refresh_token = ?",
-    [token],
-    (err, result) => {
-      if (err) return res.json(err);
-      res.json(result[0]);
-    }
-  );
+  getUserByRefreshToken(token, (err, result) => {
+    if (err) return res.json(err);
+    res.json(result);
+  });
 };
 
 export const forgotPass = async (req, res) => {
   const { email } = req.body;
   const token = process.env.ACCESS_TOKEN_SECRET;
 
-  db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
-    if (err) return console.log(err);
-    if (result.length > 0) {
-      db.query(
-        "UPDATE users SET reset_token = ? WHERE email = ?",
-        [token, email],
-        (err, result) => {
-          if (err) return console.log(err);
-          if (result) {
-            sendEmail("reset", email, token);
-            res.status(200).json({
-              msg: "Email sent",
-            });
-          }
-        }
-      );
-    } else {
-      return res.status(200).json({
-        msg: "Email not found",
+  const result = await queryDb("SELECT * FROM users WHERE email = ?", [email]);
+  if (result.length > 0) {
+    const updateResult = await queryDb(
+      "UPDATE users SET reset_token = ? WHERE email = ?",
+      [token, email]
+    );
+    if (updateResult) {
+      sendEmail("reset", email, token);
+      res.status(200).json({
+        msg: "Email sent",
       });
     }
-  });
+  } else {
+    return res.status(200).json({
+      msg: "Email not found",
+    });
+  }
 };
 
 export const getRandomUser = async (req, res) => {
   const { id } = req.params;
-  db.query("SELECT * FROM users WHERE id = ?", [id], (err, result) => {
-    if (err) {
-      res.send({ err: err });
-    }
-    if (result) {
-      res.json(result[0]);
-    }
-  });
+  try {
+    const result = await getUserById(id);
+    res.json(result);
+  } catch (err) {
+    res.send({ err });
+  }
 };
 
-export const getUsers = async (req, res) => {
-  const token = req.params.token;
-  db.query(
-    "SELECT * FROM users WHERE refresh_token = ?",
-    [token],
-    (err, result) => {
-      if (err) {
-        return res.json({ err: err });
-      }
-      let loggedIn, orientation, gender;
-      if (result.length > 0) {
-        loggedIn = result[0].id;
-        orientation = result[0].orientation;
-        gender = result[0].gender;
-      }
-      db.query(
-        "SELECT * FROM block WHERE user_id=?",
-        [loggedIn],
-        (err, result) => {
-          if (err) {
-            return res.json({ err: err });
-          }
-          if (result.length > 0) {
-            const blocked = result.map((item) => item.blocked_id);
-            if (orientation === "heterosexual" && gender === "female") {
-              db.query(
-                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
-                [loggedIn, blocked],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            } else if (orientation === "heterosexual" && gender === "male") {
-              db.query(
-                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'female' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
-                [loggedIn, blocked],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            } else if (orientation === "homosexual" && gender === "female") {
-              db.query(
-                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'female' AND (orientation = 'homosexual' OR orientation = 'bisexual')",
-                [loggedIn, blocked],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            } else if (orientation === "homosexual" && gender === "male") {
-              db.query(
-                "SELECT * FROM users WHERE id NOT IN (?, ?) AND gender = 'male' AND (orientation = 'homosexual' OR orientation = 'bisexual')",
-                [loggedIn, blocked],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            } else if (orientation === "bisexual") {
-              db.query(
-                "SELECT * FROM users WHERE id NOT IN (?, ?)",
-                [loggedIn, blocked],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            }
-          } else {
-            if (orientation === "heterosexual" && gender === "female") {
-              db.query(
-                "SELECT * FROM users WHERE id != ? AND gender = 'male' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
-                [loggedIn],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            } else if (orientation === "heterosexual" && gender === "male") {
-              db.query(
-                "SELECT * FROM users WHERE id != ? AND gender = 'female' AND (orientation = 'heterosexual' OR orientation = 'bisexual')",
-                [loggedIn],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            } else if (orientation === "homosexual" && gender === "female") {
-              db.query(
-                "SELECT * FROM users WHERE id != ? AND gender = 'female' AND (orientation = 'homosexual' OR orientation = 'bisexual')",
-                [loggedIn],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            } else if (orientation === "homosexual" && gender === "male") {
-              db.query(
-                "SELECT * FROM users WHERE id != ? AND gender = 'male' AND (orientation = 'homosexual' OR orientation = 'bisexual')",
-                [loggedIn],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            } else if (orientation === "bisexual") {
-              db.query(
-                "SELECT * FROM users WHERE id != ?",
-                [loggedIn],
-                (err, result) => {
-                  if (err) return res.json({ err: err });
-                  res.json(result);
-                }
-              );
-            }
-          }
-        }
-      );
+export const getRecommendedUsers = async (req, res) => {
+  try {
+    const token = req.params.token;
+    const [userResult] = await getUserByToken(token);
+    if (!userResult || !userResult.id) {
+      return res.json({ err: "User not found" });
     }
-  );
+    const loggedIn = userResult.id;
+    const orientation = userResult.orientation;
+    const gender = userResult.gender;
+
+    const blockedResult = await getBlockedUsers(loggedIn);
+    const blocked = blockedResult.map((item) => item.blocked_id).join(", ");
+
+    const query = getRecommendedUsersQuery(
+      loggedIn,
+      blocked,
+      orientation,
+      gender
+    );
+    db.query(query, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.json({ err });
+      }
+      res.json(result);
+    });
+  } catch (err) {
+    res.send({ err });
+  }
 };
 
 export const updateProfile = async (req, res) => {

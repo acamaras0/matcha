@@ -2,7 +2,7 @@ import express from "express";
 import { Register, Login, Logout, profileFill } from "../controllers/Auth.js";
 import {
   accountActivation,
-  getUsers,
+  getRecommendedUsers,
   getLoggedIn,
   updatePassword,
   getRandomUser,
@@ -45,7 +45,7 @@ import { upload } from "../middleware/Upload.js";
 
 const router = express.Router();
 
-router.get("/users/info/:token", getUsers);
+router.get("/users/info/:token", getRecommendedUsers);
 router.get("/user/:token", getLoggedIn);
 router.get("/user/pictures/:id", getPicsById, getPicPath);
 router.get("/users/:id", getRandomUser);

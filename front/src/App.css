@@ -165,9 +165,67 @@ h3 {
   padding-top: 2vh;
 }
 
+.radio-container {
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  font-size: 17px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.radio-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.mark {
+  position: absolute;
+  top: -10;
+  left: 0;
+  height: 15px;
+  width: 15px;
+  background-color: #eee;
+  border-radius: 50%;
+  margin-top: 6px;
+}
+
+.radio-container:hover input ~ .mark {
+  background-color: rgb(209, 188, 3);
+}
+
+.radio-container input:checked ~ .mark {
+  background-color: rgb(236, 189, 0);
+}
+
+.mark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.radio-container input:checked ~ .mark:after {
+  display: block;
+}
+
+.radio-container .mark:after {
+  top: 4px;
+  left: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(255, 255, 255);
+}
+
 .card-password {
-  padding-left: 30vw;
-  padding-right: 30vw;
+  padding-left: 35vw;
+  padding-right: 35vw;
 }
 
 img.card-img-top {

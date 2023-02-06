@@ -192,6 +192,11 @@ img.card-img-top {
   flex-direction: column-reverse;
 }
 
+.my-5 {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+}
+
 .Nav-logo {
   margin-left: 29px;
   margin-bottom: 9px;

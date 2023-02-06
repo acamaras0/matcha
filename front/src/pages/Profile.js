@@ -137,7 +137,7 @@ const Profile = () => {
           </div>
           <div className="view">
             {pics ? (
-              <div className="card" style={{ width: "50rem" }}>
+              <div style={{ width: "50rem" }}>
                 <Overview pics={pics} user={user} />
               </div>
             ) : null}

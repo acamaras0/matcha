@@ -22,17 +22,17 @@ function App() {
   const cookie = getCookie("refreshToken");
   const [user, setUser] = useState("");
   const [socket, setSocket] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
     if (cookie !== "") {
-      if (cookie !== "") {
-        const getUser = async () => {
-          const response = await getLoggedIn(cookie);
-          setUser(response);
-        };
-        getUser();
-      }
+      const getUser = async () => {
+        const response = await getLoggedIn(cookie);
+        setUser(response);
+        setLoggedIn(true)
+      };
+      getUser();
     }
   }, [cookie, setUser]);
 
@@ -42,15 +42,28 @@ function App() {
     }
   }, [socket, user]);
 
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+  };
+
   return (
     <>
       <div className="App">
         <div className="App-content">
           <BrowserRouter>
-            <NavBar socket={socket} user={user} />
+            <NavBar
+              socket={socket}
+              user={user}
+              handleLogout={handleLogout}
+              loggedIn={loggedIn}
+            />
             <Switch>
               <Route exact path="/">
-                <Login />
+                <Login handleLogin={handleLogin} />
               </Route>
               <Route path="/forgotpassword">
                 <ForgotPasswords />
@@ -65,7 +78,7 @@ function App() {
                 <Activation />
               </Route>
               <Route path="/completeprofile">
-                <CompleteProfile user={user} />
+                <CompleteProfile />
               </Route>
               <Route path="/pictures">
                 <UploadPic />

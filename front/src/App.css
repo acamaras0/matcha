@@ -538,7 +538,8 @@ a:active {
 }
 
 .chatBox {
-  flex: 5.5;
+  margin-top: 20px;
+  flex: 5.5 1;
 }
 
 .chatBoxBottom {

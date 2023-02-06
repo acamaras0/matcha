@@ -1,26 +1,23 @@
-import db from "../config/db_init.js";
+import {
+  getNotificationsFromDb,
+  updateNotificationsInDb,
+} from "../queries/notifications.js";
 
 export const getNotifications = async (req, res) => {
   const userId = req.params.id;
-  
-  db.query(
-    "SELECT * FROM notifications WHERE reciever_id = ? AND mark = 0",
-    [userId],
-    (err, result) => {
-      if (err) console.log(err);
-      return res.json(result);
-    }
-  );
+  try {
+    const notifications = await getNotificationsFromDb(userId);
+    return res.json(notifications);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Failed to retrieve notifications" });
+  }
 };
 
 export const markNotifications = async (req, res) => {
   const userId = req.params.id;
-  db.query(
-    "UPDATE notifications SET mark = 1 WHERE reciever_id = ?",
-    [userId],
-    (err, result) => {
-      if (err) console.log(err);
-      return res.json(result);
-    }
-  );
+  updateNotificationsInDb(userId, (err, result) => {
+    if (err) console.log(err);
+    return res.json(result);
+  });
 };

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import "../App.css";
 
-const Login = () => {
+const Login = ({ handleLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -17,6 +17,7 @@ const Login = () => {
       const res = await login(username, password);
       setMessage(res.msg);
       if (res.accessToken) {
+        handleLogin();
         history.push("/completeprofile");
       }
     } catch (error) {

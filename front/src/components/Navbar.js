@@ -1,5 +1,5 @@
 import React from "react";
-import { useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCookie } from "react-use-cookie";
 import { v4 as uuidv4 } from "uuid";
@@ -14,7 +14,7 @@ import userLogo from "../assets/user.png";
 import filter from "../assets/filter.png";
 import "../App.css";
 
-const NavBar = ({ socket, user }) => {
+const NavBar = ({ socket, user, handleLogout, loggedIn }) => {
   const cookie = getCookie("refreshToken");
   const [notifications, setNotifications] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -92,6 +92,7 @@ const NavBar = ({ socket, user }) => {
   const Logout = async () => {
     try {
       await logout();
+      handleLogout();
       history.push("/");
     } catch (error) {
       console.log(error);
@@ -111,7 +112,7 @@ const NavBar = ({ socket, user }) => {
 
   return (
     <>
-      {user ? (
+      {loggedIn? (
         <div>
           <nav className="navbar navbar-light bg-transparent" role="navigation">
             <div className="Nav-logo">

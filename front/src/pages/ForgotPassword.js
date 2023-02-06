@@ -12,12 +12,11 @@ const ForgotPassword = () => {
 
   const forgotPassword = (e) => {
     e.preventDefault();
-    try{
+    try {
       forgottenPassword(email);
       history.push("/");
-    }
-    catch(error){
-      if(error.response){
+    } catch (error) {
+      if (error.response) {
         setMessage(error.response.msg);
       }
     }

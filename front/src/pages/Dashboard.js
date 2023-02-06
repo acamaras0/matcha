@@ -4,9 +4,12 @@ import { getCookie } from "react-use-cookie";
 import { getLoggedIn } from "../service/auth";
 import useGetDistance from "../utils/useGetDistance";
 import Recommended from "../components/RecommendedMatches";
+import sort from "../assets/sort.svg";
+import Sort from "../components/Sort";
 
 const Dashboard = ({ socket }) => {
   const [user, setUser] = useState([]);
+  const [sortOptionsVisible, setSortOptionsVisible] = useState(false);
   const [sortState, setSortState] = useState("none");
   const distance = useGetDistance();
   const cookie = getCookie("refreshToken");
@@ -74,6 +77,10 @@ const Dashboard = ({ socket }) => {
     );
   }
 
+  const handleSort = (value) => {
+    setSortState(value);
+  };
+
   if (distance.length === 0 || filtered.length === 0)
     return (
       <div className="text-center">
@@ -82,18 +89,18 @@ const Dashboard = ({ socket }) => {
     );
   return (
     <div className="dashboard-wrap">
-      <br />
-      <h3 className="text-center">Sort the recommended people by:</h3>
-      <div className="sorting mt-4">
-        <select
-          defaultValue={"DEFAULT"}
-          onChange={(e) => setSortState(e.target.value)}
-        >
-          <option value="DEFAULT">Distance</option>
-          <option value="age">Age</option>
-          <option value="fame">Popularity</option>
-        </select>
+      <div className="d-flex justify-content-center">
+        <img
+          src={sort}
+          alt="sort"
+          className="sort-icon"
+          onClick={() => setSortOptionsVisible(!sortOptionsVisible)}
+        />
       </div>
+      {sortOptionsVisible ? (
+        <Sort handleSort={handleSort} sortState={sortState} />
+      ) : null}
+
       <div className="recommended-btn"></div>
       {user.profile_pic ? (
         <Recommended filtered={filtered} socket={socket} user={user} />

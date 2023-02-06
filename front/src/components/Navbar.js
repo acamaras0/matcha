@@ -112,9 +112,9 @@ const NavBar = ({ socket, user, handleLogout, loggedIn }) => {
 
   return (
     <>
-      {loggedIn? (
+      {loggedIn ? (
         <div>
-          <nav className="navbar navbar-light bg-transparent" role="navigation">
+          <nav className="navbar" role="navigation">
             <div className="Nav-logo">
               <img onClick={Dashboard} src={logo} className="logo" alt="logo" />
             </div>
@@ -164,7 +164,7 @@ const NavBar = ({ socket, user, handleLogout, loggedIn }) => {
       ) : (
         <>
           <nav
-            className="nav-bar navbar-light bg-transparent"
+            className="nav-bar"
             role="navigation"
           >
             <img src={logo} className="logo1" alt="logo" />

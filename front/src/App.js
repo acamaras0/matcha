@@ -30,7 +30,7 @@ function App() {
       const getUser = async () => {
         const response = await getLoggedIn(cookie);
         setUser(response);
-        setLoggedIn(true)
+        setLoggedIn(true);
       };
       getUser();
     }

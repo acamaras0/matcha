@@ -11,6 +11,21 @@ import {
   getBlockedUsers,
   getRecommendedUsersQuery,
   getUserByToken,
+  updateFirstName,
+  updateLastName,
+  checkIfUsernameExists,
+  updateUsername,
+  checkIfEmailExists,
+  updateEmail,
+  updateBio,
+  updateInterests,
+  updateGender,
+  updateOrientation,
+  updateGeoLat,
+  updateGeoLong,
+  updateCity,
+  updateCountry,
+  updateBirthdate,
 } from "../queries/user.js";
 import { getUserById } from "../queries/auth.js";
 import db from "../config/db_init.js";
@@ -174,7 +189,7 @@ export const updateProfile = async (req, res) => {
     firstName.length < 20 &&
     firstName.length > 2
   ) {
-    db.query("UPDATE users SET firstname = ? WHERE id = ?", [firstName, id]);
+    updateFirstName(firstName, id);
     counter++;
   }
   if (
@@ -183,7 +198,7 @@ export const updateProfile = async (req, res) => {
     lastName.length < 20 &&
     lastName.length > 2
   ) {
-    db.query("UPDATE users SET lastname = ? WHERE id = ?", [lastName, id]);
+    updateLastName(lastName, id);
     counter++;
   }
   if (
@@ -192,28 +207,24 @@ export const updateProfile = async (req, res) => {
     username.length < 10 &&
     username.length > 2
   ) {
-    db.query(
-      "SELECT * FROM users WHERE username = ?",
-      [username],
-      (err, result) => {
-        if (err) console.log(err);
-        if (result.length > 0) {
-          return console.log("email already exists ! ");
-        } else
-          db.query("UPDATE users SET username = ? WHERE id = ?", [
-            username,
-            id,
-          ]);
+    checkIfUsernameExists(username, (err, result) => {
+      if (err) return res.json({ err });
+      if (result.length > 0) {
+        return console.log({ err: "Username already exists" });
+      } else {
+        updateUsername(username, id);
       }
-    );
+    });
     counter++;
   }
   if (email && validator.isEmail(email) && email.length < 30) {
-    db.query("SELECT * FROM users WHERE email = ?", [email], (err, result) => {
-      if (err) console.log(err);
+    checkIfEmailExists(email, (err, result) => {
+      if (err) return res.json({ err });
       if (result.length > 0) {
-        return console.log("email already exists ! ");
-      } else db.query("UPDATE users SET email = ? WHERE id = ?", [email, id]);
+        return console.log({ err: "Email already exists" });
+      } else {
+        updateEmail(email, id);
+      }
     });
     counter++;
   }
@@ -224,30 +235,27 @@ export const updateProfile = async (req, res) => {
       /\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gi
     )
   ) {
-    db.query("UPDATE users SET bio = ? WHERE id = ?", [bio, id]);
+    updateBio(bio, id);
     counter++;
   }
   if (interests.length > 0) {
-    db.query("UPDATE users SET interests = ? WHERE id = ?", [tags, id]);
+    updateInterests(tags, id);
     counter++;
   }
   if (gender) {
-    db.query("UPDATE users SET gender = ? WHERE id = ?", [gender, id]);
+    updateGender(gender, id);
     counter++;
   }
   if (orientation) {
-    db.query("UPDATE users SET orientation = ? WHERE id = ?", [
-      orientation,
-      id,
-    ]);
+    updateOrientation(orientation, id);
     counter++;
   }
   if (geoLat && geoLat >= -90 && geoLat <= 90) {
-    db.query("UPDATE users SET geo_lat = ? WHERE id = ?", [geoLat, id]);
+    updateGeoLat(geoLat, id);
     counter++;
   }
   if (geoLng && geoLng >= -180 && geoLng <= 180) {
-    db.query("UPDATE users SET geo_long = ? WHERE id = ?", [geoLng, id]);
+    updateGeoLong(geoLng, id);
     counter++;
   }
   if (
@@ -258,7 +266,7 @@ export const updateProfile = async (req, res) => {
       /\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gi
     )
   ) {
-    db.query("UPDATE users SET city = ? WHERE id = ?", [city, id]);
+    updateCity(city, id);
     counter++;
   }
   if (
@@ -269,11 +277,11 @@ export const updateProfile = async (req, res) => {
       /\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff]/gi
     )
   ) {
-    db.query("UPDATE users SET country = ? WHERE id = ?", [country, id]);
+    updateCountry(country, id);
     counter++;
   }
   if (birthdate) {
-    db.query("UPDATE users SET birthdate = ? WHERE id = ?", [birthdate, id]);
+    updateBirthdate(birthdate, id);
     counter++;
   }
   if (counter > 0) {

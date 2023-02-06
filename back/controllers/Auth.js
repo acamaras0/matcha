@@ -106,13 +106,11 @@ export const profileFill = async (req, res) => {
     });
   }
   const refreshToken = req.cookies.refreshToken;
-  db.query(
-    "SELECT * FROM users WHERE refresh_token = ?",
-    refreshToken,
-    (err, result) => {
-      if (err) {
-        return res.send({ err });
-      }
+  getUserByRefreshToken(refreshToken, (err, result) => {
+    if (err) {
+      res.send({ err });
+    }
+    if (result.length > 0)
       if (result.length > 0) {
         const userId = result[0].id;
         updateProfile(
@@ -130,6 +128,5 @@ export const profileFill = async (req, res) => {
           }
         );
       }
-    }
-  );
+  });
 };

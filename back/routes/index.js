@@ -40,7 +40,7 @@ import { upload } from "../middleware/Upload.js";
 
 // ***THIS WILL CREATE 25 RANDOM USERS FOR TESTING PURPOSE
 
-// import createFake from "../config/CreateFake.js";
+// import createFake from "../config/createFake.js";
 // createFake()
 
 const router = express.Router();

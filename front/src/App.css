@@ -165,6 +165,14 @@ h3 {
   padding-top: 2vh;
 }
 
+.report-block{
+  display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .radio-container {
   display: block;
   position: relative;

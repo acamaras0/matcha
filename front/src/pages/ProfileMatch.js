@@ -243,12 +243,12 @@ const ProfileMatch = ({ socket }) => {
                 </label>
               </div>
               <br />
-              <div className="mb-5">
+              <div className="mb-5 report-block">
                 <button
                   onClick={() => handleReport(selectedUser.id)}
                   className="btn btn-dark"
                 >
-                  Report fake account
+                  Report
                 </button>
                 <p className="message">{report}</p>
                 <button

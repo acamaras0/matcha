@@ -24,7 +24,7 @@ const Recommended = ({ filtered, socket, user }) => {
     <div className="dashboard">
       {filtered &&
         filtered
-          .filter((person) => person.distance / 1000 < 100)
+          .filter((person) => person.distance / 1000 < 500)
           .map((user) => {
             if (user.profile_pic && user.profile_pic.length > 0) {
               return (

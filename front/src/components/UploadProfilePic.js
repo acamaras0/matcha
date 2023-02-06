@@ -38,7 +38,6 @@ const ProfilePic = () => {
   }
   return (
     <div className="form-group text-center">
-      <h3 className="mt-3">✍ Change Profile Picture</h3>
       <p className="error">{message}</p>
       <br />
       {selectedImage && (
@@ -57,7 +56,7 @@ const ProfilePic = () => {
       <br />
       <input className="" type="file" name="file" onChange={saveFile} />
       <button className="btn btn-dark" onClick={uploadFile}>
-        Upload
+        Upload Profile Picture
       </button>
     </div>
   );

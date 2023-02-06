@@ -35,7 +35,6 @@ const PicturesForm = () => {
   }
   return (
     <div className="form-group text-center">
-      <h3 className="mt-4">✍ Upload Pictures</h3>
       <br />
       {selectedImage && (
         <div>
@@ -51,9 +50,9 @@ const PicturesForm = () => {
         </div>
       )}
       <br />
-      <input className="" type="file" name="file" onChange={saveFile} />
+      <input type="file" name="file" onChange={saveFile} />
       <button className="btn btn-dark" onClick={uploadFile}>
-        Upload
+        Upload Picture
       </button>
     </div>
   );

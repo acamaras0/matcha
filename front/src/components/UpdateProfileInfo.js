@@ -47,11 +47,8 @@ const UpdateProfile = ({ user, id, setMessage, message }) => {
     }
   };
 
-  console.log(newOrientation);
   return (
     <div>
-      <h3 className="mt-4">✍ Update Profile</h3>
-      <br />
       <label>✎ Firts name</label>
       <EditText
         name="textbox1"

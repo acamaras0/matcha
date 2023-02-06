@@ -17,7 +17,6 @@ const EditPictures = ({ pics, user }) => {
   };
   return (
     <div className="card-pictures">
-      <h3 className="mt-3">✍ Edit Pictures</h3>
       {message1 ? (
         <p className="error">{message1}</p>
       ) : (

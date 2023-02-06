@@ -171,23 +171,23 @@ const ProfileMatch = ({ socket }) => {
   } else {
     return (
       <div>
-        <div className="text-center mt-5">
-          <h2 className="text-center">
-            {selectedUser.firstname} {selectedUser.lastname}
-          </h2>
-          <p className="text-center">
-            {selectedUser.city}, {selectedUser.country}
-          </p>
-          <img
-            alt="backup"
-            className="prof-pic"
-            src={selectedUser.profile_pic}
-          />
-          <div>
-            <StarRating rating={likes} />
-          </div>
-          <div className="random-card">
-            <div className="card" style={{ width: "60rem" }}>
+        <div className="random-card">
+          <div style={{ width: "60rem" }}>
+            <div className="text-center mt-5">
+              <img
+                alt="backup"
+                className="prof-pic"
+                src={selectedUser.profile_pic}
+              />
+              <h2 className="text-center">
+                {selectedUser.firstname} {selectedUser.lastname}
+              </h2>
+              <p className="text-center">
+                {selectedUser.city}, {selectedUser.country}
+              </p>
+              <div>
+                <StarRating rating={likes} />
+              </div>
               <div className="card-img">
                 {pics.length >= 0 ? (
                   <Gallery galleryImages={pics} />
@@ -224,7 +224,8 @@ const ProfileMatch = ({ socket }) => {
                     </div>
                   </div>
                 )}
-              </div>{" "}
+              </div>
+              <br />
               <div className="card-body">
                 <label>Age</label>
                 <p className="card-text">{selectedUser.birthdate}</p>
@@ -241,23 +242,23 @@ const ProfileMatch = ({ socket }) => {
                   {selectedUser.profile_views} time(s).
                 </label>
               </div>
+              <br />
+              <div className="mb-5">
+                <button
+                  onClick={() => handleReport(selectedUser.id)}
+                  className="btn btn-dark"
+                >
+                  Report fake account
+                </button>
+                <p className="message">{report}</p>
+                <button
+                  onClick={() => block(selectedUser.id)}
+                  className="btn btn-danger"
+                >
+                  Block
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="mb-5">
-            <button
-              onClick={() => handleReport(selectedUser.id)}
-              className="btn btn-dark"
-            >
-              Report fake account
-            </button>
-            <p className="message">{report}</p>
-            <br />
-            <button
-              onClick={() => block(selectedUser.id)}
-              className="btn btn-danger"
-            >
-              Block
-            </button>
           </div>
         </div>
       </div>

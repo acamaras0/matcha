@@ -28,19 +28,22 @@ export const insertReport = (id, reported) => {
 };
 
 export const handleBlockDB = (id, blocked, successCb, errorCb) => {
-    db.query(
-      "SELECT * FROM block WHERE user_id = ? AND blocked_id = ?",
-      [id, blocked],
-      (err, result) => {
-        if (err) {
-          errorCb(err);
-          return;
-        }
-        if (result.length > 0) {
-          successCb({ msg: "You can block only once." });
-          return;
-        }
-        db.query("INSERT INTO block (user_id, blocked_id) VALUES (?, ?)", [        id,        blocked,      ], (err) => {
+  db.query(
+    "SELECT * FROM block WHERE user_id = ? AND blocked_id = ?",
+    [id, blocked],
+    (err, result) => {
+      if (err) {
+        errorCb(err);
+        return;
+      }
+      if (result.length > 0) {
+        successCb({ msg: "You can block only once." });
+        return;
+      }
+      db.query(
+        "INSERT INTO block (user_id, blocked_id) VALUES (?, ?)",
+        [id, blocked],
+        (err) => {
           if (err) {
             errorCb(err);
             return;
@@ -66,8 +69,8 @@ export const handleBlockDB = (id, blocked, successCb, errorCb) => {
               );
             }
           );
-        });
-      }
-    );
-  };
-  
+        }
+      );
+    }
+  );
+};

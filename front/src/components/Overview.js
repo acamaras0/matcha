@@ -19,15 +19,22 @@ const Overview = ({ pics, user }) => {
     <div className="overview">
       <div className="text-center">
         <img className="profile-picture" src={user.profile_pic} alt="prof" />
-
         <h2 className="text-center">
           {user.firstname} {user.lastname}
         </h2>
-        <p className="card-text">{user.username}</p>
+        <StarRating rating={likes} />
         <p className="text-center">
           {user.city}, {user.country}
         </p>
-        <StarRating rating={likes} />
+        <p className="card-text">
+          {user.username}, {user.birthdate}
+        </p>
+        <p className="card-text">
+          {user.orientation} {user.gender}
+        </p>
+        <p className="card-text">"{user.bio}"</p>
+            <label>Interested in</label>
+            <p className="card-text">{user.interests}</p>
         <div className="card-img">
           {pics.length > 0 ? (
             <Gallery galleryImages={pics} />
@@ -37,16 +44,6 @@ const Overview = ({ pics, user }) => {
         </div>
         <div style={{ margin: "2%" }}>
           <div className="card-body">
-            <label>Age</label>
-            <p className="card-text">{user.birthdate}</p>
-            <label>Bio</label>
-            <p className="card-text">{user.bio}</p>
-            <label>Gender</label>
-            <p className="card-text">{user.gender}</p>
-            <label>Sexual Orientation</label>
-            <p className="card-text">{user.orientation}</p>
-            <label>Interests</label>
-            <p className="card-text">{user.interests}</p>
             <label>
               {user.username}'s profile has been viewed {user.profile_views}{" "}
               time(s).

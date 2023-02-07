@@ -179,23 +179,17 @@ const ProfileMatch = ({ socket }) => {
                 className="prof-pic"
                 src={selectedUser.profile_pic}
               />
+              <br />
+              <div>
+                <StarRating rating={likes} />
+              </div>
               <h2 className="text-center">
-                {selectedUser.firstname} {selectedUser.lastname}
+                {selectedUser.firstname} {selectedUser.lastname},{" "}
+                {selectedUser.birthdate}
               </h2>
               <p className="text-center">
                 {selectedUser.city}, {selectedUser.country}
               </p>
-              <div>
-                <StarRating rating={likes} />
-              </div>
-              <div className="card-img">
-                {pics.length >= 0 ? (
-                  <Gallery galleryImages={pics} />
-                ) : (
-                  <p className="no-pics">No pics available.</p>
-                )}
-              </div>{" "}
-              <br />
               <div className="heart-container">
                 {liked && liked === "not liked" ? (
                   <div className="like-container">
@@ -227,16 +221,20 @@ const ProfileMatch = ({ socket }) => {
               </div>
               <br />
               <div className="card-body">
-                <label>Age</label>
-                <p className="card-text">{selectedUser.birthdate}</p>
-                <label>Bio</label>
-                <p className="card-text">{selectedUser.bio}</p>
-                <label>Gender</label>
-                <p className="card-text">{selectedUser.gender}</p>
-                <label>Sexual Orientation</label>
-                <p className="card-text">{selectedUser.orientation}</p>
-                <label>Interests</label>
+                <p className="card-text">"{selectedUser.bio}"</p>
+                <p className="card-text">
+                  {selectedUser.orientation} {selectedUser.gender}
+                </p>
+                <label>Interested in</label>
                 <p className="card-text">{selectedUser.interests}</p>
+                <div className="card-img">
+                  {pics.length >= 0 ? (
+                    <Gallery galleryImages={pics} />
+                  ) : (
+                    <p className="no-pics">No pics available.</p>
+                  )}
+                </div>{" "}
+                <br />
                 <label>
                   {selectedUser.username}'s profile has been viewed{" "}
                   {selectedUser.profile_views} time(s).

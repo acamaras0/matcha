@@ -32,7 +32,7 @@ const UpdateProfile = ({ user, id, setMessage, message }) => {
         newBio.value,
         newInterest,
         newGender,
-        newOrientation,
+        newOrientation.value,
         newGeoLat.value,
         newGeoLng.value,
         newCity.value,
@@ -46,9 +46,10 @@ const UpdateProfile = ({ user, id, setMessage, message }) => {
       }
     }
   };
-
   return (
     <div>
+      <h3 className="mt-4">✍ Update Profile</h3>
+      <br />
       <label>✎ Firts name</label>
       <EditText
         name="textbox1"

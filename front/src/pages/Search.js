@@ -7,6 +7,7 @@ import useGetDistance from "../utils/useGetDistance";
 import Tags from "../utils/SetTags";
 import Card from "../components/RenderCard";
 import { getLoggedIn } from "../service/auth";
+import Sort from "../components/Sort";
 
 const Search = ({ socket }) => {
   const cookie = getCookie("refreshToken");
@@ -94,6 +95,10 @@ const Search = ({ socket }) => {
     age: { method: (a, b) => a.birthdate - b.birthdate },
   };
 
+  const handleSort = (value) => {
+    setSortState(value);
+  };
+
   if (distance) {
     usersFiltered.sort(sortMethods[sortState].method);
   }
@@ -112,22 +117,9 @@ const Search = ({ socket }) => {
         </p>
       </div>
       <div className="filter">
-        <p className="text-center">🔺🔻</p>
-        <div className="sorting">
-          <select
-            defaultValue={"DEFAULT"}
-            onChange={(e) => setSortState(e.target.value)}
-          >
-            <option value="DEFAULT" disabled>
-              Show by
-            </option>
-            <option value="location">Distance</option>
-            <option value="age">Age</option>
-            <option value="fame">Popularity</option>
-          </select>
-        </div>
+        <Sort handleSort={handleSort} sortState={sortState} />
         <div>
-          <label>By age</label>
+          <label>Age</label>
           <div onClick={() => setShow(false)}>
             <MultiRangeSlider
               ruler={false}
@@ -137,7 +129,7 @@ const Search = ({ socket }) => {
                 padding: "15px 10px",
               }}
               barLeftColor="yellow"
-              barInnerColor="red"
+              barInnerColor="black"
               barRightColor="yellow"
               min={18}
               max={99}
@@ -151,7 +143,7 @@ const Search = ({ socket }) => {
           </div>
         </div>
         <div>
-          <label>By popularity</label>
+          <label>Popularity</label>
           <div onClick={() => setShow(false)}>
             <MultiRangeSlider
               ruler={false}
@@ -161,7 +153,7 @@ const Search = ({ socket }) => {
                 padding: "15px 10px",
               }}
               barLeftColor="yellow"
-              barInnerColor="red"
+              barInnerColor="black"
               barRightColor="yellow"
               min={0}
               max={100}
@@ -176,7 +168,7 @@ const Search = ({ socket }) => {
         </div>
         <div>
           <div onClick={() => setShow(false)}>
-            <label>By distance</label>
+            <label>Distance</label>
             <MultiRangeSlider
               ruler={false}
               style={{
@@ -185,7 +177,7 @@ const Search = ({ socket }) => {
                 padding: "15px 10px",
               }}
               barLeftColor="yellow"
-              barInnerColor="red"
+              barInnerColor="black"
               barRightColor="yellow"
               min={0}
               max={800}
@@ -199,18 +191,16 @@ const Search = ({ socket }) => {
           </div>
         </div>
         <div>
-          <label>By tags</label>
+          <label>Tags</label>
           <Tags setInterests={setInterests} />
           <div className="recommended-btn">
             <button className="btn btn-dark" onClick={search}>
               Search!
             </button>
           </div>
-          {show ? (
-            <Card array={usersFiltered} socket={socket} user={user} />
-          ) : null}
         </div>
       </div>
+      {show ? <Card array={usersFiltered} socket={socket} user={user} /> : null}
     </>
   );
 };

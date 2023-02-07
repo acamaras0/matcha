@@ -18,45 +18,40 @@ const Card = ({ array, socket, user }) => {
     await countUpViews(id);
   };
   return (
-    <div className="card border-light mb-3">
-      <div className="search-card">
-        {array &&
-          array.map((array) => (
-            <div
-              key={uuidv4()}
-              className="card bg-light mb-3"
-              style={{ maxWidth: "20rem" }}
-            >
-              <div
-                className="card-header"
-                onClick={() => handleClick(array.id)}
-              >
-                {array.username}, {array.birthdate}
-              </div>
-              <img
-                className="search-img"
-                src={array.profile_pic}
-                onClick={() => handleClick(array.id)}
-                alt="img-card"
-              ></img>
-              <div className="card-body text-dark">
-                <p className="card-title">
-                  ~{Math.round(array.distance / 1000)} km away
-                </p>
-                <div className="card-title">
-                  <>
-                    {array.online === 1 ? (
-                      <p className="online"></p>
-                    ) : (
-                      <p className="offline"></p>
-                    )}
-                  </>
-                  {array.city}, {array.country}
-                </div>
+    <div className="search-card">
+      {array &&
+        array.map((array) => (
+          <div
+            key={uuidv4()}
+            className="card bg-light mb-3"
+            style={{ maxWidth: "20rem" }}
+          >
+            <div className="card-header" onClick={() => handleClick(array.id)}>
+              {array.username}, {array.birthdate}
+            </div>
+            <img
+              className="search-img"
+              src={array.profile_pic}
+              onClick={() => handleClick(array.id)}
+              alt="img-card"
+            ></img>
+            <div className="card-body text-dark">
+              <p className="card-title">
+                ~{Math.round(array.distance / 1000)} km away
+              </p>
+              <div className="card-title">
+                <>
+                  {array.online === 1 ? (
+                    <p className="online"></p>
+                  ) : (
+                    <p className="offline"></p>
+                  )}
+                </>
+                {array.city}, {array.country}
               </div>
             </div>
-          ))}
-      </div>
+          </div>
+        ))}
     </div>
   );
 };
